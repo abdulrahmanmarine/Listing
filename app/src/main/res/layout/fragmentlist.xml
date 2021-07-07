@@ -2,30 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/fifteenGray">
+    android:background="@color/fifteenGray"
+    android:orientation="vertical">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/fifteenGray">
+        android:background="@color/fifteenGray"
+        android:orientation="horizontal">
 
     </LinearLayout>
 
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/searching"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/searching"
+        android:hint="search"
+        android:inputType="text"
         android:maxHeight="50dp"
         android:maxLines="1"
-        android:inputType="text"
-        android:hint="search"
-
         />
-
 
 
     <com.example.listing.CustomGridRecyclerView

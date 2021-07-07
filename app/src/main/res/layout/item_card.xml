@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="320dp"
+    android:layout_height="180dp"
+    android:layout_marginEnd="13dp"
+    android:layout_marginBottom="8dp"
+    android:transitionName="@string/transition_string">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/material_img_card"
+            android:layout_width="99dp"
+            android:layout_height="128dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+
+        <TextView
+            android:id="@+id/quan_pt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:text="quantity: "
+            app:layout_constraintStart_toEndOf="@+id/material_img_card"
+            app:layout_constraintTop_toBottomOf="@+id/material_name" />
+
+        <TextView
+            android:id="@+id/quan_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="3"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/quan_pt"
+            app:layout_constraintTop_toTopOf="@+id/quan_pt" />
+
+        <TextView
+            android:id="@+id/loadstat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:paddingStart="10dp"
+            android:paddingRight="11dp"
+            android:ems="6"
+            app:layout_constraintStart_toEndOf="@+id/quan_tv"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <TextView
+            android:id="@+id/material_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            android:textColor="@color/SADarkGreen"
+            android:textSize="21sp"
+            app:layout_constraintStart_toEndOf="@+id/material_img_card"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="165dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="3dp"
+            android:background="@android:color/darker_gray"
+            android:backgroundTint="@color/SADarkGreen"
+            app:layout_constraintStart_toEndOf="@id/material_img_card"
+            app:layout_constraintTop_toBottomOf="@id/material_name" />
+
+
+        <Button
+            android:id="@+id/unload_button"
+            android:layout_width="79dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="32dp"
+            android:background="@color/twentyfivGray"
+            android:text="Unload"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/quan_pt" />
+
+        <Button
+            android:id="@+id/load_button"
+            android:layout_width="79dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="5dp"
+            android:background="@color/SaDarkGray"
+            android:text="Load"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/unload_button"
+            app:layout_constraintStart_toEndOf="@+id/material_img_card"
+            app:layout_constraintTop_toBottomOf="@+id/quan_pt" />
+
+        <Button
+            android:id="@+id/found_button"
+            android:layout_width="99dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="2dp"
+            android:background="#EFCAC7"
+            android:text="Not found"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/material_img_card" />
+
+
+        <ImageView
+            android:id="@+id/camera_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/ic_camera"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageView
+            android:id="@+id/location_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/ic_baseline_location_on_40"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

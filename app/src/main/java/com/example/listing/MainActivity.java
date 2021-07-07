@@ -88,8 +88,6 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
         orgCode = intent.getStringExtra("profile");
         userName = intent.getStringExtra("nameof");
         backBut = findViewById(R.id.back);
-
-
         tv_username = findViewById(R.id.tv_username);
         tv_username.setText("User: " + userName);
         tv_username.setPaintFlags(tv_username.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -113,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.fragmenttext, textfragment);
-
         ft.commit();
     }
 
@@ -146,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
     public void showAssignDialog(int matpos) {
         materialpos = matpos;
         FragmentManager fra = getSupportFragmentManager();
-//        dialog = AssignDialogFragment.newInstance(requests.get(po).getMaterials().get(matpos).getPic(), requests.get(po).getMaterials().get(matpos).getName());
+//      dialog = AssignDialogFragment.newInstance(requests.get(po).getMaterials().get(matpos).getPic(), requests.get(po).getMaterials().get(matpos).getName());
         dialog = AssignDialogFragment.newInstance(plans.get(po).getMaterials().get(matpos).getName());
         dialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
         dialog.show(fra, "assign");

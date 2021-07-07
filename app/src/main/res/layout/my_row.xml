@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="206dp"
@@ -67,7 +66,7 @@
                     android:background="@android:color/darker_gray"
                     android:backgroundTint="@color/SADarkGreen"
                     app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/reqName" />
+                    app:layout_constraintTop_toBottomOf="@id/reqName" />
 
                 <TextView
                     android:id="@+id/pt_rigcode"
