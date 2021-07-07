@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="aramcoGreen">#80bd07</color>
+    <color name="myhomeblue">#00968f</color>
+    <color name="mainback">#e4e4e4</color>
+    <color name="colorPrimary2">#f6f6f6</color>
+    <color name="colorPrimaryGreen2">#c7ffd8</color>
+    <color name="white">#ffffff</color>
+    <color name="colorPrimaryDarkBlue">#161d6f</color>
+
+    <color name="SaLightGreen">#84BD00</color>
+    <color name="SaDarkGray">#676A6E</color>
+    <color name="SADarkGreen">#00843D</color>
+    <color name ="SADarkBlue">#0033A0</color>
+    <color name = "SALightBlue"> #00A3E0</color>
+    <color name = "fiftygray">#808080</color>
+    <color name = "twentyfivGray">#c0c0c0</color>
+    <color name ="fifteenGray">#DADADA</color>
+</resources>

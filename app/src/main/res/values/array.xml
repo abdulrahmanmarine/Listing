@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="vehicels">
+        <item>three wheel forklift</item>
+        <item>four wheel forklift</item>
+        <item>pallet jack</item>
+        <item>Crane</item>
+    </string-array>
+
+    <string-array name="drivers">
+        <item>Adnan alsnan</item>
+        <item>Faisal alkroud</item>
+        <item>ahmed alhagbani</item>
+        <item>abdulaziz almussa</item>
+        <item>saleh alrouq</item>
+    </string-array>
+</resources>

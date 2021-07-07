@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="206dp"
+        android:layout_height="147dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="3dp"
+        android:elevation="14dp"
+        app:cardBackgroundColor="#ffffff"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:contentPadding="3dp"
+        app:contentPaddingBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|left|left"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_border"
+                    android:paddingStart="10dp"
+                    android:paddingRight="15dp"
+                    android:textColor="@color/SaDarkGray"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/reqName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/SADarkBlue"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@android:color/darker_gray"
+                    android:backgroundTint="@color/SADarkGreen"
+                    app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/reqName" />
+
+                <TextView
+                    android:id="@+id/pt_rigcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/list_card_tv_margin"
+                    android:paddingStart="12dp"
+                    android:text="@string/rigcode_pt"
+                    android:textColor="@color/SaLightGreen"
+                    android:textSize="@dimen/list_card_tv_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/reqName" />
+
+                <TextView
+                    android:id="@+id/rigcode_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="5dp"
+                    android:firstBaselineToTopHeight="@android:dimen/app_icon_size"
+                    android:textAlignment="center"
+                    android:textColor="@color/SaDarkGray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.11"
+                    app:layout_constraintStart_toEndOf="@+id/pt_rigcode"
+                    app:layout_constraintTop_toBottomOf="@id/reqName"
+
+                    />
+
+                <TextView
+                    android:id="@+id/pt_vessel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/list_card_tv_margin2"
+                    android:paddingStart="12dp"
+                    android:text="@string/priority_pt"
+                    android:textColor="@color/SaLightGreen"
+                    android:textSize="@dimen/list_card_tv_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pt_rigcode" />
+
+                <TextView
+                    android:id="@+id/vessel_tv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="@dimen/list_card_tv_margin2"
+                    android:firstBaselineToTopHeight="@android:dimen/app_icon_size"
+                    android:textAlignment="center"
+                    android:textColor="@color/SaDarkGray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.27"
+                    app:layout_constraintStart_toEndOf="@+id/pt_vessel"
+                    app:layout_constraintTop_toBottomOf="@+id/rigcode_tv" />
+
+                <TextView
+                    android:id="@+id/pt_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/list_card_tv_margin2"
+                    android:paddingStart="12dp"
+                    android:text="@string/date_pt"
+                    android:textColor="@color/SaLightGreen"
+                    android:textSize="@dimen/list_card_tv_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pt_vessel" />
+
+                <TextView
+                    android:id="@+id/date_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="@dimen/list_card_tv_margin2"
+                    android:textAlignment="center"
+                    android:textColor="@color/SaDarkGray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.27"
+                    app:layout_constraintStart_toEndOf="@+id/pt_date"
+                    app:layout_constraintTop_toBottomOf="@+id/vessel_tv2"
+
+                    />
+
+                <TextView
+                    android:id="@+id/pt_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="12dp"
+                    android:text="@string/time_pt"
+                    android:textColor="@color/SaLightGreen"
+                    android:textSize="@dimen/list_card_tv_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pt_date" />
+
+                <TextView
+                    android:id="@+id/time_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="24dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/SaDarkGray"
+
+                    app:layout_constraintStart_toEndOf="@id/pt_time"
+                    app:layout_constraintTop_toBottomOf="@id/date_tv" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

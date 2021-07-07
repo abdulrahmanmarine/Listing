@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Stevedoring Cockpit</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rigcode_pt">Destination: </string>
+    <string name="priority_pt">Vessel: </string>
+    <string name="date_pt">Date: </string>
+    <string name="time_pt">Time: </string>
+
+    <string name="select_vehicle">Select Vehicle</string>
+    <string name="select_driver">Select Driver</string>
+
+    <integer name="swing_anim_time">750</integer>
+    <string name="transition_string">hello</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+</resources>
