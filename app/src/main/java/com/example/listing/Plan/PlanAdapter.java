@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listing.CustomGridRecyclerView;
+import com.example.listing.Kotlin.CommonModule;
 import com.example.listing.Material.Material;
 import com.example.listing.PlanClickListener;
 import com.example.listing.R;
@@ -52,7 +53,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
     @NonNull
     @Override
     public RequestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View card = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_row, parent, false);
+        View card = LayoutInflater.from(parent.getContext()).inflate(R.layout.plan_card, parent, false);
 //        RequestViewHolder request = new RequestViewHolder(card, listener);
         RequestViewHolder request = new RequestViewHolder(card);
         contexts = parent.getContext();
@@ -232,8 +233,8 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
             //requestStatus.setText(request.getStatus());
             requestName.setText(plan.getReq_name());
             rigcode.setText(plan.getDestination());
-            date.setText(plan.getDate());
-            time.setText(plan.getTime());
+            date.setText(CommonModule.INSTANCE.parseDate(plan.getDate()));
+            time.setText(CommonModule.INSTANCE.parseTime(plan.getTime()));
             vessel.setText(plan.getVessel_num());
             //pic.setImageResource(request.getImg());
         }

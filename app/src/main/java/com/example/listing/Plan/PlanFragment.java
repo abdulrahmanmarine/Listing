@@ -143,6 +143,8 @@ public class PlanFragment extends Fragment{
 
         EditText editText = (EditText) v.findViewById(R.id.searching);
 
+        editText.setEnabled(false);
+
 
 
 

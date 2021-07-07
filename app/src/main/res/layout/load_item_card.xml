@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="320dp"
     android:layout_height="180dp"
-    android:layout_marginEnd="13dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginBottom="4dp"
     android:transitionName="@string/transition_string">
 
     <androidx.constraintlayout.widget.ConstraintLayout

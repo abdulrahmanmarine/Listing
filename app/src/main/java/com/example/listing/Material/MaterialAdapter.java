@@ -84,7 +84,7 @@ public interface addClick{
         For Load card
          */
 
-        View card = LayoutInflater.from(parent.getContext()).inflate(R.layout.text_fragment_row, parent, false);
+        View card = LayoutInflater.from(parent.getContext()).inflate(R.layout.load_item_card, parent, false);
         MaterialViewHolder request = new MaterialViewHolder(card, loadListener, unloadListener, foundListener, cameraListener);
 
 
@@ -130,7 +130,7 @@ public interface addClick{
         Button loadButton, unloadButton, addButton, foundButton;
         Material material;
         ImageView materialImage;
-        ImageButton camerabut, locButton;
+        ImageView camerabut, locButton;
 
         /*
         ASSIGN material view holder
@@ -173,8 +173,8 @@ public interface addClick{
                 loadButton = (Button) itemView.findViewById(R.id.load_button);
                 unloadButton = (Button) itemView.findViewById(R.id.unload_button);
                 foundButton = (Button) itemView.findViewById(R.id.found_button);
-                locButton = (ImageButton) itemView.findViewById(R.id.locbut);
-                camerabut = (ImageButton) itemView.findViewById(R.id.camerabutton);
+                locButton = (ImageView) itemView.findViewById(R.id.location_btn);
+                camerabut = (ImageView) itemView.findViewById(R.id.camera_btn);
 
 
 
