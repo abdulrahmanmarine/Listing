@@ -1,15 +1,10 @@
 package com.example.listing.Kotlin
 
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.listing.CustomGridRecyclerView
 import com.example.listing.Material.Loader.LoaderFragment
 import com.example.listing.Material.Material
-import com.example.listing.Material.MaterialAdapter
 import com.example.listing.Plan.Plan
 import com.example.listing.Plan.PlanFragment
 import com.example.listing.PlanClickListener
@@ -18,38 +13,39 @@ import org.json.JSONObject
 import java.util.*
 
 class Loader : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragmentClickListener {
+    var reqs = ArrayList<Plan?>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loader)
-        val reqs = ArrayList<Plan?>()
-        val mats = ArrayList<Material>()
+
         var planData = CommonModule.openRawFileAsIS(this, "plans")
         var resp = ""
-        val file = planData.reader().readLines()
+        var file = planData.reader().readLines()
         file.forEach { it ->
             resp += it + "\n"
         }
 
         if (resp != null) {
-                val jsonObj = JSONObject(resp)
-                val data: JSONObject = jsonObj.getJSONObject("d")
-                val results = data.getJSONArray("results")
+            var jsonObj = JSONObject(resp)
+            var data: JSONObject = jsonObj.getJSONObject("d")
+            var results = data.getJSONArray("results")
                 for (i in 0 until results.length()) {
-                    val res = results.getJSONObject(i)
-                    val stat = res.getString("ZuphrStatus")
-                    val rq_name = res.getString("ZuphrLpid")
-                    val time = res.getString("ZuphrLptime")
-                    val date = res.getString("ZuphrLpdate")
-                    val vessel = res.getString("ZuphrVessel")
-                    val driver = ""
-                    val materObj = res.getJSONObject("PlanToItems")
-                    val mater = materObj.getJSONArray("results")
+                    var mats = ArrayList<Material>()
+                    var res = results.getJSONObject(i)
+                    var stat = res.getString("ZuphrStatus")
+                    var rq_name = res.getString("ZuphrLpid")
+                    var time = res.getString("ZuphrLptime")
+                    var date = res.getString("ZuphrLpdate")
+                    var vessel = res.getString("ZuphrVessel")
+                    var driver = ""
+                    var materObj = res.getJSONObject("PlanToItems")
+                    var mater = materObj.getJSONArray("results")
                     for (j in 0 until mater.length()) {
-                        val mat = mater.getJSONObject(j)
-                        val mater_name = mat.getString("ZuphrShortxt")
-                        val mater_quan = mat.getString("ZuphrQuan")
-                        val mater_driver = ""
-                        val mater_vehicle = ""
+                        var mat = mater.getJSONObject(j)
+                        var mater_name = mat.getString("ZuphrShortxt")
+                        var mater_quan = mat.getString("ZuphrQuan")
+                        var mater_driver = ""
+                        var mater_vehicle = ""
                         mats.add(
                             Material(
                                 mater_name,
@@ -79,9 +75,9 @@ class Loader : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragme
     }
 
     fun buildRecycler(lst: ArrayList<Plan?>?) {
-        val planFragment = PlanFragment.newInstance(lst)
-        val fm = supportFragmentManager
-        val ft = fm.beginTransaction()
+        var planFragment = PlanFragment.newInstance(lst)
+        var fm = supportFragmentManager
+        var ft = fm.beginTransaction()
         ft.replace(R.id.constraintLayout4, planFragment)
         ft.commit()
 
@@ -92,26 +88,31 @@ class Loader : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragme
 
 
     override fun onItemClick(plan: Plan?, pos: Int) {
-        LoaderFragmentInteraction(plan!!)
+        LoaderFragmentInteraction(reqs[pos]!!)
+        //Toast.makeText(this,pos,Toast.LENGTH_SHORT).show()
     }
 
     override fun LoaderFragmentInteraction(plan: Plan) {
-//        val textfragment = LoaderFragment.newInstance(
-//            plan.materials as ArrayList<Material?>,
-//            plan.req_name,
-//            plan.vessel_num,
-//            plan.destination
-//        )
-//        val fm = supportFragmentManager
-//        val ft = fm.beginTransaction()
-//        ft.replace(R.id.item_recycler, textfragment)
-//        ft.commit()
+        var textfragment = LoaderFragment.newInstance(
+            plan.materials as ArrayList<Material?>,
+            plan.req_name,
+            plan.vessel_num,
+            plan.destination
+        )
 
-        var itemRV : RecyclerView= findViewById(R.id.item_recycler)
-        var itemAdapter = MaterialAdapter(plan.materials)
-        itemRV.layoutManager = GridLayoutManager(this, 3)
+        var fm = supportFragmentManager
+        var ft = fm.beginTransaction()
+        ft.replace(R.id.item_recycler, textfragment)
+        ft.commit()
 
-        itemRV.adapter = itemAdapter
+//
+//        var itemRV : RecyclerView= findViewById(R.id.item_recycler)
+//        var itemAdapter = MaterialAdapter(plan.materials)
+//        itemRV.layoutManager = GridLayoutManager(this, 3)
+
+
+//        itemRV.adapter = itemAdapter
     }
+
 
 }

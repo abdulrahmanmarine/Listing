@@ -185,6 +185,19 @@ public class LoaderFragment extends Fragment{
             }
         });
 
+            materialAdapter.setUnloadListener(new MaterialAdapter.unloadClick() {
+                @Override
+                public void unloadButtonClick(int pos) {
+                    mParam1.get(pos).setLoaded(false);
+                    mParam1.get(pos).setFound((true));
+                    //materialAdapter.notifyDataSetChanged();
+                    //To update myadapter
+                    notifDataChanged();
+//                    ((MainActivity) getActivity()).sortBeer();
+//                    ((MainActivity) getActivity()).dataChanged();
+                    //myAdapter.notifyDataSetChanged();
+                }
+            });
             /*
             Load button listener
              */
@@ -192,8 +205,8 @@ public class LoaderFragment extends Fragment{
                 @Override
                 public void loadButtonClicked(int pos) {
 
-                    mParam1.get(pos).setLoaded(true);
-                    mParam1.get(pos).setFound(true);
+                   // mParam1.get(pos).setLoaded(true);
+                   // mParam1.get(pos).setFound(true);
                     materialAdapter.notifyDataSetChanged();
                     //To update myadapter
                     notifDataChanged();
@@ -204,19 +217,7 @@ public class LoaderFragment extends Fragment{
             /*
             Unload button listener
              */
-            materialAdapter.setUnloadListener(new MaterialAdapter.unloadClick() {
-                @Override
-                public void unloadButtonClick(int pos) {
-                    mParam1.get(pos).setLoaded(false);
-                    mParam1.get(pos).setFound((true));
-                    materialAdapter.notifyDataSetChanged();
-                    //To update myadapter
-                    notifDataChanged();
-//                    ((MainActivity) getActivity()).sortBeer();
-//                    ((MainActivity) getActivity()).dataChanged();
-                    //myAdapter.notifyDataSetChanged();
-                }
-            });
+
 
             /*
             Found button listener
@@ -234,7 +235,7 @@ public class LoaderFragment extends Fragment{
         }
 
         rv.setAdapter(materialAdapter);
-        rv.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        rv.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
            /*
             Title animation
@@ -272,7 +273,7 @@ public class LoaderFragment extends Fragment{
 
     public void notifDataChanged(){
     FragmentManager fm = getFragmentManager();
-        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.fragmentmain);
+        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.constraintLayout4);
         fragm.dataChanged();
     }
 

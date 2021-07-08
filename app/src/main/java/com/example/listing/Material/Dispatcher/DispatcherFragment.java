@@ -25,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.listing.AssignDriver.DriverAdapter;
+import com.example.listing.Kotlin.Dispatcher;
 import com.example.listing.MainActivity;
 import com.example.listing.Material.Material;
 import com.example.listing.Material.MaterialAdapter;
@@ -189,7 +190,7 @@ public class DispatcherFragment extends Fragment{
             driverAdapter.setAddListener(new DriverAdapter.addClick() {
                 @Override
                 public void addButtonClick(int pos) {
-                    ((MainActivity) getActivity()).showAssignDialog(pos);
+                    ((Dispatcher) getActivity()).showAssignDialog(pos);
 
                     driverAdapter.notifyDataSetChanged();
                     notifDataAddChanged();
@@ -240,7 +241,7 @@ public class DispatcherFragment extends Fragment{
 
     public void notifDataAddChanged(){
         FragmentManager fm = getFragmentManager();
-        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.fragmentmain);
+        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.constraintLayout4);
         fragm.dataChanged();
     }
 

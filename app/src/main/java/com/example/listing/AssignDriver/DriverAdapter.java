@@ -84,7 +84,7 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.MaterialVi
     public static class MaterialViewHolder extends RecyclerView.ViewHolder{
         //private final ImageButton imgv;
         TextView materialName, textDriver, textVehicle, textStatus, textQuan, textPlanNum;
-        Button loadButton, unloadButton, addButton, foundButton;
+        ImageView loadButton, unloadButton, addButton, foundButton;
         Material material;
         ImageView materialImage;
         ImageButton camerabut, locButton;
@@ -99,7 +99,7 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.MaterialVi
             textStatus = (TextView) itemView.findViewById(R.id.assignstat);
             materialName = (TextView) itemView.findViewById(R.id.material_name);
             textQuan = (TextView) itemView.findViewById(R.id.quan_tv);
-            addButton = (Button) itemView.findViewById(R.id.add_button);
+            addButton = (ImageView) itemView.findViewById(R.id.add_button);
             materialImage  = (ImageView) itemView.findViewById(R.id.material_img_card);
             locButton = (ImageButton) itemView.findViewById(R.id.locbut);
             textPlanNum = (TextView) itemView.findViewById(R.id.material_name);

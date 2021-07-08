@@ -184,13 +184,17 @@ public interface addClick{
         Set load onclick listener
          */
                 loadButton.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View v) {
-                        loadListener.loadButtonClicked(getAdapterPosition());
+                        materialList.get(getAdapterPosition()).setLoaded(true);
+                        materialList.get(getAdapterPosition()).setFound(true);
+                       loadListener.loadButtonClicked(getAdapterPosition());
                         Log.i("click","load button clicked");
 
 
                     }
+
                 });
         /*
         Set Unload onclick listener

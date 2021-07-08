@@ -155,7 +155,7 @@ public class AssignDialogFragment extends DialogFragment implements AdapterView.
         but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((DispatcherFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmenttext)).dataChangedDer();
+                ((DispatcherFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.item_recycler)).dataChangedDer();
 //                ((MainActivity) getActivity()).dataChanged();
                 notifDataChanged();
                 positiveListener.onPositiveClick(driv, vehi);
@@ -197,8 +197,8 @@ public class AssignDialogFragment extends DialogFragment implements AdapterView.
         FragmentManager fm2 = getFragmentManager();
 
 
-        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.fragmentmain);
-        DispatcherFragment fragm2 = (DispatcherFragment) fm2.findFragmentById(R.id.fragmenttext);
+        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.constraintLayout4);
+        DispatcherFragment fragm2 = (DispatcherFragment) fm2.findFragmentById(R.id.item_recycler);
         fragm.dataChanged();
         fragm2.dataChangedDer();
     }
