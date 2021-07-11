@@ -56,8 +56,8 @@
                 android:backgroundTint="@color/gray88"
                 android:drawableLeft="@drawable/ic_cursor"
                 android:text="GIS"
-                android:textSize="13sp"
                 android:textColor="@color/black"
+                android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -243,17 +243,5 @@
         app:layout_constraintTop_toBottomOf="@+id/logIn_btn"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/ref_Button_Login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:backgroundTint="@color/gray88"
-        android:text="Ref"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/logIn_btn"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.758" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

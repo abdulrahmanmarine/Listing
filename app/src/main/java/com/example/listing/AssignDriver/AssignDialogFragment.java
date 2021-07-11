@@ -38,8 +38,8 @@ public class AssignDialogFragment extends DialogFragment implements AdapterView.
         if (getDialog() == null)
             return;
 
-        int dialogWidth = 640; // specify a value here
-        int dialogHeight = 740; // specify a value here
+        int dialogWidth = 800; // specify a value here
+        int dialogHeight = 800; // specify a value here
 
 
         getDialog().getWindow().setLayout(dialogWidth, dialogHeight);
