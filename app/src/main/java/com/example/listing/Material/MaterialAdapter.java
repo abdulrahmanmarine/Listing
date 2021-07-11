@@ -129,8 +129,7 @@ public interface addClick{
         TextView materialName, textDriver, textVehicle, textStatus, textQuan, textPlanNum;
         Button loadButton, unloadButton, addButton, foundButton;
         Material material;
-        ImageView materialImage;
-        ImageView camerabut, locButton;
+        ImageView materialImage, camerabut, locButton;
 
         /*
         ASSIGN material view holder
@@ -224,6 +223,7 @@ public interface addClick{
         }
 
         void bind(Material material){
+
             this.material = material;
 
 
@@ -274,6 +274,7 @@ public interface addClick{
             materialName.setText(material.getName());
             textQuan.setText(material.getQuan());
             materialImage.setImageResource(material.getPic());
+            materialImage.setImageBitmap(material.getBmpImage());
 //            if(material.getLoaded()){
 //                text3.setText("Loaded");
 //                text3.setBackground(ContextCompat.getDrawable(contexts, R.drawable.green_border));
@@ -286,6 +287,8 @@ public interface addClick{
         }
 
     }
+
+
 
 
 }

@@ -1,9 +1,12 @@
 package com.example.listing.Material.Loader;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -22,6 +25,7 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.listing.Material.Material;
 import com.example.listing.Material.MaterialAdapter;
@@ -29,6 +33,11 @@ import com.example.listing.R;
 import com.example.listing.Plan.PlanFragment;
 import com.example.listing.Plan.Plan;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,17 +46,14 @@ import java.util.List;
  * Use the {@link LoaderFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoaderFragment extends Fragment{
-
+public class LoaderFragment extends Fragment {
+    private int pPos = 0;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_PARAM3 = "param3";
     private static final String ARG_PARAM4 = "param4";
-
-
-
 
 
     // TODO: Rename and change types of parameters
@@ -61,7 +67,6 @@ public class LoaderFragment extends Fragment{
     ImageButton btnCapture;
 
 
-
     public LoaderFragment() {
         // Required empty public constructor
     }
@@ -69,9 +74,10 @@ public class LoaderFragment extends Fragment{
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
+     * <p>
+     * <p>
+     * //     * @param param2 Parameter 2.
      *
-
-//     * @param param2 Parameter 2.
      * @return A new instance of fragment TextFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -89,7 +95,9 @@ public class LoaderFragment extends Fragment{
         return fragment;
     }
 
-    public void dataChangedDer(){ materialAdapter.notifyDataSetChanged(); }
+    public void dataChangedDer() {
+        materialAdapter.notifyDataSetChanged();
+    }
 
 //    public void changeLoading(boolean loadOrNot){
 //        isLoad = loadOrNot;
@@ -108,11 +116,11 @@ public class LoaderFragment extends Fragment{
 
     }
 
-    private void filter2(String text){
+    private void filter2(String text) {
         ArrayList<Material> filteredList = new ArrayList<>();
 
-        for(Material mat : mParam1){
-            if(mat.getName().toLowerCase().contains(text.toLowerCase())){
+        for (Material mat : mParam1) {
+            if (mat.getName().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(mat);
             }
         }
@@ -162,7 +170,6 @@ public class LoaderFragment extends Fragment{
         dest_tv.setText(mParam4);
 
 
-
         materialAdapter = new MaterialAdapter(mParam1);
 ////        myAdapter = detAdapter;
 
@@ -175,15 +182,21 @@ public class LoaderFragment extends Fragment{
 
         // For loading
 
-        if(isLoad){
+        if (isLoad) {
 
-        materialAdapter.setCameraListener(new MaterialAdapter.cameraClick() {
-            @Override
-            public void cameraButtonClick(int pos) {
-                Intent cInt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cInt, 1);
-            }
-        });
+            materialAdapter.setCameraListener(new MaterialAdapter.cameraClick() {
+                @Override
+                public void cameraButtonClick(int pos) {
+                    Intent cInt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cInt, 1);
+                    pPos = pos;
+
+
+
+                }
+
+            });
+
 
             materialAdapter.setUnloadListener(new MaterialAdapter.unloadClick() {
                 @Override
@@ -205,8 +218,8 @@ public class LoaderFragment extends Fragment{
                 @Override
                 public void loadButtonClicked(int pos) {
 
-                   // mParam1.get(pos).setLoaded(true);
-                   // mParam1.get(pos).setFound(true);
+                    // mParam1.get(pos).setLoaded(true);
+                    // mParam1.get(pos).setFound(true);
                     materialAdapter.notifyDataSetChanged();
                     //To update myadapter
                     notifDataChanged();
@@ -235,7 +248,9 @@ public class LoaderFragment extends Fragment{
         }
 
         rv.setAdapter(materialAdapter);
-        rv.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        GridLayoutManager grm = new GridLayoutManager(getActivity(), 2);
+        grm.offsetChildrenHorizontal(1);
+        rv.setLayoutManager(grm);
 
            /*
             Title animation
@@ -247,17 +262,15 @@ public class LoaderFragment extends Fragment{
             TransitionManager.beginDelayedTransition(vg, fade);
 //            tv.setVisibility(View.INVISIBLE);
         }
-    //
-    //        animFadeIn = AnimationUtils.loadAnimation(contexts,
-    //                R.anim.fade_in);
+        //
+        //        animFadeIn = AnimationUtils.loadAnimation(contexts,
+        //                R.anim.fade_in);
 //        tv.setVisibility(View.INVISIBLE);
 //        animFadeIn = AnimationUtils.loadAnimation(getActivity()  ,
 //                R.anim.fade_in);
 ////        tv.startAnimation(animSlideDown);
 //        tv.startAnimation(animFadeIn);
 //        tv.setText(mParam2);
-
-
 
 
 //        Button loadBut = v.findViewById(R.id.load_button);
@@ -267,15 +280,32 @@ public class LoaderFragment extends Fragment{
 //                mParam3.get()
 //            }
 //        });
-       // detAdapter.notifyDataSetChanged();
+        // detAdapter.notifyDataSetChanged();
         return v;
     }
 
-    public void notifDataChanged(){
-    FragmentManager fm = getFragmentManager();
+    public void notifDataChanged() {
+        FragmentManager fm = getFragmentManager();
         PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.constraintLayout4);
         fragm.dataChanged();
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+       // Toast.makeText(contexts, "Entered ON Activity Results", Toast.LENGTH_SHORT).show();
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            //Toast.makeText(contexts, "Entered ON Activity Results OK!", Toast.LENGTH_SHORT).show();
+            Bitmap bmp = (Bitmap) data.getExtras().get("data");
+            mParam1.get(pPos).setBmpImage(bmp);
+            materialAdapter.notifyDataSetChanged();
+
+
+        }
     }
 
 
+
+
 }
+

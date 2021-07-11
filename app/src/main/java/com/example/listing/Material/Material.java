@@ -1,5 +1,6 @@
 package com.example.listing.Material;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -7,6 +8,7 @@ public class Material implements Parcelable {
 //public class Material {
     private String name;
     private String quan;
+    private Bitmap image;
     private String driver;
     private String vehicle;
     private Boolean loaded = false, found = false;
@@ -64,6 +66,12 @@ public class Material implements Parcelable {
 
     public void setPic(int pic) {
         this.pic = pic;
+    }
+    public void setBmpImage(Bitmap image) {
+        this.image = image;
+    }
+    public Bitmap getBmpImage()  {
+        return this.image ;
     }
 
     public String getVehicle() {
