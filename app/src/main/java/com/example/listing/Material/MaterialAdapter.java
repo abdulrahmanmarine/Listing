@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -225,6 +227,12 @@ public interface addClick{
         void bind(Material material){
 
             this.material = material;
+            locButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(contexts,"Not Implemented Yet",Toast.LENGTH_SHORT).show();
+                }
+            });
 
 
         /*

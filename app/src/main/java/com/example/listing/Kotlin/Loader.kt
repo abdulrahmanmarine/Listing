@@ -17,6 +17,8 @@ class Loader : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragme
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loader)
+        this.getSupportActionBar()!!.hide()
+
 
         var planData = CommonModule.openRawFileAsIS(this, "plans")
         var resp = ""
