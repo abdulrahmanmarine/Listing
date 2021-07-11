@@ -34,7 +34,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/plan_recycler"
             android:layout_width="match_parent"
-            android:layout_height="750dp"
+            android:layout_height="490dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="1054dp"
+        android:layout_width="740dp"
         android:layout_height="match_parent"
         android:background="@drawable/aramcoback"
         app:layout_constraintBottom_toBottomOf="parent"

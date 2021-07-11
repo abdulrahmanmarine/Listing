@@ -6,199 +6,117 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
-    tools:context=".Material.Loader.LoaderFragment"
-    android:paddingTop="15dp">
+    android:paddingTop="15dp"
+    tools:context=".Material.Loader.LoaderFragment">
 
-
-    <!--    <Button-->
-    <!--        android:id="@+id/btn_assign"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="Assign" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/textrecview"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
         android:background="@color/fifteenGray"
-        android:layout_marginStart="16dp">
+        app:layout_constraintBottom_toTopOf="@id/textrecview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
         <TextView
             android:id="@+id/plan_pt"
-            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/textrecview"
             android:layout_marginStart="15dp"
             android:layout_marginTop="@dimen/header_margin_top"
-            />
+            android:text=""
+            app:layout_constraintBottom_toTopOf="@id/textrecview"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/plan_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/plan_pt"
-            app:layout_constraintBottom_toTopOf="@id/textrecview"
-            android:textSize="19dp"
-            android:textColor="@color/SADarkBlue"
             android:layout_marginTop="@dimen/header_margin_top"
-            />
+            android:textColor="@color/SADarkBlue"
+            android:textSize="19dp"
+            app:layout_constraintBottom_toTopOf="@id/textrecview"
+            app:layout_constraintStart_toEndOf="@id/plan_pt" />
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
+            android:layout_marginStart="13dp"
             android:layout_marginTop="3dp"
             android:background="@android:color/darker_gray"
             android:backgroundTint="@color/SADarkGreen"
-            android:layout_marginStart="13dp"
-            android:paddingTop="3dp"
-            />
+            android:paddingTop="3dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/dest_pt"
-            android:text="Destination: "
-            app:layout_constraintStart_toEndOf="@id/plan_tv"
-            app:layout_constraintBottom_toTopOf="@id/textrecview"
-            android:textSize="19dp"
-            android:layout_marginTop="@dimen/header_margin_top"
-            android:textColor="@color/SaLightGreen"
-            android:layout_marginStart="15dp"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/dest_tv"
-            app:layout_constraintStart_toEndOf="@+id/dest_pt"
-            app:layout_constraintBottom_toTopOf="@id/textrecview"
-            android:textSize="19dp"
-            android:textColor="@color/SaDarkGray"
-            android:layout_marginTop="@dimen/header_margin_top"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/vessel_pt2"
-            android:text="Vessel: "
-            android:layout_marginTop="@dimen/header_margin_top"
             android:layout_marginStart="15dp"
-            android:textSize="19dp"
+            android:layout_marginTop="@dimen/header_margin_top"
+            android:text="Destination: "
             android:textColor="@color/SaLightGreen"
-            />
+            android:textSize="19dp"
+            app:layout_constraintBottom_toTopOf="@id/textrecview"
+            app:layout_constraintStart_toEndOf="@id/plan_tv" />
 
         <TextView
+            android:id="@+id/dest_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/vessel_pt2"
-            android:id="@+id/vessel_tv2"
-            android:textSize="19dp"
-            android:textColor="@color/SaDarkGray"
             android:layout_marginTop="@dimen/header_margin_top"
+            android:textColor="@color/SaDarkGray"
+            android:textSize="19dp"
+            app:layout_constraintBottom_toTopOf="@id/textrecview"
+            app:layout_constraintStart_toEndOf="@+id/dest_pt" />
+
+        <TextView
+            android:id="@+id/vessel_pt2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="@dimen/header_margin_top"
+            android:text="Vessel: "
+            android:textColor="@color/SaLightGreen"
+            android:textSize="19dp" />
+
+        <TextView
+            android:id="@+id/vessel_tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/header_margin_top"
+            android:textColor="@color/SaDarkGray"
+            android:textSize="19dp"
+            app:layout_constraintStart_toEndOf="@id/vessel_pt2"
 
             />
-
 
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/search_material"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:id="@+id/search_material"
-            android:textSize="19dp"
-            android:maxLines="1"
-            android:inputType="text"
             android:layout_marginStart="10dp"
             android:hint="   search"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textSize="19dp"
 
             />
     </LinearLayout>
 
-<!--
-    <TextView
-        android:id="@+id/plan_pt"
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/textrecview"
-        android:layout_marginStart="15dp"/>
-    <View
-        android:id="@+id/line"
-        android:layout_width="150dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="3dp"
-        android:background="@android:color/darker_gray"
-        android:backgroundTint="@color/SADarkGreen"
-        app:layout_constraintStart_toStartOf="@id/plan_pt"
-        app:layout_constraintTop_toBottomOf="@id/plan_pt" />
-
-    <TextView
-        android:id="@+id/plan_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/plan_pt"
-        app:layout_constraintBottom_toTopOf="@id/textrecview"
-        android:textSize="19dp"
-        android:textColor="@color/SaDarkGray"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dest_pt"
-        android:text="Destination: "
-        app:layout_constraintStart_toEndOf="@id/plan_tv"
-        app:layout_constraintBottom_toTopOf="@id/textrecview"
-        android:textSize="19dp"
-        android:textColor="@color/SaDarkGray"
-        android:layout_marginStart="15dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dest_tv"
-        app:layout_constraintStart_toEndOf="@+id/dest_pt"
-        app:layout_constraintBottom_toTopOf="@id/textrecview"
-        android:textSize="19dp"
-        android:textColor="@color/fiftygray"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/vessel_pt2"
-        android:text="Vessel: "
-        app:layout_constraintStart_toEndOf="@id/dest_tv"
-        app:layout_constraintBottom_toTopOf="@id/textrecview"
-        android:layout_marginStart="15dp"
-        android:textSize="19dp"
-        android:textColor="@color/SaDarkGray"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/vessel_pt2"
-        android:id="@+id/vessel_tv2"
-        app:layout_constraintBottom_toTopOf="@id/textrecview"
-        android:textSize="19dp"
-        android:textColor="@color/fiftygray"
-        />
--->
-
-
 
     <androidx.recyclerview.widget.RecyclerView
-        android:paddingTop="15dp"
         android:id="@+id/textrecview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
         android:layout_marginTop="32dp"
+        android:paddingTop="15dp"
+        tools:itemCount="3"
+        tools:listitem="@layout/load_item_card"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-         />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

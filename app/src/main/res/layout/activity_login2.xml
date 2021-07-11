@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="180dp"
         android:background="@drawable/login_header"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,18 +17,18 @@
         app:layout_constraintVertical_bias="0.0">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="500dp"
+            android:layout_height="150dp"
             android:background="@drawable/aramco_text_logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.26" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="51dp"
+            android:layout_height="38dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
                 android:layout_marginEnd="32dp"
                 android:text="Mobile Portal Login"
                 android:textColor="@color/white"
-                android:textSize="30sp"
+                android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -56,6 +56,7 @@
                 android:backgroundTint="@color/gray88"
                 android:drawableLeft="@drawable/ic_cursor"
                 android:text="GIS"
+                android:textSize="13sp"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +74,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/T1"
         android:layout_width="600dp"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="Aramco ID"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -86,7 +87,7 @@
         <EditText
             android:id="@+id/username"
             android:layout_width="600dp"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:paddingLeft="8dp"
             android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -95,20 +96,20 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/T2"
         android:layout_width="600dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="Password"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.56"
+        app:layout_constraintTop_toBottomOf="@+id/T1"
+        app:layout_constraintVertical_bias="0.0"
         app:startIconDrawable="@drawable/lock">
 
         <EditText
             android:id="@+id/password"
             android:layout_width="600dp"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:paddingLeft="8dp"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -122,23 +123,24 @@
     <Button
         android:id="@+id/logIn_btn"
         android:layout_width="600dp"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:background="@color/blue2"
         android:text="Login"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.73" />
+        app:layout_constraintTop_toBottomOf="@+id/T2"
+        app:layout_constraintVertical_bias="0.0" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="1275dp"
-        android:layout_height="90dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:background="@color/gray88"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -148,7 +150,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/online_ConstraintLayout"
-            android:layout_width="637dp"
+            android:layout_width="480dp"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -174,7 +176,7 @@
                 android:text="Online"
                 android:textAllCaps="false"
                 android:textColor="@color/aramco_blue2"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -187,7 +189,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
-            android:layout_width="637dp"
+            android:layout_width="480dp"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -214,7 +216,7 @@
                 android:layout_marginBottom="4dp"
                 android:text="Offline"
                 android:textAllCaps="false"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -234,11 +236,24 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="Saudi Aramco reserves the right to monitor all Website activity, traffic, \n computing,network, access, and content transmitted using the Website"
-        android:textSize="22sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logIn_btn"
         app:layout_constraintVertical_bias="0.0" />
 
+    <Button
+        android:id="@+id/ref_Button_Login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:backgroundTint="@color/gray88"
+        android:text="Ref"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/logIn_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.758" />
 </androidx.constraintlayout.widget.ConstraintLayout>

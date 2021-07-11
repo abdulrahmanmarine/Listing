@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="320dp"
-    android:layout_height="180dp"
-    android:layout_marginEnd="4dp"
-    android:layout_marginBottom="4dp"
+    android:layout_height="155dp"
+    android:layout_marginBottom="8dp"
     android:transitionName="@string/transition_string">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,14 +14,14 @@
 
         <ImageView
             android:id="@+id/material_img_card"
-            android:layout_width="99dp"
-            android:layout_height="128dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:background="@drawable/defult"
             android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
@@ -39,6 +38,7 @@
             android:id="@+id/quan_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:ems="3"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/quan_pt"
@@ -50,9 +50,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="5dp"
+            android:ems="6"
             android:paddingStart="10dp"
             android:paddingRight="11dp"
-            android:ems="6"
             app:layout_constraintStart_toEndOf="@+id/quan_tv"
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
@@ -63,7 +63,7 @@
             android:layout_marginTop="8dp"
             android:text="TextView"
             android:textColor="@color/SADarkGreen"
-            android:textSize="21sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/material_img_card"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -80,25 +80,26 @@
 
         <Button
             android:id="@+id/unload_button"
-            android:layout_width="79dp"
+            android:layout_width="70dp"
             android:layout_height="40dp"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="36dp"
             android:background="@color/twentyfivGray"
             android:text="Unload"
             android:textColor="@color/white"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/quan_pt" />
 
         <Button
             android:id="@+id/load_button"
-            android:layout_width="79dp"
+            android:layout_width="70dp"
             android:layout_height="40dp"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="5dp"
             android:background="@color/SaDarkGray"
             android:text="Load"
             android:textColor="@color/white"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/unload_button"
             app:layout_constraintStart_toEndOf="@+id/material_img_card"
             app:layout_constraintTop_toBottomOf="@+id/quan_pt" />
@@ -122,7 +123,7 @@
             android:id="@+id/camera_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="50dp"
+            android:layout_marginEnd="45dp"
             android:layout_marginBottom="4dp"
             android:background="@drawable/ic_camera"
             app:layout_constraintBottom_toBottomOf="parent"
