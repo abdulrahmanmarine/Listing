@@ -115,6 +115,8 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.MaterialVi
                     tst.show();
                 }
             });
+
+            locButton.setOnClickListener(view -> Toast.makeText(contexts, "Not Implemented Yet", Toast.LENGTH_SHORT).show());
         }
 
 
