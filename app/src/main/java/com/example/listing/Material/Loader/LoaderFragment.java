@@ -203,6 +203,7 @@ public class LoaderFragment extends Fragment {
                 public void unloadButtonClick(int pos) {
                     mParam1.get(pos).setLoaded(false);
                     mParam1.get(pos).setFound((true));
+                    materialAdapter.notifyDataSetChanged();
                     //materialAdapter.notifyDataSetChanged();
                     //To update myadapter
                     notifDataChanged();
