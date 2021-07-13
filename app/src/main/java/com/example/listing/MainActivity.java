@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
         materialpos = matpos;
         FragmentManager fra = getSupportFragmentManager();
 //      dialog = AssignDialogFragment.newInstance(requests.get(po).getMaterials().get(matpos).getPic(), requests.get(po).getMaterials().get(matpos).getName());
-        dialog = AssignDialogFragment.newInstance(plans.get(po).getMaterials().get(matpos).getName());
+        dialog = AssignDialogFragment.newInstance(plans.get(po).getMaterials().get(matpos).getName(),plans.get(po).getMaterials().get(matpos).getMaterial());
         dialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
         dialog.show(fra, "assign");
     }

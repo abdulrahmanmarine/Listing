@@ -120,12 +120,12 @@
 
 
         <ImageView
-            android:id="@+id/camera_btn"
+            android:id="@+id/comment_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="45dp"
             android:layout_marginBottom="4dp"
-            android:background="@drawable/ic_camera"
+            android:background="@drawable/ic_comment"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

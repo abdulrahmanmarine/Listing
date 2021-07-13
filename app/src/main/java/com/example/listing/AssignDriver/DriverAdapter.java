@@ -1,6 +1,10 @@
 package com.example.listing.AssignDriver;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +15,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.listing.Kotlin.pictureMode;
 import com.example.listing.Material.Material;
 import com.example.listing.Plan.PlanAdapter;
 import com.example.listing.R;
+import com.fasterxml.jackson.core.Base64Variants;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 
@@ -116,7 +124,12 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.MaterialVi
                 }
             });
 
-            locButton.setOnClickListener(view -> Toast.makeText(contexts, "Not Implemented Yet", Toast.LENGTH_SHORT).show());
+            locButton.setOnClickListener(view ->{
+                Uri location = Uri.parse("geo:0,0?q=27.776278,48.875420");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, location);
+                contexts.startActivity(mapIntent);
+            }
+                    );
         }
 
 
@@ -151,7 +164,26 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.MaterialVi
         /*
         For both
          */
+            Drawable image = null;
+            if(material.getMaterial().length() > 100) {
+                ByteArrayInputStream stream = new ByteArrayInputStream(Base64Variants.getDefaultVariant().decode(material.getMaterial()));
+                image = BitmapDrawable.createFromStream(
+                        stream, "");
+                materialImage.setBackground(image);
+            }
+            else
+                materialImage.setImageBitmap(material.getBmpImage());
 
+
+            Drawable finalImage = image;
+            materialImage.setOnClickListener(view -> {
+                        AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                        pictureMode myFragment = new pictureMode(finalImage);
+                        activity.getSupportFragmentManager().beginTransaction().add(myFragment,"Picture").commit();
+
+
+                    }
+            );
             materialName.setText(material.getName());
             textQuan.setText(material.getQuan());
             materialImage.setImageResource(material.getPic());

@@ -70,6 +70,7 @@ public class DispatcherFragment extends Fragment{
 
 
 
+
     public DispatcherFragment() {
         // Required empty public constructor
     }
@@ -197,6 +198,8 @@ public class DispatcherFragment extends Fragment{
 //                    ((MainActivity) getActivity()).dataChanged();
                 }
             });
+
+
         rv.setAdapter(driverAdapter);
         // For loading
         if(this.getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE){

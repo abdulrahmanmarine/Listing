@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.listing.Material.Material;
 import com.example.listing.Material.MaterialAdapter;
+import com.example.listing.NotesFragment;
 import com.example.listing.R;
 import com.example.listing.Plan.PlanFragment;
 import com.example.listing.Plan.Plan;
@@ -187,8 +189,16 @@ public class LoaderFragment extends Fragment {
             materialAdapter.setCameraListener(new MaterialAdapter.cameraClick() {
                 @Override
                 public void cameraButtonClick(int pos) {
-                    Intent cInt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cInt, 1);
+//                    Intent cInt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    startActivityForResult(cInt, 1);
+//                    DialogFragment fragment = new NotesFragment(Integer.parseInt(mParam2),Integer.parseInt(mParam1.get(pos).getName()));
+//                    fragment.show(getChildFragmentManager(), "Item Notes");
+
+                    FragmentManager fm = getChildFragmentManager();
+                    fm.beginTransaction().add(new NotesFragment(Integer.parseInt(mParam2.replace("Plan# ","")),mParam1.get(pos).getItemID()),"Comments")
+                            .commit();
+
+
                     pPos = pos;
 
 

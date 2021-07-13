@@ -7,12 +7,14 @@ import android.os.Parcelable;
 public class Material implements Parcelable {
 //public class Material {
     private String name;
+    private int itemID;
     private String quan;
     private Bitmap image;
     private String driver;
     private String vehicle;
     private Boolean loaded = false, found = false;
     private int pic;
+    private String material;
 
 
 
@@ -60,8 +62,23 @@ public class Material implements Parcelable {
         this.quan = quan;
     }
 
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+    public String getMaterial() {
+        return material;
+    }
+
     public int getPic() {
         return pic;
+    }
+
+    public int getItemID() {
+        return itemID;
+    }
+    public void setItemID(int id) {
+        this.itemID = id;
     }
 
     public void setPic(int pic) {
@@ -113,6 +130,17 @@ public class Material implements Parcelable {
         this.quan = quan;
         this.loaded = loaded;
 
+        this.driver = driver;
+        this.vehicle = vehicle;
+        this.found = found;
+    }
+
+    public Material(int id, String name, String quan,String material, Boolean loaded, String driver, String vehicle, boolean found) {
+        this.itemID = id;
+        this.name = name;
+        this.quan = quan;
+        this.loaded = loaded;
+        this.material = material;
         this.driver = driver;
         this.vehicle = vehicle;
         this.found = found;

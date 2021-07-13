@@ -44,14 +44,18 @@ class Loader : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragme
                     var mater = materObj.getJSONArray("results")
                     for (j in 0 until mater.length()) {
                         var mat = mater.getJSONObject(j)
+                        var mater_id = mat.getString("ZuphrMblpo")
                         var mater_name = mat.getString("ZuphrShortxt")
                         var mater_quan = mat.getString("ZuphrQuan")
+                        var mater_base64 = mat.getString("ZuphrMattype")
                         var mater_driver = ""
                         var mater_vehicle = ""
                         mats.add(
                             Material(
+                                mater_id.toInt(),
                                 mater_name,
                                 mater_quan,
+                                mater_base64,
                                 false,
                                 mater_driver,
                                 mater_vehicle,
@@ -99,7 +103,8 @@ class Loader : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragme
             plan.materials as ArrayList<Material?>,
             plan.req_name,
             plan.vessel_num,
-            plan.destination
+            plan.destination,
+
         )
 
         var fm = supportFragmentManager

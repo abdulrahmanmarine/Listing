@@ -1,6 +1,12 @@
 package com.example.listing.Material;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Picture;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +18,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.listing.Kotlin.pictureMode;
+import com.example.listing.NotesFragment;
 import com.example.listing.Plan.PlanAdapter;
 import com.example.listing.R;
+import com.fasterxml.jackson.core.Base64Variants;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 
@@ -175,7 +189,7 @@ public interface addClick{
                 unloadButton = (Button) itemView.findViewById(R.id.unload_button);
                 foundButton = (Button) itemView.findViewById(R.id.found_button);
                 locButton = (ImageView) itemView.findViewById(R.id.location_btn);
-                camerabut = (ImageView) itemView.findViewById(R.id.camera_btn);
+                camerabut = (ImageView) itemView.findViewById(R.id.comment_btn);
 
 
 
@@ -227,12 +241,12 @@ public interface addClick{
         void bind(Material material){
 
             this.material = material;
-            locButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(contexts,"Not Implemented Yet",Toast.LENGTH_SHORT).show();
-                }
-            });
+            locButton.setOnClickListener(view ->{
+                        Uri location = Uri.parse("geo:0,0?q=27.776278,48.875420");
+                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, location);
+                        contexts.startActivity(mapIntent);
+                    }
+            );
 
 
         /*
@@ -278,11 +292,30 @@ public interface addClick{
         /*
         For both
          */
+            Drawable image = null;
+            if(material.getMaterial().length() > 100) {
+                ByteArrayInputStream stream = new ByteArrayInputStream(Base64Variants.getDefaultVariant().decode(material.getMaterial()));
+                image = BitmapDrawable.createFromStream(
+                       stream, "");
+                materialImage.setBackground(image);
+            }
+            else
+                materialImage.setImageBitmap(material.getBmpImage());
 
-            materialName.setText(material.getName());
+
+            Drawable finalImage = image;
+            materialImage.setOnClickListener(view -> {
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                pictureMode myFragment = new pictureMode(finalImage);
+                activity.getSupportFragmentManager().beginTransaction().add(myFragment,"Picture").commit();
+
+
+            }
+);
+                materialName.setText(material.getName());
             textQuan.setText(material.getQuan());
-            materialImage.setImageResource(material.getPic());
-            materialImage.setImageBitmap(material.getBmpImage());
+//            materialImage.setImageResource(material.getPic());
+//            materialImage.setImageBitmap(material.getBmpImage());
 //            if(material.getLoaded()){
 //                text3.setText("Loaded");
 //                text3.setBackground(ContextCompat.getDrawable(contexts, R.drawable.green_border));

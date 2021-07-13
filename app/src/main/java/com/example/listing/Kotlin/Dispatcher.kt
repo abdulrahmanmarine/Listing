@@ -33,32 +33,34 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         }
 
         if (resp != null) {
-            val jsonObj = JSONObject(resp)
-            val data: JSONObject = jsonObj.getJSONObject("d")
-            val results = data.getJSONArray("results")
+            var jsonObj = JSONObject(resp)
+            var data: JSONObject = jsonObj.getJSONObject("d")
+            var results = data.getJSONArray("results")
             for (i in 0 until results.length()) {
-                val mats = ArrayList<Material>()
-
-                val res = results.getJSONObject(i)
-                val stat = res.getString("ZuphrStatus")
-                val rq_name = res.getString("ZuphrLpid")
-                val time = res.getString("ZuphrLptime")
-                val date = res.getString("ZuphrLpdate")
-                val vessel = res.getString("ZuphrVessel")
-                val driver = ""
-                val materObj = res.getJSONObject("PlanToItems")
-                val mater = materObj.getJSONArray("results")
-                mats.clear()
+                var mats = ArrayList<Material>()
+                var res = results.getJSONObject(i)
+                var stat = res.getString("ZuphrStatus")
+                var rq_name = res.getString("ZuphrLpid")
+                var time = res.getString("ZuphrLptime")
+                var date = res.getString("ZuphrLpdate")
+                var vessel = res.getString("ZuphrVessel")
+                var driver = ""
+                var materObj = res.getJSONObject("PlanToItems")
+                var mater = materObj.getJSONArray("results")
                 for (j in 0 until mater.length()) {
-                    val mat = mater.getJSONObject(j)
-                    val mater_name = mat.getString("ZuphrShortxt")
-                    val mater_quan = mat.getString("ZuphrQuan")
-                    val mater_driver = ""
-                    val mater_vehicle = ""
+                    var mat = mater.getJSONObject(j)
+                    var mater_id = mat.getString("ZuphrMblpo")
+                    var mater_name = mat.getString("ZuphrShortxt")
+                    var mater_quan = mat.getString("ZuphrQuan")
+                    var mater_base64 = mat.getString("ZuphrMattype")
+                    var mater_driver = ""
+                    var mater_vehicle = ""
                     mats.add(
                         Material(
+                            mater_id.toInt(),
                             mater_name,
                             mater_quan,
+                            mater_base64,
                             false,
                             mater_driver,
                             mater_vehicle,
@@ -125,7 +127,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
     fun showAssignDialog(matpos: Int) {
         materialpos = matpos
         val fra = supportFragmentManager
-        dialog = AssignDialogFragment.newInstance(reqs[po]!!.materials[matpos].name)
+        dialog = AssignDialogFragment.newInstance(reqs[po]!!.materials[matpos].name,reqs[po]!!.materials[matpos].material)
         (dialog as AssignDialogFragment?)!!.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
         (dialog as AssignDialogFragment?)!!.show(fra, "assign")
     }

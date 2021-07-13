@@ -1,6 +1,8 @@
 package com.example.listing.AssignDriver;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +16,17 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.listing.Kotlin.pictureMode;
 import com.example.listing.Material.Dispatcher.DispatcherFragment;
 import com.example.listing.R;
 import com.example.listing.Plan.PlanFragment;
+import com.fasterxml.jackson.core.Base64Variants;
+
+import java.io.ByteArrayInputStream;
 
 public class AssignDialogFragment extends DialogFragment implements AdapterView.OnItemSelectedListener {
     private OnPositiveClickListener positiveListener;
@@ -27,7 +34,7 @@ public class AssignDialogFragment extends DialogFragment implements AdapterView.
 
     String driv, vehi, name;
 
-    int image;
+    String simage;
     int posit;
 
     public void onStart()
@@ -71,12 +78,13 @@ public class AssignDialogFragment extends DialogFragment implements AdapterView.
 //        return dial;
 //    }
 
-    public static AssignDialogFragment newInstance(String name){
+    public static AssignDialogFragment newInstance(String name,String pic){
         AssignDialogFragment dial = new AssignDialogFragment();
 
         Bundle args = new Bundle();
 
         args.putString("name", name);
+        args.putString("pic", pic);
         dial.setArguments(args);
 
         return dial;
@@ -99,11 +107,28 @@ public class AssignDialogFragment extends DialogFragment implements AdapterView.
         final Spinner dspin = view.findViewById(R.id.driverspinner);
         Button but = view.findViewById(R.id.dialogbut), cancel_but = view.findViewById(R.id.dialog_cancel);
 
-        image = getArguments().getInt("img");
+        simage = getArguments().getString("pic");
         name = getArguments().getString("name");
 
         ImageView pic = view.findViewById(R.id.dialog_image);
-        pic.setImageResource(image);
+        Drawable image = null;
+        if(simage.length()> 100) {
+            ByteArrayInputStream stream = new ByteArrayInputStream(Base64Variants.getDefaultVariant().decode(simage));
+            image = BitmapDrawable.createFromStream(
+                    stream, "");
+            pic.setBackground(image);
+        }
+
+
+        Drawable finalImage = image;
+        pic.setOnClickListener(view1 -> {
+                    AppCompatActivity activity = (AppCompatActivity) requireContext();
+                    pictureMode myFragment = new pictureMode(finalImage);
+                    activity.getSupportFragmentManager().beginTransaction().add(myFragment,"Picture").commit();
+
+
+                }
+        );
 
         TextView nom = view.findViewById(R.id.image_name);
         nom.setText(name);
