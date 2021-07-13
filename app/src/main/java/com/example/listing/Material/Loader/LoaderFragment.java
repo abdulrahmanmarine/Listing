@@ -213,6 +213,8 @@ public class LoaderFragment extends Fragment {
                 public void unloadButtonClick(int pos) {
                     mParam1.get(pos).setLoaded(false);
                     mParam1.get(pos).setFound((true));
+                    mParam1.get(pos).setPrc((false));
+                    //mParam1.get(pos).setPrc(true);
                     materialAdapter.notifyDataSetChanged();
                     //materialAdapter.notifyDataSetChanged();
                     //To update myadapter
@@ -228,7 +230,24 @@ public class LoaderFragment extends Fragment {
             materialAdapter.setLoadListener(new MaterialAdapter.loadClick() {
                 @Override
                 public void loadButtonClicked(int pos) {
+                    mParam1.get(pos).setLoaded(true);
+                    mParam1.get(pos).setFound(false);
+                    mParam1.get(pos).setPrc(false);
+                    // mParam1.get(pos).setLoaded(true);
+                    // mParam1.get(pos).setFound(true);
+                    materialAdapter.notifyDataSetChanged();
+                    //To update myadapter
+                    notifDataChanged();
+//                    ((MainActivity) getActivity()).dataChanged();
+                }
+            });
 
+            materialAdapter.setPrcListener(new MaterialAdapter.prcClick() {
+                @Override
+                public void PrcButtonClicked(int pos) {
+                    mParam1.get(pos).setLoaded(false);
+                    mParam1.get(pos).setFound(false);
+                    mParam1.get(pos).setPrc(true);
                     // mParam1.get(pos).setLoaded(true);
                     // mParam1.get(pos).setFound(true);
                     materialAdapter.notifyDataSetChanged();
@@ -251,6 +270,8 @@ public class LoaderFragment extends Fragment {
                 public void foundButtonClick(int pos) {
                     mParam1.get(pos).setFound(false);
                     mParam1.get(pos).setLoaded(false);
+                    mParam1.get(pos).setPrc(false);
+
                     materialAdapter.notifyDataSetChanged();
                     notifDataChanged();
 //                    ((MainActivity) getActivity()).dataChanged();

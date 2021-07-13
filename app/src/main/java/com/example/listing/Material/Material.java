@@ -12,7 +12,7 @@ public class Material implements Parcelable {
     private Bitmap image;
     private String driver;
     private String vehicle;
-    private Boolean loaded = false, found = false;
+    private Boolean loaded = false, found = false, prc = false;
     private int pic;
     private String material;
 
@@ -113,6 +113,14 @@ public class Material implements Parcelable {
 
     public void setFound(Boolean found) {
         this.found = found;
+    }
+
+    public Boolean getPrc() {
+        return found;
+    }
+
+    public void setPrc(Boolean prc) {
+        this.prc = prc;
     }
 
 //    public Material(String name, String quan, Boolean loaded, int pic, String driver, String vehicle, boolean found) {

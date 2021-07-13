@@ -38,6 +38,10 @@ import java.util.List;
 
 public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.MaterialViewHolder> {
 
+    public interface prcClick{
+        public void PrcButtonClicked(int pos);
+    }
+
     public interface loadClick{
         public void loadButtonClicked(int pos);
     }
@@ -64,6 +68,7 @@ public interface addClick{
     addClick addListener;
     foundClick foundListener;
     cameraClick cameraListener;
+    prcClick prcListener;
     private static Context contexts;
     public static Boolean isLoad = true;
     PlanAdapter planAdapter;
@@ -87,6 +92,9 @@ public interface addClick{
     public void setAddListener(addClick addListener){
         this.addListener = addListener;
     }
+    public void setPrcListener(prcClick addListener){
+        this.prcListener = addListener;
+    }
 
     public void setCameraListener(cameraClick cameraListener){
         this.cameraListener = cameraListener;
@@ -101,7 +109,7 @@ public interface addClick{
          */
 
         View card = LayoutInflater.from(parent.getContext()).inflate(R.layout.load_item_card, parent, false);
-        MaterialViewHolder request = new MaterialViewHolder(card, loadListener, unloadListener, foundListener, cameraListener);
+        MaterialViewHolder request = new MaterialViewHolder(card, loadListener, unloadListener, foundListener, cameraListener, prcListener);
 
 
         /*
@@ -143,7 +151,7 @@ public interface addClick{
     public static class MaterialViewHolder extends RecyclerView.ViewHolder{
         //private final ImageButton imgv;
         TextView materialName, textDriver, textVehicle, textStatus, textQuan, textPlanNum;
-        Button loadButton, unloadButton, addButton, foundButton;
+        Button loadButton, unloadButton, addButton, foundButton, prcButton;
         Material material;
         ImageView materialImage, camerabut, locButton;
 
@@ -177,7 +185,7 @@ public interface addClick{
         /*
         LOAD material view holder
          */
-        public MaterialViewHolder(@NonNull View itemView, final loadClick loadListener, final unloadClick unloadListener, final foundClick foundListener, final cameraClick cameraListener) {
+        public MaterialViewHolder(@NonNull View itemView, final loadClick loadListener, final unloadClick unloadListener, final foundClick foundListener, final cameraClick cameraListener,final prcClick prcListener) {
 
             super(itemView);
 
@@ -190,6 +198,7 @@ public interface addClick{
                 foundButton = (Button) itemView.findViewById(R.id.found_button);
                 locButton = (ImageView) itemView.findViewById(R.id.location_btn);
                 camerabut = (ImageView) itemView.findViewById(R.id.comment_btn);
+                prcButton = (Button) itemView.findViewById(R.id.process_button);
 
 
 
@@ -202,10 +211,12 @@ public interface addClick{
 
                     @Override
                     public void onClick(View v) {
-                        materialList.get(getAdapterPosition()).setLoaded(true);
-                        materialList.get(getAdapterPosition()).setFound(true);
-                       loadListener.loadButtonClicked(getAdapterPosition());
-                        Log.i("click","load button clicked");
+//                        materialList.get(getAdapterPosition()).setLoaded(true);
+//                        materialList.get(getAdapterPosition()).setFound(true);
+//                       loadListener.loadButtonClicked(getAdapterPosition());
+//                        Log.i("click","load button clicked");
+                        textStatus.setText("Loaded");
+                        textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.green_border));
 
 
                     }
@@ -217,6 +228,8 @@ public interface addClick{
                 unloadButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        textStatus.setText("Not Loaded");
+                        textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
                         unloadListener.unloadButtonClick(getAdapterPosition());
                     }
                 });
@@ -226,16 +239,26 @@ public interface addClick{
                 foundButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        textStatus.setText("Not Found");
+                        textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
                         foundListener.foundButtonClick(getAdapterPosition());
                     }
                 });
 
-                camerabut.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        cameraListener.cameraButtonClick(getAdapterPosition());
-                    }
-                });
+            camerabut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cameraListener.cameraButtonClick(getAdapterPosition());
+                }
+            });
+            prcButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    textStatus.setText("Processing");
+                    textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.yellow_border));
+                    prcListener.PrcButtonClicked(getAdapterPosition());
+                }
+            });
         }
 
         void bind(Material material){
@@ -252,19 +275,17 @@ public interface addClick{
         /*
         FOR LOADING Setting the status text for loading (for loading).
          */
-        if(isLoad)
-            if(material.getLoaded()){
+
+            if (material.getFound() && !material.getLoaded()&& material.getPrc()) {
+                textStatus.setText("Not Loaded");
+                textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
+            } else if (material.getLoaded()) {
                 textStatus.setText("Loaded");
                 textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.green_border));
-                }else if(!material.getLoaded() && material.getFound()){
-                textStatus.setText("Not loaded");
-                textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
-            }
-//            else if(!material.getLoaded()){
-//                textStatus.setText("Not Loaded");
-//                textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
-//            }
-            else if (!material.getFound()){
+            } else if (material.getPrc()) {
+                textStatus.setText("Processing");
+                textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.yellow_border));
+            } else if(!material.getFound()) {
                 textStatus.setText("Not Found");
                 textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
             }
@@ -278,12 +299,11 @@ public interface addClick{
             textVehicle.setText(material.getVehicle());
 //                        textQuan.setText(material.getQuan());
             //materialName.setText(material.getName());
-
-            if(material.getDriver().isEmpty() && material.getVehicle().isEmpty()){
+           if(material.getDriver().isEmpty() && material.getVehicle().isEmpty()){
                 textStatus.setText("Not Assigned");
                 textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
 
-            }else{
+            } else{
                 textStatus.setText("Assigned");
                 textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.green_border));
             }
