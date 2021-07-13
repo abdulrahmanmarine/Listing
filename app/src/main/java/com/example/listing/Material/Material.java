@@ -116,7 +116,7 @@ public class Material implements Parcelable {
     }
 
     public Boolean getPrc() {
-        return found;
+        return prc;
     }
 
     public void setPrc(Boolean prc) {
