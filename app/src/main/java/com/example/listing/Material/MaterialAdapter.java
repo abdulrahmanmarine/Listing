@@ -211,12 +211,13 @@ public interface addClick{
 
                     @Override
                     public void onClick(View v) {
-//                        materialList.get(getAdapterPosition()).setLoaded(true);
-//                        materialList.get(getAdapterPosition()).setFound(true);
+                        materialList.get(getAdapterPosition()).setLoaded(true);
+                        materialList.get(getAdapterPosition()).setFound(true);
+                        materialList.get(getAdapterPosition()).setPrc(false);
+
 //                       loadListener.loadButtonClicked(getAdapterPosition());
 //                        Log.i("click","load button clicked");
-                        textStatus.setText("Loaded");
-                        textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.green_border));
+                       loadListener.loadButtonClicked(getAdapterPosition());
 
 
                     }
@@ -228,8 +229,6 @@ public interface addClick{
                 unloadButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        textStatus.setText("Not Loaded");
-                        textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
                         unloadListener.unloadButtonClick(getAdapterPosition());
                     }
                 });
@@ -239,8 +238,6 @@ public interface addClick{
                 foundButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        textStatus.setText("Not Found");
-                        textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
                         foundListener.foundButtonClick(getAdapterPosition());
                     }
                 });
@@ -254,17 +251,15 @@ public interface addClick{
             prcButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    textStatus.setText("Processing");
-                    textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.yellow_border));
                     prcListener.PrcButtonClicked(getAdapterPosition());
                 }
             });
         }
 
-        void bind(Material material){
+        void bind(Material material) {
 
             this.material = material;
-            locButton.setOnClickListener(view ->{
+            locButton.setOnClickListener(view -> {
                         Uri location = Uri.parse("geo:0,0?q=27.776278,48.875420");
                         Intent mapIntent = new Intent(Intent.ACTION_VIEW, location);
                         contexts.startActivity(mapIntent);
@@ -275,21 +270,21 @@ public interface addClick{
         /*
         FOR LOADING Setting the status text for loading (for loading).
          */
-
-            if (material.getFound() && !material.getLoaded()&& material.getPrc()) {
-                textStatus.setText("Not Loaded");
-                textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
-            } else if (material.getLoaded()) {
+       // if(isLoad){
+            if (material.getLoaded()) {
                 textStatus.setText("Loaded");
                 textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.green_border));
             } else if (material.getPrc()) {
                 textStatus.setText("Processing");
                 textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.yellow_border));
-            } else if(!material.getFound()) {
+            }else if (material.getFound()) {
+                textStatus.setText("Not Loaded");
+                textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
+            }  else {
                 textStatus.setText("Not Found");
                 textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
-            }
-
+          //  }
+        }
         /*
         for ASSIGN status
          */

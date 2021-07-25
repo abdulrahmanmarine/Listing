@@ -231,7 +231,7 @@ public class LoaderFragment extends Fragment {
                 @Override
                 public void loadButtonClicked(int pos) {
                     mParam1.get(pos).setLoaded(true);
-                    mParam1.get(pos).setFound(false);
+                    mParam1.get(pos).setFound(true);
                     mParam1.get(pos).setPrc(false);
                     // mParam1.get(pos).setLoaded(true);
                     // mParam1.get(pos).setFound(true);
@@ -246,7 +246,7 @@ public class LoaderFragment extends Fragment {
                 @Override
                 public void PrcButtonClicked(int pos) {
                     mParam1.get(pos).setLoaded(false);
-                    mParam1.get(pos).setFound(false);
+                    mParam1.get(pos).setFound(true);
                     mParam1.get(pos).setPrc(true);
                     // mParam1.get(pos).setLoaded(true);
                     // mParam1.get(pos).setFound(true);
