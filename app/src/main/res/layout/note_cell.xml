@@ -74,6 +74,16 @@
 
     </androidx.cardview.widget.CardView>
 
+    <TextView
+        android:id="@+id/timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/cardView2"
+        app:layout_constraintTop_toTopOf="@id/cardView2"
+        app:layout_constraintBottom_toBottomOf="@id/cardView2"/>
+
 
 
 

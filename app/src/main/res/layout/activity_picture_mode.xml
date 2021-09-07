@@ -7,16 +7,16 @@
     tools:context=".pictureMode">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="600dp"
-        android:layout_height="600dp"
+        android:layout_width="500dp"
+        android:layout_height="500dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="600dp"
-            android:layout_height="600dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@color/TransparentBlack"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -25,21 +25,9 @@
 
 
             <ImageView
-                android:id="@+id/close_btn"
-                android:layout_width="35dp"
-                android:layout_height="33dp"
-                android:background="@drawable/ic_baseline_clear_80w"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.07"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.058" />
-
-            <ImageView
                 android:id="@+id/expanded_image"
-                android:layout_width="700px"
-                android:layout_height="700px"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/defult"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
