@@ -58,7 +58,7 @@ public class PlansDataModel extends ViewModel {
             KeyManagementException, AuthenticationException  {
         super();
         this.application = application;
-        RestApi.initializer(application, null);
+
         retrofitInterface = RestApi.getInstance().getRetrofitInterface();
 
     }
@@ -70,7 +70,7 @@ public class PlansDataModel extends ViewModel {
 
     public void getplans(Application application){
 
-       retrofitInterface.getPlans().enqueue(new Callback<ResponseBody>() {
+       retrofitInterface.getPlans("Fetch").enqueue(new Callback<ResponseBody>() {
            @Override
            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
 

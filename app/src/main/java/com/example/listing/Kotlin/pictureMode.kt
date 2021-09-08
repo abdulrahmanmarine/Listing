@@ -20,8 +20,8 @@ class pictureMode(image: Drawable) : DialogFragment() {
             var imageEx : ImageView = infview.findViewById(R.id.expanded_image)
            // imageEx.setImageBitmap(images)
             imageEx.background = images
-            var exitButton : ImageView =  infview.findViewById(R.id.close_btn)
-            exitButton.setOnClickListener { dismiss() }
+           // var exitButton : ImageView =  infview.findViewById(R.id.close_btn)
+           // exitButton.setOnClickListener { dismiss() }
             builder.setView(infview)
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")

@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.listing.Utils.RestApi;
+
 public class LoginActivity extends AppCompatActivity {
     String input, id1, user;
     NetworkResponseListener networkResponseListener;
@@ -26,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 user = prof.getText().toString();
                 Log.i("ifnnull", user);
+                RestApi.initializer(getApplication(),null);
+
                 LoginAsyncTask tasker = new LoginAsyncTask(LoginActivity.this, user);
               //  tasker.execute();
             }

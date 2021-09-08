@@ -18,7 +18,7 @@ public interface RetrofitInterface {
 
 
     @GET("LoadingPlanSet?\\$expand=PlanToItems&\\$filter=ZuphrActtype eq 'STEV' and ZuphrDeleted eq false")
-    Call<ResponseBody> getPlans();
+    Call<ResponseBody> getPlans(@Header("x-csrf-token") String token);
 
 
 
