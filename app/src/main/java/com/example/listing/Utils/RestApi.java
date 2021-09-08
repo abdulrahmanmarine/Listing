@@ -47,8 +47,7 @@ public class RestApi {
 
     public static void initializer(Application application ,User user){
         if(instance == null){
-            synchronized (ApiManager.class){
-
+            synchronized (RestApi.class){
                 instance = new RestApi(application,user);
             }
         }

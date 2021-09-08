@@ -1,13 +1,11 @@
 package com.example.listing
 
-import AudioNote
 import android.Manifest
 import android.app.Activity
 import android.content.*
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Build
@@ -26,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.listing.Kotlin.Notes
 import com.example.listing.databinding.NoteViewBinding
+import com.example.listing.notes.AudioNote
 import com.fasterxml.jackson.core.Base64Variants
 import java.io.*
 

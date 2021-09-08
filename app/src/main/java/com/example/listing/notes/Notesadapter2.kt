@@ -12,6 +12,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.listing.Notes
+import com.example.listing.R
 import com.example.listing.databinding.NoteCellBinding
 import com.fasterxml.jackson.core.Base64Variants
 import java.io.File
