@@ -147,31 +147,6 @@ public interface addClick{
         Material material;
         ImageView materialImage, camerabut, locButton;
 
-        /*
-        ASSIGN material view holder
-         */
-
-//        public MaterialViewHolder(@NonNull View itemView, final addClick addListener){
-//            super(itemView);
-//
-//            textStatus = (TextView) itemView.findViewById(R.id.assignstat);
-//            materialName = (TextView) itemView.findViewById(R.id.material_name);
-//            textQuan = (TextView) itemView.findViewById(R.id.quan_tv);
-//            addButton = (Button) itemView.findViewById(R.id.add_button);
-//            materialImage  = (ImageView) itemView.findViewById(R.id.material_img_card);
-//            locButton = (ImageButton) itemView.findViewById(R.id.locbut);
-//            textPlanNum = (TextView) itemView.findViewById(R.id.material_name);
-//            textVehicle = (TextView) itemView.findViewById(R.id.vehicle_tv);
-//            textDriver = (TextView) itemView.findViewById(R.id.driver_tv);
-//
-//
-//            addButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    addListener.addButtonClick(getAdapterPosition());
-//                }
-//            });
-//        }
 
 
         /*
