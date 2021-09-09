@@ -4,12 +4,19 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
+    <data>
+        <variable name="item"
+            type="com.example.listing.models.Plan2"/>
+
+    </data>
+
     <androidx.cardview.widget.CardView
         android:layout_width="206dp"
         android:layout_height="155dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
+
         android:layout_margin="2.8dp"
         app:contentPaddingBottom="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
