@@ -5,13 +5,12 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 
+import com.example.listing.models.Plan2;
 import com.example.listing.Material.Material;
-import com.example.listing.Plan.Plan;
 import com.example.listing.R;
 import com.example.listing.Utils.RestApi;
 import com.example.listing.Utils.RetrofitInterface;
@@ -23,15 +22,10 @@ import org.apache.http.auth.AuthenticationException;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -39,7 +33,7 @@ import retrofit2.Callback;
 
 public class PlansDataModel extends ViewModel {
 
-    public MutableLiveData<List<Plan>> Plans = new MutableLiveData<>();
+    public MutableLiveData<List<Plan2>> Plans = new MutableLiveData<>();
 
     public MutableLiveData<List<Material>>MatrialsList = new MutableLiveData<>();
     public MutableLiveData<Material> Matrial = new MutableLiveData<>();
@@ -58,7 +52,7 @@ public class PlansDataModel extends ViewModel {
             KeyManagementException, AuthenticationException  {
         super();
         this.application = application;
-
+        RestApi.initializer(application,null);
         retrofitInterface = RestApi.getInstance().getRetrofitInterface();
 
     }
@@ -70,14 +64,15 @@ public class PlansDataModel extends ViewModel {
 
     public void getplans(Application application){
 
-       retrofitInterface.getPlans("Fetch").enqueue(new Callback<ResponseBody>() {
+       retrofitInterface.getPlans("Fetch").enqueue(new Callback<Plan2.PlanUnpack>() {
            @Override
-           public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+           public void onResponse(Call<Plan2.PlanUnpack> call, retrofit2.Response<Plan2.PlanUnpack> response) {
 
 
                if (response.isSuccessful()) {
-                   List<Plan> temp = null;
-                  // temp= response.body().getItems();
+
+
+                   List<Plan2> temp =response.body().getItems();
 
                    Plans.postValue(temp);
 
@@ -85,7 +80,7 @@ public class PlansDataModel extends ViewModel {
 
            }
            @Override
-           public void onFailure(Call<ResponseBody> call, Throwable t) {
+           public void onFailure(Call<Plan2.PlanUnpack> call, Throwable t) {
                Log.i("response-http" ,t.getMessage()+t.getLocalizedMessage());
 
            }

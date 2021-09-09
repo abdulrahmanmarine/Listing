@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +30,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.listing.AssignDriver.AssignDialogFragment;
+import com.example.listing.DataViewModel.PlansDataModel;
+import com.example.listing.DataViewModel.PlansDataModelFactory;
+import com.example.listing.Kotlin.Login;
 import com.example.listing.Material.Loader.LoaderFragment;
 import com.example.listing.Material.Material;
 import com.example.listing.Material.MaterialAdapter;
@@ -39,7 +43,6 @@ import com.example.listing.Plan.Plan;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -62,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
     String orgCode, userName;
     JSONArray stageRes;
     private Parcelable savedRecyclerLayoutState;
+    private PlansDataModel model;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -70,6 +74,23 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setButton();
+
+        model = new ViewModelProvider(this, new PlansDataModelFactory(this.getApplication())).get(PlansDataModel.class);
+
+        model.getplans(getApplication());
+
+
+        model.Plans.observe(this, PlanList -> {
+               for(int i=0;i<PlanList.size();i++){
+                   Log.d("Log-Plan",PlanList.get(i).getZuphrLoadtype());
+
+                   if(PlanList.get(i).getPlanToItems()!=null)
+                   for(int j=0;i<PlanList.get(i).getPlanToItems().size();i++){
+                       Log.d("Log-Plan",PlanList.get(i).getPlanToItems().get(j).getZuphrShortxt());
+                   }
+               }
+
+        });
 
         try {
             createLists();
@@ -96,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
             @Override
             public void onClick(View v) {
                 Context ctx = MainActivity.this;
-                Intent LoginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent LoginIntent = new Intent(MainActivity.this, Login.class);
                 ctx.startActivity(LoginIntent);
             }
         });

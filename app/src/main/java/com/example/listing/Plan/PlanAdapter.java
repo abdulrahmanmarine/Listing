@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.listing.CustomGridRecyclerView;
 import com.example.listing.Kotlin.CommonModule;
 import com.example.listing.Material.Material;
 import com.example.listing.PlanClickListener;
@@ -29,10 +28,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
     private int lastPosition = -1;
     private static Context contexts;
     private int selected_position = -1;
-    CustomGridRecyclerView rv;
-    Animation animFadeIn, animFadeOut;
-
-
 
 
 
@@ -45,16 +40,12 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
         this.listener = listener;
     }
 
-//    public interface ItemClickListener {
-//        void onItemClick(Request request, int pos);
-//    }
-
 
     @NonNull
     @Override
     public RequestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View card = LayoutInflater.from(parent.getContext()).inflate(R.layout.plan_card, parent, false);
-//        RequestViewHolder request = new RequestViewHolder(card, listener);
+
         RequestViewHolder request = new RequestViewHolder(card);
         contexts = parent.getContext();
         return request;
@@ -68,41 +59,24 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
     @Override
     public void onBindViewHolder(@NonNull RequestViewHolder holder, final int position) {
         final Plan plan = planList.get(position);
-        //holder.bind(request, listener);
+
         holder.bind(plan);
 
         setFadeAnimation(holder.itemView, position);
-      // setOnItemClickListener(listener);
+
        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast tst = Toast.makeText(contexts, "Bye", Toast.LENGTH_SHORT);
-//                tst.show();
-//                notifyDataSetChanged();
+
                 listener.onItemClick(plan, position);
             }
         });
 
     }
 
-//    private void setGridAnimation(View view, int postiion){
-//        final LayoutAnimationController controller =
-//                AnimationUtils.loadLayoutAnimation(contexts, R.anim.gridlayout_animation_from_bottom);
-//
-//        if(postiion>lastPosition){
-//            rv.setLayoutAnimation(controller);
-//            notifyDataSetChanged();
-//            rv.scheduleLayoutAnimation();
-//            lastPosition =postiion;
-//        }
-//    }
 
 
     private void setFadeAnimation(View view, int position) {
-//        final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.layout_animation);
-//        rv.setLayoutAnimation(controller);
-//        detAdapter.notifyDataSetChanged();
-//        rv.scheduleLayoutAnimation();
 
         if(position>lastPosition){
             AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
@@ -134,18 +108,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
             date = (TextView) itemView.findViewById(R.id.date_tv);
             time = (TextView) itemView.findViewById(R.id.time_tv);
             vessel = (TextView) itemView.findViewById(R.id.vessel_tv2);
-            //pic = (ImageView) itemView.findViewById(R.id.imageView2);
 
-
-//
-//
-//            itemView.setOnClickListener(new View.OnClickListener(){
-//                @Override
-//                public void onClick(View v) {
-//                    listener.onItemClick(request, getAdapterPosition());
-//                    //requestName.setText("test");
-//                }
-//            });
 
         }
 
@@ -163,7 +126,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
                     laststat = plan.getMaterials().get(i).getLoaded();
                     incomplete = true;
                     plan.getMaterials().get(i).setLoaded(false);
-//                    newstat = incomplete;
+
 
                     break;
                 }else{
@@ -173,7 +136,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
                     plan.getMaterials().get(i).setLoaded(true);
                     requestStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.green_border));
 
-//                    newstat = incomplete;
+
                 }
             }}else{
                 for(int i = 0; i< plan.getMaterials().size(); i++){
@@ -188,7 +151,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
                         laststat = plan.getMaterials().get(i).getLoaded();
                         incomplete = true;
                         plan.getMaterials().get(i).setLoaded(false);
-//                    newstat = incomplete;
 
                         break;
                     }else{
@@ -198,7 +160,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
                         plan.getMaterials().get(i).setLoaded(true);
                         requestStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.green_border));
 
-//                    newstat = incomplete;
                     }
                 }
 
@@ -209,34 +170,19 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
 
 
             if(incomplete){
-//                animFadeIn = AnimationUtils.loadAnimation(contexts,
-//                        R.anim.fade_in);
-//                requestStatus.setVisibility(View.VISIBLE);
-//                requestStatus.startAnimation(animFadeIn);
-//
-//
-//                ValueAnimator valueAnimator = (ValueAnimator) AnimatorInflater.loadAnimator(contexts, R.animator.valueanimator);
-//                valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//                    @Override
-//                    public void onAnimationUpdate(ValueAnimator animation) {
-//                        float animatedValue = (float) animation.getAnimatedValue();
-//                        requestStatus.setRotationX(animatedValue);
-//                    }
-//                });
 
-//                  valueAnimator.start();
                 requestStatus.setText(plan.getStatus());
-//                requestStatus.setBackground(R.);
+
             }else{
                 requestStatus.setText(plan.getStatus());
             }
-            //requestStatus.setText(request.getStatus());
+
             requestName.setText(plan.getReq_name());
             rigcode.setText(plan.getDestination());
             date.setText(CommonModule.INSTANCE.parseDate(plan.getDate()));
             time.setText(CommonModule.INSTANCE.parseTime(plan.getTime()));
             vessel.setText(plan.getVessel_num());
-            //pic.setImageResource(request.getImg());
+
         }
 
 

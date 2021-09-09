@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Plan implements Parcelable {
-//public class Request{
 
     private String  status;
     private String req_name;
@@ -20,28 +19,8 @@ public class Plan implements Parcelable {
     private String vessel_num;
     private String driver;
     private List<Material> materials;
-//    private JSONArray materials;
 
     private int img;
-
-
-//    protected Request(Parcel in) {
-//        status = in.readString();
-//        req_name = in.readString();
-//        destination = in.readString();
-//        date = in.readString();
-//        time = in.readString();
-//        deets = in.readString();
-//        vessel_num = in.readString();
-//        driver = in.readString();
-////        materials = in.createTypedArrayList(Material.CREATOR);
-//        materials = in.create
-//
-//        img = in.readInt();
-//    }
-
-
-
 
     public static final Creator<Plan> CREATOR = new Creator<Plan>() {
         @Override
@@ -63,39 +42,7 @@ public class Plan implements Parcelable {
         this.materials = materials;
     }
 
-//    public void setMaterials(JSONArray materials) {
-//        this.materials = materials;
-//    }
-//
-//    public JSONArray getMaterials(){
-//        return materials;
-//    }
 
-
-    //    public Request(String status, String req_name, String destination, String date, String time, String deets, String vessel_num, String driver, List<Material> materials) {
-//        this.status = status;
-//        this.req_name = req_name;
-//        this.destination = destination;
-//        this.date = date;
-//        this.time = time;
-//        this.deets = deets;
-//        this.vessel_num = vessel_num;
-//        this.driver = driver;
-//        this.materials = materials;
-//
-//    }
-
-//    public Request(String status, String req_name, String destination, String date, String time, String deets, String vessel_num, String driver, ArrayList<Material> materials) {
-//        this.status = status;
-//        this.req_name = req_name;
-//        this.destination = destination;
-//        this.date = date;
-//        this.time = time;
-//        this.deets = deets;
-//        this.vessel_num = vessel_num;
-//        this.driver = driver;
-//        this.materials = materials;
-//    }
 
     public Plan(String status, String req_name, String date, String time, String deets, String vessel_num, String driver, ArrayList<Material> materials) {
         this.status = status;

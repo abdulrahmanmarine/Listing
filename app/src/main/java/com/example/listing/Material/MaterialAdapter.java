@@ -2,36 +2,27 @@ package com.example.listing.Material;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Picture;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.listing.Kotlin.pictureMode;
-import com.example.listing.NotesFragment;
 import com.example.listing.Plan.PlanAdapter;
 import com.example.listing.R;
+import com.example.listing.notes.pictureMode;
 import com.fasterxml.jackson.core.Base64Variants;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.List;
 
 
@@ -109,7 +100,8 @@ public interface addClick{
          */
 
         View card = LayoutInflater.from(parent.getContext()).inflate(R.layout.load_item_card, parent, false);
-        MaterialViewHolder request = new MaterialViewHolder(card, loadListener, unloadListener, foundListener, cameraListener, prcListener);
+        MaterialViewHolder request = new MaterialViewHolder(card, loadListener, unloadListener, foundListener,
+                cameraListener, prcListener);
 
 
         /*
@@ -197,6 +189,7 @@ public interface addClick{
                 unloadButton = (Button) itemView.findViewById(R.id.unload_button);
                 foundButton = (Button) itemView.findViewById(R.id.found_button);
                 locButton = (ImageView) itemView.findViewById(R.id.location_btn);
+
                 camerabut = (ImageView) itemView.findViewById(R.id.comment_btn);
                 prcButton = (Button) itemView.findViewById(R.id.process_button);
 
@@ -241,6 +234,7 @@ public interface addClick{
                         foundListener.foundButtonClick(getAdapterPosition());
                     }
                 });
+
 
             camerabut.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -289,11 +283,8 @@ public interface addClick{
         for ASSIGN status
          */
         if(!isLoad) {
-//            materialName.setText(material.getName());
             textDriver.setText(material.getDriver());
             textVehicle.setText(material.getVehicle());
-//                        textQuan.setText(material.getQuan());
-            //materialName.setText(material.getName());
            if(material.getDriver().isEmpty() && material.getVehicle().isEmpty()){
                 textStatus.setText("Not Assigned");
                 textStatus.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
@@ -327,17 +318,8 @@ public interface addClick{
 
             }
 );
-                materialName.setText(material.getName());
+            materialName.setText(material.getName());
             textQuan.setText(material.getQuan());
-//            materialImage.setImageResource(material.getPic());
-//            materialImage.setImageBitmap(material.getBmpImage());
-//            if(material.getLoaded()){
-//                text3.setText("Loaded");
-//                text3.setBackground(ContextCompat.getDrawable(contexts, R.drawable.green_border));
-//            }else{
-//                text3.setText("Not loaded");
-//                text3.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
-//            }
 
 
         }

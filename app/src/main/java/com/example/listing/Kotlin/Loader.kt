@@ -1,8 +1,6 @@
 package com.example.listing.Kotlin
 
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.listing.Material.Loader.LoaderFragment
 import com.example.listing.Material.Material
@@ -72,13 +70,6 @@ class Loader : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragme
         buildRecycler(reqs)
 
 
-//        var planData = CommonModule.openRawFileAsIS(this, "plans")
-//        var planLists = CommonModule.mapper.readValue<List<Plan>>(planData)
-//        var plan_adapter = LP_Header_Adapter(null, planLists)
-//        var planRV : RecyclerView = findViewById(R.id.plan_recycler)
-//        planRV.adapter = plan_adapter
-
-
     }
 
     fun buildRecycler(lst: ArrayList<Plan?>?) {
@@ -113,13 +104,7 @@ class Loader : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragme
         ft.replace(R.id.item_recycler, textfragment)
         ft.commit()
 
-//
-//        var itemRV : RecyclerView= findViewById(R.id.item_recycler)
-//        var itemAdapter = MaterialAdapter(plan.materials)
-//        itemRV.layoutManager = GridLayoutManager(this, 3)
 
-
-//        itemRV.adapter = itemAdapter
     }
 
 

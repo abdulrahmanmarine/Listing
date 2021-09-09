@@ -20,12 +20,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme">
+
         <activity android:name=".Kotlin.Loader"
             android:screenOrientation="sensorLandscape"/>
+
+
         <activity android:name=".Kotlin.Dispatcher"
             android:screenOrientation="sensorLandscape"/>
+
         <activity android:name=".Kotlin.Home"
             android:screenOrientation="sensorLandscape"/>
+
         <activity android:name=".Kotlin.Login"
             android:screenOrientation="sensorLandscape">
             <intent-filter>

@@ -5,8 +5,11 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.*
+import android.content.Context.LOCATION_SERVICE
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Rect
+import android.location.LocationManager
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Build
@@ -15,31 +18,26 @@ import android.provider.MediaStore
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.fasterxml.jackson.core.Base64Variants
-import java.io.*
-import kotlin.collections.ArrayList
-import android.content.Context.LOCATION_SERVICE
-import android.view.Gravity
-import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
-
-import android.graphics.Rect
-import android.location.LocationManager
 import com.example.listing.*
+import com.example.listing.DataViewModel.PlansDataModel
 import com.example.listing.Utils.RestApi
+import com.fasterxml.jackson.core.Base64Variants
 import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.coroutines.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
+import java.io.*
 import javax.security.auth.callback.Callback
 
 
@@ -47,6 +45,7 @@ import javax.security.auth.callback.Callback
 
 
 class RedesignedNotesFragment(noteType: String, id1: String,id2: String?, id3: String?,noteMjahr: String?) : DialogFragment() {
+    private lateinit var mViewModel: PlansDataModel
     private lateinit var Token: String
     var notes = ArrayList<Notes>()
     var recording: Boolean = false
@@ -341,7 +340,7 @@ class RedesignedNotesFragment(noteType: String, id1: String,id2: String?, id3: S
 
 
     fun sendNote(){
-
+if(RestApi.getInstance()!=null)
         RestApi.getInstance().retrofitInterface.submitNote(subSAPNote, Token)
                 .enqueue(object : Callback,
                         retrofit2.Callback<ResponseBody> {
@@ -389,6 +388,8 @@ class RedesignedNotesFragment(noteType: String, id1: String,id2: String?, id3: S
 
     fun getNotes(){
         var filterstr = "NoteSet?\$filter=ZuphrType eq '$noteType' and ZuphrId1 eq '$id1' and ZuphrId2 eq '$id2' and ZuphrId3 eq '$id3' "
+
+        if(RestApi.getInstance()!=null)
         RestApi.getInstance().retrofitInterface.retrieveNotes(filterstr)
                 .enqueue(object : Callback,
                         retrofit2.Callback<ResponseBody> {

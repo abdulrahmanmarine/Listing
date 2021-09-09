@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.listing.Kotlin.pictureMode;
 import com.example.listing.Material.Material;
 import com.example.listing.Plan.PlanAdapter;
 import com.example.listing.R;
@@ -74,15 +72,11 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.MaterialVi
     @Override
     public void onBindViewHolder(@NonNull MaterialViewHolder holder, int position) {
         final Material material = materialList.get(position);
-//        notifyDataSetChanged();
+
         holder.bind(material);
 
-//        notifyDataSetChanged();
     }
 
-//    private void setAnimation(CardView viewToAnimate, int position){
-//        Animation animation = animationUtils.loadAnimation(mContext)
-//    }
 
     @Override
     public int getItemCount() {
@@ -145,11 +139,8 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.MaterialVi
         for ASSIGN status
          */
 
-//            materialName.setText(material.getName());
                 textDriver.setText(material.getDriver());
                 textVehicle.setText(material.getVehicle());
-//                        textQuan.setText(material.getQuan());
-                //materialName.setText(material.getName());
 
                 if(material.getDriver().isEmpty() && material.getVehicle().isEmpty()){
                     textStatus.setText("Not Assigned");
@@ -178,8 +169,8 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.MaterialVi
             Drawable finalImage = image;
             materialImage.setOnClickListener(view -> {
                         AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                        pictureMode myFragment = new pictureMode(finalImage);
-                        activity.getSupportFragmentManager().beginTransaction().add(myFragment,"Picture").commit();
+                        //pictureMode myFragment = new pictureMode(finalImage);
+                        //activity.getSupportFragmentManager().beginTransaction().add(myFragment,"Picture").commit();
 
 
                     }
@@ -187,13 +178,6 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.MaterialVi
             materialName.setText(material.getName());
             textQuan.setText(material.getQuan());
             materialImage.setImageResource(material.getPic());
-//            if(material.getLoaded()){
-//                text3.setText("Loaded");
-//                text3.setBackground(ContextCompat.getDrawable(contexts, R.drawable.green_border));
-//            }else{
-//                text3.setText("Not loaded");
-//                text3.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
-//            }
 
 
         }

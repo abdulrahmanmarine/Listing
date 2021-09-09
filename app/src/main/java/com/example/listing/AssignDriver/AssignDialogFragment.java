@@ -20,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.listing.Kotlin.pictureMode;
 import com.example.listing.Material.Dispatcher.DispatcherFragment;
 import com.example.listing.R;
 import com.example.listing.Plan.PlanFragment;
@@ -61,22 +60,7 @@ public class AssignDialogFragment extends DialogFragment implements AdapterView.
         negativeListener = (OnNegativeClickListener) context;
     }
 
-//    public Dialog onCreateDialog(){
-//        Dialog dialog = super.onCreateDialog(savedInstanceState);
-//        dialog.setTitle("My Title");
-//        return dialog;
-//    }
 
-//    public static AssignDialogFragment newInstance(int img, String name){
-//        AssignDialogFragment dial = new AssignDialogFragment();
-//
-//        Bundle args = new Bundle();
-//        args.putInt("img", img);
-//        args.putString("name", name);
-//        dial.setArguments(args);
-//
-//        return dial;
-//    }
 
     public static AssignDialogFragment newInstance(String name,String pic){
         AssignDialogFragment dial = new AssignDialogFragment();
@@ -123,8 +107,8 @@ public class AssignDialogFragment extends DialogFragment implements AdapterView.
         Drawable finalImage = image;
         pic.setOnClickListener(view1 -> {
                     AppCompatActivity activity = (AppCompatActivity) requireContext();
-                    pictureMode myFragment = new pictureMode(finalImage);
-                    activity.getSupportFragmentManager().beginTransaction().add(myFragment,"Picture").commit();
+                   // pictureMode myFragment = new pictureMode(finalImage);
+                   // activity.getSupportFragmentManager().beginTransaction().add(myFragment,"Picture").commit();
 
 
                 }
@@ -227,38 +211,6 @@ public class AssignDialogFragment extends DialogFragment implements AdapterView.
         fragm.dataChanged();
         fragm2.dataChangedDer();
     }
-
-
-//        public Dialog onCreateDialog(Bundle savedInstanceState) {
-//
-//        // Use the Builder class for convenient dialog construction
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//
-//        LayoutInflater inflater = requireActivity().getLayoutInflater();
-//        View v = inflater.inflate(R.layout.dialog_spinner, null);
-//
-//        Spinner spin = v.findViewById(R.id.driverspinner);
-//        Spinner vspin = v.findViewById(R.id.vehiclespinner);
-//
-//
-//        ArrayAdapter<CharSequence> driverAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.drivers, R.layout.support_simple_spinner_dropdown_item);
-//        driverAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//        ArrayAdapter<CharSequence> vehicleAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.vehicels, R.layout.support_simple_spinner_dropdown_item);
-//        vehicleAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-//
-//        builder.setView(v).setTitle(R.string.select_driver);
-//
-//
-//        spin.setAdapter(driverAdapter);
-//        vspin.setAdapter(vehicleAdapter);
-//
-//        spin.setOnItemSelectedListener(this);
-//        vspin.setOnItemSelectedListener(this);
-//        // Create the AlertDialog object and return it
-//        return builder.create();
-//    }
-
 
 
 }
