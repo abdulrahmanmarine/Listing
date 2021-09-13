@@ -130,7 +130,8 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
 
 
                     break;
-                }else{
+                }
+                else{
                     plan.setStatus("complete");
                     incomplete = false;
                     requestStatus.setText(plan.getStatus());
