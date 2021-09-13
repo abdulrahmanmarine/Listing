@@ -1,15 +1,16 @@
 package com.example.listing.models;
 
-import androidx.room.Entity;
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY,getterVisibility = JsonAutoDetect.Visibility.NONE,
@@ -24,8 +25,22 @@ public class Material2 implements Serializable {
     @JsonProperty("Log")
     String Log;
 
+
+   // @JsonProperty("ZuphrLoada")
+    String item;
+    LoadAction ZuphrLoada;
+
     @JsonProperty("ZuphrLoada")
-    String ZuphrLoada;
+    public void unpackd(String d) throws JsonProcessingException {
+        ObjectMapper maper=new ObjectMapper();
+        maper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES,true);
+        maper.enable(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);
+
+       ZuphrLoada=maper.readValue(d, new TypeReference<List<LoadAction>>() {}).get(0);
+        android.util.Log.i("response-plan-item" ,ZuphrLoada.FpName);
+
+    }
+
 
 
     @JsonProperty("ZuphrMovem")
@@ -194,20 +209,22 @@ public class Material2 implements Serializable {
     @JsonProperty("ZuphrFpName")
     String ZuphrFpName;
 
-    @JsonProperty("LoadingPlanLoadActionSet")
-    String LoadingPlanLoadActionSet;
-
-    @JsonProperty("LoadingPlanLoadMovemSet")
-    String LoadingPlanLoadMovemSet;
-
-    @JsonProperty("LoadingPlanLoadCharSet")
-    String LoadingPlanLoadCharSet;
-
-    @JsonProperty("LoadingPlanLoadCheckSet")
-    String LoadingPlanLoadCheckSet;
 
 
-    public Material2(String zuphrActquan, String log, String zuphrLoada, String zuphrMovem, String zuphrActtype,
+//    @JsonProperty("LoadingPlanLoadActionSet")
+//    String LoadingPlanLoadActionSet;
+//
+//    @JsonProperty("LoadingPlanLoadMovemSet")
+//    String LoadingPlanLoadMovemSet;
+//
+//    @JsonProperty("LoadingPlanLoadCharSet")
+//    String LoadingPlanLoadCharSet;
+//
+//    @JsonProperty("LoadingPlanLoadCheckSet")
+//    String LoadingPlanLoadCheckSet;
+
+
+    public Material2(String zuphrActquan, String log, LoadAction zuphrLoada, String zuphrMovem, String zuphrActtype,
                      String zuphrContents, String zuphrHeight, String zuphrLength, String zuphrLpid,
                      String zuphrObjecte, String zuphrSchar, String zuphrFrom, String zuphrSchtask,
                      String zuphrSeq, String zuphrWidth, String zuphrShipper, String zuphrTo,
@@ -221,8 +238,7 @@ public class Material2 implements Serializable {
                      String zuphrEquipnumber, String zuphrCnumber, String zuphrTicketno, String zuphrMfrpn,
                      String zuphrBitType, String zuphrBitstatus, String zuphrSrlno, String zuphrGl,
                      String zuphrCostcen, String zuphrMattype, String zuphrFpDate, String zuphrFpTime,
-                     String zuphrFpName,String loadingPlanLoadActionSet,String loadingPlanLoadMovemSet,
-                     String loadingPlanLoadCharSet,String loadingPlanLoadCheckSet ) {
+                     String zuphrFpName ) {
         ZuphrActquan = zuphrActquan;
         Log = log;
         ZuphrLoada = zuphrLoada;
@@ -282,10 +298,11 @@ public class Material2 implements Serializable {
         ZuphrFpTime = zuphrFpTime;
         ZuphrFpName = zuphrFpName;
 
-        LoadingPlanLoadActionSet=loadingPlanLoadActionSet;
-        LoadingPlanLoadMovemSet=loadingPlanLoadMovemSet;
-        LoadingPlanLoadCharSet=loadingPlanLoadCharSet;
-        LoadingPlanLoadCheckSet=loadingPlanLoadCheckSet;
+
+    }
+
+    public Material2() {
+
     }
 
     public String getZuphrActquan() {
@@ -304,11 +321,11 @@ public class Material2 implements Serializable {
         Log = log;
     }
 
-    public String getZuphrLoada() {
+    public LoadAction getZuphrLoada() {
         return ZuphrLoada;
     }
 
-    public void setZuphrLoada(String zuphrLoada) {
+    public void setZuphrLoada(LoadAction zuphrLoada) {
         ZuphrLoada = zuphrLoada;
     }
 
@@ -752,35 +769,9 @@ public class Material2 implements Serializable {
         ZuphrFpName = zuphrFpName;
     }
 
-    public String getLoadingPlanLoadActionSet() {
-        return LoadingPlanLoadActionSet;
-    }
 
-    public void setLoadingPlanLoadActionSet(String loadingPlanLoadActionSet) {
-        LoadingPlanLoadActionSet = loadingPlanLoadActionSet;
-    }
 
-    public String getLoadingPlanLoadMovemSet() {
-        return LoadingPlanLoadMovemSet;
-    }
 
-    public void setLoadingPlanLoadMovemSet(String loadingPlanLoadMovemSet) {
-        LoadingPlanLoadMovemSet = loadingPlanLoadMovemSet;
-    }
 
-    public String getLoadingPlanLoadCharSet() {
-        return LoadingPlanLoadCharSet;
-    }
-
-    public void setLoadingPlanLoadCharSet(String loadingPlanLoadCharSet) {
-        LoadingPlanLoadCharSet = loadingPlanLoadCharSet;
-    }
-
-    public String getLoadingPlanLoadCheckSet() {
-        return LoadingPlanLoadCheckSet;
-    }
-
-    public void setLoadingPlanLoadCheckSet(String loadingPlanLoadCheckSet) {
-        LoadingPlanLoadCheckSet = loadingPlanLoadCheckSet;
-    }
 }
+

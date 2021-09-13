@@ -1,5 +1,6 @@
 package com.example.listing.Plan;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +58,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RequestViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RequestViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         final Plan plan = planList.get(position);
 
         holder.bind(plan);

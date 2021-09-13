@@ -2,6 +2,8 @@ package com.example.listing.Utils;
 
 import com.example.listing.models.Plan2;
 import com.example.listing.models.ImageList;
+
+import com.example.listing.models.PlanUnpack;
 import com.example.listing.models.imagenode;
 import com.example.listing.SAPNote;
 
@@ -18,8 +20,8 @@ public interface RetrofitInterface {
 
 
 
-    @GET("LoadingPlanSet?\\$expand=PlanToItems&\\$filter=ZuphrActtype eq 'STEV' and ZuphrDeleted eq false")
-    Call<Plan2.PlanUnpack> getPlans(@Header("x-csrf-token") String token);
+    @GET("LoadingPlanSet?$expand=PlanToItems&$filter=ZuphrActtype eq 'STEV' and ZuphrDeleted eq false")
+    Call<PlanUnpack> getPlans(@Header("x-csrf-token") String token);
 
 
 

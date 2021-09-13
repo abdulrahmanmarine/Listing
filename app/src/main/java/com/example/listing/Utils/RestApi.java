@@ -110,8 +110,8 @@ public class RestApi {
 
         @Override
         public Response intercept(Chain chain) throws IOException {
-            User user1=new User("alsoaia","Abeer28121997@");
-            String creds = Credentials.basic(user.getUsername(),user.getPassword());
+            User user1=new User("ALSOAI0A","Abeer28121997@");
+            String creds = Credentials.basic(user1.getUsername(),user1.getPassword());
             Headers headers = chain.request().headers().newBuilder()
                     .add("Authorization", creds)
                     .add("Content-Type", application.getResources().getString(R.string.Content_Type))

@@ -1,13 +1,18 @@
 package com.example.listing.Kotlin
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.example.listing.DataViewModel.PlansDataModel
+import com.example.listing.DataViewModel.PlansDataModelFactory
 import com.example.listing.Material.Loader.LoaderFragment
 import com.example.listing.Material.Material
 import com.example.listing.Plan.Plan
 import com.example.listing.Plan.PlanFragment
 import com.example.listing.PlanClickListener
 import com.example.listing.R
+import com.example.listing.models.Plan2
 import org.json.JSONObject
 import java.util.*
 
@@ -17,6 +22,13 @@ class Loader : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragme
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loader)
         this.getSupportActionBar()!!.hide()
+
+        var model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(
+            PlansDataModel::class.java
+        )
+
+        model.getplans(application)
+
 
 
         var planData = CommonModule.openRawFileAsIS(this, "plans")

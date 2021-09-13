@@ -16,6 +16,7 @@ import com.example.listing.Utils.RestApi;
 import com.example.listing.Utils.RetrofitInterface;
 import com.example.listing.models.ImageList;
 import com.example.listing.models.LoadAction;
+import com.example.listing.models.PlanUnpack;
 import com.example.listing.models.imagenode;
 
 import org.apache.http.auth.AuthenticationException;
@@ -64,23 +65,32 @@ public class PlansDataModel extends ViewModel {
 
     public void getplans(Application application){
 
-       retrofitInterface.getPlans("Fetch").enqueue(new Callback<Plan2.PlanUnpack>() {
+        RestApi.initializer(application,null);
+       retrofitInterface.getPlans("Fetch").enqueue(new Callback<PlanUnpack>() {
            @Override
-           public void onResponse(Call<Plan2.PlanUnpack> call, retrofit2.Response<Plan2.PlanUnpack> response) {
-
-
+           public void onResponse(Call<PlanUnpack> call, retrofit2.Response<PlanUnpack> response) {
+               Log.i("response-plan" ,response.code()+""+response.message());
                if (response.isSuccessful()) {
-
-
                    List<Plan2> temp =response.body().getItems();
-
+                   Log.i("response-plan" ,temp.size()+"items");
+                   for(int i=0 ;i<temp.size();i++){
+                       Log.i("response-plan:"+i ,temp.get(i)+"items");
+                       Log.i("response-plan:"+i+"M:" ,temp.get(i).getPlanToItems().size()+"");
+                   }
                    Plans.postValue(temp);
 
+               }else {
+                   Log.i("response-plan" ,response.code()+""+response.message());
+                   try {
+                       Log.i("response-plan-error" ,response.errorBody().string());
+                   } catch (IOException e) {
+                       e.printStackTrace();
+                   }
                }
 
            }
            @Override
-           public void onFailure(Call<Plan2.PlanUnpack> call, Throwable t) {
+           public void onFailure(Call<PlanUnpack> call, Throwable t) {
                Log.i("response-http" ,t.getMessage()+t.getLocalizedMessage());
 
            }
