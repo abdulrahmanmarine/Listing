@@ -34,6 +34,10 @@ public class Plan implements Parcelable {
         }
     };
 
+    public Plan() {
+
+    }
+
     public List<Material> getMaterials() {
         return materials;
     }

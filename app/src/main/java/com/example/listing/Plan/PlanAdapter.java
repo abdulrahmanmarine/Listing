@@ -69,7 +69,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
             @Override
             public void onClick(View v) {
 
-                listener.onItemClick(plan, position);
+           //     listener.onItemClick(plan, position);
             }
         });
 
@@ -115,7 +115,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
 
         void bind(final Plan plan){
             this.plan = plan;
-            boolean laststat, newstat, med, load;
+            boolean laststat, load;
             load = false;
             if(load){
             for(int i = 0; i< plan.getMaterials().size() ; i++){
@@ -166,12 +166,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
                 }
 
             }
-
-
-
-
-
-            if(incomplete){
+       if(incomplete){
 
                 requestStatus.setText(plan.getStatus());
 

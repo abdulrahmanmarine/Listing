@@ -40,6 +40,7 @@ import com.example.listing.Material.Dispatcher.DispatcherFragment;
 import com.example.listing.Plan.PlanFragment;
 import com.example.listing.Plan.PlanAdapter;
 import com.example.listing.Plan.Plan;
+import com.example.listing.models.Plan2;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -198,7 +199,8 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
     CLICK ON A PLAN
      */
     @Override
-    public void onItemClick(Plan plan, int pos) {
+    public void onItemClick(Plan2 plan1, int pos) {
+        Plan plan=new Plan();
         boolean load;
 
         //Test variable

@@ -1,15 +1,17 @@
+
 [
   {
-    "mandt": "025",
+    "mandt":"025" ,
     "zuphrLpid": "99001",
-    "zuphrMjahr": 2021,
-    "zuphrMblpo": 6,
-    "zuphrLoadid": 2,
+    "zuphrMjahr": "2021",
+    "zuphrMblpo": "1",
+    "zuphrLoadid": "5",
     "zuphrActtype": "STEV",
-    "zuphrAsinQuan": 1.000,
+    "zuphrAsinQuan": "100.000",
     "zuphrMeins": "EA",
     "zuphrFpDate": "2021-08-24",
     "zuphrFpTime": "16:13:13",
     "zuphrFpName": "AWAMAS0F"
   }
 ]
+  
