@@ -7,6 +7,15 @@
         <variable
             name="item"
             type="com.example.listing.models.Plan2" />
+
+        <variable
+            name="itemClickListener"
+            type="com.example.listing.PlanClickListener" />
+
+        <variable
+            name="pos"
+            type="int" />
+
     </data>
 
     <androidx.cardview.widget.CardView
@@ -15,6 +24,7 @@
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
+        android:onClick="@{() -> itemClickListener.onItemClick(item,pos)}"
 
         android:layout_margin="2.8dp"
         app:contentPaddingBottom="0dp"
