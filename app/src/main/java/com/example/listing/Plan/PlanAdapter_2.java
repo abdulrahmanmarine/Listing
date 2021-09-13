@@ -1,3 +1,4 @@
+
 package com.example.listing.Plan;
 
         import android.content.Context;
@@ -20,20 +21,20 @@ package com.example.listing.Plan;
 
         import java.util.List;
 
-public class PlanAdapter2 extends RecyclerView.Adapter<PlanAdapter2.ViewHolder> implements PlanClickListener {
+public class PlanAdapter_2 extends RecyclerView.Adapter<PlanAdapter_2.ViewHolder> implements PlanClickListener {
 
     private List<Plan2> Plan2List;
     private Context context;
     PlanClickListener onCallBack;
 
-    public PlanAdapter2(List<Plan2> Plan2List, Context ctx, PlanClickListener onCallBack) {
+    public PlanAdapter_2(List<Plan2> Plan2List, Context ctx, PlanClickListener onCallBack) {
         this.Plan2List = Plan2List;
         context = ctx;
         this.onCallBack=onCallBack;
     }
 
     @Override
-    public PlanAdapter2.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PlanAdapter_2.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         PlanCardBindingImpl binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.plan_card, parent, false);
@@ -64,7 +65,7 @@ public class PlanAdapter2 extends RecyclerView.Adapter<PlanAdapter2.ViewHolder> 
 
     @Override
     public void onItemClick(Plan plan, int pos) {
-        
+
     }
 
 
