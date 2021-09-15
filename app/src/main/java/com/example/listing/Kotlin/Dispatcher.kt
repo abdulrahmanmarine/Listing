@@ -12,6 +12,8 @@ import com.example.listing.Plan.Plan
 import com.example.listing.Plan.PlanFragment
 import com.example.listing.PlanClickListener
 import com.example.listing.R
+import com.example.listing.models.Material2
+import com.example.listing.models.Plan2
 import org.json.JSONObject
 import java.util.*
 
@@ -73,7 +75,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
         }
 
-        buildRecycler(reqs)
+     //   buildRecycler(reqs)
 
 
 //        var planData = CommonModule.openRawFileAsIS(this, "plans")
@@ -85,7 +87,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
     }
 
-    fun buildRecycler(lst: ArrayList<Plan?>?) {
+    fun buildRecycler(lst: ArrayList<Plan2?>?) {
         val planFragment = PlanFragment.newInstance(lst)
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
@@ -98,17 +100,18 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
 
 
-    override fun onItemClick(plan: Plan?, pos: Int) {
+    override fun onItemClick(plan: Plan2?, pos: Int) {
         LoaderFragmentInteraction(plan!!)
         po = pos
     }
 
-    override fun LoaderFragmentInteraction(plan: Plan) {
+    override fun LoaderFragmentInteraction(plan: Plan2) {
         val textfragment = DispatcherFragment.newInstance(
-            plan.materials as ArrayList<Material?>,
-            plan.req_name,
-            plan.vessel_num,
-            plan.destination
+            plan.planToItems as ArrayList<Material2?>,
+//            plan.req_name,
+//            plan.vessel_num,
+//            plan.destination
+        "","",""
         )
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
@@ -140,6 +143,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
     override fun onNegativeClick() {
         //  dialog.dismiss();
     }
+
 
 
 

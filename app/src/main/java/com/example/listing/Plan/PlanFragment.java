@@ -19,6 +19,7 @@ import android.widget.EditText;
 
 import com.example.listing.PlanClickListener;
 import com.example.listing.R;
+import com.example.listing.models.Plan2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +37,13 @@ public class PlanFragment extends Fragment{
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private LoaderFragmentClickListener listener;
-    List<Plan> plans = new ArrayList<>();
+    List<Plan2> plans = new ArrayList<>();
     int currentpos;
 
 
     // TODO: Rename and change types of parameters
-    private ArrayList<Plan> mParam1 = new ArrayList<>();
-    PlanAdapter myadapter;
+    private ArrayList<Plan2> mParam1 = new ArrayList<>();
+    PlanAdapter_2 myadapter;
     RecyclerView  rv;
 
 
@@ -66,7 +67,7 @@ public class PlanFragment extends Fragment{
         // Required empty public constructor
     }
 
-    public static PlanFragment newInstance(ArrayList<Plan> param1){
+    public static PlanFragment newInstance(ArrayList<Plan2> param1){
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARG_PARAM1, param1);
         //bundle.putString(ARG_PARAM2, param2);
@@ -83,7 +84,7 @@ public class PlanFragment extends Fragment{
         super.onCreate(savedInstanceState);
          Bundle bundle  = getArguments();
          if(bundle!=null){
-             mParam1 = (ArrayList<Plan>) getArguments().getSerializable(ARG_PARAM1);
+             mParam1 = (ArrayList<Plan2>) getArguments().getSerializable(ARG_PARAM1);
 
          }
 
@@ -97,7 +98,7 @@ public class PlanFragment extends Fragment{
         View v = inflater.inflate(R.layout.fragmentlist, container, false);
 
         rv = v.findViewById(R.id.recview);
-        myadapter = new PlanAdapter((PlanClickListener) listener, mParam1);
+        myadapter = new PlanAdapter_2((PlanClickListener) listener, mParam1);
 
         rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         rv.setAdapter(myadapter);
@@ -137,22 +138,26 @@ public class PlanFragment extends Fragment{
     }
 
     private void filter(String text){
-        ArrayList<Plan> filteredList = new ArrayList<>();
+        ArrayList<Plan2> filteredList = new ArrayList<>();
 
 
-        for(Plan req : mParam1){
-            if(req.getDestination().toLowerCase().contains(text.toLowerCase())){
-                filteredList.add(req);
-            }
+        for(Plan2 req : mParam1){
+
+
+//            if(req.getDestination().toLowerCase().contains(text.toLowerCase())){
+//                filteredList.add(req);
+//            }
+
+
         }
-        myadapter.filterList(filteredList);
+      //  myadapter.filterList(filteredList);
     }
 
 
 
 
     public interface LoaderFragmentClickListener {
-        void LoaderFragmentInteraction(Plan plan);
+        void LoaderFragmentInteraction(Plan2 plan);
     }
 
     public void runAnimationAgain() {

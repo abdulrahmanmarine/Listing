@@ -140,7 +140,8 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
 
 
                 }
-            }}else{
+            }}
+            else{
                 for(int i = 0; i< plan.getMaterials().size(); i++){
                     Material material = plan.getMaterials().get(i);
                     incomplete = material.getLoaded();
@@ -170,7 +171,8 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RequestViewHol
 
                 requestStatus.setText(plan.getStatus());
 
-            }else{
+            }
+       else{
                 requestStatus.setText(plan.getStatus());
             }
 

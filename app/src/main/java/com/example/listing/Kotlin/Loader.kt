@@ -1,23 +1,22 @@
 package com.example.listing.Kotlin
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.listing.DataViewModel.PlansDataModel
 import com.example.listing.DataViewModel.PlansDataModelFactory
 import com.example.listing.Material.Loader.LoaderFragment
 import com.example.listing.Material.Material
-import com.example.listing.Plan.Plan
 import com.example.listing.Plan.PlanFragment
 import com.example.listing.PlanClickListener
 import com.example.listing.R
+import com.example.listing.models.Material2
 import com.example.listing.models.Plan2
 import org.json.JSONObject
 import java.util.*
 
 class Loader : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragmentClickListener {
-    var reqs = ArrayList<Plan?>()
+    var reqs = ArrayList<Plan2?>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loader)
@@ -30,61 +29,18 @@ class Loader : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragme
         model.getplans(application)
 
 
+        model.Plans.observe(this,
+            { Plans: List<Plan2?>? ->
+                buildRecycler((Plans as ArrayList<Plan2?>?)!!
+                )
+            })
 
-        var planData = CommonModule.openRawFileAsIS(this, "plans")
-        var resp = ""
-        var file = planData.reader().readLines()
-        file.forEach { it ->
-            resp += it + "\n"
-        }
 
-        if (resp != null) {
-            var jsonObj = JSONObject(resp)
-            var data: JSONObject = jsonObj.getJSONObject("d")
-            var results = data.getJSONArray("results")
-                for (i in 0 until results.length()) {
-                    var mats = ArrayList<Material>()
-                    var res = results.getJSONObject(i)
-                    var stat = res.getString("ZuphrStatus")
-                    var rq_name = res.getString("ZuphrLpid")
-                    var time = res.getString("ZuphrLptime")
-                    var date = res.getString("ZuphrLpdate")
-                    var vessel = res.getString("ZuphrVessel")
-                    var driver = ""
-                    var materObj = res.getJSONObject("PlanToItems")
-                    var mater = materObj.getJSONArray("results")
-                    for (j in 0 until mater.length()) {
-                        var mat = mater.getJSONObject(j)
-                        var mater_id = mat.getString("ZuphrMblpo")
-                        var mater_name = mat.getString("ZuphrShortxt")
-                        var mater_quan = mat.getString("ZuphrQuan")
-                        var mater_base64 = mat.getString("ZuphrMattype")
-                        var mater_driver = ""
-                        var mater_vehicle = ""
-                        mats.add(
-                            Material(
-                                mater_id.toInt(),
-                                mater_name,
-                                mater_quan,
-                                mater_base64,
-                                false,
-                                mater_driver,
-                                mater_vehicle,
-                                false
-                            )
-                        )
-                    }
-                    reqs.add(Plan(stat, "Plan# $rq_name", date, time, vessel, driver, mats))
-                }
-
-        }
-
-        buildRecycler(reqs)
 
 
     }
 
-    fun buildRecycler(lst: ArrayList<Plan?>?) {
+    fun buildRecycler(lst: ArrayList<Plan2?>) {
         var planFragment = PlanFragment.newInstance(lst)
         var fm = supportFragmentManager
         var ft = fm.beginTransaction()
@@ -97,17 +53,18 @@ class Loader : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragme
 
 
 
-    override fun onItemClick(plan: Plan?, pos: Int) {
+    override fun onItemClick(plan: Plan2?, pos: Int) {
         LoaderFragmentInteraction(reqs[pos]!!)
         //Toast.makeText(this,pos,Toast.LENGTH_SHORT).show()
     }
 
-    override fun LoaderFragmentInteraction(plan: Plan) {
+    override fun LoaderFragmentInteraction(plan: Plan2) {
         var textfragment = LoaderFragment.newInstance(
-            plan.materials as ArrayList<Material?>,
-            plan.req_name,
-            plan.vessel_num,
-            plan.destination,
+            plan.planToItems as ArrayList<Material2?>,
+//            plan.req_name,
+//            plan.vessel_num,
+//            plan.destination,
+            "","",""
 
         )
 

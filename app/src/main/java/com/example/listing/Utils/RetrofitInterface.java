@@ -24,7 +24,11 @@ public interface RetrofitInterface {
     Call<PlanUnpack> getPlans(@Header("x-csrf-token") String token);
 
 
+    @GET()
+    Call<ResponseBody> GetVehicle(@Url String filter);
 
+
+    //VehicleSet('')
 
     @POST("ImageHandlingSet/")
     Call<ResponseBody> SaveImages(@Header("x-csrf-token") String token,@Body imagenode image);

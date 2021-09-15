@@ -33,6 +33,7 @@ import com.example.listing.Material.MaterialAdapter;
 import com.example.listing.R;
 import com.example.listing.Plan.PlanFragment;
 import com.example.listing.Plan.Plan;
+import com.example.listing.models.Material2;
 import com.example.listing.notes.RedesignedNotesFragment;
 
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ public class LoaderFragment extends Fragment {
      * @return A new instance of fragment TextFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LoaderFragment newInstance(ArrayList<Material> param1, String param2, String param3, String param4) {
+    public static LoaderFragment newInstance(ArrayList<Material2> param1, String param2, String param3, String param4) {
         LoaderFragment fragment = new LoaderFragment();
         Bundle args = new Bundle();
         //args.putString(ARG_PARAM1, param1);

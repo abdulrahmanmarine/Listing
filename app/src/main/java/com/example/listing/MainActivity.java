@@ -40,6 +40,7 @@ import com.example.listing.Material.Dispatcher.DispatcherFragment;
 import com.example.listing.Plan.PlanFragment;
 import com.example.listing.Plan.PlanAdapter;
 import com.example.listing.Plan.Plan;
+import com.example.listing.models.Material2;
 import com.example.listing.models.Plan2;
 
 import org.json.JSONArray;
@@ -47,15 +48,18 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements PlanFragment.LoaderFragmentClickListener, AssignDialogFragment.OnPositiveClickListener, AssignDialogFragment.OnNegativeClickListener, PlanClickListener, NetworkResponseListener {
+public class MainActivity extends AppCompatActivity implements PlanFragment.LoaderFragmentClickListener,
+        AssignDialogFragment.OnPositiveClickListener,
+        AssignDialogFragment.OnNegativeClickListener, PlanClickListener{
 
     Button mAssign;
     TextView tv_username;
     ImageButton backBut;
-    Plan lastClickedReq;
+    Plan2 lastClickedReq;
     PlanAdapter myadapter, planAdapterInstance;
     MaterialAdapter detadapter;
-    ArrayList<Plan> plans, networkResp = new ArrayList<>();
+    ArrayList<Plan2> plans;
+    ArrayList<Plan> networkResp = new ArrayList<>();
     //    List<Material> materials, materials2, materials3, materials4, materials5;
     //CustomGridRecyclerView rv;
     RecyclerView rv;
@@ -69,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
     private PlansDataModel model;
 
 
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +83,6 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
 
 
 
-        try {
-            createLists();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         actionBarSettings();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -113,8 +113,12 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
 
     //So that main can send the data from list to text fragment
     @Override
-    public void LoaderFragmentInteraction(Plan plan) {
-        LoaderFragment textfragment = LoaderFragment.newInstance((ArrayList<Material>) plan.getMaterials(), plan.getReq_name(), plan.getVessel_num(), plan.getDestination());
+    public void LoaderFragmentInteraction(Plan2 plan) {
+        LoaderFragment textfragment = LoaderFragment.newInstance((ArrayList<Material2>) plan.getPlanToItems(),
+                "","",""
+//                plan.getReq_name(),
+//                plan.getVessel_num(), plan.getDestination()
+              );
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.fragmenttext, textfragment);
@@ -122,8 +126,15 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
     }
 
 
-    public void DispatcherFragmentInteraction(Plan plan) {
-        DispatcherFragment dispatcherFragment = DispatcherFragment.newInstance((ArrayList<Material>) plan.getMaterials(), plan.getReq_name(), plan.getVessel_num(), plan.getDestination());
+    public void DispatcherFragmentInteraction(Plan2 plan) {
+        DispatcherFragment dispatcherFragment = DispatcherFragment.newInstance(
+                (ArrayList<Material2>) plan.getPlanToItems(),
+//                plan.getReq_name(),
+//                plan.getVessel_num(),
+//                plan.getDestination()
+                "","",""
+
+        );
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.fragmenttext, dispatcherFragment);
@@ -139,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
     }
 
 
-    public void buildRecycler(ArrayList<Plan> lst) {
+    public void buildRecycler(ArrayList<Plan2> lst) {
         PlanFragment planFragment = PlanFragment.newInstance((lst));
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -151,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
         materialpos = matpos;
         FragmentManager fra = getSupportFragmentManager();
 //      dialog = AssignDialogFragment.newInstance(requests.get(po).getMaterials().get(matpos).getPic(), requests.get(po).getMaterials().get(matpos).getName());
-        dialog = AssignDialogFragment.newInstance(plans.get(po).getMaterials().get(matpos).getName(),plans.get(po).getMaterials().get(matpos).getMaterial());
+       // dialog = AssignDialogFragment.newInstance(plans.get(po).getMaterials().get(matpos).getName(),plans.get(po).getMaterials().get(matpos).getMaterial());
         dialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
         dialog.show(fra, "assign");
     }
@@ -159,8 +170,8 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
 
     @Override
     public void onPositiveClick(String text, String text2) {
-        plans.get(po).getMaterials().get(materialpos).setDriver(text);
-        plans.get(po).getMaterials().get(materialpos).setVehicle(text2);
+//        plans.get(po).getMaterials().get(materialpos).setDriver(text);
+//        plans.get(po).getMaterials().get(materialpos).setVehicle(text2);
         dialog.dismiss();
     }
 
@@ -199,8 +210,8 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
     CLICK ON A PLAN
      */
     @Override
-    public void onItemClick(Plan2 plan1, int pos) {
-        Plan plan=new Plan();
+    public void onItemClick(Plan2 plan, int pos) {
+
         boolean load;
 
         //Test variable
@@ -224,60 +235,9 @@ public class MainActivity extends AppCompatActivity implements PlanFragment.Load
     }
 
 
-    @Override
-    public void successData(ArrayList<Plan> data) throws JSONException {
-        buildRecycler(data);
-        plans = data;
-    }
-
-    @Override
-    public void failedData() {
-        Log.d("Failed", "failed");
-
-    }
 
 
-    public void createLists() throws JSONException {
-        //  MaterialAsyncTask tasker = new MaterialAsyncTask(MainActivity.this, MainActivity.this);
-        // tasker.execute();
 
-        ArrayList<Plan> reqs = new ArrayList<>();
-        ArrayList<Material> mats = new ArrayList<>();
-
-        for (int i = 0; i < 1/*stageRes.length()*/; i++) {
-            //JSONObject res = stageRes.getJSONObject(i);
-            //String stat = res.getString("ZuphrStatus");
-            String stat = "stat";
-            //String rq_name = res.getString("ZuphrLpid");
-            String rq_name = "rq_name";
-            //String time = res.getString("ZuphrLptime");
-            String time = "15:55";
-            //String date = res.getString("ZuphrLpdate");
-            String date ="29/05/2021";
-            //String vessel = res.getString("ZuphrVessel");
-            String vessel = "vessel";
-            //String driver = "";
-            String driver = "driver";
-            //JSONArray mater = res.getJSONArray("results");
-            for (int j = 0; j < 1/*mater.length()*/; j++) {
-                //JSONObject mat = mater.getJSONObject(j);
-                //String mater_name = mat.getString("ZuphrShorttxt");
-                String mater_name = "mater_name";
-                //String mater_quan = mat.getString("quan");
-                String mater_quan = "mater_quan";
-                //String mater_driver = "";
-                String mater_driver = "mater_driver";
-                //String mater_vehicle = "";
-                String mater_vehicle = "mater_vehicle";
-                mats.add(new Material(mater_name, mater_quan, true, mater_driver, mater_vehicle, false));
-            }
-            reqs.add(new Plan(stat, rq_name, time, date, vessel, driver, mats));
-            NetworkResponseListener networkResponseListener = MainActivity.this;
-            networkResponseListener.successData(reqs);
-
-
-        }
-    }
 }
 
 

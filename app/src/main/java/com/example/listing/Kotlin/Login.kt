@@ -27,11 +27,7 @@ class Login : AppCompatActivity() {
         //DBManager(this)
         val logIn_btn: Button = findViewById(R.id.logIn_btn)
 
-        model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(
-            PlansDataModel::class.java
-        )
 
-        model.getplans(application)
 
 
 

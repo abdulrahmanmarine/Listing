@@ -97,6 +97,65 @@ public class PlansDataModel extends ViewModel {
        });
    }
 
+
+    public void GetVehicle (Application application ,String Vehicleid){
+
+        retrofitInterface.GetVehicle("VehicleSet('"+Vehicleid+"')").enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                Log.i("response-plan" ,response.code()+""+response.message());
+                if (response.isSuccessful()) {
+
+                    Log.i("response-plan" ,response.body().toString());
+
+                }
+                else {
+                    Log.i("response-plan-error1" ,response.code()+""+response.message());
+                    try {
+                        Log.i("response-plan-error2" ,response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i("response-http" ,t.getMessage()+t.getLocalizedMessage());
+
+            }
+        });
+    }
+
+    public void GetVehicles (Application application ){
+
+        retrofitInterface.GetVehicle("VehicleSet?$filter=Vehid eq '1' or Vehid eq '2'").enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                Log.i("response-plan" ,response.code()+""+response.message());
+                if (response.isSuccessful()) {
+
+                    Log.i("response-plan" ,response.body().toString());
+
+                }
+                else {
+                    Log.i("response-plan-error1" ,response.code()+""+response.message());
+                    try {
+                        Log.i("response-plan-error2" ,response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i("response-http" ,t.getMessage()+t.getLocalizedMessage());
+
+            }
+        });
+    }
+
     public void GetImages(Application application,  String MaterialId){
 
         retrofitInterface.getImageList("ImageHandlingSet?$filter=ZuphrId eq'"+MaterialId+
