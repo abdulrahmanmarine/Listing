@@ -78,7 +78,7 @@ public class RestApi {
                     .create();
 
             retrofit = new Retrofit.Builder()
-                    .baseUrl(application.getString(R.string.dvcURL))
+                    .baseUrl(application.getString(R.string.portal))
                     .client(headersInterceptors(user, application))
                     .addConverterFactory(JacksonConverterFactory.create(jacksonObjectMapper().setPropertyNamingStrategy(new PropertyNamingStrategies.UpperCamelCaseStrategy()))).build();
 
@@ -110,7 +110,7 @@ public class RestApi {
 
         @Override
         public Response intercept(Chain chain) throws IOException {
-            User user1=new User("ALSOAI0A","Abeer28121997@");
+            User user1=new User("alsaliat","Welcome.1");
             String creds = Credentials.basic(user1.getUsername(),user1.getPassword());
             Headers headers = chain.request().headers().newBuilder()
                     .add("Authorization", creds)

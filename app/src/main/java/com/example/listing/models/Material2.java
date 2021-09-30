@@ -208,7 +208,8 @@ public class Material2 implements Serializable {
 
     @JsonProperty("ZuphrFpName")
     String ZuphrFpName;
-
+    List<Driver> Drivers;
+    List<Vehicle> Vehicles;
 
 
 //    @JsonProperty("LoadingPlanLoadActionSet")
@@ -238,7 +239,7 @@ public class Material2 implements Serializable {
                      String zuphrEquipnumber, String zuphrCnumber, String zuphrTicketno, String zuphrMfrpn,
                      String zuphrBitType, String zuphrBitstatus, String zuphrSrlno, String zuphrGl,
                      String zuphrCostcen, String zuphrMattype, String zuphrFpDate, String zuphrFpTime,
-                     String zuphrFpName ) {
+                     String zuphrFpName , List<Driver> drivers, List<Vehicle> vehicles) {
         ZuphrActquan = zuphrActquan;
         Log = log;
         ZuphrLoada = zuphrLoada;
@@ -297,8 +298,8 @@ public class Material2 implements Serializable {
         ZuphrFpDate = zuphrFpDate;
         ZuphrFpTime = zuphrFpTime;
         ZuphrFpName = zuphrFpName;
-
-
+        Drivers = drivers;
+        Vehicles = vehicles;
     }
 
     public Material2() {
@@ -335,6 +336,22 @@ public class Material2 implements Serializable {
 
     public void setZuphrMovem(String zuphrMovem) {
         ZuphrMovem = zuphrMovem;
+    }
+
+    public List<Driver> getDrivers() {
+        return Drivers;
+    }
+
+    public void setDrivers(List<Driver> drivers) {
+        Drivers = drivers;
+    }
+
+    public List<Vehicle> getVehicles() {
+        return Vehicles;
+    }
+
+    public void setVehicles(List<Vehicle> vehicles) {
+        Vehicles = vehicles;
     }
 
     public String getZuphrActtype() {

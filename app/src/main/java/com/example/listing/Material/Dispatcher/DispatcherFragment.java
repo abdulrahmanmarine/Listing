@@ -15,6 +15,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.Fade;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,11 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.listing.AddButtonClicked;
 import com.example.listing.AssignDriver.DriverAdapter;
+import com.example.listing.AssignDriver.DriverAdapter_2;
 import com.example.listing.Kotlin.Dispatcher;
 import com.example.listing.Material.Material;
 import com.example.listing.Material.MaterialAdapter;
@@ -60,9 +64,9 @@ public class DispatcherFragment extends Fragment{
     // TODO: Rename and change types of parameters
     List<Plan> plans;
     private String mParam2, mParam3, mParam4;
-    private ArrayList<Material> mParam1 = new ArrayList<>();
+    private List<Material2> mParam1 = new ArrayList<>();
     private MaterialAdapter materialAdapter;
-    private DriverAdapter driverAdapter;
+    private DriverAdapter_2 driverAdapter;
     private static Context contexts;
     private static DispatcherFragment fragment = null;
     private Boolean isLoad = true;
@@ -84,7 +88,7 @@ public class DispatcherFragment extends Fragment{
      * @return A new instance of fragment AddFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DispatcherFragment newInstance(ArrayList<Material2> param1, String param2, String param3, String param4) {
+    public static DispatcherFragment newInstance(ArrayList<Material> param1, String param2, String param3, String param4) {
         DispatcherFragment fragment = new DispatcherFragment();
         Bundle args = new Bundle();
         //args.putString(ARG_PARAM1, param1);
@@ -108,26 +112,24 @@ public class DispatcherFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = (ArrayList<Material>) getArguments().getSerializable(ARG_PARAM1);
+            mParam1 = (ArrayList<Material2>) getArguments().getSerializable(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
             mParam3 = getArguments().getString(ARG_PARAM3);
             mParam4 = getArguments().getString(ARG_PARAM4);
         }
-
-
     }
 
 
 
     private void filter2(String text){
-        ArrayList<Material> filteredList = new ArrayList<>();
-
-        for(Material mat : mParam1){
-            if(mat.getName().toLowerCase().contains(text.toLowerCase())){
-                filteredList.add(mat);
-            }
-        }
-        driverAdapter.filterList(filteredList);
+//        ArrayList<Material> filteredList = new ArrayList<>();
+//
+//        for(Material2 mat : mParam1){
+//            if(mat.getName().toLowerCase().contains(text.toLowerCase())){
+//                filteredList.add(mat);
+//            }
+//        }
+//        driverAdapter.filterList(filteredList);
     }
 
 
@@ -175,8 +177,18 @@ public class DispatcherFragment extends Fragment{
         dest_tv.setText(mParam4);
 
 
+        AddButtonClicked addListener = new AddButtonClicked() {
+            @Override
+            public void addButtonClicked(int pos) {
 
-        driverAdapter = new DriverAdapter(mParam1);
+                ((Dispatcher) getActivity()).showAssignDialog(pos, mParam1.get(pos));
+
+                driverAdapter.notifyDataSetChanged();
+                notifDataAddChanged();
+            }
+        };
+
+        driverAdapter = new DriverAdapter_2(mParam1, addListener);
 ////        myAdapter = detAdapter;
 
         //animation
@@ -188,16 +200,15 @@ public class DispatcherFragment extends Fragment{
 
 //        //FOR ASSIGN
 
-            driverAdapter.setAddListener(new DriverAdapter.addClick() {
-                @Override
-                public void addButtonClick(int pos) {
-                    ((Dispatcher) getActivity()).showAssignDialog(pos);
-
-                    driverAdapter.notifyDataSetChanged();
-                    notifDataAddChanged();
-//                    ((MainActivity) getActivity()).dataChanged();
-                }
-            });
+//            driverAdapter.setAddListener(new DriverAdapter.addClick() {
+//                @Override
+//                public void addButtonClick(int pos) {
+//                    ((Dispatcher) getActivity()).showAssignDialog(pos);
+//
+//                    driverAdapter.notifyDataSetChanged();
+//                    notifDataAddChanged();
+//                }
+//            });
 
 
         rv.setAdapter(driverAdapter);

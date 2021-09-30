@@ -15,23 +15,26 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listing.Plan.PlanAdapter;
+import com.example.listing.Plan.PlanAdapter_2;
+import com.example.listing.PrcButtonClicked;
 import com.example.listing.R;
+import com.example.listing.databinding.LoadItemCardBinding;
+import com.example.listing.databinding.PlanCardBinding;
+import com.example.listing.models.Material2;
 import com.example.listing.notes.pictureMode;
 import com.fasterxml.jackson.core.Base64Variants;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 
 
-public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.MaterialViewHolder> {
-
-    public interface prcClick{
-        public void PrcButtonClicked(int pos);
-    }
+public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.MaterialViewHolder>  {
 
     public interface loadClick{
         public void loadButtonClicked(int pos);
@@ -53,18 +56,19 @@ public interface addClick{
         public void cameraButtonClick(int pos);
     }
 
-    public static List<Material> materialList;
+    public static ArrayList<Material> materialList;
     loadClick loadListener;
     unloadClick unloadListener;
     addClick addListener;
     foundClick foundListener;
     cameraClick cameraListener;
-    prcClick prcListener;
+
     private static Context contexts;
     public static Boolean isLoad = true;
+    PrcButtonClicked prcButtonListener;
     PlanAdapter planAdapter;
 
-    public MaterialAdapter(List<Material> materialList){
+    public MaterialAdapter(ArrayList<Material> materialList){
         this.materialList = materialList;
     }
 
@@ -72,9 +76,7 @@ public interface addClick{
         this.loadListener = loadListener;
     }
 
-    public void setUnloadListener(unloadClick unloadListener) {
-        this.unloadListener = unloadListener;
-    }
+    public void setUnloadListener(unloadClick unloadListener) { this.unloadListener = unloadListener; }
 
     public void setFoundListener(foundClick foundListener){
         this.foundListener = foundListener;
@@ -83,9 +85,7 @@ public interface addClick{
     public void setAddListener(addClick addListener){
         this.addListener = addListener;
     }
-    public void setPrcListener(prcClick addListener){
-        this.prcListener = addListener;
-    }
+
 
     public void setCameraListener(cameraClick cameraListener){
         this.cameraListener = cameraListener;
@@ -99,9 +99,14 @@ public interface addClick{
         For Load card
          */
 
-        View card = LayoutInflater.from(parent.getContext()).inflate(R.layout.load_item_card, parent, false);
-        MaterialViewHolder request = new MaterialViewHolder(card, loadListener, unloadListener, foundListener,
-                cameraListener, prcListener);
+        LoadItemCardBinding binding = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.getContext()),
+                R.layout.load_item_card, parent, false);
+
+
+//        View card = LayoutInflater.from(parent.getContext()).inflate(R.layout.load_item_card, parent, false);
+//        MaterialViewHolder request = new MaterialViewHolder(card, loadListener, unloadListener, foundListener,
+//                cameraListener, prcListener);
 
 
         /*
@@ -113,9 +118,9 @@ public interface addClick{
 
         contexts = parent.getContext();
 
-        return request;
+        return new MaterialAdapter.MaterialViewHolder(binding);
     }
-    public void filterList(List<Material> materialList){
+    public void filterList(ArrayList<Material> materialList){
         this.materialList = materialList;
         notifyDataSetChanged();
     }
@@ -124,9 +129,13 @@ public interface addClick{
 
     @Override
     public void onBindViewHolder(@NonNull MaterialViewHolder holder, int position) {
-        final Material material = materialList.get(position);
+//        final Material material = materialList.get(position);
 //        notifyDataSetChanged();
+
+        final Material material = materialList.get(position);
         holder.bind(material);
+
+//        holder.itemRowBinding.setClicklisten(this::PrcButtonClicked);
 
 //        notifyDataSetChanged();
     }
@@ -146,13 +155,26 @@ public interface addClick{
         Button loadButton, unloadButton, addButton, foundButton, prcButton;
         Material material;
         ImageView materialImage, camerabut, locButton;
+        LoadItemCardBinding itemRowBinding;
+
+        public MaterialViewHolder(LoadItemCardBinding itemRowBinding){
+            super(itemRowBinding.getRoot());
+            this.itemRowBinding = itemRowBinding;
+        }
+
+        public void bind(Material2 material2){
+
+            itemRowBinding.setVariable(3, getAdapterPosition());
+            itemRowBinding.setMat(material2);
+            itemRowBinding.executePendingBindings();
+        }
 
 
 
         /*
         LOAD material view holder
          */
-        public MaterialViewHolder(@NonNull View itemView, final loadClick loadListener, final unloadClick unloadListener, final foundClick foundListener, final cameraClick cameraListener,final prcClick prcListener) {
+        public MaterialViewHolder(@NonNull View itemView, final loadClick loadListener, final unloadClick unloadListener, final foundClick foundListener, final cameraClick cameraListener) {
 
             super(itemView);
 
@@ -164,7 +186,6 @@ public interface addClick{
                 unloadButton = (Button) itemView.findViewById(R.id.unload_button);
                 foundButton = (Button) itemView.findViewById(R.id.found_button);
                 locButton = (ImageView) itemView.findViewById(R.id.location_btn);
-
                 camerabut = (ImageView) itemView.findViewById(R.id.comment_btn);
                 prcButton = (Button) itemView.findViewById(R.id.process_button);
 
@@ -179,9 +200,9 @@ public interface addClick{
 
                     @Override
                     public void onClick(View v) {
-                        materialList.get(getAdapterPosition()).setLoaded(true);
-                        materialList.get(getAdapterPosition()).setFound(true);
-                        materialList.get(getAdapterPosition()).setPrc(false);
+//                        materialList.get(getAdapterPosition()).setLoaded(true);
+//                        materialList.get(getAdapterPosition()).setFound(true);
+//                        materialList.get(getAdapterPosition()).setPrc(false);
 
 //                       loadListener.loadButtonClicked(getAdapterPosition());
 //                        Log.i("click","load button clicked");
@@ -217,12 +238,13 @@ public interface addClick{
                     cameraListener.cameraButtonClick(getAdapterPosition());
                 }
             });
-            prcButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    prcListener.PrcButtonClicked(getAdapterPosition());
-                }
-            });
+
+//            prcButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    prcListener.PrcButtonClicked(getAdapterPosition());
+//                }
+//            });
         }
 
         void bind(Material material) {

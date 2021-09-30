@@ -1,5 +1,6 @@
 package com.example.listing.Utils;
 
+import com.example.listing.models.LoadAction;
 import com.example.listing.models.Plan2;
 import com.example.listing.models.ImageList;
 
@@ -27,6 +28,9 @@ public interface RetrofitInterface {
     @GET()
     Call<ResponseBody> GetVehicle(@Url String filter);
 
+    @GET()
+    Call<ResponseBody> portal();
+
 
     //VehicleSet('')
 
@@ -36,15 +40,14 @@ public interface RetrofitInterface {
     @GET
     Call<ImageList> getImageList(@Url String filter);
 
-
-
     @GET()
     Call<ResponseBody> retrieveNotes(@Url String filter);
 
     @POST("NoteSet")
     Call<ResponseBody> submitNote(@Body SAPNote note, @Header("x-csrf-token") String Token);
 
-
+    @POST("")
+    Call<ResponseBody> postLoadAction(@Body LoadAction loadAction, @Header("x-csrf-token") String token);
 
 
 }

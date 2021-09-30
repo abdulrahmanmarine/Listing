@@ -6,18 +6,14 @@ package com.example.listing.Plan;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
-
         import androidx.core.content.ContextCompat;
         import androidx.databinding.DataBindingUtil;
-
         import androidx.recyclerview.widget.RecyclerView;
-
         import com.example.listing.Kotlin.CommonModule;
         import com.example.listing.Material.Material;
         import com.example.listing.PlanClickListener;
         import com.example.listing.R;
-
-        import com.example.listing.databinding.PlanCardBinding;
+            import com.example.listing.databinding.PlanCardBinding;
         import com.example.listing.models.Material2;
         import com.example.listing.models.Plan2;
 
@@ -30,21 +26,17 @@ public class PlanAdapter_2 extends RecyclerView.Adapter<PlanAdapter_2.ViewHolder
     private Context context;
     PlanClickListener onCallBack;
 
-
-
-
     public PlanAdapter_2(PlanClickListener listener, ArrayList<Plan2> mParam1) {
-
         this.Plan2List = mParam1;
         this.onCallBack=listener;
     }
 
     @Override
     public PlanAdapter_2.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         PlanCardBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.plan_card, parent, false);
-
 
         return new ViewHolder(binding);
     }
@@ -55,10 +47,6 @@ public class PlanAdapter_2 extends RecyclerView.Adapter<PlanAdapter_2.ViewHolder
         holder.bind(plan);
 
         holder.itemRowBinding.setItemClickListener(this);
-
-
-
-
     }
 
     @Override
@@ -69,10 +57,15 @@ public class PlanAdapter_2 extends RecyclerView.Adapter<PlanAdapter_2.ViewHolder
             return 0;
     }
 
+//    @Override
+//    public void onItemClick(Plan2 plan, int pos) {
+//       this.onCallBack.onItemClick(plan,pos);
+//       this.onCallBack.onItemClick(pos);
+//    }
+
     @Override
     public void onItemClick(Plan2 plan, int pos) {
-       this.onCallBack.onItemClick(plan,pos);
-
+        this.onCallBack.onItemClick(plan, pos);
     }
 
 
@@ -85,7 +78,7 @@ public class PlanAdapter_2 extends RecyclerView.Adapter<PlanAdapter_2.ViewHolder
         }
 
         public void bind(Plan2 plan) {
-            itemRowBinding.setVariable(1, plan);
+            itemRowBinding.setPlan(plan);
             itemRowBinding.setPos(getAdapterPosition());
             itemRowBinding.executePendingBindings();
 

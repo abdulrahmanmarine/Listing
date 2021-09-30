@@ -30,13 +30,13 @@ import java.util.List;
 
  * create an instance of this fragment.
  */
-public class PlanFragment extends Fragment{
+public class PlanFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private LoaderFragmentClickListener listener;
+    private PlanClickListener listener;
     List<Plan2> plans = new ArrayList<>();
     int currentpos;
 
@@ -50,8 +50,8 @@ public class PlanFragment extends Fragment{
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if(context instanceof LoaderFragmentClickListener){
-            listener = (LoaderFragmentClickListener) context;
+        if(context instanceof PlanClickListener){
+            listener = (PlanClickListener) context;
         }else{
             throw new ClassCastException("activity does not implement fragment listener interface");
         }
@@ -67,7 +67,7 @@ public class PlanFragment extends Fragment{
         // Required empty public constructor
     }
 
-    public static PlanFragment newInstance(ArrayList<Plan2> param1){
+    public static PlanFragment newInstance(ArrayList<Plan2> param1) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARG_PARAM1, param1);
         //bundle.putString(ARG_PARAM2, param2);
@@ -85,7 +85,6 @@ public class PlanFragment extends Fragment{
          Bundle bundle  = getArguments();
          if(bundle!=null){
              mParam1 = (ArrayList<Plan2>) getArguments().getSerializable(ARG_PARAM1);
-
          }
 
 
@@ -98,9 +97,9 @@ public class PlanFragment extends Fragment{
         View v = inflater.inflate(R.layout.fragmentlist, container, false);
 
         rv = v.findViewById(R.id.recview);
-        myadapter = new PlanAdapter_2((PlanClickListener) listener, mParam1);
-
         rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+
+        myadapter = new PlanAdapter_2(listener, mParam1);
         rv.setAdapter(myadapter);
 
         runAnimationAgain();
@@ -112,9 +111,6 @@ public class PlanFragment extends Fragment{
         EditText editText = (EditText) v.findViewById(R.id.searching);
 
         editText.setEnabled(false);
-
-
-
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -153,13 +149,6 @@ public class PlanFragment extends Fragment{
       //  myadapter.filterList(filteredList);
     }
 
-
-
-
-    public interface LoaderFragmentClickListener {
-        void LoaderFragmentInteraction(Plan2 plan);
-    }
-
     public void runAnimationAgain() {
         final LayoutAnimationController controller =
                 AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.gridlayout_animation_from_bottom);
@@ -170,6 +159,10 @@ public class PlanFragment extends Fragment{
     }
 
     public void dataChanged(){ myadapter.notifyDataSetChanged(); }
+
+    public interface LoaderFragmentClickListener {
+        void LoaderFragmentInteraction(Plan2 plan);
+    }
 
 
 

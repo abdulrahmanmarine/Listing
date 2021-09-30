@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
-            name="item"
+            name="plan"
             type="com.example.listing.models.Plan2" />
 
         <variable
@@ -24,8 +25,7 @@
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
-        android:onClick="@{() -> itemClickListener.onItemClick(item,pos)}"
-
+        android:onClick="@{() -> itemClickListener.onItemClick(plan, pos)}"
         android:layout_margin="2.8dp"
         app:contentPaddingBottom="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -142,6 +142,7 @@
                 android:layout_height="20dp"
                 android:layout_marginStart="4dp"
                 android:ems="6"
+                android:text="@{plan.zuphrLpid}"
                 android:textColor="@color/SaDarkGray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -158,6 +159,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="@dimen/list_card_tv_margin2"
                 android:ems="7"
+                android:text="@{plan.zuphrLpid}"
                 android:textColor="@color/SaDarkGray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -175,6 +177,8 @@
                 android:ems="7"
                 android:textAlignment="center"
                 android:textColor="@color/SaDarkGray"
+                android:text="@{plan.zuphrFpDate}"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -191,6 +195,8 @@
                 android:ems="7"
                 android:textAlignment="center"
                 android:textColor="@color/SaDarkGray"
+                android:text="@{plan.zuphrFpTime}"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintStart_toEndOf="@id/pt_time"

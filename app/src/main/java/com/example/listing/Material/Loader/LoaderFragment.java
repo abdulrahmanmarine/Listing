@@ -18,6 +18,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.Fade;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,13 +27,19 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.listing.CameraButtonClicked;
+import com.example.listing.LoadButtonClicked;
 import com.example.listing.Material.Material;
 import com.example.listing.Material.MaterialAdapter;
 
+import com.example.listing.Material.MaterialAdapter_2;
+import com.example.listing.PrcButtonClicked;
 import com.example.listing.R;
 import com.example.listing.Plan.PlanFragment;
 import com.example.listing.Plan.Plan;
+import com.example.listing.UnloadButtonClicked;
 import com.example.listing.models.Material2;
 import com.example.listing.notes.RedesignedNotesFragment;
 
@@ -44,7 +51,7 @@ import java.util.List;
  * Use the {@link LoaderFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoaderFragment extends Fragment {
+public class LoaderFragment extends Fragment  {
     private int pPos = 0;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -57,12 +64,14 @@ public class LoaderFragment extends Fragment {
     // TODO: Rename and change types of parameters
     List<Plan> plans;
     private String mParam2, mParam3, mParam4;
-    private ArrayList<Material> mParam1 = new ArrayList<>();
-    private MaterialAdapter materialAdapter;
+    //private ArrayList<Material> mParam1 = new ArrayList<>();
+    private ArrayList<Material2> mParam1 = new ArrayList<>();
+    private MaterialAdapter_2 materialAdapter;
     private static Context contexts;
     private static LoaderFragment fragment = null;
     private Boolean isLoad = true;
     ImageButton btnCapture;
+
 
 
     public LoaderFragment() {
@@ -105,24 +114,22 @@ public class LoaderFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = (ArrayList<Material>) getArguments().getSerializable(ARG_PARAM1);
+            mParam1 = (ArrayList<Material2>) getArguments().getSerializable(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
             mParam3 = getArguments().getString(ARG_PARAM3);
             mParam4 = getArguments().getString(ARG_PARAM4);
         }
-
-
     }
 
     private void filter2(String text) {
-        ArrayList<Material> filteredList = new ArrayList<>();
-
-        for (Material mat : mParam1) {
-            if (mat.getName().toLowerCase().contains(text.toLowerCase())) {
-                filteredList.add(mat);
-            }
-        }
-        materialAdapter.filterList(filteredList);
+//        ArrayList<Material2> filteredList = new ArrayList<>();
+//
+//        for (Material2 mat : mParam1) {
+//            if (mat.getZuphrShortxt().toLowerCase().contains(text.toLowerCase())) {
+//                filteredList.add(mat);
+//            }
+//        }
+//        materialAdapter.filterList(filteredList);
     }
 
     @Override
@@ -168,7 +175,46 @@ public class LoaderFragment extends Fragment {
         dest_tv.setText(mParam4);
 
 
-        materialAdapter = new MaterialAdapter(mParam1);
+        LoadButtonClicked loadListener = new LoadButtonClicked() {
+            @Override
+            public void loadButtonClick(int pos) {
+                mParam1.get(pos).getZuphrLoada().setStatus("loaded");
+                materialAdapter.notifyDataSetChanged();
+            }
+        };
+
+        UnloadButtonClicked unloadListener = new UnloadButtonClicked() {
+            @Override
+            public void unloadButtonClicked(int pos) {
+                mParam1.get(pos).setZuphrStatus("unload");
+                materialAdapter.notifyDataSetChanged();
+            }
+        };
+
+        PrcButtonClicked prcListener = new PrcButtonClicked() {
+            @Override
+            public void PrcButtonClicked(int pos) {
+                mParam1.get(pos).setZuphrStatus("processing");
+                materialAdapter.notifyDataSetChanged();
+            }
+        };
+
+//        CameraButtonClicked cameraListener = new MaterialAdapter.cameraClick() {
+//            @Override
+//            public void cameraButtonClick(int pos) {
+//                FragmentManager fm = getChildFragmentManager();
+//                fm.beginTransaction().add(new NotesFragment(Integer.parseInt(mParam2.replace("Plan# ","")),mParam1.get(pos).getItemID()),"Comments")
+//                        .commit();
+//                pPos = pos;
+//            }
+//
+//        };
+
+
+
+
+        materialAdapter = new MaterialAdapter_2(mParam1, loadListener, unloadListener, prcListener);
+        rv.setAdapter(materialAdapter);
 ////        myAdapter = detAdapter;
 
         //animation
@@ -177,166 +223,16 @@ public class LoaderFragment extends Fragment {
         materialAdapter.notifyDataSetChanged();
         rv.scheduleLayoutAnimation();
 
-
-        // For loading
-
-        if (isLoad) {
-
-            materialAdapter.setCameraListener(new MaterialAdapter.cameraClick() {
-                @RequiresApi(api = Build.VERSION_CODES.M)
-                @Override
-                public void cameraButtonClick(int pos) {
-//                    Intent cInt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    startActivityForResult(cInt, 1);
-//                    DialogFragment fragment = new NotesFragment(Integer.parseInt(mParam2),Integer.parseInt(mParam1.get(pos).getName()));
-//                    fragment.show(getChildFragmentManager(), "Item Notes");
-
-                    FragmentManager fm = getChildFragmentManager();
-                 //TODO update model to get year ,plan id,matrial id
-                    fm.beginTransaction().add(new RedesignedNotesFragment("STEV","","","","")
-                            ,"Comments")
-                            .commit();
-
-
-                    pPos = pos;
-
-
-
-                }
-
-            });
-
-
-            materialAdapter.setUnloadListener(new MaterialAdapter.unloadClick() {
-                @Override
-                public void unloadButtonClick(int pos) {
-                    mParam1.get(pos).setLoaded(false);
-                    mParam1.get(pos).setFound((true));
-                    mParam1.get(pos).setPrc((false));
-                    //mParam1.get(pos).setPrc(true);
-                    materialAdapter.notifyDataSetChanged();
-                    //materialAdapter.notifyDataSetChanged();
-                    //To update myadapter
-                    notifDataChanged();
-//                    ((MainActivity) getActivity()).sortBeer();
-//                    ((MainActivity) getActivity()).dataChanged();
-                    //myAdapter.notifyDataSetChanged();
-                }
-            });
-            /*
-            Load button listener
-             */
-            materialAdapter.setLoadListener(new MaterialAdapter.loadClick() {
-                @Override
-                public void loadButtonClicked(int pos) {
-                    mParam1.get(pos).setLoaded(true);
-                    mParam1.get(pos).setFound(true);
-                    mParam1.get(pos).setPrc(false);
-                    // mParam1.get(pos).setLoaded(true);
-                    // mParam1.get(pos).setFound(true);
-                    materialAdapter.notifyDataSetChanged();
-                    //To update myadapter
-                    notifDataChanged();
-//                    ((MainActivity) getActivity()).dataChanged();
-                }
-            });
-
-            materialAdapter.setPrcListener(new MaterialAdapter.prcClick() {
-                @Override
-                public void PrcButtonClicked(int pos) {
-                    mParam1.get(pos).setLoaded(false);
-                    mParam1.get(pos).setFound(true);
-                    mParam1.get(pos).setPrc(true);
-                    // mParam1.get(pos).setLoaded(true);
-                    // mParam1.get(pos).setFound(true);
-                    materialAdapter.notifyDataSetChanged();
-                    //To update myadapter
-                    notifDataChanged();
-//                    ((MainActivity) getActivity()).dataChanged();
-                }
-            });
-
-            /*
-            Unload button listener
-             */
-
-
-            /*
-            Found button listener
-             */
-            materialAdapter.setFoundListener(new MaterialAdapter.foundClick() {
-                @Override
-                public void foundButtonClick(int pos) {
-                    mParam1.get(pos).setFound(false);
-                    mParam1.get(pos).setLoaded(false);
-                    mParam1.get(pos).setPrc(false);
-
-                    materialAdapter.notifyDataSetChanged();
-                    notifDataChanged();
-//                    ((MainActivity) getActivity()).dataChanged();
-                }
-            });
-        }
-
-        rv.setAdapter(materialAdapter);
         GridLayoutManager grm = new GridLayoutManager(getActivity(), 2);
         grm.offsetChildrenHorizontal(1);
         rv.setLayoutManager(grm);
 
-           /*
-            Title animation
-             */
-//        TextView tv = v.findViewById(R.id.reqNum_txtfrag);
         ViewGroup vg = v.findViewById(R.id.cont);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
             Fade fade = new Fade();
             TransitionManager.beginDelayedTransition(vg, fade);
-//            tv.setVisibility(View.INVISIBLE);
         }
-        //
-        //        animFadeIn = AnimationUtils.loadAnimation(contexts,
-        //                R.anim.fade_in);
-//        tv.setVisibility(View.INVISIBLE);
-//        animFadeIn = AnimationUtils.loadAnimation(getActivity()  ,
-//                R.anim.fade_in);
-////        tv.startAnimation(animSlideDown);
-//        tv.startAnimation(animFadeIn);
-//        tv.setText(mParam2);
-
-
-//        Button loadBut = v.findViewById(R.id.load_button);
-//        loadBut.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mParam3.get()
-//            }
-//        });
-        // detAdapter.notifyDataSetChanged();
         return v;
     }
 
-    public void notifDataChanged() {
-        FragmentManager fm = getFragmentManager();
-        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.constraintLayout4);
-        fragm.dataChanged();
-
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-       // Toast.makeText(contexts, "Entered ON Activity Results", Toast.LENGTH_SHORT).show();
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            //Toast.makeText(contexts, "Entered ON Activity Results OK!", Toast.LENGTH_SHORT).show();
-            Bitmap bmp = (Bitmap) data.getExtras().get("data");
-            mParam1.get(pPos).setBmpImage(bmp);
-            materialAdapter.notifyDataSetChanged();
-
-
-        }
-    }
-
-
-
-
 }
-

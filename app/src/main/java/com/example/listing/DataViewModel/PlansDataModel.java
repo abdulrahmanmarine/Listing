@@ -9,6 +9,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 
+import com.example.listing.AssignDriver.AssignPair;
+import com.example.listing.models.Driver;
+import com.example.listing.models.Material2;
 import com.example.listing.models.Plan2;
 import com.example.listing.Material.Material;
 import com.example.listing.R;
@@ -17,25 +20,32 @@ import com.example.listing.Utils.RetrofitInterface;
 import com.example.listing.models.ImageList;
 import com.example.listing.models.LoadAction;
 import com.example.listing.models.PlanUnpack;
+import com.example.listing.models.Vehicle;
 import com.example.listing.models.imagenode;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.http.auth.AuthenticationException;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PlansDataModel extends ViewModel {
 
     public MutableLiveData<List<Plan2>> Plans = new MutableLiveData<>();
-
+    public  MutableLiveData<Plan2> plan = new MutableLiveData<>();
     public MutableLiveData<List<Material>>MatrialsList = new MutableLiveData<>();
     public MutableLiveData<Material> Matrial = new MutableLiveData<>();
 
@@ -63,8 +73,68 @@ public class PlansDataModel extends ViewModel {
     }
 
 
-    public void getplans(Application application){
+    public void getplans(Application application) throws IOException {
+        //OFFLINE DATA RETRIEVAL
 
+        List<Plan2> temp = new ArrayList<>();
+        List<Material2> mats = new ArrayList<>();
+        List<Driver> drivers = new ArrayList<>();
+        List<Vehicle> vehicles = new ArrayList<>();
+        List<AssignPair> assignPairs = new ArrayList<>();
+
+    LoadAction load = new LoadAction("lpid", "mjahr", "mblpo", "loadid",
+            "acttype", "assignedquan", "unit", false,"fpdate", "fptime", "name", "size", "confirmedquan",
+            "zuphract", "driver", "weight", "vehicle", "status", "content");
+
+        Driver driver1 = new Driver("3", "Abdul", "Heavy Vehicle Driving",
+                "456324", "Saudi", "91 66778899", "driver.test@gmail.com");
+        Driver driver2 = new Driver("2", "Ahmed", "Small Vehicle Driving",
+                "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
+
+        Vehicle vehicle1 = new Vehicle("3","Medium", "Truck", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456");
+        Vehicle vehicle2 = new Vehicle("2","Medium", "Crane", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456");
+
+        drivers.add(driver1);
+        drivers.add(driver2);
+
+
+
+
+        mats.add(new Material2("actquan", "String log",  load, "String zuphrMovem", "String zuphrActtype",
+                "String zuphrContents", "String zuphrHeight", "String zuphrLength", "String zuphrLpid",
+                "String zuphrObjecte", "String zuphrSchar"," String zuphrFrom", "String zuphrSchtask",
+                "String zuphrSeq", "String zuphrWidth", "String zuphrShipper", "String zuphrTo",
+                "String zuphrVolmeins", "String zuphrMjahr", "String zuphrMblpo", "String zuphrStgid",
+                "String zuphrMatnr"," String zuphrReqid", "String zuphrReqitm", "String zuphrShortxt",
+                "String zuphrDescrip", "String zuphrQuan", "String meins", "String zuphrOffshore",
+                "String zuphrAreacode", "String zuphrStatus", "String zuphrClass", "String zuphrDeleted",
+                "String zuphrStatdt", "String zuphrCompflg", "String zuphrCompdat", "String zuphrAction",
+               " String zuphrResponse", "String zuphrAutoact", "String zuphrActposgrp", "String zuphrSent",
+                "String zuphrActuname", "String zuphrActdate", "String zuphrActtime", "String zuphrWellnm",
+                "String zuphrEquipnumber", "String zuphrCnumber", "String zuphrTicketno", "String zuphrMfrpn",
+                "String zuphrBitType", "String zuphrBitstatus", "String zuphrSrlno"," String zuphrGl",
+                "String zuphrCostcen", "String zuphrMattype", "String zuphrFpDate", "String zuphrFpTime",
+                "String zuphrFpName", drivers, vehicles));
+
+
+
+        temp.add(new Plan2("String zuphrLoadtype", false, "String zuphrActtype", "String zuphrStatus",
+                "String zuphrVesselName", "String zuphrCaptain", "String zuphrStation", "String zuphrLpid",
+                "String majhr"," String zuphrLpname", "String zuphrProfid", "String zuphrRqtype", "String zuphrLpdate",
+                "String zuphrLptime", "String zuphrLpuser", "String zuphrLifnr", "String zuphrVessel",
+               false, false, "String zuphrFpDate", "String zuphrFpTime",
+                "String zuphrFpName", mats));
+
+
+        Plans.setValue(temp);
+
+        Log.i("response-plan-size" ,Plans.getValue().size()+"");
+
+        //ONLINE DATA RETRIEVAL
+
+/*
         RestApi.initializer(application,null);
        retrofitInterface.getPlans("Fetch").enqueue(new Callback<PlanUnpack>() {
            @Override
@@ -95,6 +165,25 @@ public class PlansDataModel extends ViewModel {
 
            }
        });
+
+        retrofitInterface.portal().enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                   }
+                Log.i("response-portal" ,response.code()+""+response.message());
+
+
+
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i("response-portal-http" ,t.getMessage()+t.getLocalizedMessage());
+
+            }
+        });
+*/
+
    }
 
 
@@ -173,6 +262,24 @@ public class PlansDataModel extends ViewModel {
                 Log.i("response-http" ,t.getMessage()+t.getLocalizedMessage());
             }
         });
+    }
+
+    public void postLoadAction(LoadAction loadAction){
+        SharedPreferences preferences=application.getSharedPreferences(application.getResources()
+                .getString(R.string.SharedPrefName), Activity.MODE_PRIVATE);
+        String token2 =preferences.getString("x-csrf-token","");
+        retrofitInterface.postLoadAction(loadAction, token2).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
     }
 
     public void StroingImages(Application application, List<imagenode> imagenode,String MatrialId)
