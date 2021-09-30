@@ -53,6 +53,8 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
     private ArrayList<Driver> chosenDrivers = new ArrayList<>();
     private ChosenDriverAdapter chosenDriverAdapter;
 
+    private ChosenDriverCardAdapter chosenDriverCardAdapter;
+
 
     String simage;
 
@@ -128,7 +130,7 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
                 int newPos = pos;
                 chosenDriverAdapter.notifyDataSetChanged();
                 chosenDriverAdapter.notifyItemRemoved(newPos);
-                chosenDriverAdapter.notifyItemRangeChanged(newPos, chosenVehicles.size());
+                chosenDriverAdapter.notifyItemRangeChanged(newPos, chosenDrivers.size());
             }
         };
 
@@ -194,10 +196,11 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
 
 
         materialParam = (Material2) getArguments().getSerializable(MATERIAL_2);
-        Log.i("Materialparamtest", ""+materialParam.getDrivers().get(0).getZuphrdrvrName());
+
 
         ArrayList<Driver> drivers = (ArrayList<Driver>) materialParam.getDrivers();
         chosenVehicles = (ArrayList<Vehicle>) materialParam.getVehicles();
+        chosenDrivers = (ArrayList<Driver>) materialParam.getDrivers();
 
 
         //setting adapter for loaders/drivers recycler
@@ -307,16 +310,20 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
         );
 */
 
+
         doneBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                materialParam.setDrivers(chosenDrivers);
+                materialParam.setVehicles(chosenVehicles);
+
                 dismiss();
-//                ((DispatcherFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.item_recycler)).dataChangedDer();
-////                ((MainActivity) getActivity()).dataChanged();
+        //                ((DispatcherFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.item_recycler)).dataChangedDer();
+//                ((MainActivity) getActivity()).dataChanged();
 //                notifDataChanged();
-//
-//                //TODO change to be list of drivers and list of vehicles to send data from fragment to main activity
-//                positiveListener.onPositiveClick(driv, vehi);
+
+                //TODO change to be list of drivers and list of vehicles to send data from fragment to main activity
+//               positiveListener.onPositiveClick(chosenDrivers, chosenVehicles);
             }
         });
 
@@ -373,7 +380,7 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
     }
 
     public interface OnPositiveClickListener{
-        void onPositiveClick(String text, String text2);
+        void onPositiveClick(ArrayList<Driver> text, ArrayList<Vehicle> text2);
     }
 
     public interface OnNegativeClickListener{

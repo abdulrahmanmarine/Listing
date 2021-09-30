@@ -96,9 +96,9 @@
                     android:layout_width="255dp"
                     android:layout_height="67dp"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
-                    android:scrollbars="vertical"
+                    android:layout_marginTop="12dp"
                     android:background="@drawable/inner_rounded_shape"
+                    android:scrollbars="vertical"
                     app:layout_constraintStart_toEndOf="@+id/driver_chosen_list"
                     app:layout_constraintTop_toBottomOf="@+id/pair_list_tv" />
 

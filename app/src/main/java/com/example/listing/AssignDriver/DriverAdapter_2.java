@@ -26,6 +26,7 @@ public class DriverAdapter_2 extends RecyclerView.Adapter<DriverAdapter_2.ViewHo
     private AddButtonClicked addListener;
 
 
+
     public DriverAdapter_2(List<Material2> materials, AddButtonClicked addListener) {
         this.materials = materials;
         this.addListener = addListener;
@@ -50,6 +51,9 @@ public class DriverAdapter_2 extends RecyclerView.Adapter<DriverAdapter_2.ViewHo
         Material2 material = materials.get(position);
         holder.bind(material);
         holder.itemRowBinding.setAddButtonListen(addListener);
+
+        ChosenDriverCardAdapter chosenDriverCardAdapter = new ChosenDriverCardAdapter((ArrayList<Driver>) material.getZuphrLoada().getDriver());
+        holder.chosenDriverList.setAdapter(chosenDriverCardAdapter);
     }
 
     @Override
@@ -59,13 +63,18 @@ public class DriverAdapter_2 extends RecyclerView.Adapter<DriverAdapter_2.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public AssignCardBinding itemRowBinding;
+        public RecyclerView chosenDriverList;
         boolean incomplete = true;
         public ViewHolder(AssignCardBinding itemRowBinding) {
             super(itemRowBinding.getRoot());
             this.itemRowBinding = itemRowBinding;
+            chosenDriverList = itemRowBinding.chosenDriversCard;
         }
 
         public void bind(Material2 material) {
+            if(material.getDrivers().size() != 0) {
+                itemRowBinding.setDriver(material.getDrivers().get(0));
+            }
             itemRowBinding.setItem(material);
             itemRowBinding.setPos(getAdapterPosition());
             itemRowBinding.executePendingBindings();

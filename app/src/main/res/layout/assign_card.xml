@@ -15,6 +15,10 @@
         <variable
             name="pos"
             type="int" />
+
+        <variable
+            name="driver"
+            type="com.example.listing.models.Driver" />
     </data>
 
 <androidx.cardview.widget.CardView
@@ -87,49 +91,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.30" />
 
-        <TextView
-            android:id="@+id/driver_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:maxLines="1"
-            android:ems="7"
-            android:text="@{item.drivers.get(pos).zuphrdrvrName}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/driver_pt"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.255"
-            />
-
-        <TextView
-            android:id="@+id/vehicle_pt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Vehicle: "
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.443"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/driver_pt"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/vehicle_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:maxLines="1"
-            android:ems="6"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-
-            app:layout_constraintStart_toEndOf="@+id/vehicle_pt"
-            app:layout_constraintTop_toTopOf="parent" />
-
 
         <!--
                 <Button
@@ -147,17 +108,26 @@
                     -->
 
         <TextView
+            android:id="@+id/vehicle_pt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:text="Vehicle: "
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/driver_pt"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3" />
+
+        <TextView
             android:id="@+id/quan_pt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:text="Quantity: "
             app:layout_constraintBottom_toTopOf="@id/add_button"
             app:layout_constraintHorizontal_bias="0.456"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vehicle_pt"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintRight_toRightOf="parent" />
 
         <TextView
             android:id="@+id/quan_tv"
@@ -167,11 +137,10 @@
             android:ems="7"
             android:maxLines="1"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/add_button"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toEndOf="@+id/quan_pt"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.673" />
+            app:layout_constraintTop_toTopOf="@+id/quan_pt" />
 
         <TextView
             android:id="@+id/assignstat"
@@ -218,6 +187,21 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:background="@color/colorPrimaryDark"
+            android:id="@+id/chosen_drivers_card"
+            android:layout_width="73dp"
+            android:layout_height="29dp"
+            app:layout_constraintStart_toStartOf="@+id/driver_pt"
+            app:layout_constraintTop_toBottomOf="@+id/driver_pt" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chosen_vehicles_card"
+            android:layout_width="73dp"
+            android:layout_height="28dp"
+            app:layout_constraintStart_toStartOf="@+id/vehicle_pt"
+            app:layout_constraintTop_toBottomOf="@+id/vehicle_pt" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

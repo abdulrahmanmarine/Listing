@@ -27,6 +27,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.listing.AddButtonClicked;
+import com.example.listing.AssignDriver.AssignMultiDialogFragment;
+import com.example.listing.AssignDriver.ChosenDriverCardAdapter;
 import com.example.listing.AssignDriver.DriverAdapter;
 import com.example.listing.AssignDriver.DriverAdapter_2;
 import com.example.listing.Kotlin.Dispatcher;
@@ -35,7 +37,9 @@ import com.example.listing.Material.MaterialAdapter;
 import com.example.listing.R;
 import com.example.listing.Plan.PlanFragment;
 import com.example.listing.Plan.Plan;
+import com.example.listing.models.Driver;
 import com.example.listing.models.Material2;
+import com.example.listing.models.Vehicle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +49,7 @@ import java.util.List;
  * Use the {@link DispatcherFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DispatcherFragment extends Fragment{
+public class DispatcherFragment extends Fragment implements AssignMultiDialogFragment.OnPositiveClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -65,8 +69,10 @@ public class DispatcherFragment extends Fragment{
     List<Plan> plans;
     private String mParam2, mParam3, mParam4;
     private List<Material2> mParam1 = new ArrayList<>();
+    private ArrayList<Driver> chosenDrivers = new ArrayList<>();
     private MaterialAdapter materialAdapter;
     private DriverAdapter_2 driverAdapter;
+    private ChosenDriverCardAdapter chosenDriverCardAdapter;
     private static Context contexts;
     private static DispatcherFragment fragment = null;
     private Boolean isLoad = true;
@@ -187,6 +193,9 @@ public class DispatcherFragment extends Fragment{
                 notifDataAddChanged();
             }
         };
+        if (chosenDrivers.size() != 0){
+            chosenDriverCardAdapter = new ChosenDriverCardAdapter(chosenDrivers);
+        }
 
         driverAdapter = new DriverAdapter_2(mParam1, addListener);
 ////        myAdapter = detAdapter;
@@ -260,4 +269,8 @@ public class DispatcherFragment extends Fragment{
     }
 
 
+    @Override
+    public void onPositiveClick(ArrayList<Driver> text, ArrayList<Vehicle> text2) {
+        chosenDriverCardAdapter.notifyDataSetChanged();
+    }
 }

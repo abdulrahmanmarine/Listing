@@ -186,7 +186,7 @@ public class LoaderFragment extends Fragment  {
         UnloadButtonClicked unloadListener = new UnloadButtonClicked() {
             @Override
             public void unloadButtonClicked(int pos) {
-                mParam1.get(pos).setZuphrStatus("unload");
+                mParam1.get(pos).getZuphrLoada().setStatus("unload");
                 materialAdapter.notifyDataSetChanged();
             }
         };
@@ -194,7 +194,7 @@ public class LoaderFragment extends Fragment  {
         PrcButtonClicked prcListener = new PrcButtonClicked() {
             @Override
             public void PrcButtonClicked(int pos) {
-                mParam1.get(pos).setZuphrStatus("processing");
+                mParam1.get(pos).getZuphrLoada().setStatus("processing");
                 materialAdapter.notifyDataSetChanged();
             }
         };

@@ -84,7 +84,7 @@ public class PlansDataModel extends ViewModel {
 
     LoadAction load = new LoadAction("lpid", "mjahr", "mblpo", "loadid",
             "acttype", "assignedquan", "unit", false,"fpdate", "fptime", "name", "size", "confirmedquan",
-            "zuphract", "driver", "weight", "vehicle", "status", "content");
+            "zuphract", drivers, "weight", vehicles, "status", "content");
 
         Driver driver1 = new Driver("3", "Abdul", "Heavy Vehicle Driving",
                 "456324", "Saudi", "91 66778899", "driver.test@gmail.com");
@@ -95,11 +95,6 @@ public class PlansDataModel extends ViewModel {
                 "Red", "2012", "DDMMYYYY", "123456");
         Vehicle vehicle2 = new Vehicle("2","Medium", "Crane", "456234", "1000",
                 "Red", "2012", "DDMMYYYY", "123456");
-
-        drivers.add(driver1);
-        drivers.add(driver2);
-
-
 
 
         mats.add(new Material2("actquan", "String log",  load, "String zuphrMovem", "String zuphrActtype",

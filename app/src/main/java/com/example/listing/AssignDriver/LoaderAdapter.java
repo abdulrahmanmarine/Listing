@@ -79,6 +79,8 @@ public class LoaderAdapter extends RecyclerView.Adapter<LoaderAdapter.ViewHolder
             holder.loaderName.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDarkBlue));
         }
 
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

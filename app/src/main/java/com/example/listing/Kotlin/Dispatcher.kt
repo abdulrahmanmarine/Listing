@@ -8,6 +8,7 @@ import com.example.listing.AssignDriver.AssignDialogFragment
 import com.example.listing.AssignDriver.AssignDialogFragment.OnNegativeClickListener
 import com.example.listing.AssignDriver.AssignDialogFragment.OnPositiveClickListener
 import com.example.listing.AssignDriver.AssignMultiDialogFragment
+import com.example.listing.AssignDriver.ChosenDriverCardAdapter
 import com.example.listing.DataViewModel.PlansDataModel
 import com.example.listing.DataViewModel.PlansDataModelFactory
 import com.example.listing.Material.Dispatcher.DispatcherFragment
@@ -26,6 +27,7 @@ import java.util.*
 class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragmentClickListener, OnPositiveClickListener, OnNegativeClickListener{
 
     var dialog: DialogFragment? = null
+    lateinit var chosenDriverCardAdapter: ChosenDriverCardAdapter;
     var materialpos = 0
     var po = 0
     val reqs = ArrayList<Plan2?>()
@@ -88,9 +90,6 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
     }
 
     fun showAssignDialog(matpos: Int, material: Material2) {
-
-
-
         materialpos = matpos
         val fra = supportFragmentManager
 //        dialog = AssignMultiDialogFragment.newInstance(reqs[po]!!.materials[matpos].name,
@@ -124,7 +123,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
     override fun onPositiveClick(text: String?, text2: String?) {
         reqs[po]!!.planToItems[materialpos].drivers[0].zuphrdrvrName = text
-
+        chosenDriverCardAdapter
 //        reqs[po]!!.planToItems[materialpos].driver.zuphrdrvrName = text
 //        reqs[po]!!.planToItems[materialpos].vehicle.vehType= text2
         dialog!!.dismiss()

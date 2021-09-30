@@ -105,8 +105,7 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.MaterialVi
             materialImage  = (ImageView) itemView.findViewById(R.id.material_img_card);
             locButton = (ImageButton) itemView.findViewById(R.id.locbut);
             textPlanNum = (TextView) itemView.findViewById(R.id.material_name);
-            textVehicle = (TextView) itemView.findViewById(R.id.vehicle_tv);
-            textDriver = (TextView) itemView.findViewById(R.id.driver_tv);
+
 
 
             addButton.setOnClickListener(new View.OnClickListener() {

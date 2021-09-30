@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
         setterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
@@ -45,11 +47,11 @@ public class LoadAction implements Serializable {
     @JsonProperty("zuphrAct")
     String zuphrAct = "";
     @JsonProperty("zuphrDriver")
-    String driver = "";
+    List<Driver> driver = new ArrayList<>();
     @JsonProperty("zuphrWeight")
     String weight = "";
     @JsonProperty("zuphrVehType")
-    String vehicle = "";
+    List<Vehicle> vehicle = new ArrayList<>();
     @JsonProperty("zuphrStatus")
     String status = "";
     @JsonProperty("zuphrContents")
@@ -58,7 +60,7 @@ public class LoadAction implements Serializable {
     public LoadAction(String zuphrLpid, String zuphrMjahr, String zuphrMblpo, String zuphrLoadid,
                       String zuphrActtype, String assignedQuan, String materialUnit, Boolean zuphrReady,
                       String fpDate, String fpTime, String fpName, String zuphrSize, String confirmedQuan,
-                      String zuphrAct, String driver, String weight, String vehicle, String status, String content) {
+                      String zuphrAct, List<Driver> driver, String weight, List<Vehicle> vehicle, String status, String content) {
         this.zuphrLpid = zuphrLpid;
         this.zuphrMjahr = zuphrMjahr;
         this.zuphrMblpo = zuphrMblpo;
@@ -106,6 +108,30 @@ public class LoadAction implements Serializable {
 
     public String getZuphrMjahr() {
         return zuphrMjahr;
+    }
+
+    public List<Driver> getDriver() {
+        return driver;
+    }
+
+    public void setDriver(List<Driver> driver) {
+        this.driver = driver;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public List<Vehicle> getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(List<Vehicle> vehicle) {
+        this.vehicle = vehicle;
     }
 
     public void setZuphrMjahr(String zuphrMjahr) {
