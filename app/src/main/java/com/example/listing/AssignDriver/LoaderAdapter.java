@@ -1,5 +1,7 @@
 package com.example.listing.AssignDriver;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,9 +22,9 @@ import java.util.ArrayList;
 
 public class LoaderAdapter extends RecyclerView.Adapter<LoaderAdapter.ViewHolder> {
 
-    private int selectedPosition = -1;
+    private int selectedPosition = 0;
     ArrayList<Driver> loaders;
-
+    Context context;
 
     public LoaderAdapter(ArrayList<Driver> loaders) {
         this.loaders = loaders;
@@ -35,7 +38,6 @@ public class LoaderAdapter extends RecyclerView.Adapter<LoaderAdapter.ViewHolder
         public ViewHolder(@NonNull AssignSpinnerItemBinding itemRowBinding){
             super(itemRowBinding.getRoot());
             this.itemRowBinding = itemRowBinding;
-            radioButton = itemRowBinding.getRoot().findViewById(R.id.radioButton);
             loaderName = itemRowBinding.getRoot().findViewById(R.id.vehicle_list_name);
         }
 
@@ -43,7 +45,7 @@ public class LoaderAdapter extends RecyclerView.Adapter<LoaderAdapter.ViewHolder
             itemRowBinding.setItem(driver);
             itemRowBinding.setPos(getAdapterPosition());
             itemRowBinding.executePendingBindings();
-                boolean laststat, load;
+            boolean laststat, load;
         }
     }
 
@@ -53,6 +55,7 @@ public class LoaderAdapter extends RecyclerView.Adapter<LoaderAdapter.ViewHolder
         AssignSpinnerItemBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.assign_spinner_item, parent, false);
+        context = parent.getContext();
 
         return new ViewHolder(binding);
     }
@@ -66,28 +69,37 @@ public class LoaderAdapter extends RecyclerView.Adapter<LoaderAdapter.ViewHolder
         final Driver loader = loaders.get(position);
 //        holder.loaderName.setText(loader.getZuphrdrvrName());
 
-        holder.loaderName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                holder.radioButton.setChecked(position == selectedPosition);
-                holder.radioButton.setTag(position);
-                        selectedPosition = holder.getAdapterPosition();
-                        notifyDataSetChanged();
-                        Log.i("radio pos", selectedPosition+" ");
+        if(selectedPosition==position){
+            holder.itemRowBinding.assignDriverCard.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDarkBlue));
+            holder.loaderName.setTextColor(Color.WHITE);
+        }
 
-            }
-        });
-        holder.radioButton.setChecked(position == selectedPosition);
-        holder.radioButton.setTag(position);
-        holder.radioButton.isSelected();
-        holder.radioButton.setOnClickListener(new View.OnClickListener() {
+        else {
+            holder.itemRowBinding.assignDriverCard.setBackgroundColor(Color.WHITE);
+            holder.loaderName.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDarkBlue));
+        }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (selectedPosition == holder.getAdapterPosition()) {
+                    selectedPosition = RecyclerView.NO_POSITION;
+                    notifyDataSetChanged();
+                    return;
+                }
                 selectedPosition = holder.getAdapterPosition();
                 notifyDataSetChanged();
-                Log.i("radio pos", selectedPosition+" ");
             }
         });
+
+//        if(selectedPosition == position){
+//            holder.itemRowBinding.assignDriverCard.setBackgroundColor(Color.RED);
+//
+//        }else{
+//            selectedPosition = RecyclerView.NO_POSITION;
+//            holder.itemRowBinding.assignDriverCard.setBackgroundColor(Color.WHITE);
+//        }
+
     }
 
 

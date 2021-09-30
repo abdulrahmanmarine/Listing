@@ -38,8 +38,6 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
     private OnPositiveClickListener positiveListener;
     private OnNegativeClickListener negativeListener;
 
-
-
     //material object
     private static final String MATERIAL_2 = "materialParam";
     private ArrayList<Driver> driversList = new ArrayList<>();
@@ -134,8 +132,6 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
             }
         };
 
-
-
         //add new pair button
         Button addBut = view.findViewById(R.id.add_btn), cancel_but = view.findViewById(R.id.dialog_cancel);
         //Loader recview
@@ -155,24 +151,46 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
         //Text view for material name
         TextView materialName = view.findViewById(R.id.assign_image_tv);
 
-        RadioButton radioButton = view.findViewById(R.id.radioButton);
-
-
 
         Driver driver1 = new Driver("3", "Abdul", "Heavy Vehicle Driving",
                 "456324", "Saudi", "91 66778899", "driver.test@gmail.com");
         Driver driver2 = new Driver("2", "Ahmed", "Small Vehicle Driving",
+                "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
+        Driver driver3 = new Driver("2", "Ali", "Small Vehicle Driving",
+                "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
+        Driver driver4 = new Driver("2", "Murada", "Small Vehicle Driving",
+                "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
+        Driver driver5 = new Driver("2", "Yousef", "Small Vehicle Driving",
+                "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
+        Driver driver6 = new Driver("2", "Mohammed", "Small Vehicle Driving",
                 "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
 
         Vehicle vehicle1 = new Vehicle("3","Medium", "Truck", "456234", "1000",
                 "Red", "2012", "DDMMYYYY", "123456");
         Vehicle vehicle2 = new Vehicle("2","Medium", "Crane", "456234", "1000",
                 "Red", "2012", "DDMMYYYY", "123456");
+        Vehicle vehicle3 = new Vehicle("2","Medium", "Two Wheel", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456");
+        Vehicle vehicle4 = new Vehicle("2","Medium", "Four Wheel", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456");
+        Vehicle vehicle5 = new Vehicle("2","Medium", "Small Truck", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456");
+        Vehicle vehicle6 = new Vehicle("2","Medium", "Huge Truck", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456");
 
         driversList.add(driver1);
         driversList.add(driver2);
+        driversList.add(driver3);
+        driversList.add(driver4);
+        driversList.add(driver5);
+        driversList.add(driver6);
+
         vehiclesList.add(vehicle1);
         vehiclesList.add(vehicle2);
+        vehiclesList.add(vehicle3);
+        vehiclesList.add(vehicle4);
+        vehiclesList.add(vehicle5);
+        vehiclesList.add(vehicle6);
 
 
         materialParam = (Material2) getArguments().getSerializable(MATERIAL_2);
@@ -187,21 +205,23 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
         loaderList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         loaderList.setAdapter(loaderAdapter);
 
-//        //setting adapter for vehicle recycler
+        //setting adapter for vehicle recycler
         vehicleAdapter = new VehicleAdapter(vehiclesList);
         vehicleList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         vehicleList.setAdapter(vehicleAdapter);
 
+        //setting adapter for chosen vehicle recycler
         chosenVehicleAdapter = new ChosenVehicleAdapter(chosenVehicles, vehicleDeleteButtonClicked);
         chosenVehicleList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         chosenVehicleList.setAdapter(chosenVehicleAdapter);
 
+        //setting adapter for chosen drivers recycler
         chosenDriverAdapter = new ChosenDriverAdapter(chosenDrivers, driverDeleteButtonClicked);
         chosenDriverList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         chosenDriverList.setAdapter(chosenDriverAdapter);
 
 
-/* UNCOMMENT LATER
+/* UNCOMMENT LATER FOR PAIRS
         //setting adapter for pair recycler
         pairAdapter = new PairAdapter(mParam5);
         pairList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
@@ -252,12 +272,15 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
             @Override
             public void onClick(View v) {
 
+                if(loaderAdapter.getSelectedItem() != null){
+                    chosenDrivers.add(loaderAdapter.getSelectedItem());
+                    chosenDriverAdapter.notifyDataSetChanged();
+                }
 
-                chosenDrivers.add(loaderAdapter.getSelectedItem());
-                chosenDriverAdapter.notifyDataSetChanged();
-
-                chosenVehicles.add(vehicleAdapter.getSelectedItem());
-                chosenVehicleAdapter.notifyDataSetChanged();
+                if(vehicleAdapter.getSelectedItem() != null){
+                    chosenVehicles.add(vehicleAdapter.getSelectedItem());
+                    chosenVehicleAdapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -283,6 +306,7 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
                 }
         );
 */
+
         doneBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
