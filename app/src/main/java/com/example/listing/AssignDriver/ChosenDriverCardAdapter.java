@@ -1,5 +1,6 @@
 package com.example.listing.AssignDriver;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
@@ -35,6 +36,7 @@ public class ChosenDriverCardAdapter extends RecyclerView.Adapter<ChosenDriverCa
         }
 
         public void bind(Driver driver) {
+            Log.i("Chosencardadapter", "chosen");
             itemRowBinding.setChosenDriver(driver);
             itemRowBinding.executePendingBindings();
         }
