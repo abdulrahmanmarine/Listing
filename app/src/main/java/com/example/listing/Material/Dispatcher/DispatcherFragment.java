@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +32,7 @@ import com.example.listing.AssignDriver.AssignMultiDialogFragment;
 import com.example.listing.AssignDriver.ChosenDriverCardAdapter;
 import com.example.listing.AssignDriver.DriverAdapter;
 import com.example.listing.AssignDriver.DriverAdapter_2;
+import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.Kotlin.Dispatcher;
 import com.example.listing.Material.Material;
 import com.example.listing.Material.MaterialAdapter;
@@ -60,6 +62,7 @@ public class DispatcherFragment extends Fragment implements AssignMultiDialogFra
     RecyclerView rv;
     private static Bundle mBundleRecView;
     Parcelable state;
+    PlansDataModel model;
 
 
 
@@ -94,7 +97,7 @@ public class DispatcherFragment extends Fragment implements AssignMultiDialogFra
      * @return A new instance of fragment AddFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DispatcherFragment newInstance(ArrayList<Material> param1, String param2, String param3, String param4) {
+    public static DispatcherFragment newInstance(ArrayList<Material2> param1, String param2, String param3, String param4) {
         DispatcherFragment fragment = new DispatcherFragment();
         Bundle args = new Bundle();
         //args.putString(ARG_PARAM1, param1);
@@ -123,6 +126,8 @@ public class DispatcherFragment extends Fragment implements AssignMultiDialogFra
             mParam3 = getArguments().getString(ARG_PARAM3);
             mParam4 = getArguments().getString(ARG_PARAM4);
         }
+
+        model =   new ViewModelProvider(getActivity()).get(PlansDataModel.class);
     }
 
 
@@ -182,29 +187,24 @@ public class DispatcherFragment extends Fragment implements AssignMultiDialogFra
         dest_tv = v.findViewById(R.id.dest_tv);
         dest_tv.setText(mParam4);
 
-
-        AddButtonClicked addListener = new AddButtonClicked() {
-            @Override
-            public void addButtonClicked(int pos) {
-
-                ((Dispatcher) getActivity()).showAssignDialog(pos, mParam1.get(pos));
-
+        model.MatrialsList.observe(getViewLifecycleOwner(),materialList->{
+         String x = null;
+            AddButtonClicked addListener = pos -> {
+                ((Dispatcher) getActivity()).showAssignDialog(pos, materialList.get(pos));
                 driverAdapter.notifyDataSetChanged();
                 notifDataAddChanged();
-            }
-        };
-        if (chosenDrivers.size() != 0){
-            chosenDriverCardAdapter = new ChosenDriverCardAdapter(chosenDrivers);
-        }
-
-        driverAdapter = new DriverAdapter_2(mParam1, addListener);
+            };
+            driverAdapter = new DriverAdapter_2(materialList, addListener,getContext());
 ////        myAdapter = detAdapter;
 
-        //animation
-        final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.layout_animation);
-        rv.setLayoutAnimation(controller);
-        driverAdapter.notifyDataSetChanged();
-        rv.scheduleLayoutAnimation();
+            //animation
+            final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.layout_animation);
+            rv.setLayoutAnimation(controller);
+            driverAdapter.notifyDataSetChanged();
+            rv.scheduleLayoutAnimation();
+            rv.setAdapter(driverAdapter);
+
+        });
 
 
 //        //FOR ASSIGN
@@ -220,7 +220,7 @@ public class DispatcherFragment extends Fragment implements AssignMultiDialogFra
 //            });
 
 
-        rv.setAdapter(driverAdapter);
+
         // For loading
         if(this.getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE){
         rv.setLayoutManager(new GridLayoutManager(getActivity(), 2));}
@@ -271,6 +271,7 @@ public class DispatcherFragment extends Fragment implements AssignMultiDialogFra
 
     @Override
     public void onPositiveClick(ArrayList<Driver> text, ArrayList<Vehicle> text2) {
+
         chosenDriverCardAdapter.notifyDataSetChanged();
     }
 }
