@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.listing.AssignDriver.AssignDialogFragment
 import com.example.listing.AssignDriver.AssignDialogFragment.OnNegativeClickListener
 import com.example.listing.AssignDriver.AssignDialogFragment.OnPositiveClickListener
 import com.example.listing.AssignDriver.AssignMultiDialogFragment
@@ -12,16 +11,11 @@ import com.example.listing.AssignDriver.ChosenDriverCardAdapter
 import com.example.listing.DataViewModel.PlansDataModel
 import com.example.listing.DataViewModel.PlansDataModelFactory
 import com.example.listing.Material.Dispatcher.DispatcherFragment
-import com.example.listing.Material.Material
-import com.example.listing.Plan.Plan
 import com.example.listing.Plan.PlanFragment
 import com.example.listing.PlanClickListener
 import com.example.listing.R
-import com.example.listing.models.Driver
 import com.example.listing.models.Material2
 import com.example.listing.models.Plan2
-import com.example.listing.models.Vehicle
-import org.json.JSONObject
 import java.util.*
 
 class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragmentClickListener, OnPositiveClickListener, OnNegativeClickListener{
@@ -30,13 +24,14 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
     lateinit var chosenDriverCardAdapter: ChosenDriverCardAdapter;
     var materialpos = 0
     var po = 0
+    lateinit var model :PlansDataModel
     val reqs = ArrayList<Plan2?>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loader)
         this.getSupportActionBar()!!.hide()
 
-        var model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(
+         model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(
             PlansDataModel::class.java
         )
         model.getplans(application)
@@ -59,7 +54,8 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
 
     override fun onItemClick(plan: Plan2?, pos: Int) {
-        LoaderFragmentInteraction(plan!!)
+        model.plan.value = plan
+        LoaderFragmentInteraction(pos)
         po = pos
     }
 //    override fun onItemClick(pos: Int) {
@@ -67,18 +63,33 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 //        po = pos
 //    }
 
-    override fun LoaderFragmentInteraction(plan: Plan2) {
-        val textfragment = DispatcherFragment.newInstance(
-            plan.planToItems as ArrayList<Material>,
+    override fun LoaderFragmentInteraction( pos: Int) {
+
+        model.plan.observe(this, {plan: Plan2? ->
+            val planList = model.Plans.value!!
+            planList[pos] = plan
+            model.Plans.value = planList
+            model.MatrialsList.value=plan?.planToItems
+        })
+
+        model.MatrialsList.observe(this,{MaterialList:List<Material2> ->
+
+            val textfragment = DispatcherFragment.newInstance(
+                MaterialList as ArrayList<Material2>?,
 //            plan.req_name,
 //            plan.vessel_num,
 //            plan.destination
-        "","",""
-        )
-        val fm = supportFragmentManager
-        val ft = fm.beginTransaction()
-        ft.replace(R.id.item_recycler, textfragment)
-        ft.commit()
+                "","",""
+            )
+            val fm = supportFragmentManager
+            val ft = fm.beginTransaction()
+            ft.replace(R.id.item_recycler, textfragment)
+            ft.commit()
+
+        })
+
+
+
 
 //
 //        var itemRV : RecyclerView= findViewById(R.id.item_recycler)
@@ -89,12 +100,15 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 //        itemRV.adapter = itemAdapter
     }
 
-    fun showAssignDialog(matpos: Int, material: Material2) {
+    fun showAssignDialog(
+        matpos: Int,
+        material: Material2,
+    ) {
         materialpos = matpos
         val fra = supportFragmentManager
 //        dialog = AssignMultiDialogFragment.newInstance(reqs[po]!!.materials[matpos].name,
 //            reqs[po]!!.materials[matpos].material, driverList, vehicleList, pairList)
-        dialog = AssignMultiDialogFragment.newInstance(material);
+        dialog = AssignMultiDialogFragment.newInstance(matpos,material);
 
 //        dialog = AssignMultiDialogFragment.newInstance(reqs[po]!!.planToItems[matpos].zuphrFpName,
 //            reqs[po]!!.planToItems[matpos].zuphrActquan, reqs[po]!!.planToItems[matpos].drivers as ArrayList<Driver>?

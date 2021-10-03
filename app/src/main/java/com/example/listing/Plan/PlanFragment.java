@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,8 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
+import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.PlanClickListener;
 import com.example.listing.R;
 import com.example.listing.models.Plan2;
@@ -45,6 +48,7 @@ public class PlanFragment extends Fragment {
     private ArrayList<Plan2> mParam1 = new ArrayList<>();
     PlanAdapter_2 myadapter;
     RecyclerView  rv;
+    PlansDataModel model;
 
 
     @Override
@@ -87,6 +91,9 @@ public class PlanFragment extends Fragment {
              mParam1 = (ArrayList<Plan2>) getArguments().getSerializable(ARG_PARAM1);
          }
 
+        model =new ViewModelProvider(getActivity()).get(PlansDataModel.class);
+
+
 
     }
 
@@ -99,10 +106,18 @@ public class PlanFragment extends Fragment {
         rv = v.findViewById(R.id.recview);
         rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
 
-        myadapter = new PlanAdapter_2(listener, mParam1);
-        rv.setAdapter(myadapter);
+        model.Plans.observe(getViewLifecycleOwner(), list -> {
+            if(list!=null)
+            {
+                myadapter = new PlanAdapter_2(listener, (ArrayList<Plan2>) list);
+                rv.setAdapter(myadapter);
+                runAnimationAgain();
 
-        runAnimationAgain();
+            }
+        });
+
+
+
 
         final LayoutAnimationController controller =
                 AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.gridlayout_animation_from_bottom);
@@ -161,7 +176,7 @@ public class PlanFragment extends Fragment {
     public void dataChanged(){ myadapter.notifyDataSetChanged(); }
 
     public interface LoaderFragmentClickListener {
-        void LoaderFragmentInteraction(Plan2 plan);
+        void LoaderFragmentInteraction(int pos);
     }
 
 

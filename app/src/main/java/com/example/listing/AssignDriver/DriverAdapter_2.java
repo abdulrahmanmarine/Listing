@@ -1,11 +1,14 @@
 package com.example.listing.AssignDriver;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listing.AddButtonClicked;
@@ -24,15 +27,14 @@ import java.util.List;
 public class DriverAdapter_2 extends RecyclerView.Adapter<DriverAdapter_2.ViewHolder> {
     private List<Material2> materials;
     private AddButtonClicked addListener;
+    private  Context context;
 
 
 
-    public DriverAdapter_2(List<Material2> materials, AddButtonClicked addListener) {
+    public DriverAdapter_2(List<Material2> materials, AddButtonClicked addListener, Context context) {
         this.materials = materials;
         this.addListener = addListener;
-    }
-
-    public DriverAdapter_2(ArrayList<Driver> mParam3) {
+        this.context= context;
     }
 
 
@@ -52,7 +54,9 @@ public class DriverAdapter_2 extends RecyclerView.Adapter<DriverAdapter_2.ViewHo
         holder.bind(material);
         holder.itemRowBinding.setAddButtonListen(addListener);
 
+        Log.i("datalist",material.getZuphrLoada().getDriver().size()+"");
         ChosenDriverCardAdapter chosenDriverCardAdapter = new ChosenDriverCardAdapter((ArrayList<Driver>) material.getZuphrLoada().getDriver());
+        holder.chosenDriverList.setLayoutManager(new LinearLayoutManager(context));
         holder.chosenDriverList.setAdapter(chosenDriverCardAdapter);
     }
 

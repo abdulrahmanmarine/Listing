@@ -4,6 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.ViewModelProvider
+import com.example.listing.DataViewModel.PlansDataModel
+import com.example.listing.DataViewModel.PlansDataModelFactory
 import com.example.listing.R
 
 
@@ -15,6 +18,7 @@ class Home : AppCompatActivity() {
 
         var loader : ConstraintLayout = findViewById(R.id.loader)
         var dispatcher : ConstraintLayout = findViewById(R.id.dispatcher)
+
 
         loader.setOnClickListener {
             var intent = Intent(applicationContext, Loader::class.java)

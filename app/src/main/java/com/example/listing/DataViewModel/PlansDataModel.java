@@ -46,8 +46,8 @@ public class PlansDataModel extends ViewModel {
 
     public MutableLiveData<List<Plan2>> Plans = new MutableLiveData<>();
     public  MutableLiveData<Plan2> plan = new MutableLiveData<>();
-    public MutableLiveData<List<Material>>MatrialsList = new MutableLiveData<>();
-    public MutableLiveData<Material> Matrial = new MutableLiveData<>();
+    public MutableLiveData<List<Material2>>MatrialsList = new MutableLiveData<>();
+    public MutableLiveData<Material2> Matrial = new MutableLiveData<>();
 
     public MutableLiveData<List<imagenode>> MatrialImageList = new MutableLiveData<>();
     public MutableLiveData<LoadAction> LoadAction = new MutableLiveData<>();
@@ -68,7 +68,7 @@ public class PlansDataModel extends ViewModel {
 
     }
 
-    public void setMatrial(Material matrial) {
+    public void setMatrial(Material2 matrial) {
         Matrial.postValue(matrial);
     }
 

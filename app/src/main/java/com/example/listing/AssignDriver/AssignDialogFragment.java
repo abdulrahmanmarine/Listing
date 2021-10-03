@@ -167,6 +167,7 @@ public class AssignDialogFragment extends DialogFragment implements AdapterView.
                 ((DispatcherFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.item_recycler)).dataChangedDer();
 //                ((MainActivity) getActivity()).dataChanged();
                 notifDataChanged();
+
                 positiveListener.onPositiveClick(driv, vehi);
             }
         });

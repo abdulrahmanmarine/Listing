@@ -18,23 +18,30 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import com.example.listing.Kotlin.pictureMode;
+import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.DriverDeleteButtonClicked;
+import com.example.listing.Plan.Plan;
 import com.example.listing.VehicleDeleteButtonClicked;
 import com.example.listing.Material.Dispatcher.DispatcherFragment;
 import com.example.listing.Plan.PlanFragment;
 import com.example.listing.R;
 import com.example.listing.models.Driver;
+import com.example.listing.models.LoadAction;
 import com.example.listing.models.Material2;
+import com.example.listing.models.Plan2;
 import com.example.listing.models.Vehicle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AssignMultiDialogFragment extends DialogFragment implements AdapterView.OnItemSelectedListener {
 
+    private static int Mpostion;
     private OnPositiveClickListener positiveListener;
     private OnNegativeClickListener negativeListener;
 
@@ -43,6 +50,7 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
     private ArrayList<Driver> driversList = new ArrayList<>();
     private ArrayList<Vehicle> vehiclesList = new ArrayList<>();
     private Material2 materialParam;
+    PlansDataModel model;
 
     private LoaderAdapter loaderAdapter;
     private VehicleAdapter vehicleAdapter;
@@ -90,12 +98,12 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
 //        return dialog;
 //    }
 
-    public static AssignMultiDialogFragment newInstance(Material2 materialParam){
+    public static AssignMultiDialogFragment newInstance(int position,Material2 materialParam){
         AssignMultiDialogFragment fragment = new AssignMultiDialogFragment();
         Bundle args = new Bundle();
 
         args.putSerializable(MATERIAL_2, materialParam);
-
+        Mpostion=position;
         fragment.setArguments(args);
         return fragment;
     }
@@ -111,6 +119,8 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         onClickEvent(view);
+
+        model=new ViewModelProvider(getActivity()).get(PlansDataModel.class);
 
         VehicleDeleteButtonClicked vehicleDeleteButtonClicked = new VehicleDeleteButtonClicked() {
             @Override
@@ -316,6 +326,18 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
             public void onClick(View v) {
                 materialParam.setDrivers(chosenDrivers);
                 materialParam.setVehicles(chosenVehicles);
+
+               Material2 material2= model.MatrialsList.getValue().get(Mpostion);
+                List<Material2> list =model.MatrialsList.getValue();
+                LoadAction loadAction=material2.getZuphrLoada();
+                loadAction.setDriver(chosenDrivers);
+                loadAction.setVehicle(chosenVehicles);
+                material2.setZuphrLoada(loadAction);
+                list.set(Mpostion,material2);
+                Plan2 plan= model.plan.getValue();
+                plan.setPlanToItems(list);
+                model.plan.setValue(plan);
+
 
                 dismiss();
         //                ((DispatcherFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.item_recycler)).dataChangedDer();

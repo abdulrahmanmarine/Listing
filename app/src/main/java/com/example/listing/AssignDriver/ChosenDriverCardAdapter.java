@@ -22,6 +22,7 @@ public class ChosenDriverCardAdapter extends RecyclerView.Adapter<ChosenDriverCa
     ArrayList<Driver> loaders;
 
     public ChosenDriverCardAdapter(ArrayList<Driver> loaders) {
+        Log.d("newlist",loaders.size()+"");
         this.loaders = loaders;
     }
 
