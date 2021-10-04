@@ -28,9 +28,15 @@
             />
 
         <variable
+            name="foundClickListen"
+            type="com.example.listing.FoundButtonClicked" />
+
+        <variable
             name="cameraClickListen"
             type="com.example.listing.CameraButtonClicked"
             />
+
+
 
     </data>
 
@@ -59,35 +65,35 @@
 
 
         <TextView
-            android:id="@+id/quan_pt"
+            android:id="@+id/status_pt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
-            android:text="quantity: "
+            android:text="Status: "
             app:layout_constraintStart_toEndOf="@+id/material_img_card"
             app:layout_constraintTop_toBottomOf="@+id/material_name" />
 
         <TextView
-            android:id="@+id/quan_tv"
+            android:id="@+id/status_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:ems="3"
-            android:text="@{mat.zuphrStatus}"
+            android:ems="5"
+            android:gravity="center"
+            android:text="@{mat.zuphrLoada.status}"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/quan_pt"
-            app:layout_constraintTop_toTopOf="@+id/quan_pt" />
+            app:layout_constraintBottom_toBottomOf="@+id/status_pt"
+            app:layout_constraintStart_toEndOf="@+id/status_pt"
+            app:layout_constraintTop_toTopOf="@+id/status_pt" />
 
         <TextView
             android:id="@+id/loadstat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="5dp"
             android:ems="5"
             android:gravity="center"
-            app:layout_constraintStart_toEndOf="@+id/quan_tv"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
         <TextView
@@ -125,7 +131,7 @@
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quan_pt" />
+            app:layout_constraintTop_toBottomOf="@+id/status_pt" />
 
         <Button
             android:id="@+id/load_button"
@@ -133,13 +139,13 @@
             android:layout_height="40dp"
             android:layout_marginTop="6dp"
             android:background="@color/SaDarkGray"
-            android:text="LoadTest"
+            android:text="Load"
             android:onClick="@{() -> loadClickListen.loadButtonClick(pos)}"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/unload_button"
             app:layout_constraintStart_toEndOf="@+id/material_img_card"
-            app:layout_constraintTop_toBottomOf="@+id/quan_pt" />
+            app:layout_constraintTop_toBottomOf="@+id/status_pt" />
 
         <Button
             android:id="@+id/process_button"
@@ -165,6 +171,7 @@
             android:layout_marginBottom="2dp"
             android:background="#EFCAC7"
             android:text="Not found"
+            android:onClick="@{() -> foundClickListen.foundButtonClicked(pos)}"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

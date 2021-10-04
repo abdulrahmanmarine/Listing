@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.listing.DataViewModel.PlansDataModel
 import com.example.listing.DataViewModel.PlansDataModelFactory
+import com.example.listing.Material.Dispatcher.DispatcherFragment
 import com.example.listing.Material.Loader.LoaderFragment
 import com.example.listing.Material.Material
 import com.example.listing.Plan.PlanFragment
@@ -22,20 +23,19 @@ import java.util.*
 
 class Loader : AppCompatActivity(), PlanClickListener {
     var reqs = ArrayList<Plan2?>()
+    lateinit var model: PlansDataModel
+    var po = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loader)
         this.getSupportActionBar()!!.hide()
 
-        var model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(
+
+        model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(
             PlansDataModel::class.java
         )
-
-
         model.getplans(application)
-
-
         var ctx = applicationContext
 
         model.Plans.observe(this,
@@ -55,8 +55,6 @@ class Loader : AppCompatActivity(), PlanClickListener {
     }
 
 
-
-
 //    override fun onItemClick(plan: Plan2?, pos: Int) {
 //        if (plan != null) {
 //            val sie = plan.planToItems.size
@@ -67,11 +65,11 @@ class Loader : AppCompatActivity(), PlanClickListener {
 //    }
 
     override fun onItemClick(plan: Plan2?, pos: Int) {
-        LoaderFragmentInteraction(plan!!)
-//        po = pos
+        model.plan.value = plan
+        LoaderFragmentInteraction(plan!!, pos)
 
 
-       // LoaderFragmentInteraction(reqs[pos]!!)
+        // LoaderFragmentInteraction(reqs[pos]!!)
 //        model = ViewModelProviders.of(active)
 //
 //        model.Plans.value?.let { LoaderFragmentInteraction(it[pos]) }
@@ -79,19 +77,29 @@ class Loader : AppCompatActivity(), PlanClickListener {
         //Toast.makeText(this,pos,Toast.LENGTH_SHORT).show()
     }
 
-    fun LoaderFragmentInteraction(plan: Plan2) {
-        var textfragment = LoaderFragment.newInstance(
-            plan.planToItems as ArrayList<Material2?>,
+    fun LoaderFragmentInteraction(plan: Plan2, pos: Int) {
+
+        model.plan.observe(this, { plan: Plan2? ->
+            val planList = model.Plans.value!!
+            planList[pos] = plan
+            model.Plans.value = planList
+            model.MatrialsList.value = plan?.planToItems
+        })
+
+        model.MatrialsList.observe(this, { MaterialList: List<Material2> ->
+
+            val textfragment = LoaderFragment.newInstance(
+                MaterialList as ArrayList<Material2>?,
 //            plan.req_name,
 //            plan.vessel_num,
-//            plan.destination,
-            "","",""
-        )
+//            plan.destination
+                "", "", ""
+            )
 
-        var fm = supportFragmentManager
-        var ft = fm.beginTransaction()
-        ft.replace(R.id.item_recycler, textfragment)
-        ft.commit()
+            var fm = supportFragmentManager
+            var ft = fm.beginTransaction()
+            ft.replace(R.id.item_recycler, textfragment)
+            ft.commit()
+        })
     }
-
 }

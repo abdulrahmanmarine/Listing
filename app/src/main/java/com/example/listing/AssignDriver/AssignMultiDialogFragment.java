@@ -328,6 +328,7 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
                 materialParam.setVehicles(chosenVehicles);
 
                Material2 material2= model.MatrialsList.getValue().get(Mpostion);
+               Log.i("matposition", Mpostion+"");
                 List<Material2> list =model.MatrialsList.getValue();
                 LoadAction loadAction=material2.getZuphrLoada();
                 loadAction.setDriver(chosenDrivers);

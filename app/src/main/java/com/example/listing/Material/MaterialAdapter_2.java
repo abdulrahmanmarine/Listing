@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.listing.FoundButtonClicked;
 import com.example.listing.LoadButtonClicked;
 import com.example.listing.Material.Loader.LoaderFragment;
 import com.example.listing.Plan.PlanAdapter_2;
@@ -30,14 +32,17 @@ public class MaterialAdapter_2 extends RecyclerView.Adapter<MaterialAdapter_2.Ma
    LoadButtonClicked loadListener;
    UnloadButtonClicked unloadListener;
    PrcButtonClicked prcListener;
+   FoundButtonClicked foundListener;
    public static List<Material2> materialList;
     Context contexts;
 
-    public MaterialAdapter_2(ArrayList<Material2> materialList, LoadButtonClicked loadListener, UnloadButtonClicked unloadListener, PrcButtonClicked prcListener) {
+    public MaterialAdapter_2(ArrayList<Material2> materialList, LoadButtonClicked loadListener, UnloadButtonClicked unloadListener, PrcButtonClicked prcListener
+     ,FoundButtonClicked foundListener) {
         this.materialList = materialList;
         this.loadListener = loadListener;
         this.unloadListener  = unloadListener;
         this.prcListener = prcListener;
+        this.foundListener = foundListener;
 
     }
 
@@ -60,6 +65,7 @@ public class MaterialAdapter_2 extends RecyclerView.Adapter<MaterialAdapter_2.Ma
         holder.itemRowBinding.setLoadClickListen(loadListener);
         holder.itemRowBinding.setUnloadClickListen(unloadListener);
         holder.itemRowBinding.setPrcClickListen(prcListener);
+        holder.itemRowBinding.setFoundClickListen(foundListener);
     }
 
 
@@ -77,6 +83,8 @@ public class MaterialAdapter_2 extends RecyclerView.Adapter<MaterialAdapter_2.Ma
 
     public static class MaterialViewHolder extends RecyclerView.ViewHolder{
         public LoadItemCardBinding itemRowBinding;
+        private Context contexts = itemView.getContext();
+
         public MaterialViewHolder(LoadItemCardBinding itemRowBinding) {
             super(itemRowBinding.getRoot());
             this.itemRowBinding = itemRowBinding;
@@ -87,6 +95,16 @@ public class MaterialAdapter_2 extends RecyclerView.Adapter<MaterialAdapter_2.Ma
             itemRowBinding.setPos(getAdapterPosition());
             itemRowBinding.setMat(material);
             itemRowBinding.executePendingBindings();
+            Log.i("uppercase" ,material.getZuphrLoada().getStatus().toUpperCase() + "");
+            if(material.getZuphrLoada().getStatus() == "loaded"){
+                itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.green_border));
+            }else if (material.getZuphrLoada().getStatus()== "unloaded"){
+                itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
+            }else if (material.getZuphrLoada().getStatus() == "not found"){
+                itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
+            }else if (material.getZuphrLoada().getStatus() == "processing"){
+                itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.yellow_border));
+            }
         }
     }
 }
