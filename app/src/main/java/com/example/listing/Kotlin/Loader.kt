@@ -47,7 +47,7 @@ class Loader : AppCompatActivity(), PlanClickListener {
     }
 
     fun buildRecycler(lst: ArrayList<Plan2?>) {
-        var planFragment = PlanFragment.newInstance(lst)
+        var planFragment = PlanFragment.newInstance(lst, true)
         var fm = supportFragmentManager
         var ft = fm.beginTransaction()
         ft.replace(R.id.constraintLayout4, planFragment)

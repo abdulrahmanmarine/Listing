@@ -52,9 +52,7 @@ public class PlansDataModel extends ViewModel {
 
     public MutableLiveData<List<imagenode>> MatrialImageList = new MutableLiveData<>();
     public MutableLiveData<LoadAction> LoadAction = new MutableLiveData<>();
-
-
-
+    public MutableLiveData<Boolean> flag = new MutableLiveData<>(true);
     Application application;
 
     private static RetrofitInterface retrofitInterface;
