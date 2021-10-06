@@ -9,8 +9,10 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +32,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.listing.CameraButtonClicked;
+import com.example.listing.DataViewModel.PlansDataModel;
+import com.example.listing.FoundButtonClicked;
 import com.example.listing.LoadButtonClicked;
 import com.example.listing.Material.Material;
 import com.example.listing.Material.MaterialAdapter;
@@ -40,7 +44,9 @@ import com.example.listing.R;
 import com.example.listing.Plan.PlanFragment;
 import com.example.listing.Plan.Plan;
 import com.example.listing.UnloadButtonClicked;
+import com.example.listing.models.LoadAction;
 import com.example.listing.models.Material2;
+import com.example.listing.models.Plan2;
 import com.example.listing.notes.RedesignedNotesFragment;
 
 import java.util.ArrayList;
@@ -71,6 +77,7 @@ public class LoaderFragment extends Fragment  {
     private static LoaderFragment fragment = null;
     private Boolean isLoad = true;
     ImageButton btnCapture;
+    PlansDataModel model;
 
 
 
@@ -137,6 +144,8 @@ public class LoaderFragment extends Fragment  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        model=new ViewModelProvider(getActivity()).get(PlansDataModel.class);
+
         View v = inflater.inflate(R.layout.fragment_text, container, false);
 
         EditText editText1 = (EditText) v.findViewById(R.id.search_material);
@@ -178,26 +187,60 @@ public class LoaderFragment extends Fragment  {
         LoadButtonClicked loadListener = new LoadButtonClicked() {
             @Override
             public void loadButtonClick(int pos) {
-                mParam1.get(pos).getZuphrLoada().setStatus("loaded");
-                materialAdapter.notifyDataSetChanged();
+                Material2 material2= model.MatrialsList.getValue().get(pos);
+                List<Material2> list = model.MatrialsList.getValue();
+                LoadAction loadAction= material2.getZuphrLoada();
+                loadAction.setStatus("loaded");
+                list.set(pos,material2);
+                Plan2 plan= model.plan.getValue();
+                plan.setPlanToItems(list);
+                model.plan.setValue(plan);
             }
         };
 
         UnloadButtonClicked unloadListener = new UnloadButtonClicked() {
             @Override
             public void unloadButtonClicked(int pos) {
-                mParam1.get(pos).getZuphrLoada().setStatus("unload");
-                materialAdapter.notifyDataSetChanged();
+                Material2 material2= model.MatrialsList.getValue().get(pos);
+                List<Material2> list = model.MatrialsList.getValue();
+                LoadAction loadAction= material2.getZuphrLoada();
+                loadAction.setStatus("unloaded");
+                list.set(pos,material2);
+                Plan2 plan= model.plan.getValue();
+                plan.setPlanToItems(list);
+                model.plan.setValue(plan);
             }
         };
 
         PrcButtonClicked prcListener = new PrcButtonClicked() {
             @Override
             public void PrcButtonClicked(int pos) {
-                mParam1.get(pos).getZuphrLoada().setStatus("processing");
-                materialAdapter.notifyDataSetChanged();
+                Material2 material2= model.MatrialsList.getValue().get(pos);
+                List<Material2> list = model.MatrialsList.getValue();
+                LoadAction loadAction= material2.getZuphrLoada();
+                loadAction.setStatus("processing");
+                list.set(pos,material2);
+                Plan2 plan= model.plan.getValue();
+                plan.setPlanToItems(list);
+                model.plan.setValue(plan);
+
             }
         };
+
+  FoundButtonClicked foundListener = new FoundButtonClicked() {
+      @Override
+      public void foundButtonClicked(int pos) {
+          Material2 material2= model.MatrialsList.getValue().get(pos);
+          List<Material2> list = model.MatrialsList.getValue();
+          LoadAction loadAction= material2.getZuphrLoada();
+          loadAction.setStatus("not found");
+          list.set(pos,material2);
+          Plan2 plan= model.plan.getValue();
+          plan.setPlanToItems(list);
+          model.plan.setValue(plan);
+
+      }
+  };
 
 //        CameraButtonClicked cameraListener = new MaterialAdapter.cameraClick() {
 //            @Override
@@ -213,7 +256,7 @@ public class LoaderFragment extends Fragment  {
 
 
 
-        materialAdapter = new MaterialAdapter_2(mParam1, loadListener, unloadListener, prcListener);
+        materialAdapter = new MaterialAdapter_2(mParam1, loadListener, unloadListener, prcListener, foundListener);
         rv.setAdapter(materialAdapter);
 ////        myAdapter = detAdapter;
 

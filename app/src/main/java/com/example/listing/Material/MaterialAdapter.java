@@ -19,19 +19,15 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listing.Plan.PlanAdapter;
-import com.example.listing.Plan.PlanAdapter_2;
 import com.example.listing.PrcButtonClicked;
 import com.example.listing.R;
 import com.example.listing.databinding.LoadItemCardBinding;
-import com.example.listing.databinding.PlanCardBinding;
 import com.example.listing.models.Material2;
 import com.example.listing.notes.pictureMode;
 import com.fasterxml.jackson.core.Base64Variants;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
-import java.util.List;
-
 
 
 public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.MaterialViewHolder>  {
@@ -180,7 +176,7 @@ public interface addClick{
 
                 materialName = (TextView) itemView.findViewById(R.id.material_name);
                 materialImage = (ImageView) itemView.findViewById(R.id.material_img_card);
-                textQuan = (TextView) itemView.findViewById(R.id.quan_tv);
+                textQuan = (TextView) itemView.findViewById(R.id.status_tv);
                 textStatus = (TextView) itemView.findViewById(R.id.loadstat);
                 loadButton = (Button) itemView.findViewById(R.id.load_button);
                 unloadButton = (Button) itemView.findViewById(R.id.unload_button);

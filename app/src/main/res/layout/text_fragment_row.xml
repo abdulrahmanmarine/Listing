@@ -27,7 +27,7 @@
 
 
         <TextView
-            android:id="@+id/quan_pt"
+            android:id="@+id/status_pt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -37,13 +37,13 @@
             app:layout_constraintTop_toBottomOf="@+id/material_name" />
 
         <TextView
-            android:id="@+id/quan_tv"
+            android:id="@+id/status_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="inttext"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/quan_pt"
-            app:layout_constraintTop_toTopOf="@+id/quan_pt" />
+            app:layout_constraintStart_toEndOf="@+id/status_pt"
+            app:layout_constraintTop_toTopOf="@+id/status_pt" />
 
         <TextView
             android:id="@+id/loadstat"
@@ -54,7 +54,7 @@
             android:paddingStart="10dp"
             android:paddingRight="11dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/quan_tv"
+            app:layout_constraintStart_toEndOf="@+id/status_tv"
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
         <TextView
@@ -89,7 +89,7 @@
             android:text="Unload"
             android:textColor="#ffffff"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quan_pt" />
+            app:layout_constraintTop_toBottomOf="@+id/status_pt" />
 
         <Button
             android:id="@+id/load_button"
@@ -102,7 +102,7 @@
             android:textColor="#ffffff"
             app:layout_constraintEnd_toStartOf="@+id/unload_button"
             app:layout_constraintStart_toEndOf="@+id/material_img_card"
-            app:layout_constraintTop_toBottomOf="@+id/quan_pt" />
+            app:layout_constraintTop_toBottomOf="@+id/status_pt" />
 
         <Button
             android:id="@+id/found_button"

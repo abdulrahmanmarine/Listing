@@ -37,6 +37,7 @@ public class ChosenDriverCardAdapter extends RecyclerView.Adapter<ChosenDriverCa
         }
 
         public void bind(Driver driver) {
+            Log.i("Chosencardadapter", "chosen");
             itemRowBinding.setChosenDriver(driver);
             itemRowBinding.executePendingBindings();
         }

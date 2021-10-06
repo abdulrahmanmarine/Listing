@@ -47,6 +47,7 @@ public class PlansDataModel extends ViewModel {
     public MutableLiveData<List<Plan2>> Plans = new MutableLiveData<>();
     public  MutableLiveData<Plan2> plan = new MutableLiveData<>();
     public MutableLiveData<List<Material2>>MatrialsList = new MutableLiveData<>();
+
     public MutableLiveData<Material2> Matrial = new MutableLiveData<>();
 
     public MutableLiveData<List<imagenode>> MatrialImageList = new MutableLiveData<>();
@@ -79,12 +80,20 @@ public class PlansDataModel extends ViewModel {
         List<Plan2> temp = new ArrayList<>();
         List<Material2> mats = new ArrayList<>();
         List<Driver> drivers = new ArrayList<>();
+        List<Driver> drivers2 = new ArrayList<>();
+
         List<Vehicle> vehicles = new ArrayList<>();
+        List<Vehicle> vehicles2 = new ArrayList<>();
+
         List<AssignPair> assignPairs = new ArrayList<>();
 
     LoadAction load = new LoadAction("lpid", "mjahr", "mblpo", "loadid",
             "acttype", "assignedquan", "unit", false,"fpdate", "fptime", "name", "size", "confirmedquan",
             "zuphract", drivers, "weight", vehicles, "status", "content");
+
+        LoadAction load2 = new LoadAction("lpid", "mjahr", "mblpo", "loadid",
+                "acttype", "assignedquan", "unit", false,"fpdate", "fptime", "name", "size", "confirmedquan",
+                "zuphract", drivers2, "weight", vehicles2, "status", "content");
 
         Driver driver1 = new Driver("3", "Abdul", "Heavy Vehicle Driving",
                 "456324", "Saudi", "91 66778899", "driver.test@gmail.com");
@@ -113,6 +122,22 @@ public class PlansDataModel extends ViewModel {
                 "String zuphrCostcen", "String zuphrMattype", "String zuphrFpDate", "String zuphrFpTime",
                 "String zuphrFpName", drivers, vehicles));
 
+        mats.add(new Material2("actquan", "String log",  load2, "String zuphrMovem", "String zuphrActtype",
+                "String zuphrContents", "String zuphrHeight", "String zuphrLength", "String zuphrLpid",
+                "String zuphrObjecte", "String zuphrSchar"," String zuphrFrom", "String zuphrSchtask",
+                "String zuphrSeq", "String zuphrWidth", "String zuphrShipper", "String zuphrTo",
+                "String zuphrVolmeins", "String zuphrMjahr", "String zuphrMblpo", "String zuphrStgid",
+                "String zuphrMatnr"," String zuphrReqid", "String zuphrReqitm", "String zuphrShortxt",
+                "String zuphrDescrip", "String zuphrQuan", "String meins", "String zuphrOffshore",
+                "String zuphrAreacode", "String zuphrStatus", "String zuphrClass", "String zuphrDeleted",
+                "String zuphrStatdt", "String zuphrCompflg", "String zuphrCompdat", "String zuphrAction",
+                " String zuphrResponse", "String zuphrAutoact", "String zuphrActposgrp", "String zuphrSent",
+                "String zuphrActuname", "String zuphrActdate", "String zuphrActtime", "String zuphrWellnm",
+                "String zuphrEquipnumber", "String zuphrCnumber", "String zuphrTicketno", "String zuphrMfrpn",
+                "String zuphrBitType", "String zuphrBitstatus", "String zuphrSrlno"," String zuphrGl",
+                "String zuphrCostcen", "String zuphrMattype", "String zuphrFpDate", "String zuphrFpTime",
+                "String zuphrFpName", drivers2, vehicles2));
+
 
 
         temp.add(new Plan2("String zuphrLoadtype", false, "String zuphrActtype", "String zuphrStatus",
@@ -120,6 +145,13 @@ public class PlansDataModel extends ViewModel {
                 "String majhr"," String zuphrLpname", "String zuphrProfid", "String zuphrRqtype", "String zuphrLpdate",
                 "String zuphrLptime", "String zuphrLpuser", "String zuphrLifnr", "String zuphrVessel",
                false, false, "String zuphrFpDate", "String zuphrFpTime",
+                "String zuphrFpName", mats));
+
+        temp.add(new Plan2("String zuphrLoadtype", false, "String zuphrActtype", "String zuphrStatus",
+                "String zuphrVesselName", "String zuphrCaptain", "String zuphrStation", "String zuphrLpid",
+                "String majhr"," String zuphrLpname", "String zuphrProfid", "String zuphrRqtype", "String zuphrLpdate",
+                "String zuphrLptime", "String zuphrLpuser", "String zuphrLifnr", "String zuphrVessel",
+                false, false, "String zuphrFpDate", "String zuphrFpTime",
                 "String zuphrFpName", mats));
 
 
