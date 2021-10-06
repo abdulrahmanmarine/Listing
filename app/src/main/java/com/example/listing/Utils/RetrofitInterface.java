@@ -28,11 +28,6 @@ public interface RetrofitInterface {
     @GET()
     Call<ResponseBody> GetVehicle(@Url String filter);
 
-    @GET()
-    Call<ResponseBody> portal();
-
-
-    //VehicleSet('')
 
     @POST("ImageHandlingSet/")
     Call<ResponseBody> SaveImages(@Header("x-csrf-token") String token,@Body imagenode image);
