@@ -19,6 +19,7 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
+import com.example.listing.DataViewModel.Flag;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.PlanClickListener;
 import com.example.listing.R;
@@ -41,14 +42,17 @@ public class PlanFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private PlanClickListener listener;
     List<Plan2> plans = new ArrayList<>();
+
     int currentpos;
 
 
     // TODO: Rename and change types of parameters
     private ArrayList<Plan2> mParam1 = new ArrayList<>();
+    private boolean mParam2;
     PlanAdapter_2 myadapter;
     RecyclerView  rv;
     PlansDataModel model;
+    boolean first = true;
 
 
     @Override
@@ -71,12 +75,13 @@ public class PlanFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static PlanFragment newInstance(ArrayList<Plan2> param1) {
+    public static PlanFragment newInstance(ArrayList<Plan2> param1, boolean param2) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARG_PARAM1, param1);
-        //bundle.putString(ARG_PARAM2, param2);
+        bundle.putBoolean(ARG_PARAM2, param2);
         PlanFragment fragment = new PlanFragment();
         fragment.setArguments(bundle);
+
         return fragment;
     }
 
@@ -89,12 +94,11 @@ public class PlanFragment extends Fragment {
          Bundle bundle  = getArguments();
          if(bundle!=null){
              mParam1 = (ArrayList<Plan2>) getArguments().getSerializable(ARG_PARAM1);
+             mParam2 = getArguments().getBoolean(ARG_PARAM2);
+
          }
 
         model =new ViewModelProvider(getActivity()).get(PlansDataModel.class);
-
-
-
     }
 
     @Override
@@ -111,16 +115,23 @@ public class PlanFragment extends Fragment {
             {
                 myadapter = new PlanAdapter_2(listener, (ArrayList<Plan2>) list);
                 rv.setAdapter(myadapter);
-                runAnimationAgain();
+
+                if (Flag.getInstance().getPlanFlag()){
+                    runAnimationAgain();
+                    Flag.getInstance().setPlanFlag(false);
+                }
+
+
+//                runAnimationAgain();
 
             }
+
         });
 
 
 
 
-        final LayoutAnimationController controller =
-                AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.gridlayout_animation_from_bottom);
+
 
 
         EditText editText = (EditText) v.findViewById(R.id.searching);

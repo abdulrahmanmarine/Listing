@@ -45,7 +45,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
     }
 
     fun buildRecycler(lst: ArrayList<Plan2?>?) {
-        val planFragment = PlanFragment.newInstance(lst)
+        val planFragment = PlanFragment.newInstance(lst, true);
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
         ft.replace(R.id.constraintLayout4, planFragment)
