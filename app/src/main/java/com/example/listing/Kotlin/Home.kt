@@ -1,12 +1,10 @@
 package com.example.listing.Kotlin
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.ViewModelProvider
-import com.example.listing.DataViewModel.PlansDataModel
-import com.example.listing.DataViewModel.PlansDataModelFactory
+import com.example.listing.DataViewModel.Flag
 import com.example.listing.R
 
 
@@ -21,6 +19,7 @@ class Home : AppCompatActivity() {
 
 
         loader.setOnClickListener {
+
             var intent = Intent(applicationContext, Loader::class.java)
             startActivity(intent)
         }

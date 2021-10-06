@@ -63,6 +63,7 @@ public class PlansDataModel extends ViewModel {
         super();
         this.application = application;
         RestApi.initializer(application,null);
+
         retrofitInterface = RestApi.getInstance().getRetrofitInterface();
 
     }

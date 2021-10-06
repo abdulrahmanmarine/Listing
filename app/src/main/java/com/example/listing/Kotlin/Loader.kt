@@ -1,24 +1,17 @@
 package com.example.listing.Kotlin
 
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import com.example.listing.DataViewModel.Flag
 import com.example.listing.DataViewModel.PlansDataModel
 import com.example.listing.DataViewModel.PlansDataModelFactory
-import com.example.listing.Material.Dispatcher.DispatcherFragment
 import com.example.listing.Material.Loader.LoaderFragment
-import com.example.listing.Material.Material
 import com.example.listing.Plan.PlanFragment
 import com.example.listing.PlanClickListener
 import com.example.listing.R
 import com.example.listing.models.Material2
 import com.example.listing.models.Plan2
-import org.json.JSONObject
 import java.util.*
 
 class Loader : AppCompatActivity(), PlanClickListener {
@@ -35,6 +28,8 @@ class Loader : AppCompatActivity(), PlanClickListener {
         model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(
             PlansDataModel::class.java
         )
+        Flag.initializer(true, true)
+        Flag.getInstance().planFlag = true
         model.getplans(application)
         var ctx = applicationContext
 
