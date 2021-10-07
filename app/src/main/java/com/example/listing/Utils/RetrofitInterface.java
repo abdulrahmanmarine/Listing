@@ -41,7 +41,7 @@ public interface RetrofitInterface {
     @POST("NoteSet")
     Call<ResponseBody> submitNote(@Body SAPNote note, @Header("x-csrf-token") String Token);
 
-    @POST("")
+    @POST("LoadingPlanLoadActionSet")
     Call<ResponseBody> postLoadAction(@Body LoadAction loadAction, @Header("x-csrf-token") String token);
 
 

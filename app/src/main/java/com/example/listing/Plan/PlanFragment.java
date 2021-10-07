@@ -117,13 +117,13 @@ public class PlanFragment extends Fragment {
                 myadapter = new PlanAdapter_2(listener, (ArrayList<Plan2>) list);
                 rv.setAdapter(myadapter);
 
-                if (Flag.getInstance().getPlanFlag()){
-                    runAnimationAgain();
-                    Flag.getInstance().setPlanFlag(false);
-                }
+//                if (Flag.getInstance().getPlanFlag()){
+//                    runAnimationAgain();
+//                    Flag.getInstance().setPlanFlag(false);
+//                }
 
 
-//                runAnimationAgain();
+                runAnimationAgain();
 
             }
 

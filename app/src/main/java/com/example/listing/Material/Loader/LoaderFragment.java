@@ -195,6 +195,7 @@ public class LoaderFragment extends Fragment  {
                 list.set(pos,material2);
                 Plan2 plan= model.plan.getValue();
                 plan.setPlanToItems(list);
+
                 model.plan.setValue(plan);
             }
         };
@@ -224,6 +225,7 @@ public class LoaderFragment extends Fragment  {
                 Plan2 plan= model.plan.getValue();
                 plan.setPlanToItems(list);
                 model.plan.setValue(plan);
+
 
             }
         };

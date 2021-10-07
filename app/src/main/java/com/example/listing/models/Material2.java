@@ -26,7 +26,7 @@ public class Material2 implements Serializable {
     String Log;
 
 
-   // @JsonProperty("ZuphrLoada")
+    @JsonProperty("ZuphrLoada")
     String item;
     LoadAction ZuphrLoada;
 
