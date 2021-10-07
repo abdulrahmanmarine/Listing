@@ -60,7 +60,6 @@ public class RestApi {
             Log.i("response","here");
             return instance;
         }
-
     }
 
 

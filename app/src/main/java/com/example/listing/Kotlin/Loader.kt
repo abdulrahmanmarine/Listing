@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.example.listing.DataViewModel.Flag
 import com.example.listing.DataViewModel.PlansDataModel
 import com.example.listing.DataViewModel.PlansDataModelFactory
 import com.example.listing.Material.Dispatcher.DispatcherFragment
@@ -36,6 +37,9 @@ class Loader : AppCompatActivity(), PlanClickListener {
             PlansDataModel::class.java
         )
         model.getplans(application)
+        Flag.initializer(true, true);
+        Flag.getInstance().planFlag = true;
+
         var ctx = applicationContext
 
         model.Plans.observe(this,
@@ -78,12 +82,12 @@ class Loader : AppCompatActivity(), PlanClickListener {
     }
 
     fun LoaderFragmentInteraction(plan: Plan2, pos: Int) {
-
         model.plan.observe(this, { plan: Plan2? ->
             val planList = model.Plans.value!!
             planList[pos] = plan
             model.Plans.value = planList
             model.MatrialsList.value = plan?.planToItems
+
         })
 
         model.MatrialsList.observe(this, { MaterialList: List<Material2> ->
