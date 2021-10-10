@@ -126,6 +126,8 @@ public class LoaderFragment extends Fragment  {
             mParam2 = getArguments().getString(ARG_PARAM2);
             mParam3 = getArguments().getString(ARG_PARAM3);
             mParam4 = getArguments().getString(ARG_PARAM4);
+            Flag.getInstance().setMaterialFlag(true);
+
         }
     }
 
@@ -169,6 +171,7 @@ public class LoaderFragment extends Fragment  {
         });
 
 
+
         btnCapture = (ImageButton) v.findViewById(R.id.camerabutton);
 
         //set recyclerview adapter
@@ -195,8 +198,8 @@ public class LoaderFragment extends Fragment  {
                 list.set(pos,material2);
                 Plan2 plan= model.plan.getValue();
                 plan.setPlanToItems(list);
-
                 model.plan.setValue(plan);
+                Flag.getInstance().setMaterialFlag(false);
             }
         };
 
@@ -225,8 +228,7 @@ public class LoaderFragment extends Fragment  {
                 Plan2 plan= model.plan.getValue();
                 plan.setPlanToItems(list);
                 model.plan.setValue(plan);
-
-
+                Flag.getInstance().setMaterialFlag(false);
             }
         };
 
@@ -263,21 +265,40 @@ public class LoaderFragment extends Fragment  {
         rv.setAdapter(materialAdapter);
 ////        myAdapter = detAdapter;
 
-        //animation
-        final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.layout_animation);
-        rv.setLayoutAnimation(controller);
-        materialAdapter.notifyDataSetChanged();
-        rv.scheduleLayoutAnimation();
 
-        GridLayoutManager grm = new GridLayoutManager(getActivity(), 2);
-        grm.offsetChildrenHorizontal(1);
-        rv.setLayoutManager(grm);
+        if (Flag.getInstance().getMaterialFlag()){
+            final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.layout_animation);
+            rv.setLayoutAnimation(controller);
+            materialAdapter.notifyDataSetChanged();
+            rv.scheduleLayoutAnimation();
 
-        ViewGroup vg = v.findViewById(R.id.cont);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-            Fade fade = new Fade();
-            TransitionManager.beginDelayedTransition(vg, fade);
+            GridLayoutManager grm = new GridLayoutManager(getActivity(), 2);
+            grm.offsetChildrenHorizontal(1);
+            rv.setLayoutManager(grm);
+
+            ViewGroup vg = v.findViewById(R.id.cont);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                Fade fade = new Fade();
+                TransitionManager.beginDelayedTransition(vg, fade);
+            }
+            Flag.getInstance().setMaterialFlag(false);
         }
+
+        //animation
+//        final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.layout_animation);
+//        rv.setLayoutAnimation(controller);
+//        materialAdapter.notifyDataSetChanged();
+//        rv.scheduleLayoutAnimation();
+//
+//        GridLayoutManager grm = new GridLayoutManager(getActivity(), 2);
+//        grm.offsetChildrenHorizontal(1);
+//        rv.setLayoutManager(grm);
+//
+//        ViewGroup vg = v.findViewById(R.id.cont);
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+//            Fade fade = new Fade();
+//            TransitionManager.beginDelayedTransition(vg, fade);
+//        }
         return v;
     }
 

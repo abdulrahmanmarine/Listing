@@ -15,6 +15,10 @@ public class Flag {
         this.materialFlag = materialFlag;
     }
 
+    public static void setInstance(Flag instance) {
+        Flag.instance = instance;
+    }
+
     public static void initializer(Boolean planFlag, Boolean materialFlag){
         if(instance == null){
             synchronized (Flag.class){
