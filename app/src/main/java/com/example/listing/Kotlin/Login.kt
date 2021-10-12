@@ -12,7 +12,7 @@ import com.example.listing.DataViewModel.PlansDataModel
 import com.example.listing.DataViewModel.PlansDataModelFactory
 import com.example.listing.R
 import com.example.listing.Utils.RestApi
-import com.example.listing.models.Plan2
+import com.example.listing.models.Plan
 import com.example.listing.models.User
 
 class Login : AppCompatActivity() {

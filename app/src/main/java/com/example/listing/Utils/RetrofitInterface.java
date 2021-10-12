@@ -1,12 +1,12 @@
 package com.example.listing.Utils;
 
 import com.example.listing.models.LoadAction;
-import com.example.listing.models.Plan2;
+import com.example.listing.models.Plan;
 import com.example.listing.models.ImageList;
 
 import com.example.listing.models.PlanUnpack;
 import com.example.listing.models.imagenode;
-import com.example.listing.SAPNote;
+import com.example.listing.models.SAPNote;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -25,8 +25,14 @@ public interface RetrofitInterface {
     Call<PlanUnpack> getPlans(@Header("x-csrf-token") String token);
 
 
-    @GET()
+    @GET("/VehicleSet")
     Call<ResponseBody> GetVehicle(@Url String filter);
+
+    @GET("/DriverSet")
+    Call<ResponseBody> GetLoader(@Url String filter);
+
+    @GET("/DeviceSet")
+    Call<ResponseBody> GetDevice(@Url String filter);
 
 
     @POST("ImageHandlingSet/")

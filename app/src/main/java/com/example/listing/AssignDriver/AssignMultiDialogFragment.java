@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,15 +24,14 @@ import androidx.recyclerview.widget.RecyclerView;
 //import com.example.listing.Kotlin.pictureMode;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.DriverDeleteButtonClicked;
-import com.example.listing.Plan.Plan;
 import com.example.listing.VehicleDeleteButtonClicked;
 import com.example.listing.Material.Dispatcher.DispatcherFragment;
 import com.example.listing.Plan.PlanFragment;
 import com.example.listing.R;
 import com.example.listing.models.Driver;
 import com.example.listing.models.LoadAction;
-import com.example.listing.models.Material2;
-import com.example.listing.models.Plan2;
+import com.example.listing.models.Material;
+import com.example.listing.models.Plan;
 import com.example.listing.models.Vehicle;
 
 import java.util.ArrayList;
@@ -49,7 +47,7 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
     private static final String MATERIAL_2 = "materialParam";
     private ArrayList<Driver> driversList = new ArrayList<>();
     private ArrayList<Vehicle> vehiclesList = new ArrayList<>();
-    private Material2 materialParam;
+    private Material materialParam;
     PlansDataModel model;
 
     private LoaderAdapter loaderAdapter;
@@ -98,7 +96,7 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
 //        return dialog;
 //    }
 
-    public static AssignMultiDialogFragment newInstance(int position,Material2 materialParam){
+    public static AssignMultiDialogFragment newInstance(int position,Material materialParam){
         AssignMultiDialogFragment fragment = new AssignMultiDialogFragment();
         Bundle args = new Bundle();
 
@@ -205,7 +203,7 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
         vehiclesList.add(vehicle6);
 
 
-        materialParam = (Material2) getArguments().getSerializable(MATERIAL_2);
+        materialParam = (Material) getArguments().getSerializable(MATERIAL_2);
 
 
         ArrayList<Driver> drivers = (ArrayList<Driver>) materialParam.getDrivers();
@@ -327,15 +325,15 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
                 materialParam.setDrivers(chosenDrivers);
                 materialParam.setVehicles(chosenVehicles);
 
-               Material2 material2= model.MatrialsList.getValue().get(Mpostion);
+               Material Material= model.MatrialsList.getValue().get(Mpostion);
                Log.i("matposition", Mpostion+"");
-                List<Material2> list =model.MatrialsList.getValue();
-                LoadAction loadAction=material2.getZuphrLoada();
+                List<Material> list =model.MatrialsList.getValue();
+                LoadAction loadAction=Material.getZuphrLoada();
                 loadAction.setDriver(chosenDrivers);
                 loadAction.setVehicle(chosenVehicles);
-                material2.setZuphrLoada(loadAction);
-                list.set(Mpostion,material2);
-                Plan2 plan= model.plan.getValue();
+                Material.setZuphrLoada(loadAction);
+                list.set(Mpostion,Material);
+                Plan plan= model.plan.getValue();
                 plan.setPlanToItems(list);
                 model.plan.setValue(plan);
 

@@ -11,9 +11,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.listing.AssignDriver.AssignPair;
 import com.example.listing.models.Driver;
-import com.example.listing.models.Material2;
-import com.example.listing.models.Plan2;
-import com.example.listing.Material.Material;
+import com.example.listing.models.Material;
+import com.example.listing.models.Plan;
+
 import com.example.listing.R;
 import com.example.listing.Utils.RestApi;
 import com.example.listing.Utils.RetrofitInterface;
@@ -44,11 +44,11 @@ import retrofit2.Response;
 
 public class PlansDataModel extends ViewModel {
 
-    public MutableLiveData<List<Plan2>> Plans = new MutableLiveData<>();
-    public  MutableLiveData<Plan2> plan = new MutableLiveData<>();
-    public MutableLiveData<List<Material2>>MatrialsList = new MutableLiveData<>();
+    public MutableLiveData<List<Plan>> Plans = new MutableLiveData<>();
+    public  MutableLiveData<Plan> plan = new MutableLiveData<>();
+    public MutableLiveData<List<com.example.listing.models.Material>>MatrialsList = new MutableLiveData<>();
 
-    public MutableLiveData<Material2> Matrial = new MutableLiveData<>();
+    public MutableLiveData<com.example.listing.models.Material> Matrial = new MutableLiveData<>();
 
     public MutableLiveData<List<imagenode>> MatrialImageList = new MutableLiveData<>();
     public MutableLiveData<LoadAction> LoadAction = new MutableLiveData<>();
@@ -68,7 +68,7 @@ public class PlansDataModel extends ViewModel {
 
     }
 
-    public void setMatrial(Material2 matrial) {
+    public void setMatrial(com.example.listing.models.Material matrial) {
         Matrial.postValue(matrial);
     }
 
@@ -76,8 +76,8 @@ public class PlansDataModel extends ViewModel {
     public void getplans(Application application) throws IOException {
         //OFFLINE DATA RETRIEVAL
 
-        List<Plan2> temp = new ArrayList<>();
-        List<Material2> mats = new ArrayList<>();
+        List<Plan> temp = new ArrayList<>();
+        List<com.example.listing.models.Material> mats = new ArrayList<>();
         List<Driver> drivers = new ArrayList<>();
         List<Driver> drivers2 = new ArrayList<>();
 
@@ -105,7 +105,7 @@ public class PlansDataModel extends ViewModel {
                 "Red", "2012", "DDMMYYYY", "123456");
 
 
-        mats.add(new Material2("actquan", "String log",  load, "String zuphrMovem", "String zuphrActtype",
+        mats.add(new com.example.listing.models.Material("actquan", "String log",  load, "String zuphrMovem", "String zuphrActtype",
                 "String zuphrContents", "String zuphrHeight", "String zuphrLength", "String zuphrLpid",
                 "String zuphrObjecte", "String zuphrSchar"," String zuphrFrom", "String zuphrSchtask",
                 "String zuphrSeq", "String zuphrWidth", "String zuphrShipper", "String zuphrTo",
@@ -121,7 +121,7 @@ public class PlansDataModel extends ViewModel {
                 "String zuphrCostcen", "String zuphrMattype", "String zuphrFpDate", "String zuphrFpTime",
                 "String zuphrFpName", drivers, vehicles));
 
-        mats.add(new Material2("actquan", "String log",  load2, "String zuphrMovem", "String zuphrActtype",
+        mats.add(new com.example.listing.models.Material("actquan", "String log",  load2, "String zuphrMovem", "String zuphrActtype",
                 "String zuphrContents", "String zuphrHeight", "String zuphrLength", "String zuphrLpid",
                 "String zuphrObjecte", "String zuphrSchar"," String zuphrFrom", "String zuphrSchtask",
                 "String zuphrSeq", "String zuphrWidth", "String zuphrShipper", "String zuphrTo",
@@ -139,14 +139,14 @@ public class PlansDataModel extends ViewModel {
 
 
 
-        temp.add(new Plan2("String zuphrLoadtype", false, "String zuphrActtype", "String zuphrStatus",
+        temp.add(new Plan("String zuphrLoadtype", false, "String zuphrActtype", "String zuphrStatus",
                 "String zuphrVesselName", "String zuphrCaptain", "String zuphrStation", "String zuphrLpid",
                 "String majhr"," String zuphrLpname", "String zuphrProfid", "String zuphrRqtype", "String zuphrLpdate",
                 "String zuphrLptime", "String zuphrLpuser", "String zuphrLifnr", "String zuphrVessel",
                false, false, "String zuphrFpDate", "String zuphrFpTime",
                 "String zuphrFpName", mats));
 
-        temp.add(new Plan2("String zuphrLoadtype", false, "String zuphrActtype", "String zuphrStatus",
+        temp.add(new Plan("String zuphrLoadtype", false, "String zuphrActtype", "String zuphrStatus",
                 "String zuphrVesselName", "String zuphrCaptain", "String zuphrStation", "String zuphrLpid",
                 "String majhr"," String zuphrLpname", "String zuphrProfid", "String zuphrRqtype", "String zuphrLpdate",
                 "String zuphrLptime", "String zuphrLpuser", "String zuphrLifnr", "String zuphrVessel",
@@ -167,7 +167,7 @@ public class PlansDataModel extends ViewModel {
            public void onResponse(Call<PlanUnpack> call, retrofit2.Response<PlanUnpack> response) {
                Log.i("response-plan" ,response.code()+""+response.message());
                if (response.isSuccessful()) {
-                   List<Plan2> temp =response.body().getItems();
+                   List<Plan> temp =response.body().getItems();
                    Log.i("response-plan" ,temp.size()+"items");
                    for(int i=0 ;i<temp.size();i++){
                        Log.i("response-plan:"+i ,temp.get(i)+"items");

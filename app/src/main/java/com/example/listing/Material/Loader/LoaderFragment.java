@@ -1,17 +1,9 @@
 package com.example.listing.Material.Loader;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +12,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.Fade;
 import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,26 +20,19 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.listing.CameraButtonClicked;
 import com.example.listing.DataViewModel.Flag;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.FoundButtonClicked;
 import com.example.listing.LoadButtonClicked;
-import com.example.listing.Material.Material;
-import com.example.listing.Material.MaterialAdapter;
 
-import com.example.listing.Material.MaterialAdapter_2;
+import com.example.listing.Material.MaterialAdapter;
 import com.example.listing.PrcButtonClicked;
 import com.example.listing.R;
-import com.example.listing.Plan.PlanFragment;
-import com.example.listing.Plan.Plan;
 import com.example.listing.UnloadButtonClicked;
 import com.example.listing.models.LoadAction;
-import com.example.listing.models.Material2;
-import com.example.listing.models.Plan2;
-import com.example.listing.notes.RedesignedNotesFragment;
+import com.example.listing.models.Material;
+import com.example.listing.models.Plan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +56,8 @@ public class LoaderFragment extends Fragment  {
     List<Plan> plans;
     private String mParam2, mParam3, mParam4;
     //private ArrayList<Material> mParam1 = new ArrayList<>();
-    private ArrayList<Material2> mParam1 = new ArrayList<>();
-    private MaterialAdapter_2 materialAdapter;
+    private ArrayList<Material> mParam1 = new ArrayList<>();
+    private MaterialAdapter materialAdapter;
     private static Context contexts;
     private static LoaderFragment fragment = null;
     private Boolean isLoad = true;
@@ -96,7 +80,7 @@ public class LoaderFragment extends Fragment  {
      * @return A new instance of fragment TextFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LoaderFragment newInstance(ArrayList<Material2> param1, String param2, String param3, String param4) {
+    public static LoaderFragment newInstance(ArrayList<Material> param1, String param2, String param3, String param4) {
         LoaderFragment fragment = new LoaderFragment();
         Bundle args = new Bundle();
         //args.putString(ARG_PARAM1, param1);
@@ -122,19 +106,18 @@ public class LoaderFragment extends Fragment  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = (ArrayList<Material2>) getArguments().getSerializable(ARG_PARAM1);
+            mParam1 = (ArrayList<Material>) getArguments().getSerializable(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
             mParam3 = getArguments().getString(ARG_PARAM3);
             mParam4 = getArguments().getString(ARG_PARAM4);
-            Flag.getInstance().setMaterialFlag(true);
 
         }
     }
 
     private void filter2(String text) {
-//        ArrayList<Material2> filteredList = new ArrayList<>();
+//        ArrayList<Material> filteredList = new ArrayList<>();
 //
-//        for (Material2 mat : mParam1) {
+//        for (Material mat : mParam1) {
 //            if (mat.getZuphrShortxt().toLowerCase().contains(text.toLowerCase())) {
 //                filteredList.add(mat);
 //            }
@@ -191,27 +174,28 @@ public class LoaderFragment extends Fragment  {
         LoadButtonClicked loadListener = new LoadButtonClicked() {
             @Override
             public void loadButtonClick(int pos) {
-                Material2 material2= model.MatrialsList.getValue().get(pos);
-                List<Material2> list = model.MatrialsList.getValue();
-                LoadAction loadAction= material2.getZuphrLoada();
+                Material Material= model.MatrialsList.getValue().get(pos);
+                List<Material> list = model.MatrialsList.getValue();
+                LoadAction loadAction= Material.getZuphrLoada();
                 loadAction.setStatus("loaded");
-                list.set(pos,material2);
-                Plan2 plan= model.plan.getValue();
+                list.set(pos,Material);
+                Plan plan= model.plan.getValue();
                 plan.setPlanToItems(list);
                 model.plan.setValue(plan);
                 Flag.getInstance().setMaterialFlag(false);
+                Flag.getInstance().setPlanFlag(false);
             }
         };
 
         UnloadButtonClicked unloadListener = new UnloadButtonClicked() {
             @Override
             public void unloadButtonClicked(int pos) {
-                Material2 material2= model.MatrialsList.getValue().get(pos);
-                List<Material2> list = model.MatrialsList.getValue();
-                LoadAction loadAction= material2.getZuphrLoada();
+                Material Material= model.MatrialsList.getValue().get(pos);
+                List<Material> list = model.MatrialsList.getValue();
+                LoadAction loadAction= Material.getZuphrLoada();
                 loadAction.setStatus("unloaded");
-                list.set(pos,material2);
-                Plan2 plan= model.plan.getValue();
+                list.set(pos,Material);
+                Plan plan= model.plan.getValue();
                 plan.setPlanToItems(list);
                 model.plan.setValue(plan);
             }
@@ -220,27 +204,29 @@ public class LoaderFragment extends Fragment  {
         PrcButtonClicked prcListener = new PrcButtonClicked() {
             @Override
             public void PrcButtonClicked(int pos) {
-                Material2 material2= model.MatrialsList.getValue().get(pos);
-                List<Material2> list = model.MatrialsList.getValue();
-                LoadAction loadAction= material2.getZuphrLoada();
+                Material Material= model.MatrialsList.getValue().get(pos);
+                List<Material> list = model.MatrialsList.getValue();
+                LoadAction loadAction= Material.getZuphrLoada();
                 loadAction.setStatus("processing");
-                list.set(pos,material2);
-                Plan2 plan= model.plan.getValue();
+                list.set(pos,Material);
+                Plan plan= model.plan.getValue();
                 plan.setPlanToItems(list);
                 model.plan.setValue(plan);
+
                 Flag.getInstance().setMaterialFlag(false);
+                Flag.getInstance().setPlanFlag(false);
             }
         };
 
   FoundButtonClicked foundListener = new FoundButtonClicked() {
       @Override
       public void foundButtonClicked(int pos) {
-          Material2 material2= model.MatrialsList.getValue().get(pos);
-          List<Material2> list = model.MatrialsList.getValue();
-          LoadAction loadAction= material2.getZuphrLoada();
+          Material Material= model.MatrialsList.getValue().get(pos);
+          List<Material> list = model.MatrialsList.getValue();
+          LoadAction loadAction= Material.getZuphrLoada();
           loadAction.setStatus("not found");
-          list.set(pos,material2);
-          Plan2 plan= model.plan.getValue();
+          list.set(pos,Material);
+          Plan plan= model.plan.getValue();
           plan.setPlanToItems(list);
           model.plan.setValue(plan);
 
@@ -261,10 +247,8 @@ public class LoaderFragment extends Fragment  {
 
 
 
-        materialAdapter = new MaterialAdapter_2(mParam1, loadListener, unloadListener, prcListener, foundListener);
+        materialAdapter = new MaterialAdapter(mParam1, loadListener, unloadListener, prcListener, foundListener);
         rv.setAdapter(materialAdapter);
-////        myAdapter = detAdapter;
-
 
         if (Flag.getInstance().getMaterialFlag()){
             final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.layout_animation);
@@ -277,11 +261,14 @@ public class LoaderFragment extends Fragment  {
             rv.setLayoutManager(grm);
 
             ViewGroup vg = v.findViewById(R.id.cont);
+
+
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                 Fade fade = new Fade();
                 TransitionManager.beginDelayedTransition(vg, fade);
             }
             Flag.getInstance().setMaterialFlag(false);
+
         }
 
         //animation

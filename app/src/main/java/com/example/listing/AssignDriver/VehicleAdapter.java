@@ -19,7 +19,7 @@ import com.example.listing.databinding.AssignSpinnerItemBinding;
 import com.example.listing.databinding.AssignSpinnerVehicleBinding;
 import com.example.listing.databinding.PlanCardBinding;
 import com.example.listing.models.Driver;
-import com.example.listing.models.Plan2;
+import com.example.listing.models.Plan;
 import com.example.listing.models.Vehicle;
 
 import java.util.ArrayList;

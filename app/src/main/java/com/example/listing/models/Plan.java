@@ -1,93 +1,136 @@
 package com.example.listing.models;
 
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+@Entity(tableName = "PlanTable")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY,getterVisibility = JsonAutoDetect.Visibility.NONE,
         setterVisibility = JsonAutoDetect.Visibility.NONE,creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Plan2 implements Serializable {
+public class Plan implements Serializable {
+
+    @Expose(serialize = false,deserialize = false)
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @JsonIgnore
+    public int PlanId;
 
     @JsonProperty("ZuphrLoadtype")
+    @ColumnInfo(name="ZuphrLoadtype")
     String ZuphrLoadtype;
 
     @JsonProperty("Modified")
+    @ColumnInfo(name="Modified")
     Boolean Modified;
 
     @JsonProperty("ZuphrActtype")
+    @ColumnInfo(name="ZuphrActtype")
     String ZuphrActtype;
 
     @JsonProperty("ZuphrStatus")
+    @ColumnInfo(name="ZuphrStatus")
     String ZuphrStatus;
 
     @JsonProperty("ZuphrVesselName")
+    @ColumnInfo(name="ZuphrVesselName")
     String ZuphrVesselName;
 
     @JsonProperty("ZuphrCaptain")
+    @ColumnInfo(name="ZuphrCaptain")
     String ZuphrCaptain;
 
     @JsonProperty("ZuphrStation")
+    @ColumnInfo(name="ZuphrStation")
     String ZuphrStation;
 
     @JsonProperty("ZuphrLpid")
+    @ColumnInfo(name="ZuphrLpid")
     String ZuphrLpid;
 
 
     @JsonProperty("Majhr")
+    @ColumnInfo(name="Majhr")
     String Majhr;
 
     @JsonProperty("ZuphrLpname")
+    @ColumnInfo(name="ZuphrLpname")
     String ZuphrLpname;
 
     @JsonProperty("ZuphrProfid")
+    @ColumnInfo(name="ZuphrProfid")
     String ZuphrProfid;
 
 
     @JsonProperty("ZuphrRqtype")
+    @ColumnInfo(name="ZuphrRqtype")
     String ZuphrRqtype;
 
 
     @JsonProperty("ZuphrLpdate")
+    @ColumnInfo(name="ZuphrLpdate")
     String ZuphrLpdate;
 
     @JsonProperty("ZuphrLptime")
+    @ColumnInfo(name="ZuphrLptime")
     String ZuphrLptime;
 
     @JsonProperty("ZuphrLpuser")
+    @ColumnInfo(name="ZuphrLpuser")
     String ZuphrLpuser;
 
     @JsonProperty("ZuphrLifnr")
+    @ColumnInfo(name="ZuphrLifnr")
     String ZuphrLifnr;
 
     @JsonProperty("ZuphrVessel")
+    @ColumnInfo(name="ZuphrVessel")
     String ZuphrVessel;
+
+
     @JsonProperty("ZuphrRealeased")
+    @ColumnInfo(name="ZuphrLoadtype")
     Boolean ZuphrRealeased;
 
 
     @JsonProperty("ZuphrDeleted")
+    @ColumnInfo(name="ZuphrDeleted")
     Boolean ZuphrDeleted;
 
     @JsonProperty("ZuphrFpDate")
+    @ColumnInfo(name="ZuphrFpDate")
     String ZuphrFpDate;
 
     @JsonProperty("ZuphrFpTime")
+    @ColumnInfo(name="ZuphrFpTime")
     String ZuphrFpTime;
 
     @JsonProperty("ZuphrFpName")
+    @ColumnInfo(name="ZuphrFpName")
     String ZuphrFpName;
 
 
-    List<Material2> PlanToItems ;
+
+    @Ignore
+    @JsonIgnore
+    List<Material> PlanToItems ;
 
     @JsonProperty("PlanToItems")
-    public void unpackd(Map<String, List<Material2>> d) {
+    public void unpackd(Map<String, List<Material>> d) {
         if (d.get("results") != null) {
             PlanToItems = d.get("results");
         }
@@ -98,16 +141,16 @@ public class Plan2 implements Serializable {
 
 
 
-    public Plan2() {
+    public Plan() {
 
     }
 
-    public Plan2(String zuphrLoadtype, Boolean modified, String zuphrActtype, String zuphrStatus,
+    public Plan(String zuphrLoadtype, Boolean modified, String zuphrActtype, String zuphrStatus,
                  String zuphrVesselName, String zuphrCaptain, String zuphrStation, String zuphrLpid,
                  String majhr, String zuphrLpname, String zuphrProfid, String zuphrRqtype, String zuphrLpdate,
                  String zuphrLptime, String zuphrLpuser, String zuphrLifnr, String zuphrVessel,
                  Boolean zuphrRealeased, Boolean zuphrDeleted, String zuphrFpDate, String zuphrFpTime,
-                 String zuphrFpName, List<Material2> planToItems) {
+                 String zuphrFpName, List<Material> planToItems) {
         ZuphrLoadtype = zuphrLoadtype;
         Modified = modified;
         ZuphrActtype = zuphrActtype;
@@ -309,11 +352,11 @@ public class Plan2 implements Serializable {
         ZuphrFpName = zuphrFpName;
     }
 
-    public List<Material2> getPlanToItems() {
+    public List<Material> getPlanToItems() {
         return PlanToItems;
     }
 
-    public void setPlanToItems(List<Material2> planToItems) {
+    public void setPlanToItems(List<Material> planToItems) {
         PlanToItems = planToItems;
     }
 

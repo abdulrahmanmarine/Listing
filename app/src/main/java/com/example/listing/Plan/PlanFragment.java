@@ -16,14 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import com.example.listing.DataViewModel.Flag;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.PlanClickListener;
 import com.example.listing.R;
-import com.example.listing.models.Plan2;
+import com.example.listing.models.Plan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,15 +40,15 @@ public class PlanFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private PlanClickListener listener;
-    List<Plan2> plans = new ArrayList<>();
+    List<Plan> plans = new ArrayList<>();
 
     int currentpos;
 
 
     // TODO: Rename and change types of parameters
-    private ArrayList<Plan2> mParam1 = new ArrayList<>();
+    private ArrayList<Plan> mParam1 = new ArrayList<>();
     private boolean mParam2;
-    PlanAdapter_2 myadapter;
+    PlanAdapter myadapter;
     RecyclerView  rv;
     PlansDataModel model;
     boolean first = true;
@@ -75,7 +74,7 @@ public class PlanFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static PlanFragment newInstance(ArrayList<Plan2> param1, boolean param2) {
+    public static PlanFragment newInstance(ArrayList<Plan> param1, boolean param2) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARG_PARAM1, param1);
         bundle.putBoolean(ARG_PARAM2, param2);
@@ -93,7 +92,7 @@ public class PlanFragment extends Fragment {
         super.onCreate(savedInstanceState);
          Bundle bundle  = getArguments();
          if(bundle!=null){
-             mParam1 = (ArrayList<Plan2>) getArguments().getSerializable(ARG_PARAM1);
+             mParam1 = (ArrayList<Plan>) getArguments().getSerializable(ARG_PARAM1);
              mParam2 = getArguments().getBoolean(ARG_PARAM2);
 
          }
@@ -114,16 +113,17 @@ public class PlanFragment extends Fragment {
             if(list!=null)
             {
 
-                myadapter = new PlanAdapter_2(listener, (ArrayList<Plan2>) list);
+                myadapter = new PlanAdapter(listener, (ArrayList<Plan>) list);
                 rv.setAdapter(myadapter);
 
-//                if (Flag.getInstance().getPlanFlag()){
-//                    runAnimationAgain();
+            //    if (Flag.getInstance().getPlanFlag()){
+                    runAnimationAgain();
 //                    Flag.getInstance().setPlanFlag(false);
+//
 //                }
 
 
-                runAnimationAgain();
+           //     runAnimationAgain();
 
             }
 
@@ -161,10 +161,10 @@ public class PlanFragment extends Fragment {
     }
 
     private void filter(String text){
-        ArrayList<Plan2> filteredList = new ArrayList<>();
+        ArrayList<Plan> filteredList = new ArrayList<>();
 
 
-        for(Plan2 req : mParam1){
+        for(Plan req : mParam1){
 
 
 //            if(req.getDestination().toLowerCase().contains(text.toLowerCase())){

@@ -16,7 +16,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.Fade;
 import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,22 +24,17 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.listing.AddButtonClicked;
 import com.example.listing.AssignDriver.AssignMultiDialogFragment;
 import com.example.listing.AssignDriver.ChosenDriverCardAdapter;
 import com.example.listing.AssignDriver.DriverAdapter;
-import com.example.listing.AssignDriver.DriverAdapter_2;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.Kotlin.Dispatcher;
-import com.example.listing.Material.Material;
-import com.example.listing.Material.MaterialAdapter;
 import com.example.listing.R;
 import com.example.listing.Plan.PlanFragment;
-import com.example.listing.Plan.Plan;
 import com.example.listing.models.Driver;
-import com.example.listing.models.Material2;
+import com.example.listing.models.Material;
 import com.example.listing.models.Vehicle;
 
 import java.util.ArrayList;
@@ -69,12 +63,10 @@ public class DispatcherFragment extends Fragment implements AssignMultiDialogFra
 
 
     // TODO: Rename and change types of parameters
-    List<Plan> plans;
     private String mParam2, mParam3, mParam4;
-    private List<Material2> mParam1 = new ArrayList<>();
+    private List<Material> mParam1 = new ArrayList<>();
     private ArrayList<Driver> chosenDrivers = new ArrayList<>();
-    private MaterialAdapter materialAdapter;
-    private DriverAdapter_2 driverAdapter;
+    private DriverAdapter driverAdapter;
     private ChosenDriverCardAdapter chosenDriverCardAdapter;
     private static Context contexts;
     private static DispatcherFragment fragment = null;
@@ -97,7 +89,7 @@ public class DispatcherFragment extends Fragment implements AssignMultiDialogFra
      * @return A new instance of fragment AddFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DispatcherFragment newInstance(ArrayList<Material2> param1, String param2, String param3, String param4) {
+    public static DispatcherFragment newInstance(ArrayList<Material> param1, String param2, String param3, String param4) {
         DispatcherFragment fragment = new DispatcherFragment();
         Bundle args = new Bundle();
         //args.putString(ARG_PARAM1, param1);
@@ -121,7 +113,7 @@ public class DispatcherFragment extends Fragment implements AssignMultiDialogFra
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = (ArrayList<Material2>) getArguments().getSerializable(ARG_PARAM1);
+            mParam1 = (ArrayList<Material>) getArguments().getSerializable(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
             mParam3 = getArguments().getString(ARG_PARAM3);
             mParam4 = getArguments().getString(ARG_PARAM4);
@@ -135,7 +127,7 @@ public class DispatcherFragment extends Fragment implements AssignMultiDialogFra
     private void filter2(String text){
 //        ArrayList<Material> filteredList = new ArrayList<>();
 //
-//        for(Material2 mat : mParam1){
+//        for(Material mat : mParam1){
 //            if(mat.getName().toLowerCase().contains(text.toLowerCase())){
 //                filteredList.add(mat);
 //            }
@@ -194,7 +186,7 @@ public class DispatcherFragment extends Fragment implements AssignMultiDialogFra
                 driverAdapter.notifyDataSetChanged();
                 notifDataAddChanged();
             };
-            driverAdapter = new DriverAdapter_2(materialList, addListener,getContext());
+            driverAdapter = new DriverAdapter(materialList, addListener,getContext());
 ////        myAdapter = detAdapter;
 
             //animation

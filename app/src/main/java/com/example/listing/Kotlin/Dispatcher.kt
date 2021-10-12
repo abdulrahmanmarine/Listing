@@ -4,8 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.listing.AssignDriver.AssignDialogFragment.OnNegativeClickListener
-import com.example.listing.AssignDriver.AssignDialogFragment.OnPositiveClickListener
+
 import com.example.listing.AssignDriver.AssignMultiDialogFragment
 import com.example.listing.AssignDriver.ChosenDriverCardAdapter
 import com.example.listing.DataViewModel.PlansDataModel
@@ -14,18 +13,18 @@ import com.example.listing.Material.Dispatcher.DispatcherFragment
 import com.example.listing.Plan.PlanFragment
 import com.example.listing.PlanClickListener
 import com.example.listing.R
-import com.example.listing.models.Material2
-import com.example.listing.models.Plan2
+import com.example.listing.models.Material
+import com.example.listing.models.Plan
 import java.util.*
 
-class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragmentClickListener, OnPositiveClickListener, OnNegativeClickListener{
+class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragmentClickListener{
 
     var dialog: DialogFragment? = null
     lateinit var chosenDriverCardAdapter: ChosenDriverCardAdapter;
     var materialpos = 0
     var po = 0
     lateinit var model :PlansDataModel
-    val reqs = ArrayList<Plan2?>()
+    val reqs = ArrayList<Plan?>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loader)
@@ -38,13 +37,13 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         var ctx = applicationContext
 
         model.Plans.observe(this,
-            { Plans: List<Plan2?>? ->
-                buildRecycler((Plans as ArrayList<Plan2?>?)!!
+            { Plans: List<Plan?>? ->
+                buildRecycler((Plans as ArrayList<Plan?>?)!!
                 )
             })
     }
 
-    fun buildRecycler(lst: ArrayList<Plan2?>?) {
+    fun buildRecycler(lst: ArrayList<Plan?>?) {
         val planFragment = PlanFragment.newInstance(lst, true);
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
@@ -53,7 +52,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
     }
 
 
-    override fun onItemClick(plan: Plan2?, pos: Int) {
+    override fun onItemClick(plan: Plan?, pos: Int) {
         model.plan.value = plan
         LoaderFragmentInteraction(pos)
         po = pos
@@ -65,17 +64,17 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
     override fun LoaderFragmentInteraction( pos: Int) {
 
-        model.plan.observe(this, {plan: Plan2? ->
+        model.plan.observe(this, {plan: Plan? ->
             val planList = model.Plans.value!!
             planList[pos] = plan
             model.Plans.value = planList
             model.MatrialsList.value=plan?.planToItems
         })
 
-        model.MatrialsList.observe(this,{MaterialList:List<Material2> ->
+        model.MatrialsList.observe(this,{MaterialList:List<Material> ->
 
             val textfragment = DispatcherFragment.newInstance(
-                MaterialList as ArrayList<Material2>?,
+                MaterialList as ArrayList<Material>?,
 //            plan.req_name,
 //            plan.vessel_num,
 //            plan.destination
@@ -102,7 +101,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
     fun showAssignDialog(
         matpos: Int,
-        material: Material2,
+        material: Material,
     ) {
         materialpos = matpos
         val fra = supportFragmentManager
@@ -135,17 +134,6 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 //        dialog!!.dismiss()
 //    }
 
-    override fun onPositiveClick(text: String?, text2: String?) {
-        reqs[po]!!.planToItems[materialpos].drivers[0].zuphrdrvrName = text
-        chosenDriverCardAdapter
-//        reqs[po]!!.planToItems[materialpos].driver.zuphrdrvrName = text
-//        reqs[po]!!.planToItems[materialpos].vehicle.vehType= text2
-        dialog!!.dismiss()
-    }
-
-    override fun onNegativeClick() {
-        //  dialog.dismiss();
-    }
 
 
 }

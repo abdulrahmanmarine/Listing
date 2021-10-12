@@ -24,35 +24,4 @@ data class Notes(
 )
 
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class SAPNote(
-
-    @JsonProperty("ZuphrMjahr")
-    var ZuphrMjahr:String? = "",
-    @JsonProperty("ZuphrType")
-    var ZuphrType: String = "",
-    @JsonProperty("ZuphrNoteId")
-    var ZuphrNoteId: String = "",
-    @JsonProperty("ZuphrContent")
-    var ZuphrContent: String = "",
-    @JsonProperty("ZuphrId1")
-    var ZuphrId1: String = "",
-    @JsonProperty("ZuphrId2")
-    var ZuphrId2: String? = "",
-    @JsonProperty("ZuphrId3")
-    var ZuphrId3: String? = "",
-    @JsonProperty("ZuphrContentType")
-    var ZuphrContentType: String = "",
-    @JsonProperty("Lat")
-    var Lat: String? = "",
-    @JsonProperty("Lon")
-    var Lon: String? = "",
-    @JsonProperty("ZuphrFpName")
-    var ZuphrFpName: String? = "",
-    @JsonProperty("ZuphrFpTime")
-    var ZuphrFpTime: String? = "",
-    @JsonProperty("ZuphrFpDate")
-    var ZuphrFpDate: String? = "",
-
-    )
 

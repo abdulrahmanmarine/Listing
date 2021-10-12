@@ -1,48 +1,67 @@
 package com.example.listing.models;
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
 
+@Entity(tableName = "ImageTable")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY,getterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE,creatorVisibility = JsonAutoDetect.Visibility.NONE)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class imagenode implements Serializable {
+
+
+    @Expose(serialize = false,deserialize = false)
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @JsonIgnore
+    public int Imageid;
+
+    @Expose(serialize = false,deserialize = false)
+    @ColumnInfo(name = "MaterialOfflineID")
+    @JsonIgnore
+    public  String MaterialOfflineID;
+
 
     @ColumnInfo(name = "ZuphrId")
     @JsonProperty("ZuphrId")
-    @SerializedName("ZuphrId")
     String ZuphrId ="";
 
     @ColumnInfo(name = "AppPrefix")
     @JsonProperty("AppPrefix")
-    @SerializedName("AppPrefix")
+
     String AppPrefix ="STG";
 
     @ColumnInfo(name = "Item")
     @JsonProperty("Item")
-    @SerializedName("Item")
+
     String Item ="";
 
     @ColumnInfo(name = "Order")
     @JsonProperty("Order")
-    @SerializedName("Order")
     String Order ="";
 
 
     @ColumnInfo(name = "Type")
     @JsonProperty("Type")
-    @SerializedName("Type")
     String Type;
 
     @ColumnInfo(name = "Name")
     @JsonProperty("Name")
-    @SerializedName("Name")
     String Name;
 
     @ColumnInfo(name = "Contents")
     @JsonProperty("Contents")
-    @SerializedName("Contents")
     String Contents;
 
 

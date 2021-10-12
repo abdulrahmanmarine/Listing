@@ -1,8 +1,8 @@
 package com.example.listing;
 
-import com.example.listing.models.Plan2;
+import com.example.listing.models.Plan;
 
 public interface PlanClickListener {
-      void onItemClick(Plan2 plan, int pos);
+      void onItemClick(Plan plan, int pos);
 //        void onItemClick(int pos);
 }

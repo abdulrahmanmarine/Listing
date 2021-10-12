@@ -5,7 +5,7 @@
     <data>
         <variable
             name="item"
-            type="com.example.listing.models.Material2" />
+            type="com.example.listing.models.Material" />
     </data>
 
 

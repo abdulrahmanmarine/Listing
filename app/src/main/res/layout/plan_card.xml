@@ -7,7 +7,7 @@
     <data>
         <variable
             name="plan"
-            type="com.example.listing.models.Plan2" />
+            type="com.example.listing.models.Plan" />
 
         <variable
             name="itemClickListener"
