@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/online"
+        android:title="@string/Online"
+        android:icon="@drawable/online"/>
+
+    <item
+        android:id="@+id/offline"
+        android:title="@string/Offline"
+        android:icon="@drawable/ic_baseline_wifi_off_24"/>
+
+
+</menu>

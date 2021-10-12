@@ -3,8 +3,9 @@ package com.example.listing.Utils;
 import android.app.Application;
 import android.util.Log;
 
-import com.example.staging_application.R;
+import com.example.listing.R;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.google.android.gms.common.api.Api;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -151,7 +152,7 @@ public class RestLoginClient {
             Response originalResponse = chain.proceed(chain.request());
 
       // TODO UNCOMMENT FOR AIRWATCH
-              RestApiClient.initializer(client,application,null);
+              RestApiClient.initializer(application,client);
 
 
             return originalResponse;

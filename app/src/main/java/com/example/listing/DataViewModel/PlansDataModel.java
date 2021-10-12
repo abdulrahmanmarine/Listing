@@ -11,30 +11,24 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.listing.AssignDriver.AssignPair;
 import com.example.listing.models.Driver;
-import com.example.listing.models.Material;
 import com.example.listing.models.Plan;
 
 import com.example.listing.R;
-import com.example.listing.Utils.RestApi;
+import com.example.listing.Utils.RestApiClient;
 import com.example.listing.Utils.RetrofitInterface;
 import com.example.listing.models.ImageList;
 import com.example.listing.models.LoadAction;
-import com.example.listing.models.PlanUnpack;
 import com.example.listing.models.Vehicle;
 import com.example.listing.models.imagenode;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.http.auth.AuthenticationException;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -62,9 +56,9 @@ public class PlansDataModel extends ViewModel {
             KeyManagementException, AuthenticationException  {
         super();
         this.application = application;
-        RestApi.initializer(application,null);
+        RestApiClient.initializer(application,null);
 
-        retrofitInterface = RestApi.getInstance().getRetrofitInterface();
+        retrofitInterface = RestApiClient.getInstance().getRetrofitInterface();
 
     }
 

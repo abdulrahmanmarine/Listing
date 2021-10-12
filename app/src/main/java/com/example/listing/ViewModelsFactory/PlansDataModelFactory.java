@@ -1,4 +1,4 @@
-package com.example.listing.DataViewModel;
+package com.example.listing.ViewModelsFactory;
 
 import android.app.Activity;
 import android.app.Application;
@@ -6,6 +6,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.listing.DataViewModel.PlansDataModel;
 
 import org.apache.http.auth.AuthenticationException;
 

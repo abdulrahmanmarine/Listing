@@ -25,12 +25,12 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.listing.*
 import com.example.listing.DataViewModel.PlansDataModel
-import com.example.listing.Utils.RestApi
+import com.example.listing.Utils.RestApiClient
+import com.example.listing.models.SAPNote
 import com.fasterxml.jackson.core.Base64Variants
 import com.fasterxml.jackson.module.kotlin.readValue
 import kotlinx.coroutines.*
@@ -340,8 +340,8 @@ class RedesignedNotesFragment(noteType: String, id1: String,id2: String?, id3: S
 
 
     fun sendNote(){
-if(RestApi.getInstance()!=null)
-        RestApi.getInstance().retrofitInterface.submitNote(subSAPNote, Token)
+if(RestApiClient.getInstance()!=null)
+        RestApiClient.getInstance().retrofitInterface.submitNote(subSAPNote, Token)
                 .enqueue(object : Callback,
                         retrofit2.Callback<ResponseBody> {
                     override fun onResponse(
@@ -389,8 +389,8 @@ if(RestApi.getInstance()!=null)
     fun getNotes(){
         var filterstr = "NoteSet?\$filter=ZuphrType eq '$noteType' and ZuphrId1 eq '$id1' and ZuphrId2 eq '$id2' and ZuphrId3 eq '$id3' "
 
-        if(RestApi.getInstance()!=null)
-        RestApi.getInstance().retrofitInterface.retrieveNotes(filterstr)
+        if(RestApiClient.getInstance()!=null)
+        RestApiClient.getInstance().retrofitInterface.retrieveNotes(filterstr)
                 .enqueue(object : Callback,
                         retrofit2.Callback<ResponseBody> {
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

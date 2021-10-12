@@ -12,15 +12,17 @@ import com.example.listing.OfflineInterfaces.Offline_Matrial;
 import com.example.listing.OfflineInterfaces.Offline_Notes;
 import com.example.listing.OfflineInterfaces.Offline_Plan;
 import com.example.listing.OfflineInterfaces.Offline_UserList;
+import com.example.listing.OfflineInterfaces.Offline_Vehicle;
 import com.example.listing.models.LoadAction;
 import com.example.listing.models.Material;
 import com.example.listing.models.Plan;
 import com.example.listing.models.SAPNote;
+import com.example.listing.models.Vehicle;
 import com.example.listing.models.imagenode;
 
 @Database(entities = {Plan.class, Material.class, LoadAction.class, imagenode.class,
-        com.example.listing.models.UserList.class, SAPNote.class} ,
-        version = 1)
+        //Vehicle.class,
+        com.example.listing.models.UserList.class, SAPNote.class} , version = 1)
 public abstract class OfflineDatabaseClient extends RoomDatabase {
     private static final String DB_Name ="App_db";
     private static OfflineDatabaseClient instance;
@@ -36,7 +38,7 @@ public abstract class OfflineDatabaseClient extends RoomDatabase {
     public abstract Offline_Plan planitem();
     public abstract Offline_Matrial MatrialImage();
     public abstract Offline_Driver MatrialDrivers();
-    public abstract Offline_Matrial MatrialVehicles();
+   // public abstract Offline_Vehicle MatrialVehicles();
     public abstract Offline_LoadAction MatrialLoadAction();
     public abstract Offline_UserList Users();
     public abstract Offline_Notes Notes();

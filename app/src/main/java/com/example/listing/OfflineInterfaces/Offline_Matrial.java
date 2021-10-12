@@ -7,7 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.listing.models.Material;
-import com.example.listing.models.imagenode;
+
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public interface Offline_Matrial {
 
 
     @Query("SELECT * FROM MaterialTable WHERE PlanOfflineID =:id")
-    List<imagenode> GetItemAll(String id);
+    List<Material> GetItemAll(String id);
 
     @Insert
     void insertImage(Material material);

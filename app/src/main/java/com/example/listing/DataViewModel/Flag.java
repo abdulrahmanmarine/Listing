@@ -2,8 +2,6 @@ package com.example.listing.DataViewModel;
 
 import android.util.Log;
 
-import com.example.listing.Utils.RestApi;
-
 public class Flag {
     private static Flag instance;
     private Boolean planFlag = true;

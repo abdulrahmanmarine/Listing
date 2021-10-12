@@ -29,5 +29,10 @@
     <string name="sapclient_25">025</string>
     <string name="dvcURL">https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/</string>
     <string name="SharedPrefName">Settings</string>
+    <string name="portalURL">https://dp4.aramco.com.sa/</string>
+    <string name="Online">Online</string>
+    <string name="Offline">Offline</string>
+    <string name="UserMode">UsageMode</string>
+    <string name="UserInfo">UserInfo</string>
 
 </resources>

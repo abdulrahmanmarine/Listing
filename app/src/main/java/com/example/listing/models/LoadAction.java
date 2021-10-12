@@ -2,59 +2,120 @@ package com.example.listing.models;
 
 import android.icu.util.Calendar;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity(tableName = "LoadActionTable")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
         setterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LoadAction implements Serializable {
 
+    @Expose(serialize = false,deserialize = false)
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @JsonIgnore
+    public int LoadActionId;
+
+    @Expose(serialize = false,deserialize = false)
+    @ColumnInfo(name = "PlanOfflineID")
+    @JsonIgnore
+    public  String PlanOfflineID;
+
+
     @JsonProperty("zuphrLpid")
+    @ColumnInfo(name="zuphrLpid")
     String zuphrLpid = "";
 
     @JsonProperty("zuphrMjahr")
+    @ColumnInfo(name="zuphrMjahr")
     String zuphrMjahr = "";
+
+
     @JsonProperty("zuphrMblpo")
+    @ColumnInfo(name="zuphrMblpo")
     String zuphrMblpo = "";
+
+
     @JsonProperty("zuphrLoadid")
+    @ColumnInfo(name="zuphrLoadid")
     String zuphrLoadid = "";
+
     @JsonProperty("zuphrActtype")
+    @ColumnInfo(name="zuphrActtype")
     String zuphrActtype = "";
+
+
     @JsonProperty("zuphrAsinQuan")
+    @ColumnInfo(name="zuphrAsinQuan")
     String assignedQuan = 0.0 + "";
-    @JsonProperty("zuphrMeins")
+
+
+    @JsonProperty("materialUnit")
+    @ColumnInfo(name="materialUnit")
     String materialUnit = "";
 
     @JsonIgnore
+    @Ignore
     Boolean zuphrReady = false;
+
+
     @JsonProperty("zuphrFpDate")
+    @ColumnInfo(name="zuphrFpDate")
     String FpDate = "";
+
+
     @JsonProperty("zuphrFpTime")
+    @ColumnInfo(name="zuphrFpTime")
     String FpTime = "";
     @JsonProperty("zuphrFpName")
+    @ColumnInfo(name="FpName")
     String FpName = "";
+
     @JsonProperty("zuphrSize")
+    @ColumnInfo(name="zuphrSize")
     String zuphrSize = "";
+
     @JsonProperty("zuphrConfQuan")
+    @ColumnInfo(name="zuphrConfQuan")
     String confirmedQuan = 0.0 + "";
+
     @JsonProperty("zuphrAct")
+    @ColumnInfo(name="zuphrAct")
     String zuphrAct = "";
+
     @JsonProperty("zuphrDriver")
+    @Ignore
     List<Driver> driver = new ArrayList<>();
+
     @JsonProperty("zuphrWeight")
+    @ColumnInfo(name="zuphrWeight")
     String weight = "";
+
     @JsonProperty("zuphrVehType")
+    @Ignore
     List<Vehicle> vehicle = new ArrayList<>();
+
     @JsonProperty("zuphrStatus")
+    @ColumnInfo(name="zuphrStatus")
     String status = "";
+
     @JsonProperty("zuphrContents")
+    @ColumnInfo(name="zuphrContents")
     String content = "";
 
     public LoadAction(String zuphrLpid, String zuphrMjahr, String zuphrMblpo, String zuphrLoadid,

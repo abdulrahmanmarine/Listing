@@ -30,9 +30,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 
-public class RestApi {
+public class RestApiClient {
 
-    private static RestApi instance;
+    private static RestApiClient instance;
     private static Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
 
@@ -40,20 +40,20 @@ public class RestApi {
         return retrofitInterface;
     }
 
-    private RestApi(Application application, User user){
-        retrofitInterface=Login(application,user);
+    private RestApiClient(Application application,OkHttpClient client){
+        retrofitInterface=Login(application,client);
     }
 
 
-    public static void initializer(Application application ,User user){
+    public static void initializer(Application application ,OkHttpClient client){
         if(instance == null){
-            synchronized (RestApi.class){
-                instance = new RestApi(application,user);
+            synchronized (RestApiClient.class){
+                instance = new RestApiClient(application,client);
             }
         }
     }
 
-    public static RestApi getInstance(){
+    public static RestApiClient getInstance(){
         if(instance == null){
            return null;
         }else{
@@ -64,12 +64,12 @@ public class RestApi {
 
 
 
-    public static RetrofitInterface Login(Application application, User user) {
+    public static RetrofitInterface Login(Application application, OkHttpClient client) {
         Log.i("Login-Repo","2");
-        return CreateClient(application ,user).create(RetrofitInterface.class);
+        return CreateClient(application ,client).create(RetrofitInterface.class);
     }
 
-    public static Retrofit CreateClient(Application application, User user) {
+    public static Retrofit CreateClient(Application application, OkHttpClient client) {
         if (retrofit == null) {
             Log.i("Login-create","3");
             Gson gson=new GsonBuilder()
@@ -78,16 +78,17 @@ public class RestApi {
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(application.getString(R.string.portal))
-                    .client(headersInterceptors(user, application))
+                   // .client(client)
+                    .client(headersInterceptors( application))
                     .addConverterFactory(JacksonConverterFactory.create(jacksonObjectMapper().setPropertyNamingStrategy(new PropertyNamingStrategies.UpperCamelCaseStrategy()))).build();
 
         }
         return retrofit;
     }
-    static OkHttpClient headersInterceptors(User user, Application application) {
+    static OkHttpClient headersInterceptors(Application application) {
         CookieHandler cookieHandler = new CookieManager();
         OkHttpClient  client = new OkHttpClient.Builder()
-                .addInterceptor(new BasicAuth(user, application))
+                .addInterceptor(new BasicAuth(application))
                 .cookieJar(new JavaNetCookieJar(cookieHandler))
                 .connectTimeout(900, TimeUnit.SECONDS)
                 .writeTimeout(10,TimeUnit.SECONDS)
@@ -98,19 +99,18 @@ public class RestApi {
     }
 
     private static class BasicAuth implements Interceptor {
-        User user;
         Application application;
 
-        public BasicAuth(User user, Application application) {
+        public BasicAuth(Application application) {
             this.application = application;
-            this.user = user;
+
         }
 
 
         @Override
         public Response intercept(Chain chain) throws IOException {
             User user1=new User("alsaliat","Welcome.1");
-            String creds = Credentials.basic(user1.getUsername(),user1.getPassword());
+            String creds = Credentials.basic(user1.getUserId(),user1.getPassword());
             Headers headers = chain.request().headers().newBuilder()
                     .add("Authorization", creds)
                     .add("Content-Type", application.getResources().getString(R.string.Content_Type))

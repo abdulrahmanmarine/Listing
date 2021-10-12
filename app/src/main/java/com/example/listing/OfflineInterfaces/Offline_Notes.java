@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface Offline_Notes {
 
-    @Query("SELECT * FROM SAPNote WHERE OfflineidNote =:id")
+    @Query("SELECT * FROM SAPNote WHERE MaterialOfflineID =:id")
     List<SAPNote> GetItemAll(String id);
 
     @Insert

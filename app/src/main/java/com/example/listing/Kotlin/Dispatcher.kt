@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.listing.AssignDriver.AssignMultiDialogFragment
 import com.example.listing.AssignDriver.ChosenDriverCardAdapter
 import com.example.listing.DataViewModel.PlansDataModel
-import com.example.listing.DataViewModel.PlansDataModelFactory
+import com.example.listing.ViewModelsFactory.PlansDataModelFactory
 import com.example.listing.Material.Dispatcher.DispatcherFragment
 import com.example.listing.Plan.PlanFragment
 import com.example.listing.PlanClickListener
@@ -30,7 +30,9 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         setContentView(R.layout.activity_loader)
         this.getSupportActionBar()!!.hide()
 
-         model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(
+         model = ViewModelProvider(this,
+             PlansDataModelFactory(this.application)
+         ).get(
             PlansDataModel::class.java
         )
         model.getplans(application)

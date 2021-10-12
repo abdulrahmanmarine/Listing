@@ -51,4 +51,7 @@ public interface RetrofitInterface {
     Call<ResponseBody> postLoadAction(@Body LoadAction loadAction, @Header("x-csrf-token") String token);
 
 
+    @GET("ZU_UPHR_MAIN_SRV/UserInfoSet/")
+    Call<ResponseBody> DVClogin(@Header("x-csrf-token") String fetch);
+
 }

@@ -103,7 +103,7 @@ public class Plan implements Serializable {
 
 
     @JsonProperty("ZuphrRealeased")
-    @ColumnInfo(name="ZuphrLoadtype")
+    @ColumnInfo(name="ZuphrRealeased")
     Boolean ZuphrRealeased;
 
 

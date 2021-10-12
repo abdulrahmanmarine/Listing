@@ -42,4 +42,26 @@
     <color name="aramco_green2">#84BD00</color>
     <color name="login_bc">#000026</color>
     <color name="login_bc2">#002e4f</color>
+
+
+
+    <color name="SA_Light_Green">#84BD00</color>
+    <color name="SA_Dark_Green">#00843D</color>
+    <color name="SA_Light_Blue">#00A3E0</color>
+    <color name="SA_Dark_Blue">#0033A0</color>
+    <color name="SA_Dark_Gray">#676A6E</color>
+    <color name="Gray_50">#808080</color>
+    <color name="Gray_25">#C0C0C0</color>
+    <color name="Gray_15">#DADADA</color>
+
+    <color name="reddish">#B55454</color>
+
+
+
+
+
+
+
+
+
 </resources>

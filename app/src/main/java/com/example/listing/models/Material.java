@@ -297,7 +297,11 @@ public class Material implements Serializable {
     String ZuphrFpName;
 
 
+     @JsonIgnore
+     @Ignore
     List<Driver> Drivers;
+     @JsonIgnore
+     @Ignore
     List<Vehicle> Vehicles;
 
 
