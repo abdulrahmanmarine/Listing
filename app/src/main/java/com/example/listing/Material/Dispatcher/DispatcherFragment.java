@@ -67,6 +67,7 @@ public class DispatcherFragment extends Fragment implements AssignMultiDialogFra
     private List<Material> mParam1 = new ArrayList<>();
     private ArrayList<Driver> chosenDrivers = new ArrayList<>();
     private DriverAdapter driverAdapter;
+    private DriverAdapter vechileAdapter;
     private ChosenDriverCardAdapter chosenDriverCardAdapter;
     private static Context contexts;
     private static DispatcherFragment fragment = null;
@@ -186,6 +187,7 @@ public class DispatcherFragment extends Fragment implements AssignMultiDialogFra
                 driverAdapter.notifyDataSetChanged();
                 notifDataAddChanged();
             };
+
             driverAdapter = new DriverAdapter(materialList, addListener,getContext());
 ////        myAdapter = detAdapter;
 

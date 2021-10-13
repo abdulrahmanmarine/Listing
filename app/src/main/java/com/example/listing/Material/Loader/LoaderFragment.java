@@ -182,8 +182,6 @@ public class LoaderFragment extends Fragment  {
                 Plan plan= model.plan.getValue();
                 plan.setPlanToItems(list);
                 model.plan.setValue(plan);
-                Flag.getInstance().setMaterialFlag(false);
-                Flag.getInstance().setPlanFlag(false);
             }
         };
 
@@ -213,8 +211,6 @@ public class LoaderFragment extends Fragment  {
                 plan.setPlanToItems(list);
                 model.plan.setValue(plan);
 
-                Flag.getInstance().setMaterialFlag(false);
-                Flag.getInstance().setPlanFlag(false);
             }
         };
 
@@ -250,7 +246,7 @@ public class LoaderFragment extends Fragment  {
         materialAdapter = new MaterialAdapter(mParam1, loadListener, unloadListener, prcListener, foundListener);
         rv.setAdapter(materialAdapter);
 
-        if (Flag.getInstance().getMaterialFlag()){
+
             final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.layout_animation);
             rv.setLayoutAnimation(controller);
             materialAdapter.notifyDataSetChanged();
@@ -266,8 +262,6 @@ public class LoaderFragment extends Fragment  {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                 Fade fade = new Fade();
                 TransitionManager.beginDelayedTransition(vg, fade);
-            }
-            Flag.getInstance().setMaterialFlag(false);
 
         }
 

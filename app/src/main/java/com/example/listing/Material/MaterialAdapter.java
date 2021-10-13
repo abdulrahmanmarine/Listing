@@ -42,9 +42,7 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.Materi
     @NonNull
     @Override
     public MaterialAdapter.MaterialViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LoadItemCardBinding binding = DataBindingUtil.inflate(
-                LayoutInflater.from(parent.getContext()),
-                R.layout.load_item_card, parent, false);
+        LoadItemCardBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.load_item_card, parent, false);
         contexts = parent.getContext();
 
         return new MaterialAdapter.MaterialViewHolder(binding);

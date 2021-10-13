@@ -15,6 +15,7 @@ import com.example.listing.R;
 import com.example.listing.databinding.AssignCardBinding;
 import com.example.listing.models.Driver;
 import com.example.listing.models.Material;
+import com.example.listing.models.Vehicle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,11 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
         ChosenDriverCardAdapter chosenDriverCardAdapter = new ChosenDriverCardAdapter((ArrayList<Driver>) material.getZuphrLoada().getDriver());
         holder.chosenDriverList.setLayoutManager(new LinearLayoutManager(context));
         holder.chosenDriverList.setAdapter(chosenDriverCardAdapter);
+
+
+        ChosenVehicleCardAdapter chosenVehicleCardAdapter = new ChosenVehicleCardAdapter((ArrayList<Vehicle>) material.getZuphrLoada().getVehicle());
+        holder.chosenVehicleList.setLayoutManager(new LinearLayoutManager(context));
+        holder.chosenVehicleList.setAdapter(chosenVehicleCardAdapter);
     }
 
     @Override
@@ -63,17 +69,16 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         public AssignCardBinding itemRowBinding;
         public RecyclerView chosenDriverList;
+        public RecyclerView chosenVehicleList;
         boolean incomplete = true;
         public ViewHolder(AssignCardBinding itemRowBinding) {
             super(itemRowBinding.getRoot());
             this.itemRowBinding = itemRowBinding;
+            chosenVehicleList=itemRowBinding.chosenVehiclesCard;
             chosenDriverList = itemRowBinding.chosenDriversCard;
         }
 
         public void bind(Material material) {
-            if(material.getDrivers().size() != 0) {
-                itemRowBinding.setDriver(material.getDrivers().get(0));
-            }
             itemRowBinding.setItem(material);
             itemRowBinding.setPos(getAdapterPosition());
             itemRowBinding.executePendingBindings();
