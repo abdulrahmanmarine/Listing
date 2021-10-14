@@ -1,8 +1,12 @@
 package com.example.listing.models;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -10,6 +14,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 import java.util.List;
@@ -23,6 +28,18 @@ public class Vehicle implements Serializable{
     public Vehicle() {
 
     }
+
+    @Expose(serialize = false,deserialize = false)
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @JsonIgnore
+    public int VehicleId;
+
+    @Expose(serialize = false,deserialize = false)
+    @ColumnInfo(name = "MaterialOfflineID")
+    @JsonIgnore
+    public  String MaterialOfflineID;
+
 
     @JsonProperty("Vehid")
     String Vehid;
