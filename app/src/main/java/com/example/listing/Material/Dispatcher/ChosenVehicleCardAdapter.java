@@ -1,9 +1,8 @@
-package com.example.listing.AssignDriver;
+package com.example.listing.Material.Dispatcher;
 
         import android.util.Log;
         import android.view.LayoutInflater;
         import android.view.ViewGroup;
-        import android.widget.RadioButton;
         import android.widget.TextView;
 
         import androidx.annotation.NonNull;
@@ -11,14 +10,10 @@ package com.example.listing.AssignDriver;
         import androidx.recyclerview.widget.RecyclerView;
 
         import com.example.listing.R;
-        import com.example.listing.databinding.AssignSpinnerItemBinding;
-        import com.example.listing.databinding.ChosenDriverCardItemBinding;
         import com.example.listing.databinding.ChosenVehicleCardItemBinding;
-        import com.example.listing.models.Driver;
         import com.example.listing.models.Vehicle;
 
         import java.util.ArrayList;
-        import java.util.List;
 
 public class ChosenVehicleCardAdapter extends RecyclerView.Adapter<ChosenVehicleCardAdapter.ViewHolder>  {
     ArrayList<Vehicle> Vehicle;

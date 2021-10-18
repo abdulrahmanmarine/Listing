@@ -3,6 +3,7 @@ package com.example.listing.models;
 import androidx.room.Entity;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "VehicleTable")
@@ -55,6 +57,19 @@ public class Vehicle implements Serializable{
 
     @JsonProperty("PlateNo")
     String PlateNo;
+
+
+    @JsonIgnore
+    List<Driver> driverList =new ArrayList<>();
+
+
+    public List<Driver> getDriverList() {
+        return driverList;
+    }
+
+    public void setDriverList(List<Driver> driverList) {
+        this.driverList = driverList;
+    }
 
     public String getVehid() {
         return Vehid;

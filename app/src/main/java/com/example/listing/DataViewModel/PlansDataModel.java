@@ -9,7 +9,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 
-import com.example.listing.AssignDriver.AssignPair;
 import com.example.listing.models.Driver;
 import com.example.listing.models.Plan;
 
@@ -77,8 +76,6 @@ public class PlansDataModel extends ViewModel {
 
         List<Vehicle> vehicles = new ArrayList<>();
         List<Vehicle> vehicles2 = new ArrayList<>();
-
-        List<AssignPair> assignPairs = new ArrayList<>();
 
     LoadAction load = new LoadAction("lpid", "mjahr", "mblpo", "loadid",
             "acttype", "assignedquan", "unit", false,"fpdate", "fptime", "name", "size", "confirmedquan",

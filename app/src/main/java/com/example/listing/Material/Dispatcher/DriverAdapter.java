@@ -1,4 +1,4 @@
-package com.example.listing.AssignDriver;
+package com.example.listing.Material.Dispatcher;
 
 import android.content.Context;
 import android.util.Log;
@@ -38,8 +38,7 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
     @Override
     public DriverAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         AssignCardBinding binding = DataBindingUtil.inflate(
-                LayoutInflater.from(parent.getContext()),
-                R.layout.assign_card, parent, false);
+                LayoutInflater.from(parent.getContext()), R.layout.assign_card, parent, false);
 
         return new DriverAdapter.ViewHolder(binding);
     }

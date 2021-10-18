@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 
-import com.example.listing.AssignDriver.AssignMultiDialogFragment
-import com.example.listing.AssignDriver.ChosenDriverCardAdapter
+import com.example.listing.Manual_Assigment.AssignMultiDialogFragment
+import com.example.listing.Material.Dispatcher.ChosenDriverCardAdapter
 import com.example.listing.DataViewModel.PlansDataModel
 import com.example.listing.ViewModelsFactory.PlansDataModelFactory
 import com.example.listing.Material.Dispatcher.DispatcherFragment
