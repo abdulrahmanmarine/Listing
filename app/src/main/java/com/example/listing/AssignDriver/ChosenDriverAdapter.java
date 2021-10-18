@@ -41,7 +41,6 @@ public class ChosenDriverAdapter extends RecyclerView.Adapter<ChosenDriverAdapte
             itemRowBinding.setDeleteListener(deleteListener);
             itemRowBinding.setItem(driver);
             itemRowBinding.executePendingBindings();
-
         }
     }
 

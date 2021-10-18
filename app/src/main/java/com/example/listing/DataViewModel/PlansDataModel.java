@@ -20,6 +20,7 @@ import com.example.listing.models.ImageList;
 import com.example.listing.models.LoadAction;
 import com.example.listing.models.Vehicle;
 import com.example.listing.models.imagenode;
+import com.google.android.gms.vision.L;
 
 import org.apache.http.auth.AuthenticationException;
 import org.json.JSONException;
@@ -94,9 +95,9 @@ public class PlansDataModel extends ViewModel {
                 "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
 
         Vehicle vehicle1 = new Vehicle("3","Medium", "Truck", "456234", "1000",
-                "Red", "2012", "DDMMYYYY", "123456");
+                "Red", "2012", "DDMMYYYY", "123456", drivers);
         Vehicle vehicle2 = new Vehicle("2","Medium", "Crane", "456234", "1000",
-                "Red", "2012", "DDMMYYYY", "123456");
+                "Red", "2012", "DDMMYYYY", "123456", drivers2);
 
 
         mats.add(new com.example.listing.models.Material("actquan", "String log",  load, "String zuphrMovem", "String zuphrActtype",
