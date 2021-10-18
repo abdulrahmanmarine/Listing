@@ -32,7 +32,7 @@ import com.example.listing.models.Vehicle;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AssignMultiDialogFragment extends DialogFragment
+public class Manual_AssignMultiDialogFragment extends DialogFragment
         implements DriverDeleteButtonClicked, DriverSelected,AdapterView.OnItemSelectedListener, VehicleSelected {
 
     private static int Mpostion;
@@ -87,8 +87,8 @@ public class AssignMultiDialogFragment extends DialogFragment
 //        return dialog;
 //    }
 
-    public static AssignMultiDialogFragment newInstance(int position,Material materialParam){
-        AssignMultiDialogFragment fragment = new AssignMultiDialogFragment();
+    public static Manual_AssignMultiDialogFragment newInstance(int position, Material materialParam){
+        Manual_AssignMultiDialogFragment fragment = new Manual_AssignMultiDialogFragment();
         Bundle args = new Bundle();
 
         args.putSerializable(MATERIAL_2, materialParam);
@@ -214,8 +214,7 @@ public class AssignMultiDialogFragment extends DialogFragment
                Log.i("matposition", Mpostion+"");
                 List<Material> list =model.MatrialsList.getValue();
                 LoadAction loadAction=Material.getZuphrLoada();
-                loadAction.setDriver(chosenDrivers);
-             //   loadAction.setVehicle(chosenVehicles);
+                loadAction.setVehicle(chosenVehicles);
                 Material.setZuphrLoada(loadAction);
                 list.set(Mpostion,Material);
                 Plan plan= model.plan.getValue();
