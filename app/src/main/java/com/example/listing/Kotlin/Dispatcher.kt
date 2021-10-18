@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 
-import com.example.listing.AssignDriver.AssignMultiDialogFragment
+import com.example.listing.AssignDriver.Configured_AssignMultiDialogFragment
 import com.example.listing.AssignDriver.ChosenDriverCardAdapter
 import com.example.listing.DataViewModel.PlansDataModel
 import com.example.listing.ViewModelsFactory.PlansDataModelFactory
@@ -109,7 +109,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         val fra = supportFragmentManager
 //        dialog = AssignMultiDialogFragment.newInstance(reqs[po]!!.materials[matpos].name,
 //            reqs[po]!!.materials[matpos].material, driverList, vehicleList, pairList)
-        dialog = AssignMultiDialogFragment.newInstance(matpos,material);
+        dialog = Configured_AssignMultiDialogFragment.newInstance(matpos,material);
 
 //        dialog = AssignMultiDialogFragment.newInstance(reqs[po]!!.planToItems[matpos].zuphrFpName,
 //            reqs[po]!!.planToItems[matpos].zuphrActquan, reqs[po]!!.planToItems[matpos].drivers as ArrayList<Driver>?
@@ -119,8 +119,8 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 //        (dialog as AssignDialogFragment?)!!.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
 //        (dialog as AssignDialogFragment?)!!.show(fra, "assign")
 
-        (dialog as AssignMultiDialogFragment?)!!.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
-        (dialog as AssignMultiDialogFragment?)!!.show(fra, "assign")
+        (dialog as Configured_AssignMultiDialogFragment?)!!.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
+        (dialog as Configured_AssignMultiDialogFragment?)!!.show(fra, "assign")
 
 
 //        materialpos = matpos

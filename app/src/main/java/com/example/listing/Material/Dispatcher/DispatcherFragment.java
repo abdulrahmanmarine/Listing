@@ -26,7 +26,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.listing.AddButtonClicked;
-import com.example.listing.AssignDriver.AssignMultiDialogFragment;
+import com.example.listing.AssignDriver.Configured_AssignMultiDialogFragment;
 import com.example.listing.AssignDriver.ChosenDriverCardAdapter;
 import com.example.listing.AssignDriver.DriverAdapter;
 import com.example.listing.DataViewModel.PlansDataModel;
@@ -45,7 +45,7 @@ import java.util.List;
  * Use the {@link DispatcherFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DispatcherFragment extends Fragment implements AssignMultiDialogFragment.OnPositiveClickListener {
+public class DispatcherFragment extends Fragment implements Configured_AssignMultiDialogFragment.OnPositiveClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

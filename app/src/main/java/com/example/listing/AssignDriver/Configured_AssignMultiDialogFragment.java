@@ -2,15 +2,12 @@ package com.example.listing.AssignDriver;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import com.example.listing.Kotlin.pictureMode;
+import com.example.listing.AddButtonClicked;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.DriverDeleteButtonClicked;
 import com.example.listing.VehicleDeleteButtonClicked;
@@ -37,7 +35,7 @@ import com.example.listing.models.Vehicle;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AssignMultiDialogFragment extends DialogFragment implements AdapterView.OnItemSelectedListener {
+public class Configured_AssignMultiDialogFragment extends DialogFragment implements AdapterView.OnItemSelectedListener {
 
     private static int Mpostion;
     private OnPositiveClickListener positiveListener;
@@ -56,10 +54,15 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
     private ArrayList<Vehicle> chosenVehicles = new ArrayList<>();
     private ChosenVehicleAdapter chosenVehicleAdapter;
 
+    private ArrayList<Vehicle> configureVehicles = new ArrayList<>();
+    private ConfiguredLoaderAdapter configuredLoaderAdapter;
+
     private ArrayList<Driver> chosenDrivers = new ArrayList<>();
     private ChosenDriverAdapter chosenDriverAdapter;
 
     private ChosenDriverCardAdapter chosenDriverCardAdapter;
+
+    private ConfiguredChosenAdapter configuredChosenAdapter;
 
 
     String simage;
@@ -96,8 +99,8 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
 //        return dialog;
 //    }
 
-    public static AssignMultiDialogFragment newInstance(int position,Material materialParam){
-        AssignMultiDialogFragment fragment = new AssignMultiDialogFragment();
+    public static Configured_AssignMultiDialogFragment newInstance(int position, Material materialParam){
+        Configured_AssignMultiDialogFragment fragment = new Configured_AssignMultiDialogFragment();
         Bundle args = new Bundle();
 
         args.putSerializable(MATERIAL_2, materialParam);
@@ -109,7 +112,7 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.assign_spinner, container, false);
+        View v = inflater.inflate(R.layout.assign_configured_layout, container, false);
         return v;
     }
 
@@ -119,6 +122,28 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
         onClickEvent(view);
 
         model=new ViewModelProvider(getActivity()).get(PlansDataModel.class);
+
+        AddButtonClicked addButtonClicked = new AddButtonClicked() {
+            @Override
+            public void addButtonClicked(int pos) {
+                chosenVehicles.add(configureVehicles.get(pos));
+                chosenDrivers.addAll(configureVehicles.get(pos).getLoaders());
+                configuredChosenAdapter.notifyDataSetChanged();
+                Log.i("addtest", configuredLoaderAdapter.getSelectedItem().getVehType() +" ");
+            }
+        };
+
+        VehicleDeleteButtonClicked vehicleDeleteButtonClicked2 = new VehicleDeleteButtonClicked() {
+            @Override
+            public void deleteButtonClicked(int pos) {
+                chosenVehicles.remove(pos);
+                int newPos = pos;
+                configuredChosenAdapter.notifyDataSetChanged();
+                configuredChosenAdapter.notifyItemRemoved(newPos);
+                configuredChosenAdapter.notifyItemRangeChanged(newPos, chosenVehicles.size());
+            }
+        };
+
 
         VehicleDeleteButtonClicked vehicleDeleteButtonClicked = new VehicleDeleteButtonClicked() {
             @Override
@@ -153,13 +178,20 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
         //chosen drivers list
         RecyclerView chosenDriverList = view.findViewById(R.id.driver_chosen_list);
         //done button
-        Button doneBut = view.findViewById(R.id.done_btn);
-        //search edit text for loader
-        EditText searchLoader = view.findViewById(R.id.search_loader);
-        //search edir text for vehicle
-        EditText searchVehicle = view.findViewById(R.id.search_vehicle);
+        Button doneBut = view.findViewById(R.id.complete_btn);
+//        //search edit text for loader
+//        EditText searchLoader = view.findViewById(R.id.search_loader);
+//        //search edir text for vehicle
+//        EditText searchVehicle = view.findViewById(R.id.search_vehicle);
         //Text view for material name
-        TextView materialName = view.findViewById(R.id.assign_image_tv);
+        TextView materialName = view.findViewById(R.id.material_tv);
+        //Recyclerview for configured list
+        RecyclerView configuredList = view.findViewById(R.id.configured_loader_list);
+        //textview for truck name
+        TextView vehicleName = view.findViewById(R.id.vehicle_list_name);
+        //Chosen List
+        RecyclerView configuredChosenList = view.findViewById(R.id.chosen_list);
+
 
 
         Driver driver1 = new Driver("3", "Abdul", "Heavy Vehicle Driving",
@@ -175,18 +207,7 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
         Driver driver6 = new Driver("2", "Mohammed", "Small Vehicle Driving",
                 "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
 
-        Vehicle vehicle1 = new Vehicle("3","Medium", "Truck", "456234", "1000",
-                "Red", "2012", "DDMMYYYY", "123456");
-        Vehicle vehicle2 = new Vehicle("2","Medium", "Crane", "456234", "1000",
-                "Red", "2012", "DDMMYYYY", "123456");
-        Vehicle vehicle3 = new Vehicle("2","Medium", "Two Wheel", "456234", "1000",
-                "Red", "2012", "DDMMYYYY", "123456");
-        Vehicle vehicle4 = new Vehicle("2","Medium", "Four Wheel", "456234", "1000",
-                "Red", "2012", "DDMMYYYY", "123456");
-        Vehicle vehicle5 = new Vehicle("2","Medium", "Small Truck", "456234", "1000",
-                "Red", "2012", "DDMMYYYY", "123456");
-        Vehicle vehicle6 = new Vehicle("2","Medium", "Huge Truck", "456234", "1000",
-                "Red", "2012", "DDMMYYYY", "123456");
+
 
         driversList.add(driver1);
         driversList.add(driver2);
@@ -195,6 +216,18 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
         driversList.add(driver5);
         driversList.add(driver6);
 
+        Vehicle vehicle1 = new Vehicle("3","Medium", "Truck", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456", driversList);
+        Vehicle vehicle2 = new Vehicle("2","Medium", "Crane", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456", driversList);
+        Vehicle vehicle3 = new Vehicle("2","Medium", "Two Wheel", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456", driversList);
+        Vehicle vehicle4 = new Vehicle("2","Medium", "Four Wheel", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456", driversList);
+        Vehicle vehicle5 = new Vehicle("2","Medium", "two wheel fork lift", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456", driversList);
+        Vehicle vehicle6 = new Vehicle("2","Medium", "Huge Truck", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456", driversList);
         vehiclesList.add(vehicle1);
         vehiclesList.add(vehicle2);
         vehiclesList.add(vehicle3);
@@ -202,14 +235,32 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
         vehiclesList.add(vehicle5);
         vehiclesList.add(vehicle6);
 
+        configureVehicles = vehiclesList;
+
+
 
         materialParam = (Material) getArguments().getSerializable(MATERIAL_2);
+
+
+        //setting adapter for chosen vehicle recycler
+        configuredLoaderAdapter = new ConfiguredLoaderAdapter(configureVehicles, addButtonClicked, getContext());
+        configuredList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+        configuredList.setAdapter(configuredLoaderAdapter);
+
+        materialName.setText(materialParam.getZuphrLpid());
+
+
 
 
         ArrayList<Driver> drivers = (ArrayList<Driver>) materialParam.getDrivers();
         chosenVehicles = (ArrayList<Vehicle>) materialParam.getVehicles();
         chosenDrivers = (ArrayList<Driver>) materialParam.getDrivers();
 
+        configuredChosenAdapter = new ConfiguredChosenAdapter(chosenVehicles, vehicleDeleteButtonClicked2);
+        configuredChosenList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+        configuredChosenList.setAdapter(configuredChosenAdapter);
+
+/* WORKING PART
 
         //setting adapter for loaders/drivers recycler
         loaderAdapter = new LoaderAdapter(driversList);
@@ -221,7 +272,9 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
         vehicleList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         vehicleList.setAdapter(vehicleAdapter);
 
-        //setting adapter for chosen vehicle recycler
+
+
+
         chosenVehicleAdapter = new ChosenVehicleAdapter(chosenVehicles, vehicleDeleteButtonClicked);
         chosenVehicleList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         chosenVehicleList.setAdapter(chosenVehicleAdapter);
@@ -230,7 +283,7 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
         chosenDriverAdapter = new ChosenDriverAdapter(chosenDrivers, driverDeleteButtonClicked);
         chosenDriverList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         chosenDriverList.setAdapter(chosenDriverAdapter);
-
+*/
 
 /* UNCOMMENT LATER FOR PAIRS
         //setting adapter for pair recycler
@@ -249,36 +302,8 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
             }
         });
 */
-        searchLoader.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                filterLoader(s.toString());
-            }
-        });
-
-        searchVehicle.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                filterVehicle(s.toString());
-            }
-        });
-
+/* WORKING PART
         addBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -295,7 +320,7 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
             }
         });
 
-
+*/
 //FOR IMAGE
 
 /*
@@ -339,27 +364,11 @@ public class AssignMultiDialogFragment extends DialogFragment implements Adapter
 
 
                 dismiss();
-        //                ((DispatcherFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.item_recycler)).dataChangedDer();
-//                ((MainActivity) getActivity()).dataChanged();
-//                notifDataChanged();
-
-                //TODO change to be list of drivers and list of vehicles to send data from fragment to main activity
-//               positiveListener.onPositiveClick(chosenDrivers, chosenVehicles);
             }
         });
 
 
 
-
-//        cancel_but.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                ((MainActivity) getActivity()).dataChanged();
-//                notifDataChanged();
-//                dismiss();
-//                //negativeListener.onNegativeClick();
-//            }
-//        });
     }
 
 
