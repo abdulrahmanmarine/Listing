@@ -1,4 +1,4 @@
-package com.example.listing.AssignDriver;
+package com.example.listing.AssignDialog_Configured;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,14 +10,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.listing.AddButtonClicked;
-import com.example.listing.DriverDeleteButtonClicked;
 import com.example.listing.R;
 import com.example.listing.VehicleDeleteButtonClicked;
 import com.example.listing.databinding.AssignConfiguredChosenItemBinding;
-import com.example.listing.databinding.AssignConfiguredListItemBinding;
-import com.example.listing.databinding.ChosenDriverItemBinding;
-import com.example.listing.models.Driver;
 import com.example.listing.models.Vehicle;
 
 import java.util.List;

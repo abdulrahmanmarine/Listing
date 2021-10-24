@@ -1,11 +1,17 @@
-package com.example.listing.AssignDriver;
+package com.example.listing.AssignDialog_Configured;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +29,7 @@ import java.util.List;
 public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder> {
     private List<Material> materials;
     private AddButtonClicked addListener;
+    private ImageView materialImage;
     private  Context context;
 
 
@@ -50,12 +57,6 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
         holder.bind(material);
         holder.itemRowBinding.setAddButtonListen(addListener);
 
-        Log.i("datalist",material.getZuphrLoada().getDriver().size()+"");
-        ChosenDriverCardAdapter chosenDriverCardAdapter = new ChosenDriverCardAdapter((ArrayList<Driver>) material.getZuphrLoada().getDriver());
-        holder.chosenDriverList.setLayoutManager(new LinearLayoutManager(context));
-        holder.chosenDriverList.setAdapter(chosenDriverCardAdapter);
-
-
         ChosenVehicleCardAdapter chosenVehicleCardAdapter = new ChosenVehicleCardAdapter((ArrayList<Vehicle>) material.getZuphrLoada().getVehicle());
         holder.chosenVehicleList.setLayoutManager(new LinearLayoutManager(context));
         holder.chosenVehicleList.setAdapter(chosenVehicleCardAdapter);
@@ -66,22 +67,49 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
         return materials.size();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public AssignCardBinding itemRowBinding;
         public RecyclerView chosenDriverList;
         public RecyclerView chosenVehicleList;
+        public TextView assignStatus;
         boolean incomplete = true;
         public ViewHolder(AssignCardBinding itemRowBinding) {
             super(itemRowBinding.getRoot());
             this.itemRowBinding = itemRowBinding;
             chosenVehicleList=itemRowBinding.chosenVehiclesCard;
-            chosenDriverList = itemRowBinding.chosenDriversCard;
+            materialImage = itemRowBinding.materialImgCard;
+            assignStatus = itemRowBinding.assignstat;
         }
+
 
         public void bind(Material material) {
             itemRowBinding.setItem(material);
             itemRowBinding.setPos(getAdapterPosition());
             itemRowBinding.executePendingBindings();
+
+            if(material.getZuphrContents().length()> 100) {
+                String img =material.getZuphrContents().replace("data:image/jpeg;base64,","");
+                byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                materialImage.setImageBitmap(decodedByte);
+            }
+
+//            if(material.getZuphrLoada().getVehicle().size() == 0){
+//                chosenVehicleList.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
+//            }
+
+            if(material.getZuphrLoada().getStatus() == "LFMS"){
+                itemRowBinding.assignstat.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
+            }
+
+            if(material.getZuphrLoada().getVehicle().isEmpty()){
+                assignStatus.setText("Not Assigned");
+                assignStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
+            }else{
+                assignStatus.setText("Assigned");
+                assignStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
+            }
         }
     }
 }

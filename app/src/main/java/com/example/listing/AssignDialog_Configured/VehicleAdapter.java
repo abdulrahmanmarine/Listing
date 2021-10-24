@@ -1,4 +1,4 @@
-package com.example.listing.AssignDriver;
+package com.example.listing.AssignDialog_Configured;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -15,11 +15,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listing.R;
-import com.example.listing.databinding.AssignSpinnerItemBinding;
 import com.example.listing.databinding.AssignSpinnerVehicleBinding;
-import com.example.listing.databinding.PlanCardBinding;
-import com.example.listing.models.Driver;
-import com.example.listing.models.Plan;
 import com.example.listing.models.Vehicle;
 
 import java.util.ArrayList;

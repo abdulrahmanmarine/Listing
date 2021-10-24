@@ -26,9 +26,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.listing.AddButtonClicked;
-import com.example.listing.AssignDriver.Configured_AssignMultiDialogFragment;
-import com.example.listing.AssignDriver.ChosenDriverCardAdapter;
-import com.example.listing.AssignDriver.DriverAdapter;
+import com.example.listing.AssignDialog_Configured.Configured_AssignMultiDialogFragment;
+import com.example.listing.AssignDialog_Configured.ChosenDriverCardAdapter;
+import com.example.listing.AssignDialog_Configured.DriverAdapter;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.Kotlin.Dispatcher;
 import com.example.listing.R;
@@ -129,7 +129,8 @@ public class DispatcherFragment extends Fragment implements Configured_AssignMul
 //        ArrayList<Material> filteredList = new ArrayList<>();
 //
 //        for(Material mat : mParam1){
-//            if(mat.getName().toLowerCase().contains(text.toLowerCase())){
+//            if(mat.getZuphrShortxt().equalsIgnoreCase(text)){
+////                    getName().toLowerCase().contains(text.toLowerCase())){
 //                filteredList.add(mat);
 //            }
 //        }

@@ -1,4 +1,4 @@
-package com.example.listing.AssignDriver;
+package com.example.listing.AssignDialog_Configured;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listing.DriverDeleteButtonClicked;
-import com.example.listing.VehicleDeleteButtonClicked;
 import com.example.listing.R;
 import com.example.listing.databinding.ChosenDriverItemBinding;
 import com.example.listing.models.Driver;

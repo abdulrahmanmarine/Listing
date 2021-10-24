@@ -1,12 +1,13 @@
 package com.example.listing.Kotlin
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 
-import com.example.listing.AssignDriver.Configured_AssignMultiDialogFragment
-import com.example.listing.AssignDriver.ChosenDriverCardAdapter
+import com.example.listing.AssignDialog_Configured.Configured_AssignMultiDialogFragment
+import com.example.listing.AssignDialog_Configured.ChosenDriverCardAdapter
 import com.example.listing.DataViewModel.PlansDataModel
 import com.example.listing.ViewModelsFactory.PlansDataModelFactory
 import com.example.listing.Material.Dispatcher.DispatcherFragment
@@ -40,12 +41,21 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
         model.Plans.observe(this,
             { Plans: List<Plan?>? ->
+                for (i in 0..1) {
+                    if (Plans != null) {
+                        Log.i("for test", Plans.get(i)!!.zuphrVessel + "")
+                    }
+            }
                 buildRecycler((Plans as ArrayList<Plan?>?)!!
+
+
                 )
             })
     }
 
     fun buildRecycler(lst: ArrayList<Plan?>?) {
+
+
         val planFragment = PlanFragment.newInstance(lst, true);
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()

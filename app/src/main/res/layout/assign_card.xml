@@ -19,194 +19,154 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="265dp"
-        android:layout_height="180dp"
-        android:layout_marginEnd="13dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="13dp"
         android:paddingBottom="13dp"
+        android:layout_marginEnd="9dp"
         android:transitionName="@string/transition_string">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/material_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
+                android:layout_weight="0.1"
                 android:ems="15"
-                android:gravity="center"
                 android:maxLines="1"
-                android:text="@{item.zuphrFpName}"
+                android:text="@{item.zuphrShortxt}"
                 android:textColor="@color/SADarkGreen"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                android:textSize="18sp" />
 
             <View
                 android:id="@+id/line"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 android:background="@android:color/darker_gray"
-                android:backgroundTint="@color/SADarkGreen"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/material_name"
-                app:layout_constraintVertical_bias="0.0" />
+                android:backgroundTint="@color/SADarkGreen" />
 
 
-            <ImageView
-                android:id="@+id/material_img_card"
-                android:layout_width="77dp"
-                android:layout_height="90dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/defult"
-                android:paddingRight="2dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/line"
-                app:layout_constraintVertical_bias="0.0" />
-
-
-            <TextView
-                android:id="@+id/driver_pt"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Driver: "
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.425"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.30" />
+                android:layout_weight="0.4"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:id="@+id/material_img_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="0.7"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/defult" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/vehicle_pt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="0.1"
+                        android:text="Vehicle: " />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/chosen_vehicles_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="0.7"
+                        android:background="@drawable/inner_rounded_shape"
+                        android:fadeScrollbars="false"
+                        android:scrollbars="vertical">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <TextView
+                        android:id="@+id/quantity_pt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="0.1"
+                        android:text="Quantity: " />
+
+                    <TextView
+                        android:id="@+id/quantity_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="0.1"
+                        android:ems="7"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="@{item.zuphrQuan}"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="9dp"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/assignstat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="3dp"
+                    android:layout_weight="0.25"
+                    android:gravity="center"
+                    android:paddingStart="10dp"
+                    android:paddingRight="11dp"
+                    android:text="@{item.zuphrLoada.status}" />
 
 
-            <!--
-                <Button
-                    android:id="@+id/unload_button"
-                    android:layout_width="79dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="15dp"
-                    android:background="@color/twentyfivGray"
-                    android:text="Unload"
-                    android:textColor="#ffffff"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/load_button"
-                    app:layout_constraintTop_toBottomOf="@+id/int_tx_row" />
-                    -->
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3" />
 
-            <TextView
-                android:id="@+id/vehicle_pt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="44dp"
-                android:text="Vehicle: "
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/driver_pt"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.3" />
+                <ImageView
+                    android:id="@+id/add_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="2dp"
+                    android:layout_weight="0.1"
+                    android:background="@drawable/ic_clipboard"
+                    android:onClick="@{() -> addButtonListen.addButtonClicked(pos)}" />
 
-            <TextView
-                android:id="@+id/status_pt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Quantity: "
-                app:layout_constraintBottom_toTopOf="@id/add_button"
-                app:layout_constraintHorizontal_bias="0.456"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
-
-            <TextView
-                android:id="@+id/status_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:ems="7"
-                android:maxLines="1"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toTopOf="@+id/add_button"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/status_pt"
-                app:layout_constraintTop_toTopOf="@+id/status_pt" />
-
-            <TextView
-                android:id="@+id/assignstat"
-                android:layout_width="82dp"
-                android:layout_height="18dp"
-                android:layout_marginTop="4dp"
-                android:ems="8"
-                android:gravity="start"
-                android:maxLines="1"
-                android:paddingStart="10dp"
-                android:paddingRight="11dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/material_img_card"
-                app:layout_constraintTop_toBottomOf="@+id/material_img_card"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <ImageView
-                android:id="@+id/add_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="4dp"
-                android:background="@drawable/ic_clipboard"
-                android:onClick="@{() -> addButtonListen.addButtonClicked(pos)}"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
-
-            <ImageButton
-                android:id="@+id/locbut"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="44dp"
-                android:layout_marginBottom="4dp"
-                android:background="@drawable/ic_baseline_location_on_40"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/chosen_drivers_card"
-                android:layout_width="75dp"
-                android:layout_height="50dp"
-                android:background="@drawable/inner_rounded_shape"
-                android:fadeScrollbars="false"
-                android:scrollbars="vertical"
-                app:layout_constraintStart_toStartOf="@+id/driver_pt"
-                app:layout_constraintTop_toBottomOf="@+id/driver_pt" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/chosen_vehicles_card"
-                android:layout_width="75dp"
-                android:layout_height="50dp"
-                android:background="@drawable/inner_rounded_shape"
-                android:fadeScrollbars="false"
-                android:scrollbars="vertical"
-                app:layout_constraintStart_toStartOf="@+id/vehicle_pt"
-                app:layout_constraintTop_toBottomOf="@+id/vehicle_pt" />
+                <ImageButton
+                    android:id="@+id/locbut"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.1"
+                    android:background="@drawable/ic_baseline_location_on_40" />
+            </LinearLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 </layout>

@@ -1,17 +1,14 @@
-package com.example.listing.AssignDriver;
+package com.example.listing.AssignDialog_Configured;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listing.R;
-import com.example.listing.databinding.AssignConfiguredListItemBinding;
 import com.example.listing.databinding.AssignConfiguredLoaderNameBinding;
 import com.example.listing.models.Driver;
 

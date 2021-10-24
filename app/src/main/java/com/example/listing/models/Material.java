@@ -95,7 +95,7 @@ public class Material implements Serializable {
 
      @ColumnInfo(name="ZuphrObjecte")
     @JsonProperty("ZuphrObjecte")
-    String ZuphrObjecte;
+    Boolean ZuphrObjecte;
 
      @ColumnInfo(name="ZuphrSchar")
     @JsonProperty("ZuphrSchar")
@@ -190,7 +190,7 @@ public class Material implements Serializable {
 
      @ColumnInfo(name="ZuphrDeleted")
     @JsonProperty("ZuphrDeleted")
-    String ZuphrDeleted;
+    Boolean ZuphrDeleted;
 
 
      @ColumnInfo(name="ZuphrStatdt")
@@ -320,12 +320,12 @@ public class Material implements Serializable {
 
     public Material(String zuphrActquan, String log, LoadAction zuphrLoada, String zuphrMovem, String zuphrActtype,
                      String zuphrContents, String zuphrHeight, String zuphrLength, String zuphrLpid,
-                     String zuphrObjecte, String zuphrSchar, String zuphrFrom, String zuphrSchtask,
+                     Boolean zuphrObjecte, String zuphrSchar, String zuphrFrom, String zuphrSchtask,
                      String zuphrSeq, String zuphrWidth, String zuphrShipper, String zuphrTo,
                      String zuphrVolmeins, String zuphrMjahr, String zuphrMblpo, String zuphrStgid,
                      String zuphrMatnr, String zuphrReqid, String zuphrReqitm, String zuphrShortxt,
                      String zuphrDescrip, String zuphrQuan, String meins, String zuphrOffshore,
-                     String zuphrAreacode, String zuphrStatus, String zuphrClass, String zuphrDeleted,
+                     String zuphrAreacode, String zuphrStatus, String zuphrClass, Boolean zuphrDeleted,
                      String zuphrStatdt, String zuphrCompflg, String zuphrCompdat, String zuphrAction,
                      String zuphrResponse, String zuphrAutoact, String zuphrActposgrp, String zuphrSent,
                      String zuphrActuname, String zuphrActdate, String zuphrActtime, String zuphrWellnm,
@@ -487,11 +487,11 @@ public class Material implements Serializable {
         ZuphrLpid = zuphrLpid;
     }
 
-    public String getZuphrObjecte() {
+    public Boolean getZuphrObjecte() {
         return ZuphrObjecte;
     }
 
-    public void setZuphrObjecte(String zuphrObjecte) {
+    public void setZuphrObjecte(Boolean zuphrObjecte) {
         ZuphrObjecte = zuphrObjecte;
     }
 
@@ -663,11 +663,11 @@ public class Material implements Serializable {
         ZuphrClass = zuphrClass;
     }
 
-    public String getZuphrDeleted() {
+    public Boolean getZuphrDeleted() {
         return ZuphrDeleted;
     }
 
-    public void setZuphrDeleted(String zuphrDeleted) {
+    public void setZuphrDeleted(Boolean zuphrDeleted) {
         ZuphrDeleted = zuphrDeleted;
     }
 

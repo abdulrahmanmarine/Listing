@@ -92,6 +92,7 @@ public class PlanFragment extends Fragment {
         super.onCreate(savedInstanceState);
          Bundle bundle  = getArguments();
          if(bundle!=null){
+
              mParam1 = (ArrayList<Plan>) getArguments().getSerializable(ARG_PARAM1);
              mParam2 = getArguments().getBoolean(ARG_PARAM2);
 
@@ -113,7 +114,7 @@ public class PlanFragment extends Fragment {
             if(list!=null)
             {
 
-                myadapter = new PlanAdapter(listener, (ArrayList<Plan>) list);
+                myadapter = new PlanAdapter(listener, (ArrayList<Plan>) list, getContext());
                 rv.setAdapter(myadapter);
 
             //    if (Flag.getInstance().getPlanFlag()){

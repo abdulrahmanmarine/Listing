@@ -17,73 +17,62 @@
 
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/inner_rounded_shape"
-    android:layout_marginBottom="5dp">
-
-    <TextView
-        android:id="@+id/configured__chosen_vehicle_tv"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:textColor="@color/SADarkGreen"
-        android:textSize="15dp"
-        android:text="@{item.vehType}"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <View
-        android:layout_width="1dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@android:color/darker_gray"
-        android:backgroundTint="@color/SADarkGreen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/configured__chosen_vehicle_tv"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Loaders:"
-        android:layout_marginEnd="8dp"
-        android:textColor="@color/SA_Dark_Gray"
-        app:layout_constraintBottom_toBottomOf="@+id/configured_chosen_list"
-        app:layout_constraintEnd_toStartOf="@+id/configured_chosen_list"
-        app:layout_constraintTop_toTopOf="@+id/configured_chosen_list" />
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/inner_rounded_shape"
+        android:gravity="center_vertical|left"
+        android:weightSum="5">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/configured_chosen_list"
-        android:layout_width="299dp"
-        android:layout_height="25dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/loader_list_border"
-        android:fadeScrollbars="false"
-        android:scrollbarAlwaysDrawHorizontalTrack="true"
-        android:scrollbars="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/configured_rmv_button"
-        app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+            android:id="@+id/configured__chosen_vehicle_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="0.7"
+            android:text="@{item.vehType}"
+            android:textColor="@color/SADarkGreen"
+            android:textSize="15dp"
+            android:layout_centerInParent="true" />
 
-    <Button
-        android:id="@+id/configured_rmv_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Remove"
-        android:textColor="@color/white"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:onClick="@{() -> deleteListener.deleteButtonClicked(pos)}"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray"
+            android:backgroundTint="@color/SADarkGreen"
+            android:layout_margin="5dp" />
+
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:text="Loaders:"
+            android:gravity="center_vertical|right"
+            android:textColor="@color/SA_Dark_Gray"
+            android:layout_marginEnd="10dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/configured_chosen_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.9"
+            android:background="@drawable/loader_list_border"
+            android:fadeScrollbars="false"
+            android:scrollbarAlwaysDrawHorizontalTrack="true"
+            android:scrollbars="horizontal" />
+
+        <Button
+            android:id="@+id/configured_rmv_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:onClick="@{() -> deleteListener.deleteButtonClicked(pos)}"
+            android:text="Remove"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </LinearLayout>
 </layout>

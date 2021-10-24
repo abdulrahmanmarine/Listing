@@ -43,170 +43,181 @@
 
 <androidx.cardview.widget.CardView
     android:layout_width="320dp"
-    android:layout_height="155dp"
+    android:layout_height="175dp"
     android:layout_marginBottom="8dp"
     android:transitionName="@string/transition_string">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <ImageView
-            android:id="@+id/material_img_card"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/defult"
-            android:scaleType="fitXY"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:id="@+id/status_pt"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:text="Status: "
-            app:layout_constraintStart_toEndOf="@+id/material_img_card"
-            app:layout_constraintTop_toBottomOf="@+id/material_name" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp">
 
-        <TextView
-            android:id="@+id/status_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="5"
-            android:gravity="center"
-            android:text="@{mat.zuphrLoada.status}"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/status_pt"
-            app:layout_constraintStart_toEndOf="@+id/status_pt"
-            app:layout_constraintTop_toTopOf="@+id/status_pt" />
+            <ImageView
+                android:id="@+id/material_img_card"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/defult"
+                android:scaleType="fitXY"
+                />
 
-        <TextView
-            android:id="@+id/loadstat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:ems="5"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view" />
+            <Button
+                android:id="@+id/found_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="#EFCAC7"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:onClick="@{() -> foundClickListen.foundButtonClicked(pos)}"
+                android:text="Not found"
 
-        <TextView
-            android:id="@+id/material_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            android:textColor="@color/SADarkGreen"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/material_img_card"
-            app:layout_constraintTop_toTopOf="parent" />
+                android:textColor="@color/white" />
+        </LinearLayout>
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="165dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="3dp"
-            android:background="@android:color/darker_gray"
-            android:backgroundTint="@color/SADarkGreen"
-            app:layout_constraintStart_toEndOf="@id/material_img_card"
-            app:layout_constraintTop_toBottomOf="@id/material_name" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="3dp">
 
 
-        <Button
-            android:id="@+id/unload_button"
-            android:layout_width="70dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="36dp"
-            android:background="@color/twentyfivGray"
-            android:text="Unload"
-            android:onClick="@{() -> unloadClickListen.unloadButtonClicked(pos)}"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/status_pt" />
 
-        <Button
-            android:id="@+id/load_button"
-            android:layout_width="70dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="6dp"
-            android:background="@color/SaDarkGray"
-            android:text="Load"
-            android:onClick="@{() -> loadClickListen.loadButtonClick(pos)}"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/unload_button"
-            app:layout_constraintStart_toEndOf="@+id/material_img_card"
-            app:layout_constraintTop_toBottomOf="@+id/status_pt" />
+            <TextView
+                android:id="@+id/material_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@{mat.zuphrShortxt}"
+                android:textColor="@color/SADarkGreen"
+                android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/process_button"
-            android:layout_width="70dp"
-            android:layout_height="40dp"
-            android:background="@color/SaDarkGray"
-            android:text="process"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:onClick="@{() -> prcClickListen.PrcButtonClicked(pos)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/unload_button"
-            app:layout_constraintStart_toEndOf="@+id/found_button"
-            app:layout_constraintTop_toBottomOf="@+id/load_button"
-            />
+            <View
+                android:id="@+id/view"
+                android:layout_width="165dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="3dp"
+                android:background="@android:color/darker_gray"
+                android:backgroundTint="@color/SADarkGreen" />
 
-        <Button
-            android:id="@+id/found_button"
-            android:layout_width="99dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:background="#EFCAC7"
-            android:text="Not found"
-            android:onClick="@{() -> foundClickListen.foundButtonClicked(pos)}"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/material_img_card" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/status_pt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Status: " />
+
+                <TextView
+                    android:id="@+id/status_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ems="5"
+                    android:layout_marginStart="3dp"
+                    android:gravity="center"
+
+                    android:text="@{mat.zuphrLoada.status}"
+                    android:textSize="14sp"
+                    android:layout_marginTop="2dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="2dp"
+                android:layout_weight="0.4">
+
+                <Button
+                    android:id="@+id/load_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="0.5"
+                    android:background="@color/SaDarkGray"
+                    android:onClick="@{() -> loadClickListen.loadButtonClick(pos)}"
+                    android:text="Load"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:layout_marginTop="3dp"/>
+
+                <Button
+                    android:id="@+id/unload_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/twentyfivGray"
+                    android:onClick="@{() -> unloadClickListen.unloadButtonClicked(pos)}"
+                    android:text="Unload"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:layout_weight="0.5"
+                    android:layout_marginTop="3dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="2dp"
+                android:layout_weight="0.4"
+                >
+
+                <Button
+                    android:id="@+id/process_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@color/SaDarkGray"
+                    android:onClick="@{() -> prcClickListen.PrcButtonClicked(pos)}"
+                    android:text="process"
+                    android:layout_marginEnd="12dp"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+
+                    android:id="@+id/comment_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="0.25"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_comment"
+                    android:onClick="@{() -> cameraClickListen.cameraButtonClicked(pos)}" />
+
+                <ImageView
+                    android:id="@+id/location_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0.25"
+                    android:layout_gravity="center"
+
+                    android:background="@drawable/ic_baseline_location_on_40" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
 
-        <ImageView
-            android:id="@+id/comment_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="45dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/ic_comment"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:onClick="@{() -> cameraClickListen.cameraButtonClicked(pos)}"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <ImageView
-            android:id="@+id/location_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/ic_baseline_location_on_40"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>
 </layout>

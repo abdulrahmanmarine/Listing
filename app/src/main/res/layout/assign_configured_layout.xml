@@ -7,165 +7,156 @@
             name="item"
             type="com.example.listing.models.Material" />
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <FrameLayout
-
-        android:id="@+id/header_frame"
-        android:layout_width="566dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/material_tv"
-                android:layout_width="104dp"
-                android:layout_height="29dp"
-                android:textSize="21dp"
-                app:layout_constraintEnd_toEndOf="@id/material_image"
-                app:layout_constraintStart_toEndOf="@id/title_tv"
-                app:layout_constraintTop_toBottomOf="@id/material_image" />
-
-            <ImageView
-                android:id="@+id/material_image"
-                android:layout_width="174dp"
-                android:layout_height="92dp"
-                app:layout_constraintStart_toEndOf="@id/title_tv"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/octg_pipe" />
-
-            <TextView
-                android:id="@+id/title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Choose Vehicle and Loaders for:"
-
-                android:textSize="26dp"
-                app:layout_constraintBottom_toBottomOf="@+id/material_tv"
-                app:layout_constraintEnd_toStartOf="@id/material_image"
-                app:layout_constraintTop_toTopOf="@+id/material_image" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/configured_frame"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/rounded_shape"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header_frame">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <FrameLayout
 
-            <EditText
-                android:id="@+id/editTextTextPersonName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:ems="10"
-                android:hint="search"
-                android:inputType="textPersonName"
-                app:layout_constraintBottom_toTopOf="@+id/configured_loader_list"
-                app:layout_constraintEnd_toEndOf="parent" />
+            android:id="@+id/header_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/configured_loader_list"
-                android:layout_width="559dp"
-                android:layout_height="78dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/configured_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Vehicles and Loaders"
-                android:textColor="@color/colorPrimaryDarkBlue"
-                android:textSize="21dp"
-                app:layout_constraintBottom_toTopOf="@id/configured_loader_list"
-                app:layout_constraintStart_toStartOf="@id/configured_loader_list"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/material_tv"
+                    android:layout_width="104dp"
+                    android:layout_height="29dp"
+                    android:textSize="21dp"
+                    app:layout_constraintEnd_toEndOf="@id/material_image"
+                    app:layout_constraintStart_toEndOf="@id/title_tv"
+                    app:layout_constraintTop_toBottomOf="@id/material_image" />
 
-    </FrameLayout>
+                <ImageView
+                    android:id="@+id/material_image"
+                    android:layout_width="174dp"
+                    android:layout_height="92dp"
+                    app:layout_constraintStart_toEndOf="@id/title_tv"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <FrameLayout
-        android:id="@+id/chosen_frame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/rounded_shape"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/configured_frame">
+                <TextView
+                    android:id="@+id/title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Choose Vehicle and Loaders for:"
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                    android:textSize="26dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/material_tv"
+                    app:layout_constraintEnd_toStartOf="@id/material_image"
+                    app:layout_constraintTop_toTopOf="@+id/material_image" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <EditText
-                android:id="@+id/editTextTextPersonName2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:ems="10"
-                android:hint="search"
-                android:inputType="textPersonName"
-                app:layout_constraintBottom_toTopOf="@+id/chosen_list"
-                app:layout_constraintEnd_toEndOf="parent" />
+        </FrameLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/chosen_list"
-                android:layout_width="559dp"
-                android:layout_height="78dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+        <FrameLayout
+            android:id="@+id/configured_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/rounded_shape">
 
-            </androidx.recyclerview.widget.RecyclerView>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/chosen_tv2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chosen"
-                android:textColor="@color/colorPrimaryDarkBlue"
-                android:textSize="21dp"
-                app:layout_constraintBottom_toTopOf="@id/chosen_list"
-                app:layout_constraintStart_toStartOf="@id/chosen_list"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <EditText
+                    android:id="@+id/editTextTextPersonName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:ems="10"
+                    android:hint="search"
+                    android:inputType="textPersonName"
+                    app:layout_constraintBottom_toTopOf="@+id/configured_loader_list"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-    </FrameLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/configured_loader_list"
+                    android:layout_width="559dp"
+                    android:layout_height="90dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+                <TextView
+                    android:id="@+id/configured_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vehicles and Loaders"
+                    android:textColor="@color/colorPrimaryDarkBlue"
+                    android:textSize="21dp"
+                    app:layout_constraintBottom_toTopOf="@id/configured_loader_list"
+                    app:layout_constraintStart_toStartOf="@id/configured_loader_list"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        android:id="@+id/complete_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/ic_right"
-        app:layout_constraintEnd_toEndOf="@+id/chosen_frame"
-        app:layout_constraintTop_toBottomOf="@+id/chosen_frame" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/chosen_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/rounded_shape">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/editTextTextPersonName2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:ems="10"
+                    android:hint="search"
+                    android:inputType="textPersonName"
+                    app:layout_constraintBottom_toTopOf="@+id/chosen_list"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/chosen_list"
+                    android:layout_width="559dp"
+                    android:layout_height="90dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:id="@+id/chosen_tv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chosen"
+                    android:textColor="@color/colorPrimaryDarkBlue"
+                    android:textSize="21dp"
+                    app:layout_constraintBottom_toTopOf="@id/chosen_list"
+                    app:layout_constraintStart_toStartOf="@id/chosen_list"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </FrameLayout>
+
+        <Button
+            android:layout_gravity="right"
+            android:id="@+id/complete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/ic_right" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

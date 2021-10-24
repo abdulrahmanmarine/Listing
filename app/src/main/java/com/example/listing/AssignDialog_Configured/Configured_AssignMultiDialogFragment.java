@@ -1,17 +1,24 @@
-package com.example.listing.AssignDriver;
+package com.example.listing.AssignDialog_Configured;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -31,7 +38,10 @@ import com.example.listing.models.LoadAction;
 import com.example.listing.models.Material;
 import com.example.listing.models.Plan;
 import com.example.listing.models.Vehicle;
+import com.example.listing.notes.pictureMode;
+import com.fasterxml.jackson.core.Base64Variants;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -323,15 +333,21 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment impleme
 */
 //FOR IMAGE
 
-/*
-        ImageView pic = view.findViewById(R.id.assign_image);
+
+        ImageView pic = view.findViewById(R.id.material_image);
         Drawable image = null;
-        if(mParam2.length()> 100) {
-            ByteArrayInputStream stream = new ByteArrayInputStream(Base64Variants.getDefaultVariant().decode(mParam2));
-            image = BitmapDrawable.createFromStream(
-                    stream, "");
-            pic.setBackground(image);
+
+        if(materialParam.getZuphrContents().length()> 100) {
+            String img =materialParam.getZuphrContents().replace("data:image/jpeg;base64,","");
+            byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            pic.setImageBitmap(decodedByte);
         }
+
+        // image.creator.setText(note.getCreator());
+//        byte[] decodedString = Base64.decode(note.getContents(), Base64.DEFAULT);
+//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//        image.Image.setImageBitmap(decodedByte);
 
 
         Drawable finalImage = image;
@@ -341,7 +357,7 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment impleme
                     activity.getSupportFragmentManager().beginTransaction().add(myFragment,"Picture").commit();
                 }
         );
-*/
+
 
 
         doneBut.setOnClickListener(new View.OnClickListener() {

@@ -18,75 +18,65 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/inner_rounded_shape"
-        android:layout_marginBottom="5dp">
+        android:gravity="center_vertical|left"
+        android:weightSum="5">
 
         <TextView
             android:id="@+id/configured_vehicle_tv"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_weight="0.7"
             android:text="@{item.vehType}"
             android:textColor="@color/SADarkGreen"
             android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_centerInParent="true" />
 
         <View
             android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_height="match_parent"
             android:background="@android:color/darker_gray"
             android:backgroundTint="@color/SADarkGreen"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/configured_vehicle_tv"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_margin="5dp"/>
 
         <TextView
             android:id="@+id/textView5"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_weight="0.7"
             android:text="Loaders:"
+            android:gravity="center_vertical|right"
             android:textColor="@color/SA_Dark_Gray"
-            app:layout_constraintBottom_toBottomOf="@+id/configured_loader_list"
-            app:layout_constraintEnd_toStartOf="@+id/configured_loader_list"
-            app:layout_constraintTop_toTopOf="@+id/configured_loader_list" />
+            android:layout_marginEnd="10dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/configured_loader_list"
-            android:layout_width="299dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="32dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.9"
             android:background="@drawable/loader_list_border"
             android:fadeScrollbars="false"
             android:scrollbarAlwaysDrawHorizontalTrack="true"
             android:scrollbars="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/configured_add_butotn"
-            app:layout_constraintTop_toTopOf="parent" />
+
+            />
 
         <Button
             android:id="@+id/configured_add_butotn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="0.7"
             android:backgroundTint="@color/SADarkGreen"
             android:onClick="@{() -> addListener.addButtonClicked(pos)}"
             android:text="Add"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="@color/white" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </layout>
