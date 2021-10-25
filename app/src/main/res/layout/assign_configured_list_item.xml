@@ -50,7 +50,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.7"
-            android:text="Loaders:"
+            android:text="@string/loaders"
             android:gravity="center_vertical|right"
             android:textColor="@color/SA_Dark_Gray"
             android:layout_marginEnd="10dp"/>
@@ -74,7 +74,7 @@
             android:layout_weight="0.7"
             android:backgroundTint="@color/SADarkGreen"
             android:onClick="@{() -> addListener.addButtonClicked(pos)}"
-            android:text="Add"
+            android:text="@string/add"
             android:textColor="@color/white" />
 
     </LinearLayout>

@@ -18,7 +18,10 @@ package com.example.listing.Plan;
         import com.example.listing.models.Material;
         import com.example.listing.models.Plan;
 
+        import java.text.DateFormat;
+        import java.text.SimpleDateFormat;
         import java.util.ArrayList;
+        import java.util.Date;
         import java.util.List;
 
 public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> implements PlanClickListener {
@@ -76,12 +79,14 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
         public PlanCardBinding itemRowBinding;
         public TextView statusText;
         public TextView timeTextView;
+        public TextView dateText;
         boolean incomplete = true;
         public ViewHolder(PlanCardBinding itemRowBinding) {
             super(itemRowBinding.getRoot());
             this.itemRowBinding = itemRowBinding;
             statusText = itemRowBinding.status;
             timeTextView = itemRowBinding.timeTv;
+            dateText = itemRowBinding.dateTv;
         }
 
         public void bind(Plan plan) {
@@ -89,7 +94,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
             itemRowBinding.setPos(getAdapterPosition());
             itemRowBinding.executePendingBindings();
 
-            boolean laststat, load;
+            boolean load;
             load = false;
             if(load){
                 for(int i = 0; i< plan.getPlanToItems().size() ; i++){
@@ -102,24 +107,19 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
                     }
                     else{
                         plan.setZuphrStatus("Complete");
-//                        incomplete = false;
                         statusText.setText(plan.getZuphrStatus());
-//                        plan.getPlanToItems().get(i).setLoaded(true);
                         statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
-
-
                     }
                 }}
             else{
-                Log.i("iftest", "iftest");
                 for(int i = 0; i< plan.getPlanToItems().size(); i++){
                     Material material = plan.getPlanToItems().get(i);
                     if(material.getZuphrLoada().getVehicle().isEmpty()){
                         plan.setZuphrStatus("Incomplete");
                         statusText.setText(plan.getZuphrStatus());
                         statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
-
                         break;
+
                     }else{
                         plan.setZuphrStatus("Complete");
                         statusText.setText(plan.getZuphrStatus());
@@ -138,17 +138,8 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
             timeTextView.setText(timetext);
 
             statusText.setText(plan.getZuphrStatus());
-
-//            if(incomplete){
-//
-//                statusText.setText(plan.getStatus());
-//
-//            }
-//            else{
-//                requestStatus.setText(plan.getStatus());
-//            }
-
         }
+
     }
 
 

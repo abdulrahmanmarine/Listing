@@ -96,10 +96,14 @@ public class PlansDataModel extends ViewModel {
                 "STEV", "100", "EA", false,"2021-08-24", "16:13:13", "AWAMAS0F", "size", "confirmedquan",
                 "zuphract", drivers2, "weight", vehicles3, "status", "content");
 
-        Driver driver1 = new Driver("3", "Abdul", "Heavy Vehicle Driving",
+        Driver driver1 = new Driver("3", "Abdul Alsalim", "Heavy Vehicle Driving",
                 "456324", "Saudi", "91 66778899", "driver.test@gmail.com");
-        Driver driver2 = new Driver("2", "Ahmed", "Small Vehicle Driving",
+        Driver driver2 = new Driver("2", "Ahmed Saghah", "Small Vehicle Driving",
                 "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
+
+        drivers.add(driver1);
+        drivers.add(driver2);
+
 
         Vehicle vehicle1 = new Vehicle("3","Medium", "Truck", "456234", "1000",
                 "Red", "2012", "DDMMYYYY", "123456", drivers);

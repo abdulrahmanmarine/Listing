@@ -23,7 +23,6 @@ public class ConfiguredLoaderAdapter extends RecyclerView.Adapter<ConfiguredLoad
     private List<Vehicle> vehicles;
     private AddButtonClicked addListener;
     private Context context;
-    private int selectedPosition = 0;
 
 
     public ConfiguredLoaderAdapter(List<Vehicle> vehicles, AddButtonClicked addListener, Context context) {
@@ -48,7 +47,6 @@ public class ConfiguredLoaderAdapter extends RecyclerView.Adapter<ConfiguredLoad
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Vehicle vehicle = vehicles.get(position);
         holder.bind(vehicle);
-        selectedPosition = holder.getAdapterPosition();
 
         ConfiguredLoaderListAdapter configuredLoaderListAdapter = new ConfiguredLoaderListAdapter(vehicle.getLoaders());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
@@ -59,11 +57,6 @@ public class ConfiguredLoaderAdapter extends RecyclerView.Adapter<ConfiguredLoad
     @Override
     public int getItemCount() {
         return vehicles.size();
-    }
-
-    public Vehicle getSelectedItem(){
-            notifyDataSetChanged();
-            return vehicles.get(selectedPosition);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -85,7 +78,6 @@ public class ConfiguredLoaderAdapter extends RecyclerView.Adapter<ConfiguredLoad
             itemRowBinding.setPos(getAdapterPosition());
             itemRowBinding.setAddListener(addListener);
             itemRowBinding.executePendingBindings();
-            boolean laststat, load;
         }
 
     }

@@ -77,8 +77,7 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:onClick="@{() -> foundClickListen.foundButtonClicked(pos)}"
-                android:text="Not found"
-
+                android:text="@string/notFound"
                 android:textColor="@color/white" />
         </LinearLayout>
 
@@ -119,7 +118,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:text="Status: " />
+                    android:text="@string/status" />
 
                 <TextView
                     android:id="@+id/status_tv"
@@ -150,7 +149,7 @@
                     android:layout_weight="0.5"
                     android:background="@color/SaDarkGray"
                     android:onClick="@{() -> loadClickListen.loadButtonClick(pos)}"
-                    android:text="Load"
+                    android:text="@string/load"
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:layout_marginTop="3dp"/>
@@ -161,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/twentyfivGray"
                     android:onClick="@{() -> unloadClickListen.unloadButtonClicked(pos)}"
-                    android:text="Unload"
+                    android:text="@string/unload"
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:layout_weight="0.5"
@@ -184,7 +183,7 @@
                     android:layout_weight="0.5"
                     android:background="@color/SaDarkGray"
                     android:onClick="@{() -> prcClickListen.PrcButtonClicked(pos)}"
-                    android:text="process"
+                    android:text="@string/process"
                     android:layout_marginEnd="12dp"
                     android:textColor="@color/white"
                     android:textSize="14sp" />

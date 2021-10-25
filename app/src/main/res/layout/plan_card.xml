@@ -104,7 +104,7 @@
                     android:layout_height="20dp"
                     android:layout_marginStart="4dp"
                     android:ems="7"
-                    android:text="@{plan.zuphrLpid}"
+                    android:text="@{plan.zuphrVesselName}"
                     android:textColor="@color/SaDarkGray"
                     android:layout_gravity="center_horizontal|left"/>
             </LinearLayout>

@@ -32,7 +32,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Loaders:"
+            android:text="@string/loaders"
             android:layout_marginEnd="8dp"
             android:textColor="@color/SA_Dark_Gray"
             app:layout_constraintBottom_toBottomOf="@+id/configured_chosen_list"

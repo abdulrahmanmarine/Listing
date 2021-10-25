@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.example.listing.models.Material" />
+            type="com.example.listing.models.Plan" />
 
         <variable
             name="addButtonListen"
@@ -34,7 +34,8 @@
         android:background="@color/fifteenGray"
         app:layout_constraintBottom_toTopOf="@id/textrecview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        >
 
         <TextView
             android:id="@+id/plan_pt"
@@ -71,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="@dimen/header_margin_top"
-            android:text="Destination: "
+            android:text="@string/destination"
             android:textColor="@color/SaLightGreen"
             android:textSize="19dp"
             app:layout_constraintBottom_toTopOf="@id/textrecview"
@@ -93,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="@dimen/header_margin_top"
-            android:text="Vessel: "
+            android:text="@string/vessel"
             android:textColor="@color/SaLightGreen"
             android:textSize="19dp" />
 

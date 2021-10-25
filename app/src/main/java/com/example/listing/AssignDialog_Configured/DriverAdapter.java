@@ -109,6 +109,7 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
             }else{
                 assignStatus.setText("Assigned");
                 assignStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
+                assignStatus.setPadding(50, 0, 50, 0);
             }
         }
     }

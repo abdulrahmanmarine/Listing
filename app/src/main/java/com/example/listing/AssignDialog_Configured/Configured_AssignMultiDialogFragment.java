@@ -1,12 +1,16 @@
 package com.example.listing.AssignDialog_Configured;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +23,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -45,11 +50,9 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Configured_AssignMultiDialogFragment extends DialogFragment implements AdapterView.OnItemSelectedListener {
+public class Configured_AssignMultiDialogFragment extends DialogFragment{
 
     private static int Mpostion;
-    private OnPositiveClickListener positiveListener;
-    private OnNegativeClickListener negativeListener;
 
     //material object
     private static final String MATERIAL_2 = "materialParam";
@@ -58,24 +61,17 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment impleme
     private Material materialParam;
     PlansDataModel model;
 
-    private LoaderAdapter loaderAdapter;
-    private VehicleAdapter vehicleAdapter;
+    Context context = getContext();
 
     private ArrayList<Vehicle> chosenVehicles = new ArrayList<>();
-    private ChosenVehicleAdapter chosenVehicleAdapter;
+
 
     private ArrayList<Vehicle> configureVehicles = new ArrayList<>();
     private ConfiguredLoaderAdapter configuredLoaderAdapter;
 
     private ArrayList<Driver> chosenDrivers = new ArrayList<>();
-    private ChosenDriverAdapter chosenDriverAdapter;
-
-    private ChosenDriverCardAdapter chosenDriverCardAdapter;
 
     private ConfiguredChosenAdapter configuredChosenAdapter;
-
-
-    String simage;
 
 
     public void onStart()
@@ -86,11 +82,12 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment impleme
         if (getDialog() == null)
             return;
 
-        int dialogWidth = 1600; // specify a value here
-        int dialogHeight = 1600; // specify a value here
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
 
-
-        getDialog().getWindow().setLayout(dialogWidth, dialogHeight);
+        getDialog().getWindow().setLayout((5 * width)/7, (5 * height)/5);
+        getDialog().getWindow().setBackgroundDrawable(ContextCompat.getDrawable(getActivity().getBaseContext(), R.drawable.dialogborder));
 
         // ... other stuff you want to do in your onStart() method
     }
@@ -98,16 +95,8 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment impleme
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
-//        positiveListener = (OnPositiveClickListener) context;
-//        negativeListener = (OnNegativeClickListener) context;
     }
 
-//    public Dialog onCreateDialog(){
-//        Dialog dialog = super.onCreateDialog(savedInstanceState);
-//        dialog.setTitle("My Title");
-//        return dialog;
-//    }
 
     public static Configured_AssignMultiDialogFragment newInstance(int position, Material materialParam){
         Configured_AssignMultiDialogFragment fragment = new Configured_AssignMultiDialogFragment();
@@ -129,21 +118,19 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment impleme
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        onClickEvent(view);
 
         model=new ViewModelProvider(getActivity()).get(PlansDataModel.class);
 
         AddButtonClicked addButtonClicked = new AddButtonClicked() {
             @Override
             public void addButtonClicked(int pos) {
-                chosenVehicles.add(configureVehicles.get(pos));
-                chosenDrivers.addAll(configureVehicles.get(pos).getLoaders());
+                chosenVehicles.add(vehiclesList.get(pos));
+                chosenDrivers.addAll(vehiclesList.get(pos).getLoaders());
                 configuredChosenAdapter.notifyDataSetChanged();
-                Log.i("addtest", configuredLoaderAdapter.getSelectedItem().getVehType() +" ");
             }
         };
 
-        VehicleDeleteButtonClicked vehicleDeleteButtonClicked2 = new VehicleDeleteButtonClicked() {
+        VehicleDeleteButtonClicked vehicleDeleteButtonClicked = new VehicleDeleteButtonClicked() {
             @Override
             public void deleteButtonClicked(int pos) {
                 chosenVehicles.remove(pos);
@@ -154,71 +141,31 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment impleme
             }
         };
 
-
-        VehicleDeleteButtonClicked vehicleDeleteButtonClicked = new VehicleDeleteButtonClicked() {
-            @Override
-            public void deleteButtonClicked(int pos) {
-                chosenVehicles.remove(pos);
-                int newPos = pos;
-                chosenVehicleAdapter.notifyDataSetChanged();
-                chosenVehicleAdapter.notifyItemRemoved(newPos);
-                chosenVehicleAdapter.notifyItemRangeChanged(newPos, chosenVehicles.size());
-            }
-        };
-
-        DriverDeleteButtonClicked driverDeleteButtonClicked = new DriverDeleteButtonClicked() {
-            @Override
-            public void deleteButtonClicked(int pos) {
-                chosenDrivers.remove(pos);
-                int newPos = pos;
-                chosenDriverAdapter.notifyDataSetChanged();
-                chosenDriverAdapter.notifyItemRemoved(newPos);
-                chosenDriverAdapter.notifyItemRangeChanged(newPos, chosenDrivers.size());
-            }
-        };
-
-        //add new pair button
-        Button addBut = view.findViewById(R.id.add_btn), cancel_but = view.findViewById(R.id.dialog_cancel);
-        //Loader recview
-        RecyclerView loaderList = view.findViewById(R.id.loader_list);
-        //vehicle recview
-        RecyclerView vehicleList = view.findViewById(R.id.vehicle_list);
-        //pair recview
-        RecyclerView chosenVehicleList = view.findViewById(R.id.vehicle_chosen_list);
-        //chosen drivers list
-        RecyclerView chosenDriverList = view.findViewById(R.id.driver_chosen_list);
         //done button
         Button doneBut = view.findViewById(R.id.complete_btn);
-//        //search edit text for loader
-//        EditText searchLoader = view.findViewById(R.id.search_loader);
-//        //search edir text for vehicle
-//        EditText searchVehicle = view.findViewById(R.id.search_vehicle);
+        //Close Button
+        ImageView closeBut = view.findViewById(R.id.but_close);
         //Text view for material name
         TextView materialName = view.findViewById(R.id.material_tv);
         //Recyclerview for configured list
         RecyclerView configuredList = view.findViewById(R.id.configured_loader_list);
-        //textview for truck name
-        TextView vehicleName = view.findViewById(R.id.vehicle_list_name);
         //Chosen List
         RecyclerView configuredChosenList = view.findViewById(R.id.chosen_list);
 
 
 
-        Driver driver1 = new Driver("3", "Abdul", "Heavy Vehicle Driving",
+        Driver driver1 = new Driver("3", " Abdulrahman alsalim", "Heavy Vehicle Driving",
                 "456324", "Saudi", "91 66778899", "driver.test@gmail.com");
-        Driver driver2 = new Driver("2", "Ahmed", "Small Vehicle Driving",
+        Driver driver2 = new Driver("2", "Ahmed Alghamdi", "Small Vehicle Driving",
                 "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
         Driver driver3 = new Driver("2", "Ali", "Small Vehicle Driving",
                 "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
-        Driver driver4 = new Driver("2", "Murada", "Small Vehicle Driving",
+        Driver driver4 = new Driver("2", "Murada Alyousef", "Small Vehicle Driving",
                 "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
-        Driver driver5 = new Driver("2", "Yousef", "Small Vehicle Driving",
+        Driver driver5 = new Driver("2", "Yousef Almohammed", "Small Vehicle Driving",
                 "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
-        Driver driver6 = new Driver("2", "Mohammed", "Small Vehicle Driving",
+        Driver driver6 = new Driver("2", "Mohammed Alahmad", "Small Vehicle Driving",
                 "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
-
-
-
         driversList.add(driver1);
         driversList.add(driver2);
         driversList.add(driver3);
@@ -245,112 +192,38 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment impleme
         vehiclesList.add(vehicle5);
         vehiclesList.add(vehicle6);
 
-        configureVehicles = vehiclesList;
-
-
 
         materialParam = (Material) getArguments().getSerializable(MATERIAL_2);
 
 
         //setting adapter for chosen vehicle recycler
-        configuredLoaderAdapter = new ConfiguredLoaderAdapter(configureVehicles, addButtonClicked, getContext());
+        configuredLoaderAdapter = new ConfiguredLoaderAdapter(vehiclesList, addButtonClicked, getContext());
         configuredList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         configuredList.setAdapter(configuredLoaderAdapter);
 
-        materialName.setText(materialParam.getZuphrLpid());
+        materialName.setText(materialParam.getZuphrShortxt());
 
 
 
 
-        ArrayList<Driver> drivers = (ArrayList<Driver>) materialParam.getDrivers();
         chosenVehicles = (ArrayList<Vehicle>) materialParam.getVehicles();
-        chosenDrivers = (ArrayList<Driver>) materialParam.getDrivers();
 
-        configuredChosenAdapter = new ConfiguredChosenAdapter(chosenVehicles, vehicleDeleteButtonClicked2);
+        configuredChosenAdapter = new ConfiguredChosenAdapter(chosenVehicles, vehicleDeleteButtonClicked);
         configuredChosenList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         configuredChosenList.setAdapter(configuredChosenAdapter);
 
-/* WORKING PART
-
-        //setting adapter for loaders/drivers recycler
-        loaderAdapter = new LoaderAdapter(driversList);
-        loaderList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        loaderList.setAdapter(loaderAdapter);
-
-        //setting adapter for vehicle recycler
-        vehicleAdapter = new VehicleAdapter(vehiclesList);
-        vehicleList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        vehicleList.setAdapter(vehicleAdapter);
-
-
-
-
-        chosenVehicleAdapter = new ChosenVehicleAdapter(chosenVehicles, vehicleDeleteButtonClicked);
-        chosenVehicleList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        chosenVehicleList.setAdapter(chosenVehicleAdapter);
-
-        //setting adapter for chosen drivers recycler
-        chosenDriverAdapter = new ChosenDriverAdapter(chosenDrivers, driverDeleteButtonClicked);
-        chosenDriverList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        chosenDriverList.setAdapter(chosenDriverAdapter);
-*/
-
-/* UNCOMMENT LATER FOR PAIRS
-        //setting adapter for pair recycler
-        pairAdapter = new PairAdapter(mParam5);
-        pairList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        pairList.setAdapter(pairAdapter);
-
-        pairAdapter.setDeleteListener(new PairAdapter.deleteClick() {
-            @Override
-            public void DeleteButtonClicked(int pos) {
-                mParam5.remove(pos);
-                int newPos = pos;
-                pairAdapter.notifyDataSetChanged();
-                pairAdapter.notifyItemRemoved(newPos);
-                pairAdapter.notifyItemRangeChanged(newPos, mParam5.size());
-            }
-        });
-*/
-
-/* WORKING PART
-        addBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(loaderAdapter.getSelectedItem() != null){
-                    chosenDrivers.add(loaderAdapter.getSelectedItem());
-                    chosenDriverAdapter.notifyDataSetChanged();
-                }
-
-                if(vehicleAdapter.getSelectedItem() != null){
-                    chosenVehicles.add(vehicleAdapter.getSelectedItem());
-                    chosenVehicleAdapter.notifyDataSetChanged();
-                }
-            }
-        });
-
-*/
 //FOR IMAGE
-
-
         ImageView pic = view.findViewById(R.id.material_image);
-        Drawable image = null;
-
+        Bitmap decodedByte = null;
         if(materialParam.getZuphrContents().length()> 100) {
             String img =materialParam.getZuphrContents().replace("data:image/jpeg;base64,","");
             byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             pic.setImageBitmap(decodedByte);
         }
 
-        // image.creator.setText(note.getCreator());
-//        byte[] decodedString = Base64.decode(note.getContents(), Base64.DEFAULT);
-//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-//        image.Image.setImageBitmap(decodedByte);
-
-
-        Drawable finalImage = image;
+        //Click on image to enlarge
+        Drawable finalImage = new BitmapDrawable(getResources(), decodedByte);
         pic.setOnClickListener(view1 -> {
                     AppCompatActivity activity = (AppCompatActivity) requireContext();
                     pictureMode myFragment = new pictureMode(finalImage);
@@ -367,7 +240,6 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment impleme
                 materialParam.setVehicles(chosenVehicles);
 
                Material Material= model.MatrialsList.getValue().get(Mpostion);
-               Log.i("matposition", Mpostion+"");
                 List<Material> list =model.MatrialsList.getValue();
                 LoadAction loadAction=Material.getZuphrLoada();
                 loadAction.setDriver(chosenDrivers);
@@ -383,66 +255,14 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment impleme
             }
         });
 
-
-
-    }
-
-
-    private void filterVehicle(String text) {
-        ArrayList<Vehicle> filteredList = new ArrayList<>();
-
-        for(Vehicle vehicle : vehiclesList){
-            if(vehicle.getVehType().toLowerCase().contains(text.toLowerCase())){
-                filteredList.add(vehicle);
+        closeBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
             }
-        }
-        vehicleAdapter.filterList(filteredList);
-    }
-
-    private void filterLoader(String text){
-        ArrayList<Driver> filteredList = new ArrayList<>();
-
-        for (Driver load : driversList) {
-            if (load.getZuphrdrvrName().toLowerCase().contains(text.toLowerCase())) {
-                filteredList.add(load);
-            }
-        }
-        loaderAdapter.filterList(filteredList);
-    }
-
-    private void onClickEvent(View view) {
+        });
 
     }
-
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    public interface OnPositiveClickListener{
-        void onPositiveClick(ArrayList<Driver> text, ArrayList<Vehicle> text2);
-    }
-
-    public interface OnNegativeClickListener{
-        void onNegativeClick();
-    }
-
-    public void notifDataChanged(){
-        FragmentManager fm = getFragmentManager();
-        FragmentManager fm2 = getFragmentManager();
-
-        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.constraintLayout4);
-        DispatcherFragment fragm2 = (DispatcherFragment) fm2.findFragmentById(R.id.item_recycler);
-        fragm.dataChanged();
-        fragm2.dataChangedDer();
-    }
-
 }
 
 
