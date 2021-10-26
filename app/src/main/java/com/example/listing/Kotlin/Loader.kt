@@ -79,9 +79,7 @@ class Loader : AppCompatActivity(), PlanClickListener {
 
     fun LoaderFragmentInteraction(plan: Plan, pos: Int) {
         model.plan.observe(this, { plan: Plan? ->
-            val planList = model.Plans.value!!
-            planList[pos] = plan
-            model.Plans.value = planList
+
             model.MatrialsList.value = plan?.planToItems
 
         })

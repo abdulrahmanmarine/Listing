@@ -22,7 +22,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
     var dialog: DialogFragment? = null
     var dialogManual: DialogFragment? = null
-    var Flag: Boolean = false
+    var Flag: Boolean = true
     var materialpos = 0
     var po = 0
     lateinit var model :PlansDataModel
