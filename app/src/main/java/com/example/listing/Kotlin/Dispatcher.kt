@@ -22,8 +22,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
     var dialog: DialogFragment? = null
     var dialogManual: DialogFragment? = null
-    var Flag: Boolean = true
-    lateinit var chosenDriverCardAdapter: ChosenDriverCardAdapter;
+    var Flag: Boolean = false
     var materialpos = 0
     var po = 0
     lateinit var model :PlansDataModel
@@ -79,17 +78,12 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
     override fun LoaderFragmentInteraction( pos: Int) {
 
         model.plan.observe(this, {plan: Plan? ->
-            val planList = model.Plans.value!!
-            planList[pos] = plan
-            model.Plans.value = planList
             model.MatrialsList.value=plan?.planToItems
         })
 
         model.MatrialsList.observe(this,{MaterialList:List<Material> ->
-
             val planList = model.Plans.value!!
             val plan = planList[pos]
-
             val textfragment = DispatcherFragment.newInstance(
                 MaterialList as ArrayList<Material>?,
             plan.zuphrLpname,

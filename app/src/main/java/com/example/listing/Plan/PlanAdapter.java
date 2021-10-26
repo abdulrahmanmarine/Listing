@@ -62,11 +62,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
             return 0;
     }
 
-//    @Override
-//    public void onItemClick(Plan plan, int pos) {
-//       this.onCallBack.onItemClick(plan,pos);
-//       this.onCallBack.onItemClick(pos);
-//    }
 
     @Override
     public void onItemClick(Plan plan, int pos) {

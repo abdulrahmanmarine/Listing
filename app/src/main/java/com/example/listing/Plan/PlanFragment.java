@@ -113,7 +113,6 @@ public class PlanFragment extends Fragment {
         model.Plans.observe(getViewLifecycleOwner(), list -> {
             if(list!=null)
             {
-
                 myadapter = new PlanAdapter(listener, (ArrayList<Plan>) list, getContext());
                 rv.setAdapter(myadapter);
 
