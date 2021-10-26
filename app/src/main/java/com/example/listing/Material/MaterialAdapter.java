@@ -1,9 +1,13 @@
 package com.example.listing.Material;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -74,11 +78,13 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.Materi
 
     public static class MaterialViewHolder extends RecyclerView.ViewHolder{
         public LoadItemCardBinding itemRowBinding;
+        public ImageView materialImage;
         private Context contexts = itemView.getContext();
 
         public MaterialViewHolder(LoadItemCardBinding itemRowBinding) {
             super(itemRowBinding.getRoot());
             this.itemRowBinding = itemRowBinding;
+            materialImage = itemRowBinding.materialImgCard;
         }
 
         public void bind(Material material){
@@ -87,14 +93,21 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.Materi
             itemRowBinding.setMat(material);
             itemRowBinding.executePendingBindings();
             Log.i("uppercase" ,material.getZuphrLoada().getStatus().toUpperCase() + "");
-            if(material.getZuphrLoada().getStatus() == "loaded"){
+            if(material.getZuphrLoada().getStatus().equalsIgnoreCase("loaded")  || material.getZuphrLoada().getStatus() == "LFMS"){
                 itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.green_border));
-            }else if (material.getZuphrLoada().getStatus()== "unloaded"){
+            }else if (material.getZuphrLoada().getStatus().equalsIgnoreCase("unloaded")){
                 itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
-            }else if (material.getZuphrLoada().getStatus() == "not found"){
+            }else if (material.getZuphrLoada().getStatus().equalsIgnoreCase("not found")){
                 itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
-            }else if (material.getZuphrLoada().getStatus() == "processing"){
+            }else if (material.getZuphrLoada().getStatus().equalsIgnoreCase("processing")){
                 itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.yellow_border));
+            }
+
+            if(material.getZuphrContents().length()> 100) {
+                String img =material.getZuphrContents().replace("data:image/jpeg;base64,","");
+                byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                materialImage.setImageBitmap(decodedByte);
             }
         }
     }

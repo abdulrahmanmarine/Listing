@@ -34,5 +34,20 @@
     <string name="Offline">Offline</string>
     <string name="UserMode">UsageMode</string>
     <string name="UserInfo">UserInfo</string>
+    <string name="vehiclesText">Vehicles: </string>
+    <string name="quantity">Quantity: </string>
+    <string name="dialogHeader">Choose Vehicle and Loaders</string>
+    <string name="vehiclesList">Vehicles and Loaders</string>
+    <string name="chosenList">Chosen</string>
+    <string name="status">Status: </string>
+    <string name="load">LOAD</string>
+    <string name="unload">UNLOAD</string>
+    <string name="process">PROCESS</string>
+    <string name="notFound">NOT FOUND</string>
+    <string name="loaders">Loaders: </string>
+    <string name="add">ADD</string>
+    <string name="remove">REMOVE</string>
+    <string name="destination">Destination: </string>
+    <string name="vessel">Vessel: </string>
 
 </resources>

@@ -177,7 +177,7 @@ public class LoaderFragment extends Fragment  {
                 Material Material= model.MatrialsList.getValue().get(pos);
                 List<Material> list = model.MatrialsList.getValue();
                 LoadAction loadAction= Material.getZuphrLoada();
-                loadAction.setStatus("loaded");
+                loadAction.setStatus("Loaded");
                 list.set(pos,Material);
                 Plan plan= model.plan.getValue();
                 plan.setPlanToItems(list);
@@ -191,7 +191,7 @@ public class LoaderFragment extends Fragment  {
                 Material Material= model.MatrialsList.getValue().get(pos);
                 List<Material> list = model.MatrialsList.getValue();
                 LoadAction loadAction= Material.getZuphrLoada();
-                loadAction.setStatus("unloaded");
+                loadAction.setStatus("Unloaded");
                 list.set(pos,Material);
                 Plan plan= model.plan.getValue();
                 plan.setPlanToItems(list);
@@ -205,7 +205,7 @@ public class LoaderFragment extends Fragment  {
                 Material Material= model.MatrialsList.getValue().get(pos);
                 List<Material> list = model.MatrialsList.getValue();
                 LoadAction loadAction= Material.getZuphrLoada();
-                loadAction.setStatus("processing");
+                loadAction.setStatus("Processing");
                 list.set(pos,Material);
                 Plan plan= model.plan.getValue();
                 plan.setPlanToItems(list);
@@ -220,7 +220,7 @@ public class LoaderFragment extends Fragment  {
           Material Material= model.MatrialsList.getValue().get(pos);
           List<Material> list = model.MatrialsList.getValue();
           LoadAction loadAction= Material.getZuphrLoada();
-          loadAction.setStatus("not found");
+          loadAction.setStatus("Not Found");
           list.set(pos,Material);
           Plan plan= model.plan.getValue();
           plan.setPlanToItems(list);

@@ -20,8 +20,8 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="206dp"
-        android:layout_height="155dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
@@ -31,180 +31,156 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/reqName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="8"
+                android:text="@{plan.zuphrLpname}"
                 android:textColor="@color/SADarkBlue"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.14"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                android:textSize="16sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="@android:color/darker_gray"
+                android:backgroundTint="@color/SADarkGreen" />
 
-            <TextView
-                android:id="@+id/pt_rigcode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rigcode_pt"
-                android:textColor="@color/SaLightGreen"
-                android:textSize="@dimen/list_card_tv_size"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.05"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.25" />
 
-            <TextView
-                android:id="@+id/pt_vessel"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/priority_pt"
-                android:textColor="@color/SaLightGreen"
-                android:textSize="@dimen/list_card_tv_size"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/pt_rigcode"
-                app:layout_constraintTop_toBottomOf="@id/pt_rigcode"
-                app:layout_constraintVertical_bias="0.0" />
+                android:orientation="horizontal"
+                android:layout_marginBottom="4dp">
 
-            <TextView
-                android:id="@+id/pt_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/date_pt"
-                android:textColor="@color/SaLightGreen"
-                android:textSize="@dimen/list_card_tv_size"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/pt_vessel"
-                app:layout_constraintTop_toBottomOf="@+id/pt_vessel"
-                app:layout_constraintVertical_bias="0.0" />
+                <TextView
+                    android:id="@+id/pt_rigcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rigcode_pt"
+                    android:textColor="@color/SaLightGreen"
+                    android:textSize="@dimen/list_card_tv_size"
+                    android:layout_weight="0.2"/>
 
-            <TextView
-                android:id="@+id/pt_time"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/rigcode_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="4dp"
+                    android:ems="6"
+                    android:text="@{plan.zuphrLpid}"
+                    android:textColor="@color/SaDarkGray"
+                    android:layout_weight="0.8"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/time_pt"
-                android:textColor="@color/SaLightGreen"
-                android:textSize="@dimen/list_card_tv_size"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/pt_date"
-                app:layout_constraintTop_toBottomOf="@+id/pt_date"
-                app:layout_constraintVertical_bias="0.0" />
+                android:orientation="horizontal"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:id="@+id/pt_vessel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/priority_pt"
+                    android:textColor="@color/SaLightGreen"
+                    android:textSize="@dimen/list_card_tv_size" />
+
+                <TextView
+                    android:id="@+id/vessel_tv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="4dp"
+                    android:ems="7"
+                    android:text="@{plan.zuphrVesselName}"
+                    android:textColor="@color/SaDarkGray"
+                    android:layout_gravity="center_horizontal|left"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:id="@+id/pt_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/date_pt"
+                    android:textColor="@color/SaLightGreen"
+                    android:textSize="@dimen/list_card_tv_size"
+                    />
+
+                <TextView
+                    android:id="@+id/date_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="4dp"
+                    android:ems="7"
+                    android:text="@{plan.zuphrFpDate}"
+                    android:textAlignment="center"
+                    android:textColor="@color/SaDarkGray"
+
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/pt_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time_pt"
+                    android:textColor="@color/SaLightGreen"
+                    android:textSize="@dimen/list_card_tv_size" />
+
+                <TextView
+                    android:id="@+id/time_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="4dp"
+                    android:ems="7"
+                    android:textAlignment="center"
+                    android:textColor="@color/SaDarkGray"
+
+                    />
+            </LinearLayout>
 
 
             <TextView
                 android:id="@+id/status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:background="@drawable/green_border"
                 android:paddingStart="10dp"
                 android:paddingRight="15dp"
                 android:textColor="@color/SaDarkGray"
                 android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.033"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pt_time" />
+                />
 
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="3dp"
-                android:background="@android:color/darker_gray"
-                android:backgroundTint="@color/SADarkGreen"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/reqName" />
 
 
-            <TextView
-                android:id="@+id/rigcode_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginStart="4dp"
-                android:ems="6"
-                android:text="@{plan.zuphrLpid}"
-                android:textColor="@color/SaDarkGray"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/pt_rigcode"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.242" />
-
-
-            <TextView
-                android:id="@+id/vessel_tv2"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="@dimen/list_card_tv_margin2"
-                android:ems="7"
-                android:text="@{plan.zuphrLpid}"
-                android:textColor="@color/SaDarkGray"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/pt_vessel"
-                app:layout_constraintTop_toBottomOf="@+id/rigcode_tv"
-                app:layout_constraintVertical_bias="0.0" />
-
-
-            <TextView
-                android:id="@+id/date_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginStart="4dp"
-                android:ems="7"
-                android:textAlignment="center"
-                android:textColor="@color/SaDarkGray"
-                android:text="@{plan.zuphrFpDate}"
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/pt_date"
-
-                app:layout_constraintTop_toBottomOf="@+id/vessel_tv2"
-                app:layout_constraintVertical_bias="0.037" />
-
-            <TextView
-                android:id="@+id/time_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginStart="4dp"
-                android:ems="7"
-                android:textAlignment="center"
-                android:textColor="@color/SaDarkGray"
-                android:text="@{plan.zuphrFpTime}"
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toEndOf="@id/pt_time"
-                app:layout_constraintTop_toBottomOf="@id/date_tv"
-                app:layout_constraintVertical_bias="0.093" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
 
     </androidx.cardview.widget.CardView>

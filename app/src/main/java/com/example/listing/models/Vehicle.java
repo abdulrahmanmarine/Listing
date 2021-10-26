@@ -1,8 +1,14 @@
 package com.example.listing.models;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
+import com.example.listing.Kotlin.Loader;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -10,6 +16,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 import java.util.List;
@@ -23,6 +30,18 @@ public class Vehicle implements Serializable{
     public Vehicle() {
 
     }
+
+    @Expose(serialize = false,deserialize = false)
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @JsonIgnore
+    public int VehicleId;
+
+    @Expose(serialize = false,deserialize = false)
+    @ColumnInfo(name = "MaterialOfflineID")
+    @JsonIgnore
+    public  String MaterialOfflineID;
+
 
     @JsonProperty("Vehid")
     String Vehid;
@@ -55,6 +74,10 @@ public class Vehicle implements Serializable{
 
     @JsonProperty("PlateNo")
     String PlateNo;
+
+    @Ignore
+    @JsonIgnore
+    List<Driver> loaders;
 
     public String getVehid() {
         return Vehid;
@@ -128,8 +151,16 @@ public class Vehicle implements Serializable{
         PlateNo = plateNo;
     }
 
+    public List<Driver> getLoaders() {
+        return loaders;
+    }
+
+    public void setLoaders(List<Driver> loaders) {
+        this.loaders = loaders;
+    }
+
     public Vehicle(String vehid, String category, String vehType, String identifier, String maxWeight, String color, String model,
-                   String mfgYear, String plateNo) {
+                   String mfgYear, String plateNo, List<Driver> laoders) {
         Vehid = vehid;
         Category = category;
         VehType = vehType;
@@ -139,6 +170,8 @@ public class Vehicle implements Serializable{
         Model = model;
         MfgYear = mfgYear;
         PlateNo = plateNo;
+        loaders = laoders;
+
     }
 
 }

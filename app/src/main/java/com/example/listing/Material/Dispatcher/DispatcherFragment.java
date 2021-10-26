@@ -26,16 +26,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.listing.AddButtonClicked;
-import com.example.listing.AssignDriver.AssignMultiDialogFragment;
-import com.example.listing.AssignDriver.ChosenDriverCardAdapter;
-import com.example.listing.AssignDriver.DriverAdapter;
+import com.example.listing.AssignDialog_Configured.DriverAdapter;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.Kotlin.Dispatcher;
 import com.example.listing.R;
 import com.example.listing.Plan.PlanFragment;
 import com.example.listing.models.Driver;
 import com.example.listing.models.Material;
-import com.example.listing.models.Vehicle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +42,7 @@ import java.util.List;
  * Use the {@link DispatcherFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DispatcherFragment extends Fragment implements AssignMultiDialogFragment.OnPositiveClickListener {
+public class DispatcherFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -65,11 +62,7 @@ public class DispatcherFragment extends Fragment implements AssignMultiDialogFra
     // TODO: Rename and change types of parameters
     private String mParam2, mParam3, mParam4;
     private List<Material> mParam1 = new ArrayList<>();
-    private ArrayList<Driver> chosenDrivers = new ArrayList<>();
     private DriverAdapter driverAdapter;
-    private DriverAdapter vechileAdapter;
-    private ChosenDriverCardAdapter chosenDriverCardAdapter;
-    private static Context contexts;
     private static DispatcherFragment fragment = null;
     private Boolean isLoad = true;
     ImageButton btnCapture;
@@ -129,7 +122,8 @@ public class DispatcherFragment extends Fragment implements AssignMultiDialogFra
 //        ArrayList<Material> filteredList = new ArrayList<>();
 //
 //        for(Material mat : mParam1){
-//            if(mat.getName().toLowerCase().contains(text.toLowerCase())){
+//            if(mat.getZuphrShortxt().equalsIgnoreCase(text)){
+////                    getName().toLowerCase().contains(text.toLowerCase())){
 //                filteredList.add(mat);
 //            }
 //        }
@@ -264,9 +258,5 @@ public class DispatcherFragment extends Fragment implements AssignMultiDialogFra
     }
 
 
-    @Override
-    public void onPositiveClick(ArrayList<Driver> text, ArrayList<Vehicle> text2) {
 
-        chosenDriverCardAdapter.notifyDataSetChanged();
-    }
 }

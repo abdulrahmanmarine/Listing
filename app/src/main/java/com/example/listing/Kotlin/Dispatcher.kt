@@ -1,13 +1,14 @@
 package com.example.listing.Kotlin
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 
-import com.example.listing.AssignDriver.AssignMultiDialogFragment
-import com.example.listing.AssignDriver.ChosenDriverCardAdapter
+import com.example.listing.AssignDialog_Configured.Configured_AssignMultiDialogFragment
 import com.example.listing.DataViewModel.PlansDataModel
+import com.example.listing.Manual_Assigment.Manual_AssignMultiDialogFragment
 import com.example.listing.ViewModelsFactory.PlansDataModelFactory
 import com.example.listing.Material.Dispatcher.DispatcherFragment
 import com.example.listing.Plan.PlanFragment
@@ -20,6 +21,8 @@ import java.util.*
 class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragmentClickListener{
 
     var dialog: DialogFragment? = null
+    var dialogManual: DialogFragment? = null
+    var Flag: Boolean = true
     lateinit var chosenDriverCardAdapter: ChosenDriverCardAdapter;
     var materialpos = 0
     var po = 0
@@ -40,12 +43,21 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
         model.Plans.observe(this,
             { Plans: List<Plan?>? ->
+                for (i in 0..1) {
+                    if (Plans != null) {
+                        Log.i("for test", Plans.get(i)!!.zuphrVessel + "")
+                    }
+            }
                 buildRecycler((Plans as ArrayList<Plan?>?)!!
+
+
                 )
             })
     }
 
     fun buildRecycler(lst: ArrayList<Plan?>?) {
+
+
         val planFragment = PlanFragment.newInstance(lst, true);
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
@@ -75,12 +87,14 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
         model.MatrialsList.observe(this,{MaterialList:List<Material> ->
 
+            val planList = model.Plans.value!!
+            val plan = planList[pos]
+
             val textfragment = DispatcherFragment.newInstance(
                 MaterialList as ArrayList<Material>?,
-//            plan.req_name,
-//            plan.vessel_num,
-//            plan.destination
-                "","",""
+            plan.zuphrLpname,
+            plan.zuphrVesselName,
+            plan.zuphrCaptain
             )
             val fm = supportFragmentManager
             val ft = fm.beginTransaction()
@@ -109,7 +123,8 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         val fra = supportFragmentManager
 //        dialog = AssignMultiDialogFragment.newInstance(reqs[po]!!.materials[matpos].name,
 //            reqs[po]!!.materials[matpos].material, driverList, vehicleList, pairList)
-        dialog = AssignMultiDialogFragment.newInstance(matpos,material);
+        dialog = Configured_AssignMultiDialogFragment.newInstance(matpos,material);
+        dialogManual=Manual_AssignMultiDialogFragment.newInstance(matpos,material);
 
 //        dialog = AssignMultiDialogFragment.newInstance(reqs[po]!!.planToItems[matpos].zuphrFpName,
 //            reqs[po]!!.planToItems[matpos].zuphrActquan, reqs[po]!!.planToItems[matpos].drivers as ArrayList<Driver>?
@@ -119,8 +134,15 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 //        (dialog as AssignDialogFragment?)!!.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
 //        (dialog as AssignDialogFragment?)!!.show(fra, "assign")
 
-        (dialog as AssignMultiDialogFragment?)!!.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
-        (dialog as AssignMultiDialogFragment?)!!.show(fra, "assign")
+        (dialog as Configured_AssignMultiDialogFragment?)!!.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
+        (dialogManual as Manual_AssignMultiDialogFragment?)!!.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
+
+        if(Flag){
+           (dialog as Configured_AssignMultiDialogFragment?)!!.show(fra, "assign")
+        }else{
+            (dialogManual as Manual_AssignMultiDialogFragment?)!!.show(fra, "assign")
+        }
+
 
 
 //        materialpos = matpos
