@@ -41,6 +41,9 @@ public class PlansDataModel extends ViewModel {
     public  MutableLiveData<Plan> plan = new MutableLiveData<>();
     public MutableLiveData<List<com.example.listing.models.Material>>MatrialsList = new MutableLiveData<>();
 
+    public  MutableLiveData<List<Driver>> MasterdriversList = new MutableLiveData<>();
+    public MutableLiveData<List<Vehicle>> MastervehiclesList = new MutableLiveData<>();
+
     public MutableLiveData<com.example.listing.models.Material> Matrial = new MutableLiveData<>();
 
     public MutableLiveData<List<imagenode>> MatrialImageList = new MutableLiveData<>();
@@ -239,6 +242,58 @@ public class PlansDataModel extends ViewModel {
 
    }
 
+   public  void getVechiles(){
+
+       Driver driver1 = new Driver("1", "Abdul", "Heavy Vehicle Driving",
+               "456324", "Saudi", "91 66778899", "driver.test@gmail.com");
+       Driver driver2 = new Driver("2", "Ahmed", "Small Vehicle Driving",
+               "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
+       Driver driver3 = new Driver("3", "Ali", "Small Vehicle Driving",
+               "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
+       Driver driver4 = new Driver("4", "Murada", "Small Vehicle Driving",
+               "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
+       Driver driver5 = new Driver("5", "Yousef", "Small Vehicle Driving",
+               "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
+       Driver driver6 = new Driver("6", "Mohammed", "Small Vehicle Driving",
+               "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
+
+
+       Vehicle vehicle1 = new Vehicle("1","Medium", "Truck", "456234", "1000",
+               "Red", "2012", "DDMMYYYY", "123456",null);
+       Vehicle vehicle2 = new Vehicle("2","Medium", "Crane", "456234", "1000",
+               "Red", "2012", "DDMMYYYY", "123456",null);
+       Vehicle vehicle3 = new Vehicle("3","Medium", "Two Wheel", "456234", "1000",
+               "Red", "2012", "DDMMYYYY", "123456",null);
+       Vehicle vehicle4 = new Vehicle("4","Medium", "Four Wheel", "456234", "1000",
+               "Red", "2012", "DDMMYYYY", "123456",null);
+       Vehicle vehicle5 = new Vehicle("5","Medium", "Small Truck", "456234", "1000",
+               "Red", "2012", "DDMMYYYY", "123456",null);
+       Vehicle vehicle6 = new Vehicle("6","Medium", "Huge Truck", "456234", "1000",
+               "Red", "2012", "DDMMYYYY", "123456",null);
+
+        ArrayList<Driver> driversList = new ArrayList<>();
+        ArrayList<Vehicle> vehiclesList = new ArrayList<>();
+
+       driversList.add(driver1);
+       driversList.add(driver2);
+       driversList.add(driver3);
+       driversList.add(driver4);
+       driversList.add(driver5);
+       driversList.add(driver6);
+       MasterdriversList.setValue(driversList);
+
+
+
+       vehiclesList.add(vehicle1);
+       vehiclesList.add(vehicle2);
+       vehiclesList.add(vehicle3);
+       vehiclesList.add(vehicle4);
+       vehiclesList.add(vehicle5);
+       vehiclesList.add(vehicle6);
+       MastervehiclesList.setValue(vehiclesList);
+
+
+   }
 
     public void GetVehicle (Application application ,String Vehicleid){
 

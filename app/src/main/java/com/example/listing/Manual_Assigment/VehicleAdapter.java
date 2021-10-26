@@ -27,6 +27,10 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.ViewHold
     Context context;
     VehicleSelected vehicleSelected;
 
+    public void setSelectedPosition(int selectedPosition) {
+        this.selectedPosition = selectedPosition;
+    }
+
     public VehicleAdapter(ArrayList<Vehicle> vehicles, VehicleSelected vehicleSelected) {
         this.vehicles = vehicles;
         this.vehicleSelected=vehicleSelected;
@@ -80,15 +84,13 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.ViewHold
             holder.vehicleName.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDarkBlue));
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    vehicleSelected.VehicleSelected(vehicle);
-                    selectedPosition = RecyclerView.NO_POSITION;
-                    holder.itemRowBinding.assignDriverCard.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDarkBlue));
-                    holder.vehicleName.setTextColor(Color.WHITE);
-                    notifyDataSetChanged();
-            }
+        holder.itemView.setOnClickListener(v -> {
+
+                vehicleSelected.VehicleSelected(vehicle);
+                selectedPosition = holder.getAdapterPosition();
+                notifyDataSetChanged();
+                return;
+
         });
 
     }

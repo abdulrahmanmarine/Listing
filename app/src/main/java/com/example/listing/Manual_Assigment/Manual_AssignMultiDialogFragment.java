@@ -20,8 +20,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import com.example.listing.Kotlin.pictureMode;
+import com.example.listing.AddButtonClicked;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.DriverDeleteButtonClicked;
+import com.example.listing.Kotlin.Dispatcher;
 import com.example.listing.R;
 import com.example.listing.models.Driver;
 import com.example.listing.models.LoadAction;
@@ -38,9 +40,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
     private static int Mpostion;
     //material object
     private static final String MATERIAL_2 = "materialParam";
-    private ArrayList<Driver> driversList = new ArrayList<>();
 
-    private ArrayList<Vehicle> vehiclesList = new ArrayList<>();
     private Material materialParam;
     PlansDataModel model;
     DriverSelected driverSelected;
@@ -131,60 +131,25 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         TextView materialName = view.findViewById(R.id.assign_image_tv);
 
 
-        Driver driver1 = new Driver("3", "Abdul", "Heavy Vehicle Driving",
-                "456324", "Saudi", "91 66778899", "driver.test@gmail.com");
-        Driver driver2 = new Driver("2", "Ahmed", "Small Vehicle Driving",
-                "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
-        Driver driver3 = new Driver("2", "Ali", "Small Vehicle Driving",
-                "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
-        Driver driver4 = new Driver("2", "Murada", "Small Vehicle Driving",
-                "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
-        Driver driver5 = new Driver("2", "Yousef", "Small Vehicle Driving",
-                "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
-        Driver driver6 = new Driver("2", "Mohammed", "Small Vehicle Driving",
-                "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
 
-        Vehicle vehicle1 = new Vehicle("1","Medium", "Truck", "456234", "1000",
-                "Red", "2012", "DDMMYYYY", "123456",null);
-        Vehicle vehicle2 = new Vehicle("2","Medium", "Crane", "456234", "1000",
-                "Red", "2012", "DDMMYYYY", "123456",null);
-        Vehicle vehicle3 = new Vehicle("3","Medium", "Two Wheel", "456234", "1000",
-                "Red", "2012", "DDMMYYYY", "123456",null);
-        Vehicle vehicle4 = new Vehicle("4","Medium", "Four Wheel", "456234", "1000",
-                "Red", "2012", "DDMMYYYY", "123456",null);
-        Vehicle vehicle5 = new Vehicle("5","Medium", "Small Truck", "456234", "1000",
-                "Red", "2012", "DDMMYYYY", "123456",null);
-        Vehicle vehicle6 = new Vehicle("6","Medium", "Huge Truck", "456234", "1000",
-                "Red", "2012", "DDMMYYYY", "123456",null);
 
-        driversList.add(driver1);
-        driversList.add(driver2);
-        driversList.add(driver3);
-        driversList.add(driver4);
-        driversList.add(driver5);
-        driversList.add(driver6);
-
-        vehiclesList.add(vehicle1);
-        vehiclesList.add(vehicle2);
-        vehiclesList.add(vehicle3);
-        vehiclesList.add(vehicle4);
-        vehiclesList.add(vehicle5);
-        vehiclesList.add(vehicle6);
-
+         model.getVechiles();
 
         materialParam = (Material) getArguments().getSerializable(MATERIAL_2);
 
 
         chosenVehicles  = (ArrayList<Vehicle>) materialParam.getVehicles();
-        ArrayList<Driver> drivers = (ArrayList<Driver>) materialParam.getDrivers();
 
 
         //setting adapter for loaders/drivers recycler
 
         //setting adapter for vehicle recycler
-        vehicleAdapter = new VehicleAdapter(vehiclesList ,this::VehicleSelected);
-        vehicleList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-        vehicleList.setAdapter(vehicleAdapter);
+        model.MastervehiclesList.observe(getViewLifecycleOwner(),vehiclesList->{
+            vehicleAdapter = new VehicleAdapter((ArrayList<Vehicle>) vehiclesList,this::VehicleSelected);
+            vehicleList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+            vehicleList.setAdapter(vehicleAdapter);
+
+        });
 
 
         chosenVehicleAdapter = new Manual_Assignment_Adapter(chosenVehicles,this::deleteButtonClicked,getContext());
@@ -196,15 +161,21 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
             chosenVehicle.setLoaders(chosenDrivers);
             if(chosenVehicle.getLoaders().size()>0){
                 chosenVehicles.add(chosenVehicle);
-
+                 ArrayList<Vehicle> vehiclesList = (ArrayList<Vehicle>) model.MastervehiclesList.getValue();
 
                 for(int i=0 ;i<vehiclesList.size();i++){
                     if(chosenVehicle.equals(vehiclesList.get(0))){
                         vehiclesList.remove(i);
+                        model.MastervehiclesList.setValue(vehiclesList);
+
+                        loaderAdapter = new LoaderAdapter((ArrayList<Driver>) model.MasterdriversList.getValue(),this::Driverselected);
+                        loaderList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+                        loaderList.setAdapter(loaderAdapter);
+
                         break;
                     }
                 }
-                vehicleAdapter.notifyDataSetChanged();
+
                 chosenVehicleAdapter.notifyDataSetChanged();
             }else {
                 Toast.makeText(getContext(),"Assign drivers to the vehicle first",Toast.LENGTH_SHORT).show();
@@ -213,22 +184,19 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         });
 
 
-        doneBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        doneBut.setOnClickListener(v -> {
 
-                Material Material= model.MatrialsList.getValue().get(Mpostion);
-                Log.i("matposition", Mpostion+"");
-                List<Material> list =model.MatrialsList.getValue();
-                LoadAction loadAction=Material.getZuphrLoada();
-                loadAction.setVehicle(chosenVehicles);
-                Material.setZuphrLoada(loadAction);
-                list.set(Mpostion,Material);
-                Plan plan= model.plan.getValue();
-                plan.setPlanToItems(list);
-                model.plan.setValue(plan);
-                dismiss();
-            }
+            Material Material= model.MatrialsList.getValue().get(Mpostion);
+            Log.i("matposition", Mpostion+"");
+            List<Material> list =model.MatrialsList.getValue();
+            LoadAction loadAction=Material.getZuphrLoada();
+            loadAction.setVehicle(chosenVehicles);
+            Material.setZuphrLoada(loadAction);
+            list.set(Mpostion,Material);
+            Plan plan= model.plan.getValue();
+            plan.setPlanToItems(list);
+            model.plan.setValue(plan);
+            dismiss();
         });
 
 
@@ -269,7 +237,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
     public void VehicleSelected(Vehicle vehicle) {
         chosenDrivers.clear();
         this.chosenVehicle=vehicle;
-        loaderAdapter = new LoaderAdapter(driversList,this::Driverselected);
+        loaderAdapter = new LoaderAdapter((ArrayList<Driver>) model.MasterdriversList.getValue(),this::Driverselected);
         loaderList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         loaderList.setAdapter(loaderAdapter);
 

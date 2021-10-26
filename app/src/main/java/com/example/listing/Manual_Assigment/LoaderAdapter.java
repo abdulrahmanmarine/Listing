@@ -22,8 +22,9 @@ import java.util.ArrayList;
 
 public class LoaderAdapter extends RecyclerView.Adapter<LoaderAdapter.ViewHolder>{
 
-    private int selectedPosition = 0;
-    ArrayList<Driver> loaders;
+   ArrayList<Driver> loaders;
+
+    ArrayList<Driver> SelectedLoaders= new ArrayList<>();
     Context context;
     DriverSelected driverSelected;
 
@@ -32,11 +33,16 @@ public class LoaderAdapter extends RecyclerView.Adapter<LoaderAdapter.ViewHolder
         this.driverSelected=driverSelected;
     }
 
+    public ArrayList<Driver> getSelectedLoaders() {
+        return SelectedLoaders;
+    }
 
+    public void setSelectedLoaders(ArrayList<Driver> selectedLoaders) {
+        SelectedLoaders = selectedLoaders;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public AssignSpinnerItemBinding itemRowBinding;
-        public RadioButton radioButton;
         public TextView loaderName;
 
         public ViewHolder(@NonNull AssignSpinnerItemBinding itemRowBinding){
@@ -70,34 +76,26 @@ public class LoaderAdapter extends RecyclerView.Adapter<LoaderAdapter.ViewHolder
         Driver driver = loaders.get(position);
         holder.bind(driver);
 
-        final Driver loader = loaders.get(position);
-//        holder.loaderName.setText(loader.getZuphrdrvrName());
+        for(int i=0 ;i<SelectedLoaders.size();i++){
 
-        if(selectedPosition==position){
-            holder.itemRowBinding.assignDriverCard.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDarkBlue));
-            holder.loaderName.setTextColor(Color.WHITE);
-        }
-
-        else {
-            holder.itemRowBinding.assignDriverCard.setBackgroundColor(Color.WHITE);
-            holder.loaderName.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDarkBlue));
-        }
-
-
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedPosition == holder.getAdapterPosition()) {
-
-                    driverSelected.Driverselected(driver);
-                    selectedPosition = RecyclerView.NO_POSITION;
-                    notifyDataSetChanged();
-                    return;
-                }
-                selectedPosition = holder.getAdapterPosition();
-                notifyDataSetChanged();
+            if(SelectedLoaders.get(i).getZuphrDriverid().contentEquals(driver.getZuphrDriverid())){
+                holder.itemRowBinding.assignDriverCard.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDarkBlue));
+                holder.loaderName.setTextColor(Color.WHITE);
+                break;
             }
+            else {
+                holder.itemRowBinding.assignDriverCard.setBackgroundColor(Color.WHITE);
+                holder.loaderName.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDarkBlue));
+            }
+
+        }
+
+        holder.itemView.setOnClickListener(v -> {
+                driverSelected.Driverselected(driver);
+                SelectedLoaders.add(driver);
+                notifyDataSetChanged();
+            return;
+
         });
 
 
@@ -115,15 +113,7 @@ public class LoaderAdapter extends RecyclerView.Adapter<LoaderAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
-    //To send the loader to the fragment
-    public Driver getSelectedItem(){
-        if(selectedPosition != -1){
-            //Toast.makeText(context, "SelectedItem: " + loaders.get(selectedPosition), Toast.LENGTH_LONG );
-            Log.i("second radio test", loaders.get(selectedPosition).getZuphrdrvrName());
-            return  loaders.get(selectedPosition);
-        }
-        return null;
-    }
+
 
     public void uncheckRadio(int pos){
 
