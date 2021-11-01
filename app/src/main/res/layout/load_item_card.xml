@@ -32,8 +32,8 @@
             type="com.example.listing.FoundButtonClicked" />
 
         <variable
-            name="cameraClickListen"
-            type="com.example.listing.CameraButtonClicked"
+            name="noteClickListen"
+            type="com.example.listing.NoteButtonClicked"
             />
 
 
@@ -198,7 +198,7 @@
                     android:layout_weight="0.25"
                     android:layout_gravity="center"
                     android:background="@drawable/ic_comment"
-                    android:onClick="@{() -> cameraClickListen.cameraButtonClicked(pos)}" />
+                    android:onClick="@{() -> noteClickListen.noteButtonClicked(pos)}" />
 
                 <ImageView
                     android:id="@+id/location_btn"

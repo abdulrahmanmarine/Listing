@@ -3,7 +3,9 @@ package com.example.listing.Material.Loader;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +14,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.Fade;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +30,15 @@ import com.example.listing.FoundButtonClicked;
 import com.example.listing.LoadButtonClicked;
 
 import com.example.listing.Material.MaterialAdapter;
+import com.example.listing.NoteButtonClicked;
 import com.example.listing.PrcButtonClicked;
 import com.example.listing.R;
 import com.example.listing.UnloadButtonClicked;
+import com.example.listing.databinding.FragmentAddBinding;
 import com.example.listing.models.LoadAction;
 import com.example.listing.models.Material;
 import com.example.listing.models.Plan;
+import com.example.listing.notes.RedesignedNotesFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +66,7 @@ public class LoaderFragment extends Fragment  {
     private MaterialAdapter materialAdapter;
     private static Context contexts;
     private static LoaderFragment fragment = null;
+    private static RedesignedNotesFragment notesFragment= null;
     private Boolean isLoad = true;
     ImageButton btnCapture;
     PlansDataModel model;
@@ -171,6 +178,8 @@ public class LoaderFragment extends Fragment  {
         dest_tv.setText(mParam4);
 
 
+
+
         LoadButtonClicked loadListener = new LoadButtonClicked() {
             @Override
             public void loadButtonClick(int pos) {
@@ -182,6 +191,8 @@ public class LoaderFragment extends Fragment  {
                 Plan plan= model.plan.getValue();
                 plan.setPlanToItems(list);
                 model.plan.setValue(plan);
+
+
             }
         };
 
@@ -214,6 +225,8 @@ public class LoaderFragment extends Fragment  {
             }
         };
 
+
+
   FoundButtonClicked foundListener = new FoundButtonClicked() {
       @Override
       public void foundButtonClicked(int pos) {
@@ -226,6 +239,20 @@ public class LoaderFragment extends Fragment  {
           plan.setPlanToItems(list);
           model.plan.setValue(plan);
 
+      }
+  };
+
+  NoteButtonClicked noteListener = new NoteButtonClicked() {
+      @Override
+      public void noteButtonClicked(int pos) {
+          AppCompatActivity activity = (AppCompatActivity) getView().getContext();
+          FragmentManager fragm = getActivity().getSupportFragmentManager();
+          int selectedPosition = pos;
+          materialAdapter.notifyDataSetChanged();
+          notesFragment = new RedesignedNotesFragment(" ", model.MatrialsList.getValue().get(pos).getZuphrLpid(),
+                                            model.Plans.getValue().get(pos).getZuphrLpid(), "0", "0");
+
+          notesFragment.show(fragm, "Note");
       }
   };
 
@@ -243,7 +270,7 @@ public class LoaderFragment extends Fragment  {
 
 
 
-        materialAdapter = new MaterialAdapter(mParam1, loadListener, unloadListener, prcListener, foundListener);
+        materialAdapter = new MaterialAdapter(mParam1, loadListener, unloadListener, prcListener, foundListener, noteListener);
         rv.setAdapter(materialAdapter);
 
 

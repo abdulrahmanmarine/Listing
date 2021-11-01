@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listing.FoundButtonClicked;
 import com.example.listing.LoadButtonClicked;
+import com.example.listing.NoteButtonClicked;
 import com.example.listing.PrcButtonClicked;
 import com.example.listing.R;
 import com.example.listing.UnloadButtonClicked;
@@ -30,17 +32,19 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.Materi
    UnloadButtonClicked unloadListener;
    PrcButtonClicked prcListener;
    FoundButtonClicked foundListener;
+   NoteButtonClicked noteListener;
+   AppCompatActivity act;
    public static List<Material> materialList;
     Context contexts;
 
     public MaterialAdapter(ArrayList<Material> materialList, LoadButtonClicked loadListener, UnloadButtonClicked unloadListener, PrcButtonClicked prcListener
-     , FoundButtonClicked foundListener) {
+     , FoundButtonClicked foundListener, NoteButtonClicked noteListener) {
         this.materialList = materialList;
         this.loadListener = loadListener;
         this.unloadListener  = unloadListener;
         this.prcListener = prcListener;
         this.foundListener = foundListener;
-
+        this.noteListener = noteListener;
     }
 
     @NonNull
@@ -61,6 +65,8 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.Materi
         holder.itemRowBinding.setUnloadClickListen(unloadListener);
         holder.itemRowBinding.setPrcClickListen(prcListener);
         holder.itemRowBinding.setFoundClickListen(foundListener);
+        holder.itemRowBinding.setNoteClickListen(noteListener);
+
     }
 
 

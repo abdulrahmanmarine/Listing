@@ -103,6 +103,7 @@ class RedesignedNotesFragment(noteType: String, id1: String,id2: String?, id3: S
         lManager = requireContext().getSystemService(LOCATION_SERVICE) as LocationManager
         outputDir = "${requireActivity().filesDir?.path}/ggg.3gp"
         getNotes()
+        getNotesOffline()
         subSAPNote.ZuphrFpName = "DummyUser"
         subSAPNote.ZuphrFpDate = dummyDate
         subSAPNote.ZuphrFpTime = dummyTime
@@ -122,7 +123,14 @@ class RedesignedNotesFragment(noteType: String, id1: String,id2: String?, id3: S
         }
 
         saveAudioNote.setOnClickListener(this::saveAudioClickListener)
-        saveTextNote.setOnClickListener(this::saveTextClickListner)
+        //FOR ONLINE
+        /*
+                saveTextNote.setOnClickListener(this::saveTextClickListner)
+
+         */
+
+        //FOR OFFLINE
+        saveTextNote.setOnClickListener(this::saveTextClickListnerOffline)
         noteRV.scrollToPosition(noteAdapter.itemCount-1)
 
 
@@ -340,7 +348,7 @@ class RedesignedNotesFragment(noteType: String, id1: String,id2: String?, id3: S
 
 
     fun sendNote(){
-if(RestApiClient.getInstance()!=null)
+        if(RestApiClient.getInstance()!=null)
         RestApiClient.getInstance().retrofitInterface.submitNote(subSAPNote, Token)
                 .enqueue(object : Callback,
                         retrofit2.Callback<ResponseBody> {
@@ -376,14 +384,51 @@ if(RestApiClient.getInstance()!=null)
     }
     @RequiresApi(Build.VERSION_CODES.M)
     fun saveTextClickListner(v: View){
-            var textBoxValue = noteTextView.text.toString()
-            if (textBoxValue.isNotEmpty() && textBoxValue.trim()!= "") {
+        var textBoxValue = noteTextView.text.toString()
+        if (textBoxValue.isNotEmpty() && textBoxValue.trim()!= "") {
                 subSAPNote.ZuphrContent = noteTextView.text.toString()
                 subSAPNote.ZuphrContentType = "TXT"
+                notes.add(
+                    Notes(
+                        subSAPNote!!.ZuphrFpName!!.lowercase(),
+                        subSAPNote.ZuphrContent!!,
+                        subSAPNote!!.ZuphrContentType,
+                        SharefPref.parseTime(subSAPNote.ZuphrFpTime!!)!!,
+                        SharefPref.parseDate(subSAPNote.ZuphrFpDate!!)!!
+                    )
+                )
+                noteAdapter.notifyDataSetChanged()
+                noteRV.scrollToPosition(noteAdapter.itemCount - 1)
                 noteTextView.text.clear()
                 sendNote()
 
             }
+    }
+
+    fun saveTextClickListnerOffline(v: View){
+        subSAPNote.ZuphrContent = noteTextView.text.toString()
+        subSAPNote.ZuphrContentType = "TXT"
+        notes.add(
+            Notes(
+                subSAPNote!!.ZuphrFpName!!.lowercase(),
+                subSAPNote.ZuphrContent!!,
+                subSAPNote!!.ZuphrContentType,
+                SharefPref.parseTime(subSAPNote.ZuphrFpTime!!)!!,
+                SharefPref.parseDate(subSAPNote.ZuphrFpDate!!)!!
+            )
+        )
+        noteAdapter.notifyDataSetChanged()
+        noteRV.scrollToPosition(noteAdapter.itemCount - 1)
+        noteTextView.text.clear()
+        noteAdapter.historyList = notes
+
+    }
+
+    fun getNotesOffline(){
+        var SAPnotesList : ArrayList<SAPNote>?
+        notes.forEach {
+            Log.i("looping", it.noteText + " ")
+        }
     }
 
     fun getNotes(){

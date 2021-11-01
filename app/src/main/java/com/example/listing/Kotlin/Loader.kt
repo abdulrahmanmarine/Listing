@@ -85,13 +85,14 @@ class Loader : AppCompatActivity(), PlanClickListener {
         })
 
         model.MatrialsList.observe(this, { MaterialList: List<Material> ->
-
+            val planList = model.Plans.value!!
+            val plan = planList[pos]
             val textfragment = LoaderFragment.newInstance(
                 MaterialList as ArrayList<Material>?,
-//            plan.req_name,
-//            plan.vessel_num,
-//            plan.destination
-                "", "", ""
+                plan.zuphrLpname,
+                plan.zuphrVesselName,
+                plan.zuphrCaptain
+
             )
 
             var fm = supportFragmentManager
