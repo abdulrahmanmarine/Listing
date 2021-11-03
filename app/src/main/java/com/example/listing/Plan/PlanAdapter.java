@@ -29,11 +29,13 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
     private List<Plan> PlanList;
     private Context context;
     PlanClickListener onCallBack;
+    Boolean load;
 
-    public PlanAdapter(PlanClickListener listener, ArrayList<Plan> mParam1, Context context) {
+    public PlanAdapter(PlanClickListener listener, ArrayList<Plan> mParam1, Context context,Boolean load) {
         this.PlanList = mParam1;
         this.onCallBack=listener;
         this.context = context;
+        this.load=load;
     }
 
     @Override
@@ -89,10 +91,11 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
             itemRowBinding.setPos(getAdapterPosition());
             itemRowBinding.executePendingBindings();
 
-            boolean load;
-            load = false;
+
             if(load){
                 for(int i = 0; i< plan.getPlanToItems().size() ; i++){
+
+                    Log.i("Status",plan.getPlanToItems().get(i).getZuphrStatus());
                     if(!plan.getPlanToItems().get(i).getZuphrLoada().getStatus().equalsIgnoreCase("LOADED")){
                         plan.setZuphrStatus("Incomplete");
 
@@ -105,7 +108,8 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
                         statusText.setText(plan.getZuphrStatus());
                         statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
                     }
-                }}
+                }
+            }
             else{
                 for(int i = 0; i< plan.getPlanToItems().size(); i++){
                     Material material = plan.getPlanToItems().get(i);

@@ -25,11 +25,14 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.listing.*
 import com.example.listing.DataViewModel.PlansDataModel
 import com.example.listing.Utils.RestApiClient
+import com.example.listing.models.Material
+import com.example.listing.models.Plan
 import com.example.listing.models.SAPNote
 import com.fasterxml.jackson.core.Base64Variants
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -44,19 +47,25 @@ import javax.security.auth.callback.Callback
 @RequiresApi(Build.VERSION_CODES.M)
 
 
-class RedesignedNotesFragment(noteType: String, id1: String,id2: String?, id3: String?,noteMjahr: String?) : DialogFragment() {
+class RedesignedNotesFragment(
+    noteType: String, material: Material,
+    notes: java.util.ArrayList<Notes>, id2: String?,
+    id3: String?,
+    noteMjahr: String?
+) : DialogFragment() {
     private lateinit var mViewModel: PlansDataModel
     private lateinit var Token: String
-    var notes = ArrayList<Notes>()
+    var notes = notes
     var recording: Boolean = false
     var recorder: MediaRecorder? = null
     var player: MediaPlayer? = null
     private var vmJob = Job()
     private var uiScopre = CoroutineScope(Dispatchers.IO + vmJob)
     var noteType = noteType
-    var id1 = id1
+    var id1 = material.zuphrLpid
     var id2 = id2
     var id3 = id3
+    var material=material;
     var noteMjahr = noteMjahr
     lateinit var saveTextNote: ImageButton
     lateinit var saveAudioNote: ImageButton
@@ -97,12 +106,14 @@ class RedesignedNotesFragment(noteType: String, id1: String,id2: String?, id3: S
         cameraBtn = infview.findViewById(R.id.camera_button)
         noteTextView = infview.findViewById(R.id.note_text)
         noteRV = infview.findViewById(R.id.notes_list)
-        noteAdapter = NotesAdapter2(requireActivity().supportFragmentManager, requireContext())
+        noteAdapter = NotesAdapter2(requireActivity().supportFragmentManager, requireContext(),notes)
         noteRV.adapter = noteAdapter
-        permission()
+        Manifest.permission()
+        mViewModel=ViewModelProviders.of(requireActivity()).get(PlansDataModel::class.java)
         lManager = requireContext().getSystemService(LOCATION_SERVICE) as LocationManager
         outputDir = "${requireActivity().filesDir?.path}/ggg.3gp"
-        getNotes()
+//        getNotes()
+
         getNotesOffline()
         subSAPNote.ZuphrFpName = "DummyUser"
         subSAPNote.ZuphrFpDate = dummyDate
@@ -422,10 +433,35 @@ class RedesignedNotesFragment(noteType: String, id1: String,id2: String?, id3: S
         noteTextView.text.clear()
         noteAdapter.historyList = notes
 
+
+        val materials: MutableList<Material> = mViewModel.plan.getValue()!!.getPlanToItems()
+        val plan: Plan? = mViewModel.plan.getValue()
+        for (i in materials.indices) {
+            if ("" === materials[i].zuphrShortxt) {
+                material.setNotes(notes)
+                materials[i] = material
+                plan!!.planToItems = materials
+                mViewModel.plan.setValue(plan)
+            }
+            break
+        }
+
+        val plans: MutableList<Plan> = mViewModel.Plans.getValue()!!
+        for (i in mViewModel.Plans.getValue()!!.indices) {
+            if (mViewModel.plan.getValue()!!.getZuphrLpid() == mViewModel.Plans.getValue()!!.get(i)
+                    .getZuphrLpid()
+            ) {
+                plans[i] = mViewModel.plan.getValue()!!
+                mViewModel.Plans.setValue(plans)
+            }
+        }
+
+
     }
 
     fun getNotesOffline(){
         var SAPnotesList : ArrayList<SAPNote>?
+
         notes.forEach {
             Log.i("looping", it.noteText + " ")
         }

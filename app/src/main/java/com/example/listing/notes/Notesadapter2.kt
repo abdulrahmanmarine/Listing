@@ -4,7 +4,6 @@ package com.example.listing.notes
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.media.MediaPlayer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.listing.Notes
+
 import com.example.listing.R
 import com.example.listing.databinding.NoteCellBinding
 import com.fasterxml.jackson.core.Base64Variants
@@ -22,7 +21,7 @@ import java.io.IOException
 import java.util.*
 
 
-class NotesAdapter2(val supFM: FragmentManager, val context: Context) :
+class NotesAdapter2(val supFM: FragmentManager, val context: Context, notes: ArrayList<Notes>,) :
     RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
 
     companion object {
@@ -32,9 +31,9 @@ class NotesAdapter2(val supFM: FragmentManager, val context: Context) :
     }
 
 
-    var historyList = mutableListOf<Notes>()
+  //  var historyList = mutableListOf<Notes>()
 
-
+    var historyList=notes
 
     override fun getItemViewType(position: Int): Int {
         return if (historyList[position].type == "AUD") {

@@ -251,6 +251,15 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
                 model.plan.setValue(plan);
 
 
+                List<Plan> plans=model.Plans.getValue();
+                for(int i=0;i<model.Plans.getValue().size();i++){
+                    if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
+                        plans.set(i,model.plan.getValue());
+                        model.Plans.setValue(plans);
+                    }
+                }
+
+
                 dismiss();
             }
         });

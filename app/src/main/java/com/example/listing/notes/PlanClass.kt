@@ -1,4 +1,4 @@
-package com.example.listing
+package com.example.listing.notes
 import androidx.core.content.res.FontResourcesParserCompat
 import com.fasterxml.jackson.annotation.*
 

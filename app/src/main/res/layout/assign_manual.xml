@@ -13,7 +13,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/tenGray"
         android:orientation="vertical">
 
@@ -72,7 +72,7 @@
             <FrameLayout
                 android:id="@+id/loader_frame"
                 android:layout_width="237dp"
-                android:layout_height="209dp"
+                android:layout_height="170dp"
                 android:layout_marginEnd="50dp"
                 android:background="@drawable/rounded_shape"
                 android:elevation="30dp">
@@ -85,24 +85,12 @@
                         android:id="@+id/vehicle_list"
                         android:layout_width="212dp"
                         android:layout_height="114dp"
-                        android:layout_marginBottom="8dp"
                         android:background="@drawable/inner_rounded_shape"
                         android:fadeScrollbars="false"
                         android:scrollbars="vertical"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-                    <EditText
-                        android:id="@+id/search_vehicle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="search"
-                        android:inputType="textPersonName"
-                        app:layout_constraintBottom_toTopOf="@+id/vehicle_list"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/vehi_tv" />
 
                     <TextView
                         android:id="@+id/vehi_tv"
@@ -111,8 +99,8 @@
                         android:text="Vehicles"
                         android:textColor="@color/colorPrimaryDarkBlue"
                         android:textSize="26dp"
-                        app:layout_constraintBottom_toTopOf="@+id/search_vehicle"
-                        app:layout_constraintStart_toStartOf="@+id/search_vehicle" />
+                        tools:layout_editor_absoluteX="12dp"
+                        tools:layout_editor_absoluteY="3dp" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </FrameLayout>
@@ -120,7 +108,7 @@
             <FrameLayout
                 android:id="@+id/vehicle_frame"
                 android:layout_width="237dp"
-                android:layout_height="212dp"
+                android:layout_height="170dp"
                 android:background="@drawable/rounded_shape"
                 android:elevation="30dp">
 
@@ -129,32 +117,20 @@
                     android:layout_height="match_parent">
 
 
-                    <EditText
-                        android:id="@+id/search_loader"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="search"
-                        android:inputType="textPersonName"
-                        app:layout_constraintBottom_toTopOf="@+id/loader_list"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/loader_list"
                         android:layout_width="212dp"
                         android:layout_height="115dp"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="8dp"
                         android:background="@drawable/inner_rounded_shape"
                         android:fadeScrollbars="false"
                         android:scrollbarFadeDuration="0"
                         android:scrollbarStyle="insideInset"
                         android:scrollbars="vertical"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.476"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/loader_tv" />
 
                     <TextView
                         android:id="@+id/loader_tv"
@@ -163,8 +139,8 @@
                         android:text="Loaders"
                         android:textColor="@color/colorPrimaryDarkBlue"
                         android:textSize="26dp"
-                        app:layout_constraintBottom_toTopOf="@+id/search_loader"
-                        app:layout_constraintStart_toStartOf="@+id/loader_list" />
+                        app:layout_constraintStart_toStartOf="@+id/loader_list"
+                        tools:layout_editor_absoluteY="5dp" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </FrameLayout>
@@ -176,7 +152,6 @@
             android:layout_width="237dp"
             android:layout_height="45dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
             android:backgroundTint="@color/blue2"
             android:text="Add" />
 
@@ -205,7 +180,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/vehicle_chosen_list"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="120dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/inner_rounded_shape"

@@ -31,6 +31,7 @@ import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.Kotlin.Dispatcher;
 import com.example.listing.R;
 import com.example.listing.Plan.PlanFragment;
+import com.example.listing.Utils.DataClass;
 import com.example.listing.models.Driver;
 import com.example.listing.models.Material;
 
@@ -191,6 +192,7 @@ public class DispatcherFragment extends Fragment {
             driverAdapter.notifyDataSetChanged();
             rv.scheduleLayoutAnimation();
             rv.setAdapter(driverAdapter);
+
 
         });
 

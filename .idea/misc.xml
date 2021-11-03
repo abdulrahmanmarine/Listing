@@ -3,14 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../Library/Android/sdk/platforms/android-30/data/res/layout/simple_list_item_1.xml" value="0.3078125" />
+        <entry key="../../Library/Android/sdk/platforms/android-30/data/res/layout/simple_spinner_dropdown_item.xml" value="0.34375" />
         <entry key="..\:/Users/MobTeam/AndroidStudioProjects/Listing/app/src/main/res/layout/plan_card.xml" value="0.1431159420289855" />
         <entry key="app/src/main/res/drawable/dialogborder.xml" value="0.21927083333333333" />
         <entry key="app/src/main/res/layout/activity_loader.xml" value="0.18958333333333333" />
+        <entry key="app/src/main/res/layout/assign_card.xml" value="0.34375" />
         <entry key="app/src/main/res/layout/assign_configured_layout.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/assign_manual.xml" value="0.203125" />
+        <entry key="app/src/main/res/layout/fragmentlist.xml" value="0.33559782608695654" />
         <entry key="app/src/main/res/layout/load_item_card.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/manual_assigment_card.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/manual_choosen_driver_list.xml" value="0.203125" />
+        <entry key="app/src/main/res/layout/spinner_item.xml" value="0.3078125" />
+        <entry key="app/src/main/res/xml/spinner_item_custom.xml" value="0.3078125" />
       </map>
     </option>
   </component>

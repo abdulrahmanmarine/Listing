@@ -31,6 +31,7 @@ class Loader : AppCompatActivity(), PlanClickListener {
         ).get(
             PlansDataModel::class.java
         )
+        model.UserRule.value=true
         model.getplans(application)
         Flag.initializer(true, true);
         Flag.getInstance().planFlag = true;

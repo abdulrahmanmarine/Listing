@@ -189,8 +189,16 @@ public class LoaderFragment extends Fragment  {
                 loadAction.setStatus("Loaded");
                 list.set(pos,Material);
                 Plan plan= model.plan.getValue();
+
                 plan.setPlanToItems(list);
                 model.plan.setValue(plan);
+                List<Plan> plans=model.Plans.getValue();
+                for(int i=0;i<model.Plans.getValue().size();i++){
+                    if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
+                        plans.set(i,model.plan.getValue());
+                      model.Plans.setValue(plans);
+                    }
+                }
 
 
             }
@@ -207,6 +215,14 @@ public class LoaderFragment extends Fragment  {
                 Plan plan= model.plan.getValue();
                 plan.setPlanToItems(list);
                 model.plan.setValue(plan);
+
+                List<Plan> plans=model.Plans.getValue();
+                for(int i=0;i<model.Plans.getValue().size();i++){
+                    if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
+                        plans.set(i,model.plan.getValue());
+                        model.Plans.setValue(plans);
+                    }
+                }
             }
         };
 
@@ -221,6 +237,14 @@ public class LoaderFragment extends Fragment  {
                 Plan plan= model.plan.getValue();
                 plan.setPlanToItems(list);
                 model.plan.setValue(plan);
+
+                List<Plan> plans=model.Plans.getValue();
+                for(int i=0;i<model.Plans.getValue().size();i++){
+                    if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
+                        plans.set(i,model.plan.getValue());
+                        model.Plans.setValue(plans);
+                    }
+                }
 
             }
         };
@@ -239,6 +263,15 @@ public class LoaderFragment extends Fragment  {
           plan.setPlanToItems(list);
           model.plan.setValue(plan);
 
+
+          List<Plan> plans=model.Plans.getValue();
+          for(int i=0;i<model.Plans.getValue().size();i++){
+              if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
+                  plans.set(i,model.plan.getValue());
+                  model.Plans.setValue(plans);
+              }
+          }
+
       }
   };
 
@@ -249,10 +282,15 @@ public class LoaderFragment extends Fragment  {
           FragmentManager fragm = getActivity().getSupportFragmentManager();
           int selectedPosition = pos;
           materialAdapter.notifyDataSetChanged();
-          notesFragment = new RedesignedNotesFragment(" ", model.MatrialsList.getValue().get(pos).getZuphrLpid(),
-                                            model.Plans.getValue().get(pos).getZuphrLpid(), "0", "0");
 
+          Log.i("notes",model.MatrialsList.getValue().get(pos).getNotes().size()+"");
+          notesFragment = new RedesignedNotesFragment(" ", model.MatrialsList.getValue().get(pos),
+                  model.MatrialsList.getValue().get(pos).getNotes(),
+                                            model.Plans.getValue().get(pos).getZuphrLpid(), "0", "0");
           notesFragment.show(fragm, "Note");
+
+
+
       }
   };
 
@@ -275,9 +313,9 @@ public class LoaderFragment extends Fragment  {
 
 
             final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.layout_animation);
-            rv.setLayoutAnimation(controller);
+           // rv.setLayoutAnimation(controller);
             materialAdapter.notifyDataSetChanged();
-            rv.scheduleLayoutAnimation();
+           // rv.scheduleLayoutAnimation();
 
             GridLayoutManager grm = new GridLayoutManager(getActivity(), 2);
             grm.offsetChildrenHorizontal(1);
@@ -285,12 +323,12 @@ public class LoaderFragment extends Fragment  {
 
             ViewGroup vg = v.findViewById(R.id.cont);
 
-
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                Fade fade = new Fade();
-                TransitionManager.beginDelayedTransition(vg, fade);
-
-        }
+//
+//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+//                Fade fade = new Fade();
+//                TransitionManager.beginDelayedTransition(vg, fade);
+//
+//        }
 
         //animation
 //        final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.layout_animation);

@@ -22,8 +22,7 @@
         android:hint="search"
         android:inputType="text"
         android:maxHeight="50dp"
-        android:maxLines="1"
-        />
+        android:maxLines="1" />
 
 
     <com.example.listing.CustomGridRecyclerView
@@ -31,7 +30,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp" />
+        android:paddingBottom="10dp">
+
+    </com.example.listing.CustomGridRecyclerView>
+
+
+    <LinearLayout
+        android:id="@+id/flagwidget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="13dp"
+            android:text="Mood" />
+
+        <Spinner
+            android:id="@+id/flagbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            />
+
+    </LinearLayout>
 
 
 </LinearLayout>

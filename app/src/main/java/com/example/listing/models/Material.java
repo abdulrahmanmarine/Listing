@@ -19,6 +19,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,6 +41,10 @@ public class Material implements Serializable {
     public  String PlanOfflineID;
 
 
+
+    @Ignore
+    @JsonIgnore
+    public ArrayList<com.example.listing.notes.Notes> notes=new ArrayList<>();
 
     @JsonProperty("ZuphrActquan")
     @ColumnInfo(name="ZuphrActquan")
@@ -880,9 +885,12 @@ public class Material implements Serializable {
         ZuphrFpName = zuphrFpName;
     }
 
+    public ArrayList<com.example.listing.notes.Notes> getNotes() {
+        return notes;
+    }
 
-
-
-
+    public void setNotes(ArrayList<com.example.listing.notes.Notes> notes) {
+        this.notes = notes;
+    }
 }
 

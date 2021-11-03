@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.listing.R
+import com.example.listing.Utils.DataClass
 
 
 class Home : AppCompatActivity() {
@@ -12,7 +13,7 @@ class Home : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         this.getSupportActionBar()!!.hide()
-
+        DataClass.initializer()
         var loader : ConstraintLayout = findViewById(R.id.loader)
         var dispatcher : ConstraintLayout = findViewById(R.id.dispatcher)
 

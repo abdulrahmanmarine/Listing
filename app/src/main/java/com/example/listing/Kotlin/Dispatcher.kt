@@ -14,6 +14,7 @@ import com.example.listing.Material.Dispatcher.DispatcherFragment
 import com.example.listing.Plan.PlanFragment
 import com.example.listing.PlanClickListener
 import com.example.listing.R
+import com.example.listing.Utils.DataClass
 import com.example.listing.models.Material
 import com.example.listing.models.Plan
 import java.util.*
@@ -22,7 +23,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
     var dialog: DialogFragment? = null
     var dialogManual: DialogFragment? = null
-    var Flag: Boolean = false
+    var Flag: Boolean = true
     var materialpos = 0
     var po = 0
     lateinit var model :PlansDataModel
@@ -37,6 +38,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
          ).get(
             PlansDataModel::class.java
         )
+        model.UserRule.value=false
         model.getplans(application)
         var ctx = applicationContext
 
@@ -131,6 +133,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         (dialog as Configured_AssignMultiDialogFragment?)!!.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
         (dialogManual as Manual_AssignMultiDialogFragment?)!!.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
 
+        Flag=DataClass.getInstance().flag_dispatch
         if(Flag){
            (dialog as Configured_AssignMultiDialogFragment?)!!.show(fra, "assign")
         }else{

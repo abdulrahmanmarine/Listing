@@ -1,7 +1,10 @@
 package com.example.listing.Manual_Assigment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +50,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
     DriverSelected driverSelected;
     RecyclerView loaderList;
     List<Vehicle> chosenVehicles;
-
+    ImageView imageView;
     Vehicle chosenVehicle;
 
     private LoaderAdapter loaderAdapter;
@@ -129,6 +133,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         EditText searchVehicle = view.findViewById(R.id.search_vehicle);
         //Text view for material name
         TextView materialName = view.findViewById(R.id.assign_image_tv);
+        imageView=view.findViewById(R.id.assign_image);
 
 
 
@@ -137,6 +142,14 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
         materialParam = (Material) getArguments().getSerializable(MATERIAL_2);
 
+
+        Bitmap decodedByte = null;
+        if(materialParam.getZuphrContents().length()> 100) {
+            String img =materialParam.getZuphrContents().replace("data:image/jpeg;base64,","");
+            byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
+            decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            imageView.setImageBitmap(decodedByte);
+        }
 
         chosenVehicles  = (ArrayList<Vehicle>) materialParam.getVehicles();
 
@@ -196,6 +209,13 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
             Plan plan= model.plan.getValue();
             plan.setPlanToItems(list);
             model.plan.setValue(plan);
+            List<Plan> plans=model.Plans.getValue();
+            for(int i=0;i<model.Plans.getValue().size();i++){
+                if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
+                    plans.set(i,model.plan.getValue());
+                    model.Plans.setValue(plans);
+                }
+            }
             dismiss();
         });
 

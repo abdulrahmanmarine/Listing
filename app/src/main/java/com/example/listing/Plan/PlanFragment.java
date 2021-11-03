@@ -16,12 +16,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import com.example.listing.DataViewModel.Flag;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.PlanClickListener;
 import com.example.listing.R;
+import com.example.listing.Utils.DataClass;
 import com.example.listing.models.Plan;
 
 import java.util.ArrayList;
@@ -51,7 +57,9 @@ public class PlanFragment extends Fragment {
     PlanAdapter myadapter;
     RecyclerView  rv;
     PlansDataModel model;
+    Spinner button;
     boolean first = true;
+    LinearLayout flagwidget;
 
 
     @Override
@@ -99,6 +107,7 @@ public class PlanFragment extends Fragment {
          }
 
         model =new ViewModelProvider(getActivity()).get(PlansDataModel.class);
+
     }
 
     @Override
@@ -110,14 +119,44 @@ public class PlanFragment extends Fragment {
         rv = v.findViewById(R.id.recview);
         rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
 
+        flagwidget=v.findViewById(R.id.flagwidget);
+        button=v.findViewById(R.id.flagbutton);
         model.Plans.observe(getViewLifecycleOwner(), list -> {
             if(list!=null)
             {
-                myadapter = new PlanAdapter(listener, (ArrayList<Plan>) list, getContext());
+                if(model.UserRule.getValue()){
+                    flagwidget.setVisibility(View.GONE);
+                }else{
+                    flagwidget.setVisibility(View.VISIBLE);
+                }
+
+                myadapter = new PlanAdapter(listener, (ArrayList<Plan>) list, getContext(),model.UserRule.getValue());
                 rv.setAdapter(myadapter);
 
-            //    if (Flag.getInstance().getPlanFlag()){
-                    runAnimationAgain();
+                List<String> type =new ArrayList<>();
+                type.add("Manual");
+                type.add("Configured");
+
+                ArrayAdapter<String> adapter=new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,type);
+                button.setAdapter(adapter);
+                button.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                      if(parent.getItemAtPosition(position).toString().equalsIgnoreCase("Manual"))
+                        DataClass.getInstance().setFlag_dispatch(false);
+                      else
+                          DataClass.getInstance().setFlag_dispatch(true);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+
+//                if (Flag.getInstance().getPlanFlag()){
+//                    runAnimationAgain();
 //                    Flag.getInstance().setPlanFlag(false);
 //
 //                }
