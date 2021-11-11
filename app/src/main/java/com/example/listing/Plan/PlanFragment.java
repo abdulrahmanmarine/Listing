@@ -28,6 +28,7 @@ import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.PlanClickListener;
 import com.example.listing.R;
 import com.example.listing.Utils.DataClass;
+import com.example.listing.models.Material;
 import com.example.listing.models.Plan;
 
 import java.util.ArrayList;
@@ -176,7 +177,6 @@ public class PlanFragment extends Fragment {
 
         EditText editText = (EditText) v.findViewById(R.id.searching);
 
-        editText.setEnabled(false);
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -202,17 +202,12 @@ public class PlanFragment extends Fragment {
     private void filter(String text){
         ArrayList<Plan> filteredList = new ArrayList<>();
 
-
-        for(Plan req : mParam1){
-
-
-//            if(req.getDestination().toLowerCase().contains(text.toLowerCase())){
-//                filteredList.add(req);
-//            }
-
-
+        for(Plan plan : mParam1){
+            if(plan.getZuphrLpname().toLowerCase().contains(text)){
+                filteredList.add(plan);
+            }
         }
-      //  myadapter.filterList(filteredList);
+        myadapter.filterList(filteredList);
     }
 
     public void runAnimationAgain() {

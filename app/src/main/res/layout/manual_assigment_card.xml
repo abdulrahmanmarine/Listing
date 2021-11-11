@@ -17,7 +17,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/green_border2">
+        android:background="@drawable/green_border2"
+        android:layout_margin="5dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -25,15 +26,17 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:weightSum="5">
+            android:weightSum="5"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/chosen_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 android:text="@{item.vehType}"
                 android:textColor="@color/green"
+                android:gravity="center"
                 android:textSize="16dp" />
 
             <View
@@ -54,7 +57,10 @@
                 android:layout_marginEnd="5dp"
                 android:layout_weight="0.1"
                 android:text="Loaders:"
-                android:textColor="@color/SA_Dark_Gray" />
+                android:textColor="@color/SA_Dark_Gray"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -67,7 +73,9 @@
                 android:background="@drawable/loader_list_border"
                 android:fadeScrollbars="false"
                 android:scrollbarAlwaysDrawHorizontalTrack="true"
-                android:scrollbars="horizontal" />
+                android:scrollbars="horizontal"
+                android:layout_gravity="center_vertical"
+                />
         </LinearLayout>
 
 

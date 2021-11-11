@@ -47,7 +47,6 @@ public class Manual_Assignment_Adapter extends RecyclerView.Adapter<Manual_Assig
             itemRowBinding.setItem(vehicle);
             itemRowBinding.setDeleteListener(deleteListener);
             itemRowBinding.executePendingBindings();
-
         }
     }
 
@@ -65,7 +64,7 @@ public class Manual_Assignment_Adapter extends RecyclerView.Adapter<Manual_Assig
     public void onBindViewHolder(@NonNull Manual_Assignment_Adapter.ViewHolder holder, int position) {
         Vehicle vehicleitem=vehicle.get(position);
        holder.bind(vehicleitem);
-        Log.i("REFlisit",vehicleitem.getLoaders().size()+"");
+        Log.i("REFlisit",vehicleitem.getVehType()+"");
         if(vehicleitem.getLoaders().size()>0){
 
           ChosenDriverAdapter recyclerviewAdapter = new ChosenDriverAdapter(vehicleitem.getLoaders());

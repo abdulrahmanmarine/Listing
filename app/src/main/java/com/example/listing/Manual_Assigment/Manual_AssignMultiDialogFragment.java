@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -60,6 +62,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
     private Manual_Assignment_Adapter chosenVehicleAdapter;
 
     private ArrayList<Driver> chosenDrivers = new ArrayList<>();
+    Driver chosenDriver;
 
 
 
@@ -71,12 +74,13 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         if (getDialog() == null)
             return;
 
-        int dialogWidth = 1600; // specify a value here
-        int dialogHeight = 1600; // specify a value here
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
 
 
-        getDialog().getWindow().setLayout(dialogWidth, dialogHeight);
-
+        getDialog().getWindow().setLayout((5 * width)/6, (5 * height)/5);
         // ... other stuff you want to do in your onStart() method
     }
 
@@ -132,8 +136,8 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         //search edir text for vehicle
         EditText searchVehicle = view.findViewById(R.id.search_vehicle);
         //Text view for material name
-        TextView materialName = view.findViewById(R.id.assign_image_tv);
-        imageView=view.findViewById(R.id.assign_image);
+        TextView materialName = view.findViewById(R.id.material_tv);
+        imageView=view.findViewById(R.id.material_image);
 
 
 
@@ -144,6 +148,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
 
         Bitmap decodedByte = null;
+        materialName.setText(materialParam.getZuphrShortxt());
         if(materialParam.getZuphrContents().length()> 100) {
             String img =materialParam.getZuphrContents().replace("data:image/jpeg;base64,","");
             byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
@@ -170,24 +175,30 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         Choosenpair.setAdapter(chosenVehicleAdapter);
 
         addBut.setOnClickListener(v -> {
+            if(chosenVehicles.size()>0){
+                Log.i("Drivers list", " " + chosenVehicles.get(0).getLoaders().get(0).getZuphrdrvrName());
+            }
+           chosenVehicle.setLoaders(chosenDrivers);
 
-            chosenVehicle.setLoaders(chosenDrivers);
             if(chosenVehicle.getLoaders().size()>0){
                 chosenVehicles.add(chosenVehicle);
                  ArrayList<Vehicle> vehiclesList = (ArrayList<Vehicle>) model.MastervehiclesList.getValue();
 
                 for(int i=0 ;i<vehiclesList.size();i++){
-                    if(chosenVehicle.equals(vehiclesList.get(0))){
+                    if(chosenVehicle.equals(vehiclesList.get(i))){
                         vehiclesList.remove(i);
                         model.MastervehiclesList.setValue(vehiclesList);
 
                         loaderAdapter = new LoaderAdapter((ArrayList<Driver>) model.MasterdriversList.getValue(),this::Driverselected);
+
                         loaderList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                         loaderList.setAdapter(loaderAdapter);
 
                         break;
                     }
                 }
+
+
 
                 chosenVehicleAdapter.notifyDataSetChanged();
             }else {
@@ -243,7 +254,8 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
     @Override
     public void Driverselected(Driver driver) {
         if(chosenVehicle!=null){
-            chosenDrivers.add(driver);
+
+
             Toast.makeText(getContext(),"Loader:"+driver.getZuphrdrvrName()+" has been assigned to "+
                     chosenVehicle.getVehType(),Toast.LENGTH_SHORT).show();
         }

@@ -57,6 +57,7 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
     //material object
     private static final String MATERIAL_2 = "materialParam";
     private ArrayList<Driver> driversList = new ArrayList<>();
+    private ArrayList<Driver> driverList2 = new ArrayList<>();
     private ArrayList<Vehicle> vehiclesList = new ArrayList<>();
     private Material materialParam;
     PlansDataModel model;
@@ -173,10 +174,15 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
         driversList.add(driver5);
         driversList.add(driver6);
 
+        driverList2.add(driver2);
+        driverList2.add(driver1);
+
+
+
         Vehicle vehicle1 = new Vehicle("3","Medium", "Truck", "456234", "1000",
                 "Red", "2012", "DDMMYYYY", "123456", driversList);
         Vehicle vehicle2 = new Vehicle("2","Medium", "Crane", "456234", "1000",
-                "Red", "2012", "DDMMYYYY", "123456", driversList);
+                "Red", "2012", "DDMMYYYY", "123456", driverList2);
         Vehicle vehicle3 = new Vehicle("2","Medium", "Two Wheel", "456234", "1000",
                 "Red", "2012", "DDMMYYYY", "123456", driversList);
         Vehicle vehicle4 = new Vehicle("2","Medium", "Four Wheel", "456234", "1000",

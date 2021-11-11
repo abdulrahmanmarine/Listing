@@ -16,6 +16,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.Fade;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.listing.AddButtonClicked;
@@ -117,21 +119,16 @@ public class DispatcherFragment extends Fragment {
         model =   new ViewModelProvider(getActivity()).get(PlansDataModel.class);
     }
 
-
-
     private void filter2(String text){
-//        ArrayList<Material> filteredList = new ArrayList<>();
-//
-//        for(Material mat : mParam1){
-//            if(mat.getZuphrShortxt().equalsIgnoreCase(text)){
-////                    getName().toLowerCase().contains(text.toLowerCase())){
-//                filteredList.add(mat);
-//            }
-//        }
-//        driverAdapter.filterList(filteredList);
+        ArrayList<Material> filteredList = new ArrayList<>();
+
+        for(Material mat : mParam1){
+            if(mat.getZuphrShortxt().toLowerCase().contains(text)){
+                filteredList.add(mat);
+            }
+        }
+        driverAdapter.filterList(filteredList);
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -174,6 +171,7 @@ public class DispatcherFragment extends Fragment {
 
         dest_tv = v.findViewById(R.id.dest_tv);
         dest_tv.setText(mParam4);
+
 
         model.MatrialsList.observe(getViewLifecycleOwner(),materialList->{
          String x = null;

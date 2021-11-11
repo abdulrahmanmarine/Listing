@@ -6,23 +6,19 @@
     android:orientation="vertical">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/fifteenGray"
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/searching"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="search"
+        android:layout_marginStart="10dp"
+        android:hint="   search"
         android:inputType="text"
-        android:maxHeight="50dp"
-        android:maxLines="1" />
+        android:gravity="center"
+        android:maxLines="1"
+        android:textSize="19dp"
+
+        />
 
 
     <com.example.listing.CustomGridRecyclerView

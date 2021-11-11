@@ -71,6 +71,11 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
         Log.i("plan num", pos  +" ");
     }
 
+    public void filterList(ArrayList<Plan> filteredList) {
+        PlanList = filteredList;
+        notifyDataSetChanged();
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public PlanCardBinding itemRowBinding;

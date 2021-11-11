@@ -66,6 +66,11 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
         return materials.size();
     }
 
+    public void filterList(ArrayList<Material> filteredList) {
+        materials = filteredList;
+        notifyDataSetChanged();
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public AssignCardBinding itemRowBinding;
@@ -91,7 +96,7 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
                 String img =material.getZuphrContents().replace("data:image/jpeg;base64,","");
                 byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                materialImage.setImageBitmap(decodedByte);
+                itemRowBinding.materialImgCard.setImageBitmap(decodedByte);
             }
 
 //            if(material.getZuphrLoada().getVehicle().size() == 0){
@@ -103,12 +108,12 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
             }
 
             if(material.getZuphrLoada().getVehicle().isEmpty()){
-                assignStatus.setText("Not Assigned");
-                assignStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
+                itemRowBinding.assignstat.setText("Not Assigned");
+                itemRowBinding.assignstat.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
             }else{
-                assignStatus.setText("Assigned");
-                assignStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
-                assignStatus.setPadding(50, 0, 50, 0);
+               itemRowBinding.assignstat.setText("Assigned");
+                itemRowBinding.assignstat.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
+                itemRowBinding.assignstat.setPadding(50, 0, 50, 0);
             }
         }
     }

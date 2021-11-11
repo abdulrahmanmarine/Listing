@@ -71,6 +71,7 @@
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
                     android:src="@drawable/defult"
+
                     />
 
                 <LinearLayout

@@ -113,7 +113,7 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.Materi
                 String img =material.getZuphrContents().replace("data:image/jpeg;base64,","");
                 byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                materialImage.setImageBitmap(decodedByte);
+                itemRowBinding.materialImgCard.setImageBitmap(decodedByte);
             }
         }
     }

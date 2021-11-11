@@ -122,14 +122,14 @@ public class LoaderFragment extends Fragment  {
     }
 
     private void filter2(String text) {
-//        ArrayList<Material> filteredList = new ArrayList<>();
-//
-//        for (Material mat : mParam1) {
-//            if (mat.getZuphrShortxt().toLowerCase().contains(text.toLowerCase())) {
-//                filteredList.add(mat);
-//            }
-//        }
-//        materialAdapter.filterList(filteredList);
+        ArrayList<Material> filteredList = new ArrayList<>();
+
+        for(Material mat : mParam1){
+            if(mat.getZuphrShortxt().toLowerCase().contains(text)){
+                filteredList.add(mat);
+            }
+        }
+        materialAdapter.filterList(filteredList);
     }
 
     @Override
