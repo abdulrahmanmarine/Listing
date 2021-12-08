@@ -45,7 +45,7 @@
             android:screenOrientation="sensorLandscape"
             android:exported="true"/>
 
-        <activity android:name=".Kotlin.Login"
+        <activity android:name=".Login"
             android:screenOrientation="sensorLandscape"
             android:exported="true"
             >

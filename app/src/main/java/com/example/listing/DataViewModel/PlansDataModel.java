@@ -8,20 +8,17 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-
-import com.example.listing.Utils.DataClass;
-import com.example.listing.models.Driver;
-import com.example.listing.models.Plan;
-
 import com.example.listing.R;
+import com.example.listing.Utils.DataClass;
 import com.example.listing.Utils.RestApiClient;
 import com.example.listing.Utils.RetrofitInterface;
+import com.example.listing.models.Driver;
 import com.example.listing.models.ImageList;
 import com.example.listing.models.LoadAction;
+import com.example.listing.models.Plan;
 import com.example.listing.models.Vehicle;
 import com.example.listing.models.imagenode;
 
-import org.apache.http.auth.AuthenticationException;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -59,12 +56,11 @@ public class PlansDataModel extends ViewModel {
 
 
     public PlansDataModel(Application application) throws NoSuchAlgorithmException, KeyStoreException,
-            KeyManagementException, AuthenticationException  {
+            KeyManagementException {
         super();
         this.application = application;
-        RestApiClient.initializer(application,null);
 
-        retrofitInterface = RestApiClient.getInstance().getRetrofitInterface();
+        retrofitInterface = RestApiClient.getInstance(application).getRetrofitInterface();
 
     }
 
