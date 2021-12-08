@@ -5,6 +5,7 @@ import com.example.listing.models.Plan;
 import com.example.listing.models.ImageList;
 
 import com.example.listing.models.PlanUnpack;
+import com.example.listing.models.Userunpack;
 import com.example.listing.models.imagenode;
 import com.example.listing.models.SAPNote;
 
@@ -25,13 +26,13 @@ public interface RetrofitInterface {
     Call<PlanUnpack> getPlans(@Header("x-csrf-token") String token);
 
 
-    @GET("/VehicleSet")
+    @GET("VehicleSet")
     Call<ResponseBody> GetVehicle(@Url String filter);
 
-    @GET("/DriverSet")
+    @GET("DriverSet")
     Call<ResponseBody> GetLoader(@Url String filter);
 
-    @GET("/DeviceSet")
+    @GET("DeviceSet")
     Call<ResponseBody> GetDevice(@Url String filter);
 
 
@@ -51,7 +52,7 @@ public interface RetrofitInterface {
     Call<ResponseBody> postLoadAction(@Body LoadAction loadAction, @Header("x-csrf-token") String token);
 
 
-    @GET("ZU_UPHR_MAIN_SRV/UserInfoSet/")
-    Call<ResponseBody> DVClogin(@Header("x-csrf-token") String fetch);
+    @GET("UserInfoSet/")
+    Call<Userunpack> DVClogin(@Header("x-csrf-token") String fetch);
 
 }

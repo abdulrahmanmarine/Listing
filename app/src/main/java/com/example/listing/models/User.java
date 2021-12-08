@@ -1,39 +1,56 @@
 package com.example.listing.models;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 
-
+@Entity(tableName = "UserTable")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
         setterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 //  UserOffline Data Model  //
 public class User implements Serializable {
 
+
+    @PrimaryKey()
+    @Expose(serialize = false, deserialize = false)
+    @NonNull
     @JsonProperty("Userid")
     public String UserId = null;
 
-    public void setName(String name) {
-        Name = name;
-    }
 
     public String Password = null;
 
+
+    @ColumnInfo(name = "Name")
+    @Expose(serialize = false, deserialize = false)
     @JsonProperty("Vorna")
     public String Name = null;
 
+
+    @ColumnInfo(name = "Profileid")
+    @Expose(serialize = false, deserialize = false)
     @JsonProperty("ZuphrProfid")
     public String Profileid = null;
 
+
+    @ColumnInfo(name = "Email")
+    @Expose(serialize = false, deserialize = false)
     @JsonProperty("Email")
     public String Email = null;
 
     //  Data Constructor for usage
     public User() {
     }
+
 
     //  Data Constructor for login
     public User(String UserId, String Password) {
@@ -47,40 +64,45 @@ public class User implements Serializable {
         return UserId;
     }
 
+    @NonNull
     public String getUserId() {
         return UserId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(@NonNull String userId) {
         UserId = userId;
-    }
-
-    public void setPassword(String password) {
-        Password = password;
-    }
-
-    public void setProfileid(String profileid) {
-        Profileid = profileid;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
     }
 
     public String getPassword() {
         return Password;
     }
 
+    public void setPassword(String password) {
+        Password = password;
+    }
+
     public String getName() {
         return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
     }
 
     public String getProfileid() {
         return Profileid;
     }
 
+    public void setProfileid(String profileid) {
+        Profileid = profileid;
+    }
+
     public String getEmail() {
         return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
     }
     ////////////////////////////////////////
 }

@@ -152,7 +152,7 @@ public class RestLoginClient {
             Response originalResponse = chain.proceed(chain.request());
 
       // TODO UNCOMMENT FOR AIRWATCH
-              RestApiClient.initializer(application,client);
+              RestApiClient.initializer(client,application);
 
 
             return originalResponse;

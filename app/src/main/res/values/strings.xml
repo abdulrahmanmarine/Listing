@@ -13,7 +13,18 @@
     <integer name="swing_anim_time">750</integer>
     <string name="transition_string">hello</string>
 
+
+    <string name="login_app_header">Mobile Portal Login</string>
+    <string name="Login_Error_msg">Authentication failed </string>
+    <string name="Login_Empty_Error_msg">Please fill all the fields </string>
+    <string name="Login_Button">Login</string>
+    <string name="id_hint">Aramco ID</string>
+    <string name="password_hint">Password</string>
+    <string name="Login_legaltext">" Saudi Aramco reserves the right to monitor all Website activity, traffic,computing,network, access, and content transmitted using the Website"</string>
+
+
     <!-- Strings related to login -->
+    <string name="OfflineLoginError">User ID not found please login online first</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
