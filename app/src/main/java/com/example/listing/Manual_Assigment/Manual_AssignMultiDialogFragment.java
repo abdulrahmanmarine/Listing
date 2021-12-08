@@ -122,7 +122,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
 
         //add new pair button
-        Button addBut = view.findViewById(R.id.add_btn), cancel_but = view.findViewById(R.id.dialog_cancel);
+        Button addBut = view.findViewById(R.id.add_btn);
         //Loader recview
          loaderList = view.findViewById(R.id.loader_list);
         //vehicle recview
@@ -131,12 +131,15 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         RecyclerView Choosenpair = view.findViewById(R.id.vehicle_chosen_list);
         //done button
         Button doneBut = view.findViewById(R.id.done_btn);
+        //Exit Button
+        ImageView exitBut = view.findViewById(R.id.but_close);
         //search edit text for loader
         EditText searchLoader = view.findViewById(R.id.search_loader);
         //search edir text for vehicle
         EditText searchVehicle = view.findViewById(R.id.search_vehicle);
         //Text view for material name
         TextView materialName = view.findViewById(R.id.material_tv);
+
         imageView=view.findViewById(R.id.material_image);
 
 
@@ -174,37 +177,45 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         Choosenpair.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         Choosenpair.setAdapter(chosenVehicleAdapter);
 
+
+        exitBut.setOnClickListener(v -> {
+            dismiss();
+        });
+
         addBut.setOnClickListener(v -> {
-            if(chosenVehicles.size()>0){
-                Log.i("Drivers list", " " + chosenVehicles.get(0).getLoaders().get(0).getZuphrdrvrName());
-            }
-           chosenVehicle.setLoaders(chosenDrivers);
-
-            if(chosenVehicle.getLoaders().size()>0){
-                chosenVehicles.add(chosenVehicle);
-                 ArrayList<Vehicle> vehiclesList = (ArrayList<Vehicle>) model.MastervehiclesList.getValue();
-
-                for(int i=0 ;i<vehiclesList.size();i++){
-                    if(chosenVehicle.equals(vehiclesList.get(i))){
-                        vehiclesList.remove(i);
-                        model.MastervehiclesList.setValue(vehiclesList);
-
-                        loaderAdapter = new LoaderAdapter((ArrayList<Driver>) model.MasterdriversList.getValue(),this::Driverselected);
-
-                        loaderList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-                        loaderList.setAdapter(loaderAdapter);
-
-                        break;
-                    }
+            try{
+                if(chosenVehicles.size()>0){
+                    Log.i("Drivers list", " " + chosenVehicles.get(0).getLoaders().get(0).getZuphrdrvrName());
                 }
+                chosenVehicle.setLoaders(chosenDrivers);
 
+                if(chosenVehicle.getLoaders().size()>0){
+                    chosenVehicles.add(chosenVehicle);
+                    ArrayList<Vehicle> vehiclesList = (ArrayList<Vehicle>) model.MastervehiclesList.getValue();
 
+                    for(int i=0 ;i<vehiclesList.size();i++){
+                        if(chosenVehicle.equals(vehiclesList.get(i))){
+                            vehiclesList.remove(i);
+                            model.MastervehiclesList.setValue(vehiclesList);
 
-                chosenVehicleAdapter.notifyDataSetChanged();
-            }else {
-                Toast.makeText(getContext(),"Assign drivers to the vehicle first",Toast.LENGTH_SHORT).show();
+                            loaderAdapter = new LoaderAdapter((ArrayList<Driver>) model.MasterdriversList.getValue(),this::Driverselected);
+
+                            loaderList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+                            loaderList.setAdapter(loaderAdapter);
+
+                            break;
+                        }
+                    }
+                    
+
+                    chosenVehicleAdapter.notifyDataSetChanged();
+                }else {
+                    Toast.makeText(getContext(),"Assign drivers to the vehicle first",Toast.LENGTH_SHORT).show();
+                }
+            }catch (NullPointerException e){
+                e.printStackTrace();
+                Toast.makeText(getContext(),"Choose a Vehicle",Toast.LENGTH_SHORT).show();
             }
-
         });
 
 
@@ -255,7 +266,8 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
     public void Driverselected(Driver driver) {
         if(chosenVehicle!=null){
 
-
+            this.chosenDriver = driver;
+            chosenDrivers.add(driver);
             Toast.makeText(getContext(),"Loader:"+driver.getZuphrdrvrName()+" has been assigned to "+
                     chosenVehicle.getVehType(),Toast.LENGTH_SHORT).show();
         }
