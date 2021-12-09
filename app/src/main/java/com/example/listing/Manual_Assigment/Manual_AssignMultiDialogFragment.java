@@ -30,6 +30,7 @@ import com.example.listing.AddButtonClicked;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.DriverDeleteButtonClicked;
 import com.example.listing.Kotlin.Dispatcher;
+import com.example.listing.Kotlin.Loader;
 import com.example.listing.R;
 import com.example.listing.models.Driver;
 import com.example.listing.models.LoadAction;
@@ -44,12 +45,11 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         implements DriverDeleteButtonClicked, DriverSelected,AdapterView.OnItemSelectedListener, VehicleSelected {
 
     private static int Mpostion;
-    //material object
+
     private static final String MATERIAL_2 = "materialParam";
 
     private Material materialParam;
     PlansDataModel model;
-    DriverSelected driverSelected;
     RecyclerView loaderList;
     List<Vehicle> chosenVehicles;
     ImageView imageView;
@@ -60,43 +60,30 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
 
     private Manual_Assignment_Adapter chosenVehicleAdapter;
-
     private ArrayList<Driver> chosenDrivers = new ArrayList<>();
-    Driver chosenDriver;
 
 
 
     public void onStart()
     {
         super.onStart();
-
         // safety check
         if (getDialog() == null)
             return;
-
-
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
 
-
         getDialog().getWindow().setLayout((5 * width)/6, (5 * height)/5);
-        // ... other stuff you want to do in your onStart() method
+
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
-//        positiveListener = (OnPositiveClickListener) context;
-//        negativeListener = (OnNegativeClickListener) context;
     }
 
-//    public Dialog onCreateDialog(){
-//        Dialog dialog = super.onCreateDialog(savedInstanceState);
-//        dialog.setTitle("My Title");
-//        return dialog;
-//    }
 
     public static Manual_AssignMultiDialogFragment newInstance(int position, Material materialParam){
         Manual_AssignMultiDialogFragment fragment = new Manual_AssignMultiDialogFragment();
@@ -122,7 +109,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
 
         //add new pair button
-        Button addBut = view.findViewById(R.id.add_btn);
+        Button addBut = view.findViewById(R.id.add_btn), cancel_but = view.findViewById(R.id.dialog_cancel);
         //Loader recview
          loaderList = view.findViewById(R.id.loader_list);
         //vehicle recview
@@ -131,15 +118,12 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         RecyclerView Choosenpair = view.findViewById(R.id.vehicle_chosen_list);
         //done button
         Button doneBut = view.findViewById(R.id.done_btn);
-        //Exit Button
-        ImageView exitBut = view.findViewById(R.id.but_close);
         //search edit text for loader
         EditText searchLoader = view.findViewById(R.id.search_loader);
         //search edir text for vehicle
         EditText searchVehicle = view.findViewById(R.id.search_vehicle);
         //Text view for material name
         TextView materialName = view.findViewById(R.id.material_tv);
-
         imageView=view.findViewById(R.id.material_image);
 
 
@@ -150,7 +134,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         materialParam = (Material) getArguments().getSerializable(MATERIAL_2);
 
 
-        Bitmap decodedByte = null;
+        Bitmap decodedByte ;
         materialName.setText(materialParam.getZuphrShortxt());
         if(materialParam.getZuphrContents().length()> 100) {
             String img =materialParam.getZuphrContents().replace("data:image/jpeg;base64,","");
@@ -159,7 +143,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
             imageView.setImageBitmap(decodedByte);
         }
 
-        chosenVehicles  = (ArrayList<Vehicle>) materialParam.getVehicles();
+        chosenVehicles  =  materialParam.getVehicles();
 
 
         //setting adapter for loaders/drivers recycler
@@ -177,45 +161,32 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         Choosenpair.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         Choosenpair.setAdapter(chosenVehicleAdapter);
 
-
-        exitBut.setOnClickListener(v -> {
-            dismiss();
-        });
-
         addBut.setOnClickListener(v -> {
-            try{
-                if(chosenVehicles.size()>0){
-                    Log.i("Drivers list", " " + chosenVehicles.get(0).getLoaders().get(0).getZuphrdrvrName());
-                }
-                chosenVehicle.setLoaders(chosenDrivers);
 
-                if(chosenVehicle.getLoaders().size()>0){
-                    chosenVehicles.add(chosenVehicle);
-                    ArrayList<Vehicle> vehiclesList = (ArrayList<Vehicle>) model.MastervehiclesList.getValue();
+               if(chosenVehicle.getLoaders().size()>0){
 
-                    for(int i=0 ;i<vehiclesList.size();i++){
-                        if(chosenVehicle.equals(vehiclesList.get(i))){
-                            vehiclesList.remove(i);
-                            model.MastervehiclesList.setValue(vehiclesList);
+                   chosenVehicles.add(chosenVehicle);
+                   ArrayList<Vehicle> vehiclesList = (ArrayList<Vehicle>) model.MastervehiclesList.getValue();
 
-                            loaderAdapter = new LoaderAdapter((ArrayList<Driver>) model.MasterdriversList.getValue(),this::Driverselected);
+                   for(int i=0 ;i<vehiclesList.size();i++){
+                       if(chosenVehicle.equals(vehiclesList.get(i))){
+                           vehiclesList.remove(i);
+                           model.MastervehiclesList.setValue(vehiclesList);
+                           loaderAdapter = new LoaderAdapter((ArrayList<Driver>) model.MasterdriversList.getValue(),this::Driverselected);
+                           loaderList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+                           loaderList.setAdapter(loaderAdapter);
+                           break;
+                       }
+                   }
+                   chosenVehicleAdapter.notifyDataSetChanged();
 
-                            loaderList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-                            loaderList.setAdapter(loaderAdapter);
+               }
+               else {
+                   Toast.makeText(getContext(),"Assign drivers to the vehicle first",Toast.LENGTH_SHORT).show();
+               }
 
-                            break;
-                        }
-                    }
-                    
 
-                    chosenVehicleAdapter.notifyDataSetChanged();
-                }else {
-                    Toast.makeText(getContext(),"Assign drivers to the vehicle first",Toast.LENGTH_SHORT).show();
-                }
-            }catch (NullPointerException e){
-                e.printStackTrace();
-                Toast.makeText(getContext(),"Choose a Vehicle",Toast.LENGTH_SHORT).show();
-            }
+
         });
 
 
@@ -248,6 +219,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
     @Override
     public void deleteButtonClicked(int pos) {
         chosenVehicles.remove(pos);
+
         chosenVehicleAdapter.notifyDataSetChanged();
 
     }
@@ -265,9 +237,13 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
     @Override
     public void Driverselected(Driver driver) {
         if(chosenVehicle!=null){
+            List<Driver> loaders=new ArrayList<>();
 
-            this.chosenDriver = driver;
-            chosenDrivers.add(driver);
+            if(chosenVehicle.getLoaders()!=null)
+                loaders= chosenVehicle.getLoaders();
+
+            loaders.add(driver);
+            chosenVehicle.setLoaders(loaders);
             Toast.makeText(getContext(),"Loader:"+driver.getZuphrdrvrName()+" has been assigned to "+
                     chosenVehicle.getVehType(),Toast.LENGTH_SHORT).show();
         }
@@ -280,7 +256,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
     @Override
     public void VehicleSelected(Vehicle vehicle) {
         chosenDrivers.clear();
-        this.chosenVehicle=vehicle;
+        chosenVehicle=vehicle;
         loaderAdapter = new LoaderAdapter((ArrayList<Driver>) model.MasterdriversList.getValue(),this::Driverselected);
         loaderList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         loaderList.setAdapter(loaderAdapter);
@@ -288,14 +264,6 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
     }
 
-
-    public interface OnPositiveClickListener{
-        void onPositiveClick(ArrayList<Driver> text, ArrayList<Vehicle> text2);
-    }
-
-    public interface OnNegativeClickListener{
-        void onNegativeClick();
-    }
 
 
 }

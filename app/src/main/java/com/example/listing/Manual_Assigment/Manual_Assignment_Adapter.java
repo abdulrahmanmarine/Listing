@@ -79,6 +79,9 @@ public class Manual_Assignment_Adapter extends RecyclerView.Adapter<Manual_Assig
 
     @Override
     public int getItemCount() {
+        if(vehicle!=null)
         return vehicle.size();
+        else
+            return 0;
     }
 }

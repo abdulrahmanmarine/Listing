@@ -52,7 +52,7 @@ public class ChosenVehicleCardAdapter extends RecyclerView.Adapter<ChosenVehicle
             Log.i("Chosencardadapter", "chosen");
             itemRowBinding.setChosenDriver(vehicle);
             itemRowBinding.executePendingBindings();
-
+//
 //            itemVertBinding.setChosenDriver(vehicle);
 //            itemVertBinding.executePendingBindings();
         }
@@ -61,13 +61,13 @@ public class ChosenVehicleCardAdapter extends RecyclerView.Adapter<ChosenVehicle
     @NonNull
     @Override
     public ChosenVehicleCardAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        ChosenVehicleCardItemBinding binding = DataBindingUtil.inflate(
-//                LayoutInflater.from(parent.getContext()),
-//                R.layout.chosen_vehicle_card_item_vert, parent, false);
-
-        ChosenVehicleCardItemVertBinding binding = DataBindingUtil.inflate(
+        ChosenVehicleCardItemBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.chosen_vehicle_card_item, parent, false);
+
+//        ChosenVehicleCardItemVertBinding binding = DataBindingUtil.inflate(
+//                LayoutInflater.from(parent.getContext()),
+//                R.layout.chosen_vehicle_card_item_vert, parent, false);
 
 
         return new ChosenVehicleCardAdapter.ViewHolder(binding);

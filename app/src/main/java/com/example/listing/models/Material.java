@@ -305,10 +305,10 @@ public class Material implements Serializable {
 
      @JsonIgnore
      @Ignore
-    List<Driver> Drivers;
+    List<Driver> Drivers= new ArrayList<>();
      @JsonIgnore
      @Ignore
-    List<Vehicle> Vehicles;
+    List<Vehicle> Vehicles =new ArrayList<>();
 
 
 //    @JsonProperty("LoadingPlanLoadActionSet")
