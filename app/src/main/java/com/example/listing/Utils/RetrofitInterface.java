@@ -22,9 +22,12 @@ public interface RetrofitInterface {
 
 
 
-    @GET("LoadingPlanSet?$expand=PlanToItems&$filter=ZuphrActtype eq 'STEV' and ZuphrDeleted eq false")
-    Call<PlanUnpack> getPlans(@Header("x-csrf-token") String token);
+    @GET("LoadingPlanSet?$expand=PlanToItems&$filter=ZuphrActtype eq 'LOAD' and ZuphrDeleted eq false")
+    Call<PlanUnpack> getPlansLoader(@Header("x-csrf-token") String token);
 
+
+    @GET("LoadingPlanSet?$expand=PlanToItems&$filter=ZuphrActtype eq 'DISP' and ZuphrDeleted eq false")
+    Call<PlanUnpack> getPlansDispatcher(@Header("x-csrf-token") String token);
 
     @GET("VehicleSet")
     Call<ResponseBody> GetVehicle(@Url String filter);

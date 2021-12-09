@@ -65,8 +65,8 @@ public class LoadAction implements Serializable {
     String assignedQuan = 0.0 + "";
 
 
-    @JsonProperty("materialUnit")
-    @ColumnInfo(name="materialUnit")
+    @JsonProperty("zuphrMeins")
+    @ColumnInfo(name="zuphrMeins")
     String materialUnit = "";
 
     @JsonIgnore
@@ -86,42 +86,36 @@ public class LoadAction implements Serializable {
     @ColumnInfo(name="FpName")
     String FpName = "";
 
-    @JsonProperty("zuphrSize")
-    @ColumnInfo(name="zuphrSize")
-    String zuphrSize = "";
-
-    @JsonProperty("zuphrConfQuan")
-    @ColumnInfo(name="zuphrConfQuan")
-    String confirmedQuan = 0.0 + "";
-
-    @JsonProperty("zuphrAct")
-    @ColumnInfo(name="zuphrAct")
-    String zuphrAct = "";
-
-    @JsonProperty("zuphrDriver")
-    @Ignore
-    List<Driver> driver = new ArrayList<>();
-
-    @JsonProperty("zuphrWeight")
-    @ColumnInfo(name="zuphrWeight")
-    String weight = "";
-
     @JsonProperty("zuphrVehType")
     @Ignore
     List<Vehicle> vehicle = new ArrayList<>();
 
-    @JsonProperty("zuphrStatus")
+    @JsonIgnore
     @ColumnInfo(name="zuphrStatus")
     String status = "";
 
-    @JsonProperty("zuphrContents")
-    @ColumnInfo(name="zuphrContents")
-    String content = "";
+    @JsonIgnore
+    @Ignore
+    String zuphrSize = "";
+    @JsonIgnore
+    @Ignore
+    String confirmedQuan = 0.0 + "";
+    @JsonIgnore
+    @Ignore
+    String zuphrAct = "";
+    @JsonIgnore
+    @Ignore
+    List<Driver> driver = new ArrayList<>();
+    @JsonIgnore
+    @Ignore
+    String weight = "";
+
+
 
     public LoadAction(String zuphrLpid, String zuphrMjahr, String zuphrMblpo, String zuphrLoadid,
                       String zuphrActtype, String assignedQuan, String materialUnit, Boolean zuphrReady,
                       String fpDate, String fpTime, String fpName, String zuphrSize, String confirmedQuan,
-                      String zuphrAct, List<Driver> driver, String weight, List<Vehicle> vehicle, String status, String content) {
+                      String zuphrAct, List<Driver> driver, String weight, List<Vehicle> vehicle, String status) {
         this.zuphrLpid = zuphrLpid;
         this.zuphrMjahr = zuphrMjahr;
         this.zuphrMblpo = zuphrMblpo;
@@ -140,7 +134,7 @@ public class LoadAction implements Serializable {
         this.weight = weight;
         this.vehicle = vehicle;
         this.status = status;
-        this.content = content;
+
     }
 
     public String getStatus() {
@@ -171,21 +165,6 @@ public class LoadAction implements Serializable {
         return zuphrMjahr;
     }
 
-    public List<Driver> getDriver() {
-        return driver;
-    }
-
-    public void setDriver(List<Driver> driver) {
-        this.driver = driver;
-    }
-
-    public String getWeight() {
-        return weight;
-    }
-
-    public void setWeight(String weight) {
-        this.weight = weight;
-    }
 
     public List<Vehicle> getVehicle() {
         return vehicle;

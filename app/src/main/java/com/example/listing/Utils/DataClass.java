@@ -44,15 +44,15 @@ public class DataClass {
 
         LoadAction load = new LoadAction("99001", "2021", "1", "5",
                 "STEV", "100.000", "EA", false,"2021-08-24", "16:13:13", "AWAMAS0F", "size", "confirmedquan",
-                "zuphract", drivers, "weight", vehicles, "LFMS", "content");
+                "zuphract", drivers, "weight", vehicles, "LFMS");
 
         LoadAction load2 = new LoadAction("99002", "2021", "1", "5",
                 "STEV", "100", "EA", false,"2021-08-24", "16:13:13", "AWAMAS0F", "size", "confirmedquan",
-                "zuphract", drivers2, "weight", vehicles2, "status", "content");
+                "zuphract", drivers2, "weight", vehicles2, "status");
 
         LoadAction load3 = new LoadAction("99002", "2021", "1", "5",
                 "STEV", "100", "EA", false,"2021-08-24", "16:13:13", "AWAMAS0F", "size", "confirmedquan",
-                "zuphract", drivers2, "weight", vehicles3, "status", "content");
+                "zuphract", drivers2, "weight", vehicles3, "status");
 
 
 

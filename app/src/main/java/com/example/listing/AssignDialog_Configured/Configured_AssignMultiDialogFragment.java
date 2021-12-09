@@ -248,7 +248,6 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
                Material Material= model.MatrialsList.getValue().get(Mpostion);
                 List<Material> list =model.MatrialsList.getValue();
                 LoadAction loadAction=Material.getZuphrLoada();
-                loadAction.setDriver(chosenDrivers);
                 loadAction.setVehicle(chosenVehicles);
                 Material.setZuphrLoada(loadAction);
                 list.set(Mpostion,Material);

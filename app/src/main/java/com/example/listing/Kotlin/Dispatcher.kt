@@ -33,13 +33,9 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         setContentView(R.layout.activity_loader)
         this.getSupportActionBar()!!.hide()
 
-         model = ViewModelProvider(this,
-             PlansDataModelFactory(this.application)
-         ).get(
-            PlansDataModel::class.java
-        )
+         model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(PlansDataModel::class.java)
         model.UserRule.value=false
-        model.getplans(application)
+        model.getplansLoader(application)
         var ctx = applicationContext
 
         model.Plans.observe(this,
