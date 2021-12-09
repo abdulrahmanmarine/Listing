@@ -67,15 +67,17 @@
                 android:id="@+id/Driverlist"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="32dp"
                 android:layout_weight="4.5"
                 android:background="@drawable/loader_list_border"
                 android:fadeScrollbars="false"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="15dp"
                 android:scrollbarAlwaysDrawHorizontalTrack="true"
-                android:scrollbars="horizontal"
-                android:layout_gravity="center_vertical"
-                />
+                android:scrollbars="horizontal" />
         </LinearLayout>
 
 

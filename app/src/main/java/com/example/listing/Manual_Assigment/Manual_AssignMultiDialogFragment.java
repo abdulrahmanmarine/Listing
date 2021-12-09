@@ -219,6 +219,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
     @Override
     public void deleteButtonClicked(int pos) {
         chosenVehicles.remove(pos);
+
         chosenVehicleAdapter.notifyDataSetChanged();
 
     }
