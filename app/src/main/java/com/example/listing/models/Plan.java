@@ -1,6 +1,8 @@
 package com.example.listing.models;
 
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -30,98 +32,316 @@ public class Plan implements Serializable {
     @JsonIgnore
     public int PlanId;
 
+    @JsonProperty("ZuphrActquan")
+    @ColumnInfo(name="ZuphrActquan")
+    public String ZuphrActquan;
+
+    @JsonIgnore
+    @Ignore
+    LoadAction ZuphrLoada;
+
+
+    @JsonProperty("ZuphrLoada")
+    @Ignore
+    public void unpackload(Map<String, List<LoadAction>> d) {
+       Log.i("loadaction",d.keySet().toString());
+    }
+
     @JsonProperty("ZuphrLoadtype")
     @ColumnInfo(name="ZuphrLoadtype")
-    String ZuphrLoadtype;
+    public String ZuphrLoadtype;
+
+
+    @JsonProperty("ZpuhrMovtype")
+    @ColumnInfo(name="ZpuhrMovtype")
+     public String ZpuhrMovtype;
+
+    @JsonProperty("ZuphrFreestock")
+    @ColumnInfo(name="ZuphrFreestock")
+    public boolean ZuphrFreestock;
+
+
 
     @JsonProperty("Modified")
     @ColumnInfo(name="Modified")
-    Boolean Modified;
+     public boolean Modified;
 
     @JsonProperty("ZuphrActtype")
     @ColumnInfo(name="ZuphrActtype")
-    String ZuphrActtype;
+    public String ZuphrActtype;
+
+
+
+    @JsonProperty("ZuphrContents")
+    @ColumnInfo(name="ZuphrContents")
+    public String ZuphrContents;
+
+
+    @JsonProperty("ZuphrHeight")
+    @ColumnInfo(name="ZuphrHeight")
+    public String ZuphrHeight;
+
+    @JsonProperty("ZuphrLength")
+    @ColumnInfo(name="ZuphrLength")
+    public String ZuphrLength;
+
+
+    @JsonProperty("ZuphrWidth")
+    @ColumnInfo(name="ZuphrWidth")
+    public String ZuphrWidth;
+
+    @JsonProperty("ZuphrTo")
+    @ColumnInfo(name="ZuphrTo")
+    public String ZuphrOffshore;
+
+    @JsonProperty("ZuphrVolmeins")
+    @ColumnInfo(name="ZuphrVolmeins")
+    public String ZuphrVolmeins;
+
+
+    @JsonProperty("ZuphrMatnr")
+    @ColumnInfo(name="ZuphrMatnr")
+    public String ZuphrMatnr;
+
+
+
+    @JsonProperty("ZuphrMjahr")
+    @ColumnInfo(name="ZuphrMjahr")
+    public String ZuphrMjahr;
+
+
+    @JsonProperty("ZuphrClass")
+    @ColumnInfo(name="ZuphrClass")
+    public String ZuphrClass;
+
+
+    @JsonProperty("ZuphrMattype")
+    @ColumnInfo(name="ZuphrMattype")
+    public String ZuphrMattype;
+
+    @JsonProperty("ZuphrDeleted")
+    @ColumnInfo(name="ZuphrDeleted")
+    public boolean ZuphrDeleted;
+
+
+    @JsonProperty("ZuphrCostcen")
+    @ColumnInfo(name="ZuphrCostcen")
+    public String ZuphrCostcen;
+
+    @JsonProperty("ZuphrGl")
+    @ColumnInfo(name="ZuphrGl")
+    public String ZuphrGl;
+
+    @JsonProperty("ZuphrBitstatus")
+    @ColumnInfo(name="ZuphrBitstatus")
+    public String ZuphrBitstatus;
+
+    @JsonProperty("ZuphrBitType")
+    @ColumnInfo(name="ZuphrBitType")
+    public String ZuphrBitType;
+
+    @JsonProperty("ZuphrMfrpn")
+    @ColumnInfo(name="ZuphrMfrpn")
+    public String ZuphrMfrpn;
+
+    @JsonProperty("ZuphrTicketno")
+    @ColumnInfo(name="ZuphrTicketno")
+    public String ZuphrTicketno;
+
+
+    @JsonProperty("ZuphrCnumber")
+    @ColumnInfo(name="ZuphrCnumber")
+    public String ZuphrCnumber;
+
+    @JsonProperty("ZuphrEquipnumber")
+    @ColumnInfo(name="ZuphrEquipnumber")
+    public String ZuphrEquipnumber;
+
+    @JsonProperty("ZuphrWellnm")
+    @ColumnInfo(name="ZuphrWellnm")
+    public String ZuphrWellnm;
+
+
+    @JsonProperty("ZuphrActtime")
+    @ColumnInfo(name="ZuphrActtime")
+    public String ZuphrActtime;
+
+    @JsonProperty("ZuphrActdate")
+    @ColumnInfo(name="ZuphrActdate")
+    public String ZuphrActdate;
+
+    @JsonProperty("ZuphrActuname")
+    @ColumnInfo(name="ZuphrActuname")
+    public String ZuphrActuname;
+
+    @JsonProperty("ZuphrSent")
+    @ColumnInfo(name="ZuphrSent")
+    public String ZuphrSent;
+
+    @JsonProperty("ZuphrActrole")
+    @ColumnInfo(name="ZuphrActrole")
+    public String ZuphrActrole;
+
+    @JsonProperty("ZuphrActposgrp")
+    @ColumnInfo(name="ZuphrActposgrp")
+    public String ZuphrActposgrp;
+
+
+    @JsonProperty("ZuphrAutoact")
+    @ColumnInfo(name="ZuphrAutoact")
+    public String ZuphrAutoact;
+
+
+    @JsonProperty("ZuphrSrlno")
+    @ColumnInfo(name="ZuphrSrlno")
+    public String ZuphrSrlno;
+
+    @JsonProperty("ZuphrMblpo")
+    @ColumnInfo(name="ZuphrMblpo")
+    public String ZuphrMblpo;
+
+
+    @JsonProperty("ZuphrStgid")
+    @ColumnInfo(name="ZuphrStgid")
+    public String ZuphrStgid;
+
+    @JsonProperty("ZuphrReqid")
+    @ColumnInfo(name="ZuphrReqid")
+    public String ZuphrReqid;
+
+    @JsonProperty("ZuphrReqitm")
+    @ColumnInfo(name="ZuphrReqitm")
+    public String ZuphrReqitm;
+
+    @JsonProperty("ZuphrShortxt")
+    @ColumnInfo(name="ZuphrShortxt")
+    public String ZuphrShortxt;
+
+
+    @JsonProperty("ZuphrDescrip")
+    @ColumnInfo(name="ZuphrDescrip")
+    public String ZuphrDescrip;
+
+    @JsonProperty("ZuphrQuan")
+    @ColumnInfo(name="ZuphrQuan")
+    public String ZuphrQuan;
+
+
+    @JsonProperty("Meins")
+    @ColumnInfo(name="Meins")
+    public String Meins;
+
+    @JsonProperty("ZuphrOffshore")
+    @ColumnInfo(name="ZuphrOffshore")
+    public String ZuphrOffshore2;
+
+
+
+    @JsonProperty("ZuphrAreacode")
+    @ColumnInfo(name="ZuphrAreacode")
+    public String ZuphrAreacode;
 
     @JsonProperty("ZuphrStatus")
     @ColumnInfo(name="ZuphrStatus")
-    String ZuphrStatus;
+    public String ZuphrStatus;
+
+
+
+
+
 
     @JsonProperty("ZuphrVesselName")
     @ColumnInfo(name="ZuphrVesselName")
-    String ZuphrVesselName;
+    public String ZuphrVesselName;
 
     @JsonProperty("ZuphrCaptain")
     @ColumnInfo(name="ZuphrCaptain")
-    String ZuphrCaptain;
+    public String ZuphrCaptain;
 
     @JsonProperty("ZuphrStation")
     @ColumnInfo(name="ZuphrStation")
-    String ZuphrStation;
+    public String ZuphrStation;
 
     @JsonProperty("ZuphrLpid")
     @ColumnInfo(name="ZuphrLpid")
-    String ZuphrLpid;
+    public String ZuphrLpid;
+
+    @JsonProperty("ZuphrObjecte")
+    @ColumnInfo(name="ZuphrObjecte")
+    public String ZuphrObjecte;
+
+
+    @JsonProperty("ZuphrFrom")
+    @ColumnInfo(name="ZuphrFrom")
+    public String ZuphrFrom;
 
 
     @JsonProperty("Majhr")
     @ColumnInfo(name="Majhr")
-    String Majhr;
+    public String Majhr;
 
     @JsonProperty("ZuphrLpname")
     @ColumnInfo(name="ZuphrLpname")
-    String ZuphrLpname;
+    public String ZuphrLpname;
 
     @JsonProperty("ZuphrProfid")
     @ColumnInfo(name="ZuphrProfid")
-    String ZuphrProfid;
+    public String ZuphrProfid;
 
 
     @JsonProperty("ZuphrRqtype")
     @ColumnInfo(name="ZuphrRqtype")
-    String ZuphrRqtype;
+    public String ZuphrRqtype;
 
 
     @JsonProperty("ZuphrLpdate")
     @ColumnInfo(name="ZuphrLpdate")
-    String ZuphrLpdate;
+    public String ZuphrLpdate;
 
     @JsonProperty("ZuphrLptime")
     @ColumnInfo(name="ZuphrLptime")
-    String ZuphrLptime;
+    public String ZuphrLptime;
 
     @JsonProperty("ZuphrLpuser")
     @ColumnInfo(name="ZuphrLpuser")
-    String ZuphrLpuser;
+    public String ZuphrLpuser;
 
     @JsonProperty("ZuphrLifnr")
     @ColumnInfo(name="ZuphrLifnr")
-    String ZuphrLifnr;
+    public String ZuphrLifnr;
 
     @JsonProperty("ZuphrVessel")
     @ColumnInfo(name="ZuphrVessel")
-    String ZuphrVessel;
+    public String ZuphrVessel;
 
 
     @JsonProperty("ZuphrRealeased")
     @ColumnInfo(name="ZuphrRealeased")
-    Boolean ZuphrRealeased;
+    public boolean ZuphrRealeased;
 
-
-    @JsonProperty("ZuphrDeleted")
-    @ColumnInfo(name="ZuphrDeleted")
-    Boolean ZuphrDeleted;
 
     @JsonProperty("ZuphrFpDate")
     @ColumnInfo(name="ZuphrFpDate")
-    String ZuphrFpDate;
+    public String ZuphrFpDate;
 
     @JsonProperty("ZuphrFpTime")
     @ColumnInfo(name="ZuphrFpTime")
-    String ZuphrFpTime;
+    public String ZuphrFpTime;
 
     @JsonProperty("ZuphrFpName")
     @ColumnInfo(name="ZuphrFpName")
-    String ZuphrFpName;
+    public String ZuphrFpName;
+
+
+
+    @JsonProperty("ZuphrSeq")
+    @ColumnInfo(name="ZuphrSeq")
+    public String ZuphrSeq;
+
+
+    @JsonProperty("ZuphrSchtask")
+    @ColumnInfo(name="ZuphrSchtask")
+    public String ZuphrSchtask;
 
 
 

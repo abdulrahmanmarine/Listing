@@ -16,6 +16,7 @@ import com.example.listing.models.Driver;
 import com.example.listing.models.ImageList;
 import com.example.listing.models.LoadAction;
 import com.example.listing.models.Plan;
+import com.example.listing.models.PlanUnpack;
 import com.example.listing.models.Vehicle;
 import com.example.listing.models.imagenode;
 
@@ -69,18 +70,13 @@ public class PlansDataModel extends ViewModel {
     }
 
 
-    public void getplans(Application application) throws IOException {
+    public void getplansLoader(Application application) throws IOException {
         //OFFLINE DATA RETRIEVAL
 
-        Plans.setValue(DataClass.getInstance().getPlans());
-
-        Log.i("response-plan-size" ,Plans.getValue().size()+"");
 
         //ONLINE DATA RETRIEVAL
 
-/*
-        RestApi.initializer(application,null);
-       retrofitInterface.getPlans("Fetch").enqueue(new Callback<PlanUnpack>() {
+       retrofitInterface.getPlansLoader("Fetch").enqueue(new Callback<PlanUnpack>() {
            @Override
            public void onResponse(Call<PlanUnpack> call, retrofit2.Response<PlanUnpack> response) {
                Log.i("response-plan" ,response.code()+""+response.message());
@@ -110,27 +106,52 @@ public class PlansDataModel extends ViewModel {
            }
        });
 
-        retrofitInterface.portal().enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                   }
-                Log.i("response-portal" ,response.code()+""+response.message());
 
-
-
-            }
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.i("response-portal-http" ,t.getMessage()+t.getLocalizedMessage());
-
-            }
-        });
-*/
 
    }
 
-   public  void getVechiles(){
+
+    public void getplansDispatcher(Application application) throws IOException {
+        //OFFLINE DATA RETRIEVAL
+
+
+        //ONLINE DATA RETRIEVAL
+
+        retrofitInterface.getPlansDispatcher("Fetch").enqueue(new Callback<PlanUnpack>() {
+            @Override
+            public void onResponse(Call<PlanUnpack> call, retrofit2.Response<PlanUnpack> response) {
+                Log.i("response-plan" ,response.code()+""+response.message());
+                if (response.isSuccessful()) {
+                    List<Plan> temp =response.body().getItems();
+                    Log.i("response-plan" ,temp.size()+"items");
+                    for(int i=0 ;i<temp.size();i++){
+                        Log.i("response-plan:"+i ,temp.get(i)+"items");
+                        Log.i("response-plan:"+i+"M:" ,temp.get(i).getPlanToItems().size()+"");
+                    }
+                    Plans.postValue(temp);
+
+                }else {
+                    Log.i("response-plan" ,response.code()+""+response.message());
+                    try {
+                        Log.i("response-plan-error" ,response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+            @Override
+            public void onFailure(Call<PlanUnpack> call, Throwable t) {
+                Log.i("response-http" ,t.getMessage()+t.getLocalizedMessage());
+
+            }
+        });
+
+
+
+    }
+
+    public  void getVechiles(){
 
        Driver driver1 = new Driver("1", "Abdul", "Heavy Vehicle Driving",
                "456324", "Saudi", "91 66778899", "driver.test@gmail.com");

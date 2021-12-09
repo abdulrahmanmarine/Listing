@@ -5,12 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.listing.DataViewModel.Flag
 import com.example.listing.DataViewModel.PlansDataModel
-import com.example.listing.ViewModelsFactory.PlansDataModelFactory
 import com.example.listing.Material.Loader.LoaderFragment
-
 import com.example.listing.Plan.PlanFragment
 import com.example.listing.PlanClickListener
 import com.example.listing.R
+import com.example.listing.ViewModelsFactory.PlansDataModelFactory
 import com.example.listing.models.Material
 import com.example.listing.models.Plan
 import java.util.*
@@ -26,13 +25,10 @@ class Loader : AppCompatActivity(), PlanClickListener {
         this.getSupportActionBar()!!.hide()
 
 
-        model = ViewModelProvider(this,
-            PlansDataModelFactory(this.application)
-        ).get(
-            PlansDataModel::class.java
-        )
+        model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(PlansDataModel::class.java)
+        model.getplansLoader(application)
         model.UserRule.value=true
-        model.getplans(application)
+        model.getplansLoader(application)
         Flag.initializer(true, true);
         Flag.getInstance().planFlag = true;
         Flag.getInstance().materialFlag=true;
@@ -41,7 +37,8 @@ class Loader : AppCompatActivity(), PlanClickListener {
 
         model.Plans.observe(this,
             { Plans: List<Plan?>? ->
-                buildRecycler((Plans as ArrayList<Plan?>?)!!
+                buildRecycler(
+                    (Plans as ArrayList<Plan?>?)!!
                 )
             })
 
@@ -103,3 +100,5 @@ class Loader : AppCompatActivity(), PlanClickListener {
         })
     }
 }
+
+
