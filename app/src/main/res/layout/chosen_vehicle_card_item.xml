@@ -34,6 +34,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
             android:layout_height="wrap_content"
             android:text="@string/loaders"
             android:layout_marginEnd="8dp"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/SA_Dark_Gray"
             app:layout_constraintBottom_toBottomOf="@+id/configured_chosen_list"
             app:layout_constraintEnd_toStartOf="@+id/configured_chosen_list"
@@ -42,7 +43,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/loaders_list_card"
             android:layout_width="299dp"
-            android:layout_height="25dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/loader_list_border"
             android:fadeScrollbars="false"

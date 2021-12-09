@@ -42,6 +42,7 @@ import com.example.listing.notes.RedesignedNotesFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -125,7 +126,10 @@ public class LoaderFragment extends Fragment  {
         ArrayList<Material> filteredList = new ArrayList<>();
 
         for(Material mat : mParam1){
-            if(mat.getZuphrShortxt().toLowerCase().contains(text)){
+            String planName = mat.getZuphrShortxt().toLowerCase();
+
+            Boolean contains = Pattern.compile(Pattern.quote(text), Pattern.CASE_INSENSITIVE).matcher(planName).find();
+            if(contains){
                 filteredList.add(mat);
             }
         }

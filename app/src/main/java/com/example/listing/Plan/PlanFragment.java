@@ -33,6 +33,7 @@ import com.example.listing.models.Plan;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -203,7 +204,11 @@ public class PlanFragment extends Fragment {
         ArrayList<Plan> filteredList = new ArrayList<>();
 
         for(Plan plan : mParam1){
-            if(plan.getZuphrLpname().toLowerCase().contains(text)){
+            String planName = plan.getZuphrLpname();
+            //Comparing strings
+            Boolean contains = Pattern.compile(Pattern.quote(text), Pattern.CASE_INSENSITIVE).matcher(planName).find();
+
+            if(contains){
                 filteredList.add(plan);
             }
         }

@@ -50,11 +50,11 @@ public class ChosenVehicleCardAdapter extends RecyclerView.Adapter<ChosenVehicle
 
         public void bind(Vehicle vehicle) {
             Log.i("Chosencardadapter", "chosen");
-//            itemRowBinding.setChosenDriver(vehicle);
-//            itemRowBinding.executePendingBindings();
+            itemRowBinding.setChosenDriver(vehicle);
+            itemRowBinding.executePendingBindings();
 
-            itemVertBinding.setChosenDriver(vehicle);
-            itemVertBinding.executePendingBindings();
+//            itemVertBinding.setChosenDriver(vehicle);
+//            itemVertBinding.executePendingBindings();
         }
     }
 
@@ -67,7 +67,7 @@ public class ChosenVehicleCardAdapter extends RecyclerView.Adapter<ChosenVehicle
 
         ChosenVehicleCardItemVertBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
-                R.layout.chosen_vehicle_card_item_vert, parent, false);
+                R.layout.chosen_vehicle_card_item, parent, false);
 
 
         return new ChosenVehicleCardAdapter.ViewHolder(binding);
@@ -81,13 +81,13 @@ public class ChosenVehicleCardAdapter extends RecyclerView.Adapter<ChosenVehicle
         holder.bind(vehicle);
 
         ConfiguredLoaderListAdapter configuredLoaderListAdapter = new ConfiguredLoaderListAdapter(vehicle.getLoaders());
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-//        holder.itemRowBinding.loadersListCard.setLayoutManager(linearLayoutManager);
-//        holder.itemRowBinding.loadersListCard.setAdapter(configuredLoaderListAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        holder.itemRowBinding.loadersListCard.setLayoutManager(linearLayoutManager);
+        holder.itemRowBinding.loadersListCard.setAdapter(configuredLoaderListAdapter);
 
-        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        holder.itemVertBinding.loadersListCardVert.setLayoutManager(linearLayoutManager1);
-        holder.itemVertBinding.loadersListCardVert.setAdapter(configuredLoaderListAdapter);
+//        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+//        holder.itemVertBinding.loadersListCardVert.setLayoutManager(linearLayoutManager1);
+//        holder.itemVertBinding.loadersListCardVert.setAdapter(configuredLoaderListAdapter);
 
 
 
