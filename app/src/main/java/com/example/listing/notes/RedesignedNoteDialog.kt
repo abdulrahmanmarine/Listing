@@ -3,6 +3,7 @@ package com.example.listing.notes
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Application
 import android.app.Dialog
 import android.content.*
 import android.content.Context.LOCATION_SERVICE
@@ -359,8 +360,8 @@ class RedesignedNotesFragment(
 
 
     fun sendNote(){
-        if(RestApiClient.getInstance()!=null)
-        RestApiClient.getInstance().retrofitInterface.submitNote(subSAPNote, Token)
+        if(RestApiClient.getInstance(context as Application?)!=null)
+        RestApiClient.getInstance(context as Application?).retrofitInterface.submitNote(subSAPNote, Token)
                 .enqueue(object : Callback,
                         retrofit2.Callback<ResponseBody> {
                     override fun onResponse(
@@ -470,8 +471,8 @@ class RedesignedNotesFragment(
     fun getNotes(){
         var filterstr = "NoteSet?\$filter=ZuphrType eq '$noteType' and ZuphrId1 eq '$id1' and ZuphrId2 eq '$id2' and ZuphrId3 eq '$id3' "
 
-        if(RestApiClient.getInstance()!=null)
-        RestApiClient.getInstance().retrofitInterface.retrieveNotes(filterstr)
+        if(RestApiClient.getInstance(context as Application?)!=null)
+        RestApiClient.getInstance(context as Application?).retrofitInterface.retrieveNotes(filterstr)
                 .enqueue(object : Callback,
                         retrofit2.Callback<ResponseBody> {
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
