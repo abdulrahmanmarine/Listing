@@ -60,5 +60,6 @@
     <string name="remove">REMOVE</string>
     <string name="destination">Destination: </string>
     <string name="vessel">Vessel: </string>
+    <string name="LoadingData">Loading Plans</string>
 
 </resources>

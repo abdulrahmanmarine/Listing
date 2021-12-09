@@ -1,6 +1,8 @@
 package com.example.listing.Kotlin
 
 import android.os.Bundle
+import android.view.View
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.listing.DataViewModel.Flag
@@ -18,16 +20,18 @@ class Loader : AppCompatActivity(), PlanClickListener {
     var reqs = ArrayList<Plan?>()
     lateinit var model: PlansDataModel
     var po = 0
-
+    lateinit var  progressBar: LinearLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loader)
         this.getSupportActionBar()!!.hide()
 
+        progressBar = findViewById(R.id.progressBarlayout)
 
         model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(PlansDataModel::class.java)
         model.getplansLoader(application)
         model.UserRule.value=true
+        progressBar.visibility = View.VISIBLE
         model.getplansLoader(application)
         Flag.initializer(true, true);
         Flag.getInstance().planFlag = true;
@@ -36,11 +40,12 @@ class Loader : AppCompatActivity(), PlanClickListener {
         var ctx = applicationContext
 
         model.Plans.observe(this,
-            { Plans: List<Plan?>? ->
-                buildRecycler(
-                    (Plans as ArrayList<Plan?>?)!!
-                )
-            })
+                { Plans: List<Plan?>? ->
+                    progressBar.visibility = View.GONE
+                    buildRecycler(
+                            (Plans as ArrayList<Plan?>?)!!
+                    )
+                })
 
     }
 
@@ -86,10 +91,10 @@ class Loader : AppCompatActivity(), PlanClickListener {
             val planList = model.Plans.value!!
             val plan = planList[pos]
             val textfragment = LoaderFragment.newInstance(
-                MaterialList as ArrayList<Material>?,
-                plan.zuphrLpname,
-                plan.zuphrVesselName,
-                plan.zuphrCaptain
+                    MaterialList as ArrayList<Material>?,
+                    plan.zuphrLpname,
+                    plan.zuphrVesselName,
+                    plan.zuphrCaptain
 
             )
 

@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "VehicleTable")
@@ -77,7 +78,7 @@ public class Vehicle implements Serializable{
 
     @Ignore
     @JsonIgnore
-    List<Driver> loaders;
+    List<Driver> loaders =new ArrayList<>();
 
     public String getVehid() {
         return Vehid;

@@ -6,4 +6,5 @@
     <dimen name = "list_card_tv_margin2">6dp</dimen>
     <dimen name = "list_card_tv_size">14sp</dimen>
     <dimen name="header_margin_top">5dp</dimen>
+    <dimen name="text_size_M">16dp</dimen>
 </resources>

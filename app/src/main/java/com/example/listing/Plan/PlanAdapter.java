@@ -17,6 +17,7 @@ package com.example.listing.Plan;
             import com.example.listing.databinding.PlanCardBinding;
         import com.example.listing.models.Material;
         import com.example.listing.models.Plan;
+        import com.example.listing.notes.SharefPref;
 
         import java.text.DateFormat;
         import java.text.SimpleDateFormat;
@@ -52,6 +53,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
     public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Plan plan = PlanList.get(position);
         holder.bind(plan);
+        holder.dateText.setText(SharefPref.INSTANCE.parseDate(plan.getZuphrFpDate()));
 
         holder.itemRowBinding.setItemClickListener(this);
     }
