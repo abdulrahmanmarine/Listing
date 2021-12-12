@@ -1,16 +1,20 @@
 package com.example.listing.Kotlin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.listing.DataViewModel.Flag
 import com.example.listing.DataViewModel.PlansDataModel
+import com.example.listing.Login
 import com.example.listing.Material.Loader.LoaderFragment
 import com.example.listing.Plan.PlanFragment
 import com.example.listing.PlanClickListener
 import com.example.listing.R
+import com.example.listing.Utils.Loginsession
 import com.example.listing.ViewModelsFactory.PlansDataModelFactory
 import com.example.listing.models.Material
 import com.example.listing.models.Plan
@@ -25,14 +29,13 @@ class Loader : AppCompatActivity(), PlanClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loader)
         this.getSupportActionBar()!!.hide()
-
+       // var logout: Button =findViewById (R.id.homelogout_button)
         progressBar = findViewById(R.id.progressBarlayout)
 
         model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(PlansDataModel::class.java)
-        model.getplansLoader(application)
+        model.getplansLoader(application,this)
         model.UserRule.value=true
         progressBar.visibility = View.VISIBLE
-        model.getplansLoader(application)
         Flag.initializer(true, true);
         Flag.getInstance().planFlag = true;
         Flag.getInstance().materialFlag=true;
@@ -46,6 +49,13 @@ class Loader : AppCompatActivity(), PlanClickListener {
                             (Plans as ArrayList<Plan?>?)!!
                     )
                 })
+
+//        logout.setOnClickListener {
+//            Loginsession.getInstance().user=null
+//            var intent = Intent(applicationContext, Login::class.java)
+//            startActivity(intent)
+//        }
+
 
     }
 

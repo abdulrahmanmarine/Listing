@@ -4,6 +4,7 @@ package com.example.listing.Manual_Assigment;
         import android.util.Log;
         import android.view.LayoutInflater;
         import android.view.ViewGroup;
+        import android.widget.Button;
 
         import androidx.annotation.NonNull;
         import androidx.databinding.DataBindingUtil;
@@ -48,6 +49,8 @@ public class Manual_Assignment_Adapter extends RecyclerView.Adapter<Manual_Assig
             itemRowBinding.setDeleteListener(deleteListener);
             itemRowBinding.executePendingBindings();
         }
+
+
     }
 
     @NonNull

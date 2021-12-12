@@ -6,6 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".Kotlin.Loader">
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:orientation="horizontal"
+            app:layout_dodgeInsetEdges="bottom">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/homelogout_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="14dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/SALightBlue"
+                android:clickable="true"
+                android:src="@drawable/logout" />
+
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="220dp"
@@ -94,8 +122,8 @@
 
         <FrameLayout
             android:id="@+id/item_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="980dp"
+            android:layout_height="1030dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

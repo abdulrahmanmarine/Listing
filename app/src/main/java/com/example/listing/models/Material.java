@@ -892,5 +892,21 @@ public class Material implements Serializable {
     public void setNotes(ArrayList<com.example.listing.notes.Notes> notes) {
         this.notes = notes;
     }
+
+    public int getMatrialId() {
+        return MatrialId;
+    }
+
+    public void setMatrialId(int matrialId) {
+        MatrialId = matrialId;
+    }
+
+    public String getPlanOfflineID() {
+        return PlanOfflineID;
+    }
+
+    public void setPlanOfflineID(String planOfflineID) {
+        PlanOfflineID = planOfflineID;
+    }
 }
 

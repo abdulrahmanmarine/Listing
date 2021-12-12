@@ -5,6 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Kotlin.Home">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_margin="16dp"
+                android:orientation="horizontal"
+                app:layout_dodgeInsetEdges="bottom"
+                android:id="@+id/logout_button"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/SALightBlue"
+                android:clickable="true"
+                android:src="@drawable/logout" />
+
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout5"
@@ -68,8 +89,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     <LinearLayout
         android:layout_width="452dp"
         android:layout_height="215dp"

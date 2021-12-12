@@ -580,5 +580,12 @@ public class Plan implements Serializable {
         PlanToItems = planToItems;
     }
 
+    public int getPlanId() {
+        return PlanId;
+    }
+
+    public void setPlanId(int planId) {
+        PlanId = planId;
+    }
 }
 

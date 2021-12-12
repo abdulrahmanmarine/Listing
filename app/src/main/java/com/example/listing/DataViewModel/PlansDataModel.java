@@ -5,18 +5,24 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.listing.R;
+import com.example.listing.Utils.AppExecutors;
 import com.example.listing.Utils.DataClass;
+import com.example.listing.Utils.Loginsession;
+import com.example.listing.Utils.OfflineDatabaseClient;
 import com.example.listing.Utils.RestApiClient;
 import com.example.listing.Utils.RetrofitInterface;
 import com.example.listing.models.Driver;
 import com.example.listing.models.ImageList;
 import com.example.listing.models.LoadAction;
+import com.example.listing.models.Material;
 import com.example.listing.models.Plan;
 import com.example.listing.models.PlanUnpack;
+import com.example.listing.models.User;
 import com.example.listing.models.Vehicle;
 import com.example.listing.models.imagenode;
 
@@ -36,12 +42,13 @@ import retrofit2.Response;
 
 public class PlansDataModel extends ViewModel {
 
+    private final SharedPreferences preferences;
+    private final String Mode;
+    private final OfflineDatabaseClient db;
     public MutableLiveData<List<Plan>> Plans = new MutableLiveData<>();
     public  MutableLiveData<Plan> plan = new MutableLiveData<>();
     public MutableLiveData<List<com.example.listing.models.Material>>MatrialsList = new MutableLiveData<>();
     public  MutableLiveData<Boolean> UserRule =new MutableLiveData<>();
-
-
 
     public  MutableLiveData<List<Driver>> MasterdriversList = new MutableLiveData<>();
     public MutableLiveData<List<Vehicle>> MastervehiclesList = new MutableLiveData<>();
@@ -53,6 +60,8 @@ public class PlansDataModel extends ViewModel {
     public MutableLiveData<Boolean> flag = new MutableLiveData<>(true);
     Application application;
 
+    User user;
+
     private static RetrofitInterface retrofitInterface;
 
 
@@ -63,80 +72,113 @@ public class PlansDataModel extends ViewModel {
 
         retrofitInterface = RestApiClient.getInstance(application).getRetrofitInterface();
 
+        preferences = application.getSharedPreferences(application.getResources().getString(R.string.SharedPrefName), Activity.MODE_PRIVATE);
+        Mode = preferences.getString(application.getResources().getString(R.string.UserMode), "");
+        db = OfflineDatabaseClient.getInstance(application.getApplicationContext());
+        user = Loginsession.getInstance().getUser();
+
+
+
     }
 
-    public void setMatrial(com.example.listing.models.Material matrial) {
-        Matrial.postValue(matrial);
-    }
 
-
-    public void getplansLoader(Application application) throws IOException {
+    public void getplansLoader(Application application,LifecycleOwner owner) throws IOException {
         //OFFLINE DATA RETRIEVAL
+
+        if (Mode.equals("offline")) {
+            db.planitem().GetItemAll(user.getUserId()).observe(owner,itemlist->{
+                Log.i("test plans:",itemlist.size()+"");
+
+                for(int i=0 ;i<itemlist.size();i++){
+                    Plan plan=itemlist.get(i);
+                    db.Matrial().GetItemAll(String.valueOf(plan.getPlanId())).observe(owner, matriallist->{
+
+                        Log.i("test matrial:",matriallist.size()+"");
+                        plan.setPlanToItems(matriallist);
+
+                    });
+                    itemlist.set(i,plan);
+                }
+                Plans.postValue(itemlist);
+            });
+
+        }
 
 
         //ONLINE DATA RETRIEVAL
+        else {
+            retrofitInterface.getPlansLoader("Fetch").enqueue(new Callback<PlanUnpack>() {
+                @Override
+                public void onResponse(Call<PlanUnpack> call, retrofit2.Response<PlanUnpack> response) {
+                    if (response.isSuccessful()) {
+                        List<Plan> temp =response.body().getItems();
+                        Plans.postValue(temp);
 
-       retrofitInterface.getPlansLoader("Fetch").enqueue(new Callback<PlanUnpack>() {
-           @Override
-           public void onResponse(Call<PlanUnpack> call, retrofit2.Response<PlanUnpack> response) {
-               Log.i("response-plan" ,response.code()+""+response.message());
-               if (response.isSuccessful()) {
-                   List<Plan> temp =response.body().getItems();
-                   Log.i("response-plan" ,temp.size()+"items");
-                   for(int i=0 ;i<temp.size();i++){
-                       Log.i("response-plan:"+i ,temp.get(i)+"items");
-                       Log.i("response-plan:"+i+"M:" ,temp.get(i).getPlanToItems().size()+"");
-                   }
-                   Plans.postValue(temp);
+                         AppExecutors.getInstance().diskIO().execute(() -> {
+                            for(int i=0 ;i<temp.size();i++){
+                                Plan plan= temp.get(i);
+                                plan.setZuphrFpName(user.getUserId());
+                                String id = String.valueOf(db.planitem().insertplan(plan));
+                                for(int j=0 ;j<temp.get(i).getPlanToItems().size();j++) {
+                                    Material material=temp.get(i).getPlanToItems().get(j);
+                                    material.setPlanOfflineID(id);
+                                    db.Matrial().insertMatrial(material);
+                                }
+                            }
+                        });
 
-               }else {
-                   Log.i("response-plan" ,response.code()+""+response.message());
-                   try {
-                       Log.i("response-plan-error" ,response.errorBody().string());
-                   } catch (IOException e) {
-                       e.printStackTrace();
-                   }
-               }
+                    }
 
-           }
-           @Override
-           public void onFailure(Call<PlanUnpack> call, Throwable t) {
-               Log.i("response-http" ,t.getMessage()+t.getLocalizedMessage());
+                }
+                @Override
+                public void onFailure(Call<PlanUnpack> call, Throwable t) {
+                    Log.i("response-http" ,t.getMessage()+t.getLocalizedMessage());
 
-           }
-       });
+                }
+            });
+        }
+
+
 
 
 
    }
 
 
-    public void getplansDispatcher(Application application) throws IOException {
+    public void getplansDispatcher(Application application, LifecycleOwner owner) throws IOException {
         //OFFLINE DATA RETRIEVAL
+        if (Mode.equals("offline")) {
 
+            db.planitem().GetItemAll(user.getUserId()).observe(owner,itemlist->{
+                Log.i("test plans:",itemlist.size()+"");
+                Plans.postValue(itemlist);
+
+            });
+
+        }
 
         //ONLINE DATA RETRIEVAL
-
-        retrofitInterface.getPlansDispatcher("Fetch").enqueue(new Callback<PlanUnpack>() {
+        else {
+            retrofitInterface.getPlansDispatcher("Fetch").enqueue(new Callback<PlanUnpack>() {
             @Override
             public void onResponse(Call<PlanUnpack> call, retrofit2.Response<PlanUnpack> response) {
-                Log.i("response-plan" ,response.code()+""+response.message());
+
                 if (response.isSuccessful()) {
                     List<Plan> temp =response.body().getItems();
-                    Log.i("response-plan" ,temp.size()+"items");
-                    for(int i=0 ;i<temp.size();i++){
-                        Log.i("response-plan:"+i ,temp.get(i)+"items");
-                        Log.i("response-plan:"+i+"M:" ,temp.get(i).getPlanToItems().size()+"");
-                    }
-                    Plans.postValue(temp);
+                     Plans.postValue(temp);
+                    AppExecutors.getInstance().diskIO().execute(() -> {
+                        for(int i=0 ;i<temp.size();i++){
+                            Plan plan= temp.get(i);
+                            plan.setZuphrFpName(user.getUserId());
+                            String id = String.valueOf(db.planitem().insertplan(plan));
+                            for(int j=0 ;j<temp.get(i).getPlanToItems().size();j++) {
+                                Material material=temp.get(i).getPlanToItems().get(j);
+                                material.setPlanOfflineID(id);
+                                db.Matrial().insertMatrial(material);
+                            }
+                        }
+                    });
 
-                }else {
-                    Log.i("response-plan" ,response.code()+""+response.message());
-                    try {
-                        Log.i("response-plan-error" ,response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
 
             }
@@ -146,9 +188,7 @@ public class PlansDataModel extends ViewModel {
 
             }
         });
-
-
-
+        }
     }
 
     public  void getVechiles(){

@@ -51,6 +51,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
 
     @Override
     public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
         Plan plan = PlanList.get(position);
         holder.bind(plan);
         holder.dateText.setText(SharefPref.INSTANCE.parseDate(plan.getZuphrFpDate()));

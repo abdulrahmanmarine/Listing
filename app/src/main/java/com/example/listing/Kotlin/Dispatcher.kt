@@ -1,13 +1,16 @@
 package com.example.listing.Kotlin
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 
 import com.example.listing.AssignDialog_Configured.Configured_AssignMultiDialogFragment
 import com.example.listing.DataViewModel.PlansDataModel
+import com.example.listing.Login
 import com.example.listing.Manual_Assigment.Manual_AssignMultiDialogFragment
 import com.example.listing.ViewModelsFactory.PlansDataModelFactory
 import com.example.listing.Material.Dispatcher.DispatcherFragment
@@ -15,6 +18,7 @@ import com.example.listing.Plan.PlanFragment
 import com.example.listing.PlanClickListener
 import com.example.listing.R
 import com.example.listing.Utils.DataClass
+import com.example.listing.Utils.Loginsession
 import com.example.listing.models.Material
 import com.example.listing.models.Plan
 import java.util.*
@@ -28,14 +32,16 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
     var po = 0
     lateinit var model :PlansDataModel
     val reqs = ArrayList<Plan?>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loader)
         this.getSupportActionBar()!!.hide()
+        //var logout: Button =findViewById (R.id.homelogout_button)
 
-         model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(PlansDataModel::class.java)
+        model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(PlansDataModel::class.java)
         model.UserRule.value=false
-        model.getplansLoader(application)
+        model.getplansDispatcher(application,this)
         var ctx = applicationContext
 
         model.Plans.observe(this,
@@ -50,6 +56,13 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
                 )
             })
+
+
+//        logout.setOnClickListener {
+//            Loginsession.getInstance().user=null
+//            var intent = Intent(applicationContext, Login::class.java)
+//            startActivity(intent)
+//        }
     }
 
     fun buildRecycler(lst: ArrayList<Plan?>?) {

@@ -72,6 +72,9 @@ public class PlanFragment extends Fragment {
         }else{
             throw new ClassCastException("activity does not implement fragment listener interface");
         }
+
+
+
     }
 
     @Override
@@ -123,48 +126,45 @@ public class PlanFragment extends Fragment {
 
         flagwidget=v.findViewById(R.id.flagwidget);
         button=v.findViewById(R.id.flagbutton);
+
+
         model.Plans.observe(getViewLifecycleOwner(), list -> {
             if(list!=null)
             {
-                if(model.UserRule.getValue()){
-                    flagwidget.setVisibility(View.GONE);
-                }else{
-                    flagwidget.setVisibility(View.VISIBLE);
+                if(list.size()>0){
+
+                    if(model.UserRule.getValue()){
+                        flagwidget.setVisibility(View.GONE);
+                    }else{
+                        flagwidget.setVisibility(View.VISIBLE);
+                    }
+
+                    myadapter = new PlanAdapter(listener, (ArrayList<Plan>) list, getContext(),model.UserRule.getValue());
+                    rv.setAdapter(myadapter);
+
+                    List<String> type =new ArrayList<>();
+                    type.add("Manual");
+                    type.add("Configured");
+
+                    ArrayAdapter<String> adapter=new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,type);
+                    button.setAdapter(adapter);
+                    button.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if(parent.getItemAtPosition(position).toString().equalsIgnoreCase("Manual"))
+                                DataClass.getInstance().setFlag_dispatch(false);
+                            else
+                                DataClass.getInstance().setFlag_dispatch(true);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+
                 }
 
-                myadapter = new PlanAdapter(listener, (ArrayList<Plan>) list, getContext(),model.UserRule.getValue());
-                rv.setAdapter(myadapter);
-
-                List<String> type =new ArrayList<>();
-                type.add("Manual");
-                type.add("Configured");
-
-                ArrayAdapter<String> adapter=new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,type);
-                button.setAdapter(adapter);
-                button.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                      if(parent.getItemAtPosition(position).toString().equalsIgnoreCase("Manual"))
-                        DataClass.getInstance().setFlag_dispatch(false);
-                      else
-                          DataClass.getInstance().setFlag_dispatch(true);
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-
-
-//                if (Flag.getInstance().getPlanFlag()){
-//                    runAnimationAgain();
-//                    Flag.getInstance().setPlanFlag(false);
-//
-//                }
-
-
-           //     runAnimationAgain();
 
             }
 

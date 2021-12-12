@@ -1,5 +1,6 @@
 package com.example.listing.OfflineInterfaces;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -16,17 +17,18 @@ import java.util.List;
 public interface Offline_Matrial {
 
 
-    @Query("SELECT * FROM MaterialTable WHERE PlanOfflineID =:id")
-    List<Material> GetItemAll(String id);
+    @Query("SELECT * FROM MaterialTable WHERE PlanOfflineID =:planid")
+    LiveData<List<Material>> GetItemAll(String planid);
+
 
     @Insert
-    void insertImage(Material material);
+    void insertMatrial(Material material);
 
     @Update
-    void UpdateImage(Material material);
+    void UpdateImageMatrial(Material material);
 
     @Delete
-    void Delete(Material material);
+    void DeleteMatrial(Material material);
 
     @Query("DELETE FROM MaterialTable")
     void nukeTable();
