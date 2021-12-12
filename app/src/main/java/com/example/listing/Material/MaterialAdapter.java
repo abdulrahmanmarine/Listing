@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.listing.CameraButtonClicked;
 import com.example.listing.FoundButtonClicked;
 import com.example.listing.LoadButtonClicked;
 import com.example.listing.NoteButtonClicked;
@@ -33,18 +34,20 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.Materi
    PrcButtonClicked prcListener;
    FoundButtonClicked foundListener;
    NoteButtonClicked noteListener;
+   CameraButtonClicked cameraListener;
    AppCompatActivity act;
    public static List<Material> materialList;
     Context contexts;
 
     public MaterialAdapter(ArrayList<Material> materialList, LoadButtonClicked loadListener, UnloadButtonClicked unloadListener, PrcButtonClicked prcListener
-     , FoundButtonClicked foundListener, NoteButtonClicked noteListener) {
+            , FoundButtonClicked foundListener, NoteButtonClicked noteListener, CameraButtonClicked cameraListener) {
         this.materialList = materialList;
         this.loadListener = loadListener;
         this.unloadListener  = unloadListener;
         this.prcListener = prcListener;
         this.foundListener = foundListener;
         this.noteListener = noteListener;
+        this.cameraListener = cameraListener;
     }
 
     @NonNull
@@ -66,7 +69,7 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.Materi
         holder.itemRowBinding.setPrcClickListen(prcListener);
         holder.itemRowBinding.setFoundClickListen(foundListener);
         holder.itemRowBinding.setNoteClickListen(noteListener);
-
+        holder.itemRowBinding.setCameraButtonCLicked(cameraListener);
     }
 
 

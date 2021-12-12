@@ -1,8 +1,13 @@
 package com.example.listing.Material.Loader;
 
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.Fade;
@@ -24,6 +30,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.listing.CameraButtonClicked;
 import com.example.listing.DataViewModel.Flag;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.FoundButtonClicked;
@@ -39,7 +46,9 @@ import com.example.listing.models.LoadAction;
 import com.example.listing.models.Material;
 import com.example.listing.models.Plan;
 import com.example.listing.notes.RedesignedNotesFragment;
+import com.fasterxml.jackson.core.Base64Variants;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -57,6 +66,7 @@ public class LoaderFragment extends Fragment  {
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_PARAM3 = "param3";
     private static final String ARG_PARAM4 = "param4";
+    static final int REQUEST_IMAGE_CAPTURE = -1;
 
 
     // TODO: Rename and change types of parameters
@@ -137,6 +147,19 @@ public class LoaderFragment extends Fragment  {
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_IMAGE_CAPTURE&& requestCode == Activity.RESULT_OK){
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            String picString = Base64Variants.getDefaultVariant().encode(byteArray);
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -183,6 +206,17 @@ public class LoaderFragment extends Fragment  {
 
 
 
+        CameraButtonClicked cameraListener = new CameraButtonClicked() {
+            @Override
+            public void cameraButtonClicked(int pos) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                try{
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE );
+                }catch (ActivityNotFoundException e){
+
+                }
+            }
+        };
 
         LoadButtonClicked loadListener = new LoadButtonClicked() {
             @Override
@@ -312,7 +346,7 @@ public class LoaderFragment extends Fragment  {
 
 
 
-        materialAdapter = new MaterialAdapter(mParam1, loadListener, unloadListener, prcListener, foundListener, noteListener);
+        materialAdapter = new MaterialAdapter(mParam1, loadListener, unloadListener, prcListener, foundListener, noteListener, cameraListener);
         rv.setAdapter(materialAdapter);
 
 

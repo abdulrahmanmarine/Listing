@@ -81,7 +81,7 @@ public class ChosenVehicleCardAdapter extends RecyclerView.Adapter<ChosenVehicle
         holder.bind(vehicle);
 
         ConfiguredLoaderListAdapter configuredLoaderListAdapter = new ConfiguredLoaderListAdapter(vehicle.getLoaders());
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         holder.itemRowBinding.loadersListCard.setLayoutManager(linearLayoutManager);
         holder.itemRowBinding.loadersListCard.setAdapter(configuredLoaderListAdapter);
 
