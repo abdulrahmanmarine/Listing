@@ -1,12 +1,16 @@
 package com.example.listing.Material.Loader;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.os.Bundle;
 
+import androidx.annotation.DimenRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -356,9 +360,9 @@ public class LoaderFragment extends Fragment  {
            // rv.scheduleLayoutAnimation();
 
             GridLayoutManager grm = new GridLayoutManager(getActivity(), 2);
+
             grm.offsetChildrenHorizontal(1);
             rv.setLayoutManager(grm);
-
             ViewGroup vg = v.findViewById(R.id.cont);
 
 //
@@ -387,3 +391,4 @@ public class LoaderFragment extends Fragment  {
     }
 
 }
+
