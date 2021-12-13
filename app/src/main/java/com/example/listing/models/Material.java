@@ -55,7 +55,7 @@ public class Material implements Serializable {
 
     @JsonProperty("ZuphrLoada")
     @Ignore
-    LoadAction ZuphrLoada;
+    LoadAction ZuphrLoada= new LoadAction();
 
     @JsonProperty("ZuphrLoada")
     @Ignore

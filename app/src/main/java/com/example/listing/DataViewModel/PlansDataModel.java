@@ -82,10 +82,9 @@ public class PlansDataModel extends ViewModel {
         //OFFLINE DATA RETRIEVAL
 
         if (Mode.equals("offline")) {
-            AppExecutors.getInstance().diskIO().execute(() -> {
-                List<Plan> itemlist = db.planitem().GetItemAll(Loginsession.getInstance().getUser().getUserId()).getValue();
-            });
-
+//            AppExecutors.getInstance().diskIO().execute(() -> {
+//                List<Plan> itemlist = db.planitem().GetItemAll(Loginsession.getInstance().getUser().getUserId()).getValue();
+//            });
 
             db.planitem().GetItemAll(Loginsession.getInstance().getUser().getUserId()).observe(owner,itemlist->{
                 Log.i("test plans:",itemlist.size()+"");
@@ -104,6 +103,8 @@ public class PlansDataModel extends ViewModel {
                                 material.setZuphrLoada(loadaction);
                                 matriallist.set(x,material);
                             });
+
+
                         }
                         plan.setPlanToItems(matriallist);
                     });

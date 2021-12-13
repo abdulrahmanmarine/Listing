@@ -148,7 +148,6 @@ public class Login extends AppCompatActivity {
                         startActivity(intent);
                     } else {
                         model.Logged_in.setValue(null);
-                        myProgress.dismiss();
                         Error_Msg.setText(model.ErrorMsg.getValue());
                         Error_Msg.setVisibility(View.VISIBLE);
                     }
