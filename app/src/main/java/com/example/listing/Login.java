@@ -39,10 +39,10 @@ public class Login extends AppCompatActivity {
         model = new ViewModelProvider(this, new LoginView_ModelFactory(Login.this.getApplication())).get(LoginView_Model.class);
 
         if (Loginsession.getInstance() != null) {
-            if (Loginsession.getInstance().getUser() != null) {
-                Intent intent = new Intent(Login.this, Home.class);
-                startActivity(intent);
-            }
+//            if (Loginsession.getInstance().getUser() != null) {
+//                Intent intent = new Intent(Login.this, Home.class);
+//                startActivity(intent);
+//            }
         }
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
@@ -126,8 +126,8 @@ public class Login extends AppCompatActivity {
     public void login() {
         Error_Msg.setVisibility(View.INVISIBLE);
         saveMode("online");
-        binding.password.setText("alsoai0a");
-        binding.username.setText("000000");
+        binding.password.setText("000000");
+        binding.username.setText("alsoai0a");
 
         User user = new User(binding.username.getText().toString(), binding.password.getText().toString());
         if (binding.username.getText().toString().isEmpty() || binding.password.getText().toString().isEmpty()) {

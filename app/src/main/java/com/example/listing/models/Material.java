@@ -40,8 +40,6 @@ public class Material implements Serializable {
     @JsonIgnore
     public  String PlanOfflineID;
 
-
-
     @Ignore
     @JsonIgnore
     public ArrayList<com.example.listing.notes.Notes> notes=new ArrayList<>();

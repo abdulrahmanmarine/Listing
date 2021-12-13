@@ -7,48 +7,46 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-
 import com.example.listing.AssignDialog_Configured.Configured_AssignMultiDialogFragment
 import com.example.listing.DataViewModel.PlansDataModel
 import com.example.listing.Login
 import com.example.listing.Manual_Assigment.Manual_AssignMultiDialogFragment
-import com.example.listing.ViewModelsFactory.PlansDataModelFactory
 import com.example.listing.Material.Dispatcher.DispatcherFragment
 import com.example.listing.Plan.PlanFragment
 import com.example.listing.PlanClickListener
 import com.example.listing.R
 import com.example.listing.Utils.DataClass
 import com.example.listing.Utils.Loginsession
+import com.example.listing.ViewModelsFactory.PlansDataModelFactory
 import com.example.listing.models.Material
 import com.example.listing.models.Plan
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
 class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragmentClickListener{
 
     var dialog: DialogFragment? = null
     var dialogManual: DialogFragment? = null
-    var Flag: Boolean = true
+    private var flag: Boolean = true
     var materialpos = 0
     var po = 0
     lateinit var model :PlansDataModel
-    val reqs = ArrayList<Plan?>()
+    lateinit var logout :FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loader)
-        this.getSupportActionBar()!!.hide()
-        //var logout: Button =findViewById (R.id.homelogout_button)
+        this.supportActionBar!!.hide()
 
         model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(PlansDataModel::class.java)
-        model.UserRule.value=false
         model.getplansDispatcher(application,this)
-        var ctx = applicationContext
+        model.UserRule.value=false
+        logout=findViewById(R.id.logout_button)
 
-        model.Plans.observe(this,
-            { Plans: List<Plan?>? ->
+        model.Plans.observe(this, { Plans: List<Plan?>? ->
                 for (i in 0..1) {
                     if (Plans != null) {
-                        Log.i("for test", Plans.get(i)!!.zuphrVessel + "")
+                        Log.i("for test", Plans[i]!!.zuphrVessel + "")
                     }
             }
                 buildRecycler((Plans as ArrayList<Plan?>?)!!
@@ -58,17 +56,20 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
             })
 
 
-//        logout.setOnClickListener {
-//            Loginsession.getInstance().user=null
-//            var intent = Intent(applicationContext, Login::class.java)
-//            startActivity(intent)
-//        }
+        logout.setOnClickListener {
+           // Loginsession.getInstance().user=null
+            val intent = Intent(applicationContext, Login::class.java)
+            startActivity(intent)
+        }
+
+
     }
 
-    fun buildRecycler(lst: ArrayList<Plan?>?) {
+
+    private fun buildRecycler(lst: ArrayList<Plan?>?) {
 
 
-        val planFragment = PlanFragment.newInstance(lst, true);
+        val planFragment = PlanFragment.newInstance(lst, true)
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
         ft.replace(R.id.constraintLayout4, planFragment)
@@ -81,10 +82,6 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         LoaderFragmentInteraction(pos)
         po = pos
     }
-//    override fun onItemClick(pos: Int) {
-//        LoaderFragmentInteraction(reqs[pos]!!)
-//        po = pos
-//    }
 
     override fun LoaderFragmentInteraction( pos: Int) {
 
@@ -108,61 +105,27 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
         })
 
-
-
-
-//
-//        var itemRV : RecyclerView= findViewById(R.id.item_recycler)
-//        var itemAdapter = MaterialAdapter(plan.materials)
-//        itemRV.layoutManager = GridLayoutManager(this, 3)
-
-
-//        itemRV.adapter = itemAdapter
     }
 
-    fun showAssignDialog(
-        matpos: Int,
-        material: Material,
-    ) {
+    fun showAssignDialog(matpos: Int, material: Material) {
         materialpos = matpos
         val fra = supportFragmentManager
-//        dialog = AssignMultiDialogFragment.newInstance(reqs[po]!!.materials[matpos].name,
-//            reqs[po]!!.materials[matpos].material, driverList, vehicleList, pairList)
-        dialog = Configured_AssignMultiDialogFragment.newInstance(matpos,material);
-        dialogManual=Manual_AssignMultiDialogFragment.newInstance(matpos,material);
 
-//        dialog = AssignMultiDialogFragment.newInstance(reqs[po]!!.planToItems[matpos].zuphrFpName,
-//            reqs[po]!!.planToItems[matpos].zuphrActquan, reqs[po]!!.planToItems[matpos].drivers as ArrayList<Driver>?
-//        );
-        //dialog = AssignDialogFragment.newInstance(reqs[po]!!.materials[matpos].name,reqs[po]!!.materials[matpos].material)
-
-//        (dialog as AssignDialogFragment?)!!.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
-//        (dialog as AssignDialogFragment?)!!.show(fra, "assign")
+        dialog = Configured_AssignMultiDialogFragment.newInstance(matpos,material)
+        dialogManual=Manual_AssignMultiDialogFragment.newInstance(matpos,material)
 
         (dialog as Configured_AssignMultiDialogFragment?)!!.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
         (dialogManual as Manual_AssignMultiDialogFragment?)!!.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
 
-        Flag=DataClass.getInstance().flag_dispatch
-        if(Flag){
+        flag=DataClass.getInstance().flag_dispatch
+        if(flag){
            (dialog as Configured_AssignMultiDialogFragment?)!!.show(fra, "assign")
         }else{
             (dialogManual as Manual_AssignMultiDialogFragment?)!!.show(fra, "assign")
         }
 
 
-
-//        materialpos = matpos
-//        val fra = supportFragmentManager
-//        //dialog = AssignDialogFragment.newInstance(reqs[po]!!.materials[matpos].name,reqs[po]!!.materials[matpos].material)
-//        dialog = AssignDialogFragment.newInstance(reqs[po]!!.planToItems[matpos].zuphrFpName, reqs[po]!!.planToItems[matpos].zuphrFpName)
-//        (dialog as AssignDialogFragment?)!!.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
-//        (dialog as AssignDialogFragment?)!!.show(fra, "assign")
     }
-//    override fun onPositiveClick(text: String?, text2: String?) {
-//        reqs[po]!!.materials[materialpos].driver = text
-//        reqs[po]!!.materials[materialpos].vehicle = text2
-//        dialog!!.dismiss()
-//    }
 
 
 

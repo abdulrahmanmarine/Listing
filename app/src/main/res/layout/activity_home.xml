@@ -17,7 +17,7 @@
                 android:layout_margin="16dp"
                 android:orientation="horizontal"
                 app:layout_dodgeInsetEdges="bottom"
-                android:id="@+id/logout_button"
+                android:id="@+id/homelogout_button"
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/SALightBlue"
                 android:clickable="true"
