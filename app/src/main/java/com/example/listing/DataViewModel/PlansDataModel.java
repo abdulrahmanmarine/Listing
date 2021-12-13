@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.listing.R;
 import com.example.listing.Utils.AppExecutors;
-import com.example.listing.Utils.DataClass;
+
 import com.example.listing.Utils.Loginsession;
 import com.example.listing.Utils.OfflineDatabaseClient;
 import com.example.listing.Utils.RestApiClient;
@@ -60,13 +60,11 @@ public class PlansDataModel extends ViewModel {
     public MutableLiveData<Boolean> flag = new MutableLiveData<>(true);
     Application application;
 
-    User user;
 
     private static RetrofitInterface retrofitInterface;
 
 
-    public PlansDataModel(Application application) throws NoSuchAlgorithmException, KeyStoreException,
-            KeyManagementException {
+    public PlansDataModel(Application application) {
         super();
         this.application = application;
 
@@ -75,8 +73,6 @@ public class PlansDataModel extends ViewModel {
         preferences = application.getSharedPreferences(application.getResources().getString(R.string.SharedPrefName), Activity.MODE_PRIVATE);
         Mode = preferences.getString(application.getResources().getString(R.string.UserMode), "");
         db = OfflineDatabaseClient.getInstance(application.getApplicationContext());
-        user = Loginsession.getInstance().getUser();
-
 
 
     }
@@ -86,17 +82,33 @@ public class PlansDataModel extends ViewModel {
         //OFFLINE DATA RETRIEVAL
 
         if (Mode.equals("offline")) {
-            db.planitem().GetItemAll(user.getUserId()).observe(owner,itemlist->{
+//            AppExecutors.getInstance().diskIO().execute(() -> {
+//                List<Plan> itemlist = db.planitem().GetItemAll(Loginsession.getInstance().getUser().getUserId()).getValue();
+//            });
+
+            db.planitem().GetItemAll(Loginsession.getInstance().getUser().getUserId()).observe(owner,itemlist->{
                 Log.i("test plans:",itemlist.size()+"");
 
                 for(int i=0 ;i<itemlist.size();i++){
                     Plan plan=itemlist.get(i);
                     db.Matrial().GetItemAll(String.valueOf(plan.getPlanId())).observe(owner, matriallist->{
-
                         Log.i("test matrial:",matriallist.size()+"");
-                        plan.setPlanToItems(matriallist);
 
+                        for(int j=0 ;j<matriallist.size();j++) {
+                            Material material=matriallist.get(j);
+                            int x=j;
+                            db.MatrialLoadAction().GetItemAll(String.valueOf(material.MatrialId)).observe(owner, loadaction->{
+                                Log.i("test loadaction:",loadaction.MatiralOfflineID+"");
+
+                                material.setZuphrLoada(loadaction);
+                                matriallist.set(x,material);
+                            });
+
+
+                        }
+                        plan.setPlanToItems(matriallist);
                     });
+
                     itemlist.set(i,plan);
                 }
                 Plans.postValue(itemlist);
@@ -117,13 +129,20 @@ public class PlansDataModel extends ViewModel {
                          AppExecutors.getInstance().diskIO().execute(() -> {
                             for(int i=0 ;i<temp.size();i++){
                                 Plan plan= temp.get(i);
-                                plan.setZuphrFpName(user.getUserId());
+                                plan.setZuphrFpName(Loginsession.getInstance().getUser().getUserId());
                                 String id = String.valueOf(db.planitem().insertplan(plan));
+
                                 for(int j=0 ;j<temp.get(i).getPlanToItems().size();j++) {
                                     Material material=temp.get(i).getPlanToItems().get(j);
                                     material.setPlanOfflineID(id);
-                                    db.Matrial().insertMatrial(material);
+                                    String Mid= String.valueOf(db.Matrial().insertMatrial(material));
+                                    LoadAction loadAction=material.getZuphrLoada();
+                                    loadAction.setMatiralOfflineID(Mid);
+                                    db.MatrialLoadAction().insertLoadAction(loadAction);
                                 }
+
+
+
                             }
                         });
 
@@ -148,11 +167,30 @@ public class PlansDataModel extends ViewModel {
     public void getplansDispatcher(Application application, LifecycleOwner owner) throws IOException {
         //OFFLINE DATA RETRIEVAL
         if (Mode.equals("offline")) {
-
-            db.planitem().GetItemAll(user.getUserId()).observe(owner,itemlist->{
+            db.planitem().GetItemAll(Loginsession.getInstance().getUser().getUserId()).observe(owner,itemlist->{
                 Log.i("test plans:",itemlist.size()+"");
-                Plans.postValue(itemlist);
 
+                for(int i=0 ;i<itemlist.size();i++){
+                    Plan plan=itemlist.get(i);
+                    db.Matrial().GetItemAll(String.valueOf(plan.getPlanId())).observe(owner, matriallist->{
+                        Log.i("test matrial:",matriallist.size()+"");
+
+                        for(int j=0 ;j<matriallist.size();j++) {
+                            Material material=matriallist.get(j);
+                            int x=j;
+                            db.MatrialLoadAction().GetItemAll(String.valueOf(material.MatrialId)).observe(owner, loadaction->{
+                                Log.i("test loadaction:",loadaction.MatiralOfflineID+"");
+
+                                material.setZuphrLoada(loadaction);
+                                matriallist.set(x,material);
+                            });
+                        }
+                        plan.setPlanToItems(matriallist);
+                    });
+
+                    itemlist.set(i,plan);
+                }
+                Plans.postValue(itemlist);
             });
 
         }
@@ -160,33 +198,40 @@ public class PlansDataModel extends ViewModel {
         //ONLINE DATA RETRIEVAL
         else {
             retrofitInterface.getPlansDispatcher("Fetch").enqueue(new Callback<PlanUnpack>() {
-            @Override
-            public void onResponse(Call<PlanUnpack> call, retrofit2.Response<PlanUnpack> response) {
+                @Override
+                public void onResponse(Call<PlanUnpack> call, retrofit2.Response<PlanUnpack> response) {
+                    if (response.isSuccessful()) {
+                        List<Plan> temp =response.body().getItems();
+                        Plans.postValue(temp);
 
-                if (response.isSuccessful()) {
-                    List<Plan> temp =response.body().getItems();
-                     Plans.postValue(temp);
-                    AppExecutors.getInstance().diskIO().execute(() -> {
-                        for(int i=0 ;i<temp.size();i++){
-                            Plan plan= temp.get(i);
-                            plan.setZuphrFpName(user.getUserId());
-                            String id = String.valueOf(db.planitem().insertplan(plan));
-                            for(int j=0 ;j<temp.get(i).getPlanToItems().size();j++) {
-                                Material material=temp.get(i).getPlanToItems().get(j);
-                                material.setPlanOfflineID(id);
-                                db.Matrial().insertMatrial(material);
+                        AppExecutors.getInstance().diskIO().execute(() -> {
+                            for(int i=0 ;i<temp.size();i++){
+                                Plan plan= temp.get(i);
+                                plan.setZuphrFpName(Loginsession.getInstance().getUser().getUserId());
+                                String id = String.valueOf(db.planitem().insertplan(plan));
+
+                                for(int j=0 ;j<temp.get(i).getPlanToItems().size();j++) {
+                                    Material material=temp.get(i).getPlanToItems().get(j);
+                                    material.setPlanOfflineID(id);
+                                    String Mid= String.valueOf(db.Matrial().insertMatrial(material));
+                                    LoadAction loadAction=material.getZuphrLoada();
+                                    loadAction.setMatiralOfflineID(Mid);
+                                    db.MatrialLoadAction().insertLoadAction(loadAction);
+                                }
+
+
+
                             }
-                        }
-                    });
+                        });
+
+                    }
 
                 }
+                @Override
+                public void onFailure(Call<PlanUnpack> call, Throwable t) {
+                    Log.i("response-http" ,t.getMessage()+t.getLocalizedMessage());
 
-            }
-            @Override
-            public void onFailure(Call<PlanUnpack> call, Throwable t) {
-                Log.i("response-http" ,t.getMessage()+t.getLocalizedMessage());
-
-            }
+                }
         });
         }
     }

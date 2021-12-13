@@ -18,6 +18,7 @@ import com.example.listing.Utils.Loginsession
 import com.example.listing.ViewModelsFactory.PlansDataModelFactory
 import com.example.listing.models.Material
 import com.example.listing.models.Plan
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
 class Loader : AppCompatActivity(), PlanClickListener {
@@ -29,7 +30,8 @@ class Loader : AppCompatActivity(), PlanClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loader)
         this.getSupportActionBar()!!.hide()
-       // var logout: Button =findViewById (R.id.homelogout_button)
+        lateinit var logout : FloatingActionButton
+
         progressBar = findViewById(R.id.progressBarlayout)
 
         model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(PlansDataModel::class.java)
@@ -39,8 +41,7 @@ class Loader : AppCompatActivity(), PlanClickListener {
         Flag.initializer(true, true);
         Flag.getInstance().planFlag = true;
         Flag.getInstance().materialFlag=true;
-
-        var ctx = applicationContext
+        logout=findViewById(R.id.logout_button);
 
         model.Plans.observe(this,
                 { Plans: List<Plan?>? ->
@@ -50,11 +51,11 @@ class Loader : AppCompatActivity(), PlanClickListener {
                     )
                 })
 
-//        logout.setOnClickListener {
-//            Loginsession.getInstance().user=null
-//            var intent = Intent(applicationContext, Login::class.java)
-//            startActivity(intent)
-//        }
+        logout.setOnClickListener {
+            //Loginsession.getInstance().user=null
+            var intent = Intent(applicationContext, Login::class.java)
+            startActivity(intent)
+        }
 
 
     }

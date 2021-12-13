@@ -7,10 +7,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.listing.Login
 import com.example.listing.R
+import com.example.listing.Utils.DataClass
 import com.example.listing.Utils.Loginsession
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class Home : AppCompatActivity() {
+
+    lateinit var logout : FloatingActionButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -18,8 +23,8 @@ class Home : AppCompatActivity() {
 
         var loader : ConstraintLayout = findViewById(R.id.loader)
         var dispatcher : ConstraintLayout = findViewById(R.id.dispatcher)
-        //var logout: Button =findViewById(R.id.homelogout_button)
-
+        logout=findViewById(R.id.homelogout_button);
+        DataClass.initializer()
         loader.setOnClickListener {
             var intent = Intent(applicationContext, Loader::class.java)
             startActivity(intent)
@@ -30,11 +35,11 @@ class Home : AppCompatActivity() {
             startActivity(intent)
         }
 
-//        logout.setOnClickListener {
-//            Loginsession.getInstance().user=null
-//            var intent = Intent(applicationContext, Login::class.java)
-//            startActivity(intent)
-//        }
+        logout.setOnClickListener {
+           // Loginsession.getInstance().user=null
+            var intent = Intent(applicationContext, Login::class.java)
+            startActivity(intent)
+        }
 
 
     }

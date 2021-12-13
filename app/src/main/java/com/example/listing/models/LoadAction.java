@@ -32,9 +32,9 @@ public class LoadAction implements Serializable {
     public int LoadActionId;
 
     @Expose(serialize = false,deserialize = false)
-    @ColumnInfo(name = "PlanOfflineID")
+    @ColumnInfo(name = "MatiralOfflineID")
     @JsonIgnore
-    public  String PlanOfflineID;
+    public  String MatiralOfflineID;
 
 
     @JsonProperty("zuphrLpid")
@@ -251,5 +251,13 @@ public class LoadAction implements Serializable {
     }
 
     public LoadAction() {
+    }
+
+    public String getMatiralOfflineID() {
+        return MatiralOfflineID;
+    }
+
+    public void setMatiralOfflineID(String matiralOfflineID) {
+        MatiralOfflineID = matiralOfflineID;
     }
 }

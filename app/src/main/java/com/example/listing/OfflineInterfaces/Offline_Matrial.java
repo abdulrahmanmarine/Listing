@@ -22,7 +22,7 @@ public interface Offline_Matrial {
 
 
     @Insert
-    void insertMatrial(Material material);
+    long insertMatrial(Material material);
 
     @Update
     void UpdateImageMatrial(Material material);

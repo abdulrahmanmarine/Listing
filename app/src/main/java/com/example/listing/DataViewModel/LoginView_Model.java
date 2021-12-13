@@ -40,8 +40,7 @@ public class LoginView_Model extends ViewModel {
 
     public void OffLogin(String username, LifecycleOwner owner) {
         final OfflineDatabaseClient db = OfflineDatabaseClient.getInstance(application.getApplicationContext());
-        db.Users().GetUser(username.toUpperCase())
-                .observe(owner, user -> {
+        db.Users().GetUser(username.toUpperCase()).observe(owner, user -> {
                     if (user != null) {
                         user.setUserId(user.getUserId());
                         Loginsession.initializer(null, user);
@@ -90,7 +89,8 @@ public class LoginView_Model extends ViewModel {
 
                 if(response.errorBody()!=null){
                     try {
-                        Log.i("response",response.errorBody().string());
+                        ErrorMsg.setValue(response.errorBody().string());
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -107,8 +107,6 @@ public class LoginView_Model extends ViewModel {
                         }
                     });
                     Loginsession.initializer( response.headers().get("x-csrf-token"), user1);
-                    Log.i("response",response.body().getUser().Profileid);
-                    Loginsession.getInstance().setUser(user1);
                     Logged_in.postValue(true);
 
                 }

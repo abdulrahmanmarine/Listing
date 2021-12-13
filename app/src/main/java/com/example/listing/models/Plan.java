@@ -587,5 +587,7 @@ public class Plan implements Serializable {
     public void setPlanId(int planId) {
         PlanId = planId;
     }
+
+
 }
 
