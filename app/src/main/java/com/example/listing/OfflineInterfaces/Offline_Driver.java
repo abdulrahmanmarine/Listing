@@ -18,7 +18,7 @@ public interface Offline_Driver {
     List<Driver> GetItemAll(String id);
 
     @Insert
-    void insertImage(Driver driver);
+    void insertDriver(Driver driver);
 
     @Update
     void UpdateImage(Driver driver);

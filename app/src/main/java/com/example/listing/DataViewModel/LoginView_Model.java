@@ -44,6 +44,7 @@ public class LoginView_Model extends ViewModel {
                     if (user != null) {
                         user.setUserId(user.getUserId());
                         Loginsession.initializer(null, user);
+                        Loginsession.getInstance().setUser(user);
                         Log.d("userid1", user.getUserId() + "");
                         Offline.postValue(true);
                     } else {

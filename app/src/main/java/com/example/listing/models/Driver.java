@@ -60,7 +60,7 @@ public class Driver implements Serializable{
     @Expose(serialize = false,deserialize = false)
     @ColumnInfo(name = "MaterialOfflineID")
     @JsonIgnore
-    public  String MaterialOfflineID;
+    public  String VechileId;
 
 
     public String getZuphrDriverid() {
@@ -134,5 +134,11 @@ public class Driver implements Serializable{
 
     }
 
+    public String getVechileId() {
+        return VechileId;
+    }
 
+    public void setVechileId(String vechileId) {
+        VechileId = vechileId;
+    }
 }

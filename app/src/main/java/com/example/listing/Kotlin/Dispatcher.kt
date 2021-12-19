@@ -68,7 +68,6 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
     private fun buildRecycler(lst: ArrayList<Plan?>?) {
 
-
         val planFragment = PlanFragment.newInstance(lst, true)
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()

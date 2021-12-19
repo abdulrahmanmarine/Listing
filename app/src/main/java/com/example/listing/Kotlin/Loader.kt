@@ -52,7 +52,7 @@ class Loader : AppCompatActivity(), PlanClickListener {
                 })
 
         logout.setOnClickListener {
-            //Loginsession.getInstance().user=null
+            Loginsession.getInstance().user=null
             var intent = Intent(applicationContext, Login::class.java)
             startActivity(intent)
         }

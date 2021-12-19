@@ -104,8 +104,20 @@ public class PlansDataModel extends ViewModel {
                                 matriallist.set(x,material);
                             });
 
-
+//                            List<Vehicle> vehicles = db.MatrialVehicles().GetItemAll(String.valueOf(material.MatrialId));
+//                            material.setVehicles(vehicles);
+//                            matriallist.set(x, material);
+//
+//                            for(int y = 0 ; y <vehicles.size() ; y++){
+//                                Vehicle vehicle = vehicles.get(y);
+//                                List<Driver> drivers  = db.MatrialDrivers().GetItemAll(String.valueOf(vehicle.VehicleId));
+//                                material.setDrivers(drivers);
+//                                matriallist.set(x, material);
+//                            }
                         }
+
+
+
                         plan.setPlanToItems(matriallist);
                     });
 
@@ -139,6 +151,17 @@ public class PlansDataModel extends ViewModel {
                                     LoadAction loadAction=material.getZuphrLoada();
                                     loadAction.setMatiralOfflineID(Mid);
                                     db.MatrialLoadAction().insertLoadAction(loadAction);
+
+//                                    for(int x=0 ; x<material.getVehicles().size();x++){
+//                                        Vehicle vehicle = material.getVehicles().get(j);
+//                                        String idV = String.valueOf(db.MatrialVehicles().insertV(vehicle));
+//
+//                                        for (int y = 0 ; y <vehicle.getLoaders().size(); y++){
+//                                            Driver driver = vehicle.getLoaders().get(y);
+//                                            driver.setVechileId(idV);
+//                                            db.MatrialDrivers().insertImage(driver);
+//                                        }
+//                                    }
                                 }
 
 
@@ -164,6 +187,28 @@ public class PlansDataModel extends ViewModel {
    }
 
 
+    public void postLoadAction(LoadAction loadAction){
+        SharedPreferences preferences=application.getSharedPreferences(application.getResources()
+                .getString(R.string.SharedPrefName), Activity.MODE_PRIVATE);
+        String token2 =preferences.getString("x-csrf-token","");
+        retrofitInterface.postLoadAction(loadAction, token2).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                ResponseBody responsefromApi = response.body();
+                String offlineMaterialId = loadAction.getMatiralOfflineID();
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+
     public void getplansDispatcher(Application application, LifecycleOwner owner) throws IOException {
         //OFFLINE DATA RETRIEVAL
         if (Mode.equals("offline")) {
@@ -184,6 +229,19 @@ public class PlansDataModel extends ViewModel {
                                 material.setZuphrLoada(loadaction);
                                 matriallist.set(x,material);
                             });
+
+//                            List<Vehicle> vehicles = db.MatrialVehicles().GetItemAll(String.valueOf(material.MatrialId));
+//                            material.setVehicles(vehicles);
+//                            matriallist.set(x, material);
+//
+//                            for(int y = 0 ; y <vehicles.size() ; y++){
+//                                Vehicle vehicle = vehicles.get(y);
+//                                List<Driver> drivers  = db.MatrialDrivers().GetItemAll(String.valueOf(vehicle.VehicleId));
+//                                material.setDrivers(drivers);
+//                                matriallist.set(x, material);
+//                            }
+
+
                         }
                         plan.setPlanToItems(matriallist);
                     });
@@ -217,6 +275,17 @@ public class PlansDataModel extends ViewModel {
                                     LoadAction loadAction=material.getZuphrLoada();
                                     loadAction.setMatiralOfflineID(Mid);
                                     db.MatrialLoadAction().insertLoadAction(loadAction);
+
+//                                    for(int x=0 ; x<material.getVehicles().size();x++){
+//                                        Vehicle vehicle = material.getVehicles().get(j);
+//                                        String idV = String.valueOf(db.MatrialVehicles().insertV(vehicle));
+//
+//                                        for (int y = 0 ; y <vehicle.getLoaders().size(); y++){
+//                                            Driver driver = vehicle.getLoaders().get(y);
+//                                            driver.setVechileId(idV);
+//                                            db.MatrialDrivers().insertImage(driver);
+//                                        }
+//                                    }
                                 }
 
 
@@ -366,23 +435,6 @@ public class PlansDataModel extends ViewModel {
         });
     }
 
-    public void postLoadAction(LoadAction loadAction){
-        SharedPreferences preferences=application.getSharedPreferences(application.getResources()
-                .getString(R.string.SharedPrefName), Activity.MODE_PRIVATE);
-        String token2 =preferences.getString("x-csrf-token","");
-        retrofitInterface.postLoadAction(loadAction, token2).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-
-    }
 
     public void StroingImages(Application application, List<imagenode> imagenode,String MatrialId)
             throws JSONException {

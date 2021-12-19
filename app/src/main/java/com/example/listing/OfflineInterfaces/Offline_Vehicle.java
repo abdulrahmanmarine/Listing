@@ -19,10 +19,10 @@ public interface Offline_Vehicle {
     List<Vehicle> GetItemAll(String id);
 
     @Insert
-    void insertImage(Vehicle material);
+    long insertV(Vehicle material);
 
     @Update
-    void UpdateImage(Vehicle material);
+    void UpdateV(Vehicle material);
 
     @Delete
     void Delete(Vehicle material);
