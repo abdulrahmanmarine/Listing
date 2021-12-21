@@ -90,8 +90,8 @@ public class PlansDataModel extends ViewModel {
                 Log.i("test plans:",itemlist.size()+"");
 
                 for(int i=0 ;i<itemlist.size();i++){
-                    Plan plan=itemlist.get(i);
-                    db.Matrial().GetItemAll(String.valueOf(plan.getPlanId())).observe(owner, matriallist->{
+                    Plan plan2=itemlist.get(i);
+                    db.Matrial().GetItemAll(String.valueOf(plan2.getPlanId())).observe(owner, matriallist->{
                         Log.i("test matrial:",matriallist.size()+"");
 
                         for(int j=0 ;j<matriallist.size();j++) {
@@ -117,11 +117,10 @@ public class PlansDataModel extends ViewModel {
                         }
 
 
-
-                        plan.setPlanToItems(matriallist);
+                        plan2.setPlanToItems(matriallist);
                     });
 
-                    itemlist.set(i,plan);
+                    itemlist.set(i,plan2);
                 }
                 Plans.postValue(itemlist);
             });
@@ -141,7 +140,7 @@ public class PlansDataModel extends ViewModel {
                          AppExecutors.getInstance().diskIO().execute(() -> {
                             for(int i=0 ;i<temp.size();i++){
                                 Plan plan= temp.get(i);
-                                plan.setZuphrFpName(Loginsession.getInstance().getUser().getUserId());
+                                plan.setZuphrFpName(Loginsession.getInstance().getUser().getUserId().toUpperCase());
                                 String id = String.valueOf(db.planitem().insertplan(plan));
 
                                 for(int j=0 ;j<temp.get(i).getPlanToItems().size();j++) {
@@ -216,8 +215,8 @@ public class PlansDataModel extends ViewModel {
                 Log.i("test plans:",itemlist.size()+"");
 
                 for(int i=0 ;i<itemlist.size();i++){
-                    Plan plan=itemlist.get(i);
-                    db.Matrial().GetItemAll(String.valueOf(plan.getPlanId())).observe(owner, matriallist->{
+                    Plan plan2=itemlist.get(i);
+                    db.Matrial().GetItemAll(String.valueOf(plan2.getPlanId())).observe(owner, matriallist->{
                         Log.i("test matrial:",matriallist.size()+"");
 
                         for(int j=0 ;j<matriallist.size();j++) {
@@ -228,6 +227,7 @@ public class PlansDataModel extends ViewModel {
 
                                 material.setZuphrLoada(loadaction);
                                 matriallist.set(x,material);
+
                             });
 
 //                            List<Vehicle> vehicles = db.MatrialVehicles().GetItemAll(String.valueOf(material.MatrialId));
@@ -243,10 +243,10 @@ public class PlansDataModel extends ViewModel {
 
 
                         }
-                        plan.setPlanToItems(matriallist);
+                        plan2.setPlanToItems(matriallist);
                     });
 
-                    itemlist.set(i,plan);
+                    itemlist.set(i,plan2);
                 }
                 Plans.postValue(itemlist);
             });
@@ -265,13 +265,15 @@ public class PlansDataModel extends ViewModel {
                         AppExecutors.getInstance().diskIO().execute(() -> {
                             for(int i=0 ;i<temp.size();i++){
                                 Plan plan= temp.get(i);
-                                plan.setZuphrFpName(Loginsession.getInstance().getUser().getUserId());
+                                plan.setZuphrFpName(Loginsession.getInstance().getUser().getUserId().toUpperCase());
                                 String id = String.valueOf(db.planitem().insertplan(plan));
 
                                 for(int j=0 ;j<temp.get(i).getPlanToItems().size();j++) {
                                     Material material=temp.get(i).getPlanToItems().get(j);
                                     material.setPlanOfflineID(id);
                                     String Mid= String.valueOf(db.Matrial().insertMatrial(material));
+
+                                    Log.i("matrial:",Mid+"");
                                     LoadAction loadAction=material.getZuphrLoada();
                                     loadAction.setMatiralOfflineID(Mid);
                                     db.MatrialLoadAction().insertLoadAction(loadAction);

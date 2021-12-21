@@ -42,7 +42,7 @@ public class LoginView_Model extends ViewModel {
         final OfflineDatabaseClient db = OfflineDatabaseClient.getInstance(application.getApplicationContext());
         db.Users().GetUser(username.toUpperCase()).observe(owner, user -> {
                     if (user != null) {
-                        user.setUserId(user.getUserId());
+                        user.setUserId(user.getUserId().toUpperCase());
                         Loginsession.initializer(null, user);
                         Loginsession.getInstance().setUser(user);
                         Log.d("userid1", user.getUserId() + "");

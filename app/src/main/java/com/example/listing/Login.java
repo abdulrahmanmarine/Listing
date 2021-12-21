@@ -106,7 +106,7 @@ public class Login extends AppCompatActivity {
 
 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         builder.setView(input);
-        input.setText("alsoai0a".toUpperCase());
+        input.setText("alsaliat".toUpperCase());
 
 // Set up the buttons
         builder.setPositiveButton("OK", (dialog, which) -> {
@@ -127,7 +127,7 @@ public class Login extends AppCompatActivity {
         Error_Msg.setVisibility(View.INVISIBLE);
         saveMode("online");
         binding.password.setText("000000");
-        binding.username.setText("alsoai0a");
+        binding.username.setText("alsaliat");
 
         User user = new User(binding.username.getText().toString(), binding.password.getText().toString());
         if (binding.username.getText().toString().isEmpty() || binding.password.getText().toString().isEmpty()) {
