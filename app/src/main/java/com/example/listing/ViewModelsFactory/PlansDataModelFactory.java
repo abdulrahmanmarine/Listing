@@ -14,19 +14,18 @@ import java.security.NoSuchAlgorithmException;
 
 public class PlansDataModelFactory implements ViewModelProvider.Factory {
     private Application mApplication;
+    private String id;
 
-
-
-    public PlansDataModelFactory(Application application) {
+    public PlansDataModelFactory(Application application,String deviceid) {
         mApplication = application;
-
+        id=deviceid;
     }
 
 
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
 
-            return (T) new PlansDataModel(mApplication);
+            return (T) new PlansDataModel(mApplication,id);
 
     }
 }

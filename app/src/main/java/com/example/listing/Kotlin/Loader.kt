@@ -2,8 +2,9 @@ package com.example.listing.Kotlin
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -34,8 +35,12 @@ class Loader : AppCompatActivity(), PlanClickListener {
 
         progressBar = findViewById(R.id.progressBarlayout)
 
-        model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(PlansDataModel::class.java)
-        model.getplansLoader(application,this, Loginsession.getInstance().user)
+        val android_id = Settings.Secure.getString(this.getContentResolver(),
+            Settings.Secure.ANDROID_ID
+        )
+
+        model = ViewModelProvider(this, PlansDataModelFactory(this.application,android_id)).get(PlansDataModel::class.java)
+        model.getplansLoader(application, this, Loginsession.getInstance().user)
         model.UserRule.value=true
         progressBar.visibility = View.VISIBLE
         Flag.initializer(true, true);
@@ -44,12 +49,12 @@ class Loader : AppCompatActivity(), PlanClickListener {
         logout=findViewById(R.id.logout_button);
 
         model.Plans.observe(this,
-                { Plans: List<Plan?>? ->
-                    progressBar.visibility = View.GONE
-                    buildRecycler(
-                            (Plans as ArrayList<Plan?>?)!!
-                    )
-                })
+            { Plans: List<Plan?>? ->
+                progressBar.visibility = View.GONE
+                buildRecycler(
+                    (Plans as ArrayList<Plan?>?)!!
+                )
+            })
 
         logout.setOnClickListener {
             Loginsession.getInstance().user=null
@@ -102,10 +107,10 @@ class Loader : AppCompatActivity(), PlanClickListener {
             val planList = model.Plans.value!!
             val plan = planList[pos]
             val textfragment = LoaderFragment.newInstance(
-                    MaterialList as ArrayList<Material>?,
-                    plan.zuphrLpname,
-                    plan.zuphrVesselName,
-                    plan.zuphrCaptain
+                MaterialList as ArrayList<Material>?,
+                plan.zuphrLpname,
+                plan.zuphrVesselName,
+                plan.zuphrCaptain
 
             )
 

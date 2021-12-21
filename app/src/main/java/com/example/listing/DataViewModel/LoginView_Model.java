@@ -14,6 +14,8 @@ import com.example.listing.Utils.Loginsession;
 import com.example.listing.Utils.OfflineDatabaseClient;
 import com.example.listing.Utils.RestApiClient;
 import com.example.listing.Utils.RestLoginClient;
+import com.example.listing.models.Device;
+import com.example.listing.models.Deviceunpack;
 import com.example.listing.models.User;
 import com.example.listing.models.Userunpack;
 
@@ -110,6 +112,7 @@ Application application;
                     Loginsession.initializer( response.headers().get("x-csrf-token"), user1);
                     Logged_in.postValue(true);
 
+
                 }
             }
 
@@ -147,6 +150,42 @@ Application application;
 //        });
 
     }
+
+
+
+
+    private void SearchDevice(String id,Application application) {
+
+//        RestApiClient.getInstance().GetDevice(" Devid eq ' "+id+" ' ").enqueue(new Callback<Deviceunpack>() {
+//            @Override
+//            public void onResponse(@NotNull Call<Deviceunpack> call, @NotNull retrofit2.Response<Deviceunpack> response) {
+//
+//                if(response.errorBody()!=null){
+//                    try {
+//                        Log.i("",response.errorBody().string());
+//
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                if (response.isSuccessful()) {
+//                    Device device = response.body().getdevice();
+//                    if(device!=null){
+//                        Log.i("device is regsterd","");
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NotNull Call<Deviceunpack> call, @NotNull Throwable t) {
+//
+//                Log.i("response-error",t.getLocalizedMessage());
+//
+//            }
+//        });
+
+    }
+
 
 }
 

@@ -145,9 +145,10 @@ public class Login extends AppCompatActivity {
                 myProgress.dismiss();
                 if (Loggedin != null) {
                     if (Loggedin) {
-                        Intent intent = new Intent(Login.this, Home.class);
 
+                        Intent intent = new Intent(Login.this, Home.class);
                         startActivity(intent);
+
                     } else {
                         model.Logged_in.setValue(null);
                         Error_Msg.setText(model.ErrorMsg.getValue());

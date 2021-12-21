@@ -17,6 +17,8 @@ import com.example.listing.Utils.Loginsession;
 import com.example.listing.Utils.OfflineDatabaseClient;
 import com.example.listing.Utils.RestApiClient;
 import com.example.listing.Utils.RetrofitInterface;
+import com.example.listing.models.Device;
+import com.example.listing.models.Deviceunpack;
 import com.example.listing.models.Driver;
 import com.example.listing.models.ImageList;
 import com.example.listing.models.LoadAction;
@@ -25,6 +27,7 @@ import com.example.listing.models.Plan;
 import com.example.listing.models.PlanUnpack;
 import com.example.listing.models.SAPNote;
 import com.example.listing.models.User;
+import com.example.listing.models.Userunpack;
 import com.example.listing.models.Vehicle;
 import com.example.listing.models.imagenode;
 
@@ -69,7 +72,7 @@ public class PlansDataModel extends ViewModel {
     private static RetrofitInterface retrofitInterface;
 
 
-    public PlansDataModel(Application application) {
+    public PlansDataModel(Application application,String id) {
         super();
         this.application = application;
 
@@ -81,6 +84,8 @@ public class PlansDataModel extends ViewModel {
 
 
     }
+
+
 
     public void getplansLoader(Application application,LifecycleOwner owner ,User user) throws IOException {
         //OFFLINE DATA RETRIEVAL

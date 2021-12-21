@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.DimenRes;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.Fade;
@@ -55,6 +57,7 @@ import com.fasterxml.jackson.core.Base64Variants;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -194,6 +197,7 @@ public class LoaderFragment extends Fragment  {
 
 
 
+
         btnCapture = (ImageButton) v.findViewById(R.id.camerabutton);
 
         //set recyclerview adapter
@@ -211,124 +215,112 @@ public class LoaderFragment extends Fragment  {
 
 
 
-        CameraButtonClicked cameraListener = new CameraButtonClicked() {
-            @Override
-            public void cameraButtonClicked(int pos) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                try{
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE );
-                }catch (ActivityNotFoundException e){
-
-                }
-            }
-        };
-
-        LoadButtonClicked loadListener = new LoadButtonClicked() {
-            @Override
-            public void loadButtonClick(int pos) {
-                Material Material= model.MatrialsList.getValue().get(pos);
-                List<Material> list = model.MatrialsList.getValue();
-                LoadAction loadAction= Material.getZuphrLoada();
-                loadAction.setStatus("Loaded");
-                list.set(pos,Material);
-                Plan plan= model.plan.getValue();
-
-                plan.setPlanToItems(list);
-                model.plan.setValue(plan);
-                List<Plan> plans=model.Plans.getValue();
-                for(int i=0;i<model.Plans.getValue().size();i++){
-                    if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-                        plans.set(i,model.plan.getValue());
-                      model.Plans.setValue(plans);
-                    }
-                }
-
+        CameraButtonClicked cameraListener = pos -> {
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            try{
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE );
+            }catch (ActivityNotFoundException e){
 
             }
         };
 
-        UnloadButtonClicked unloadListener = new UnloadButtonClicked() {
-            @Override
-            public void unloadButtonClicked(int pos) {
-                Material Material= model.MatrialsList.getValue().get(pos);
-                List<Material> list = model.MatrialsList.getValue();
-                LoadAction loadAction= Material.getZuphrLoada();
-                loadAction.setStatus("Unloaded");
-                list.set(pos,Material);
-                Plan plan= model.plan.getValue();
-                plan.setPlanToItems(list);
-                model.plan.setValue(plan);
+        LoadButtonClicked loadListener = pos -> {
+            Material Material= model.MatrialsList.getValue().get(pos);
+            List<Material> list = model.MatrialsList.getValue();
+            LoadAction loadAction= Material.getZuphrLoada();
+            loadAction.setStatus("Loaded");
+            list.set(pos,Material);
+            Plan plan= model.plan.getValue();
 
-                List<Plan> plans=model.Plans.getValue();
-                for(int i=0;i<model.Plans.getValue().size();i++){
-                    if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-                        plans.set(i,model.plan.getValue());
-                        model.Plans.setValue(plans);
-                    }
-                }
-            }
-        };
-
-        PrcButtonClicked prcListener = new PrcButtonClicked() {
-            @Override
-            public void PrcButtonClicked(int pos) {
-                Material Material= model.MatrialsList.getValue().get(pos);
-                List<Material> list = model.MatrialsList.getValue();
-                LoadAction loadAction= Material.getZuphrLoada();
-                loadAction.setStatus("Processing");
-                list.set(pos,Material);
-                Plan plan= model.plan.getValue();
-                plan.setPlanToItems(list);
-                model.plan.setValue(plan);
-
-                List<Plan> plans=model.Plans.getValue();
-                for(int i=0;i<model.Plans.getValue().size();i++){
-                    if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-                        plans.set(i,model.plan.getValue());
-                        model.Plans.setValue(plans);
-                    }
-                }
-
-            }
-        };
-
-
-
-  FoundButtonClicked foundListener = new FoundButtonClicked() {
-      @Override
-      public void foundButtonClicked(int pos) {
-          Material Material= model.MatrialsList.getValue().get(pos);
-          List<Material> list = model.MatrialsList.getValue();
-          LoadAction loadAction= Material.getZuphrLoada();
-          loadAction.setStatus("Not Found");
-          list.set(pos,Material);
-          Plan plan= model.plan.getValue();
-          plan.setPlanToItems(list);
-          model.plan.setValue(plan);
-
-
-          List<Plan> plans=model.Plans.getValue();
-          for(int i=0;i<model.Plans.getValue().size();i++){
-              if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-                  plans.set(i,model.plan.getValue());
+            plan.setPlanToItems(list);
+            model.plan.setValue(plan);
+            List<Plan> plans=model.Plans.getValue();
+            for(int i=0;i<model.Plans.getValue().size();i++){
+                if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
+                    plans.set(i,model.plan.getValue());
                   model.Plans.setValue(plans);
-              }
-          }
+                }
+            }
 
+
+        };
+
+        UnloadButtonClicked unloadListener = pos -> {
+            Material Material= model.MatrialsList.getValue().get(pos);
+            List<Material> list = model.MatrialsList.getValue();
+            LoadAction loadAction= Material.getZuphrLoada();
+            loadAction.setStatus("Unloaded");
+            list.set(pos,Material);
+            Plan plan= model.plan.getValue();
+            plan.setPlanToItems(list);
+            model.plan.setValue(plan);
+
+            List<Plan> plans=model.Plans.getValue();
+            for(int i=0;i<model.Plans.getValue().size();i++){
+                if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
+                    plans.set(i,model.plan.getValue());
+                    model.Plans.setValue(plans);
+                }
+            }
+        };
+
+        PrcButtonClicked prcListener = pos -> {
+            Material Material= model.MatrialsList.getValue().get(pos);
+            List<Material> list = model.MatrialsList.getValue();
+            LoadAction loadAction= Material.getZuphrLoada();
+            loadAction.setStatus("Processing");
+            list.set(pos,Material);
+            Plan plan= model.plan.getValue();
+            plan.setPlanToItems(list);
+            model.plan.setValue(plan);
+
+            List<Plan> plans=model.Plans.getValue();
+            for(int i=0;i<model.Plans.getValue().size();i++){
+                if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
+                    plans.set(i,model.plan.getValue());
+                    model.Plans.setValue(plans);
+                }
+            }
+
+        };
+
+
+
+  FoundButtonClicked foundListener = pos -> {
+      Material Material= model.MatrialsList.getValue().get(pos);
+      List<Material> list = model.MatrialsList.getValue();
+      LoadAction loadAction= Material.getZuphrLoada();
+      loadAction.setStatus("Not Found");
+      list.set(pos,Material);
+      Plan plan= model.plan.getValue();
+      plan.setPlanToItems(list);
+      model.plan.setValue(plan);
+
+
+      List<Plan> plans=model.Plans.getValue();
+      for(int i=0;i<model.Plans.getValue().size();i++){
+          if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
+              plans.set(i,model.plan.getValue());
+              model.Plans.setValue(plans);
+          }
       }
+
   };
 
   NoteButtonClicked noteListener = pos -> {
+
+
       FragmentManager fragm = getActivity().getSupportFragmentManager();
       materialAdapter.notifyDataSetChanged();
       SharedPreferences preferences = requireActivity().getSharedPreferences(getResources().getString(R.string.SharedPrefName), Activity.MODE_PRIVATE);
       String Mode = preferences.getString(getResources().getString(R.string.UserMode), "");
 
       Log.i("notes",model.MatrialsList.getValue().get(pos).getNotes().size()+"");
-      notesFragment = new RedesignedNotesFragment(" ", model.MatrialsList.getValue().get(pos),
-              model.MatrialsList.getValue().get(pos).getNotes(),
-                                        model.Plans.getValue().get(pos).getZuphrLpid(), "0", "0",
+      notesFragment =
+              new RedesignedNotesFragment( model.MatrialsList.getValue().get(pos),
+              model.Plans.getValue().get(pos).getZuphrLpid(), "0", Calendar.getInstance().get(Calendar.YEAR) + "",
               requireActivity().getApplication(),Mode);
+
       notesFragment.show(fragm, "Note");
 
 

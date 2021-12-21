@@ -59,8 +59,8 @@ import javax.security.auth.callback.Callback
 
 
 class RedesignedNotesFragment(
-        noteType: String, material: Material,
-        notes: java.util.ArrayList<Notes>, id2: String?,
+         material: Material, 
+         id2: String?,
         id3: String?,
         noteMjahr: String?,
         application: Application,
@@ -70,14 +70,14 @@ class RedesignedNotesFragment(
     private var Mode =mode
     private lateinit var mViewModel: PlansDataModel
     private lateinit var Token: String
-    var notes = notes
+    var notes = ArrayList<Notes>()
     var application=application
     var recording: Boolean = false
     var recorder: MediaRecorder? = null
     var player: MediaPlayer? = null
     private var vmJob = Job()
     private var uiScopre = CoroutineScope(Dispatchers.IO + vmJob)
-    var noteType = noteType
+    var noteType =""
     var id1 = material.zuphrLpid
     var id2 = id2
     var id3 = id3
