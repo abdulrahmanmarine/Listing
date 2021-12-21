@@ -1,11 +1,13 @@
 package com.example.listing.Utils;
 
+import com.example.listing.models.Driver;
 import com.example.listing.models.LoadAction;
 import com.example.listing.models.Plan;
 import com.example.listing.models.ImageList;
 
 import com.example.listing.models.PlanUnpack;
 import com.example.listing.models.Userunpack;
+import com.example.listing.models.Vehicle;
 import com.example.listing.models.imagenode;
 import com.example.listing.models.SAPNote;
 
@@ -15,6 +17,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 public interface RetrofitInterface {
@@ -32,8 +35,8 @@ public interface RetrofitInterface {
     @GET("VehicleSet")
     Call<ResponseBody> GetVehicle(@Url String filter);
 
-    @GET("DriverSet")
-    Call<ResponseBody> GetLoader(@Url String filter);
+    @GET("DriverSet('ABDK01')")
+    Call<ResponseBody> GetLoader(@Header("x-csrf-token") String token,@Query("$filter") String filter);
 
     @GET("DeviceSet")
     Call<ResponseBody> GetDevice(@Url String filter);
@@ -50,6 +53,12 @@ public interface RetrofitInterface {
 
     @POST("NoteSet")
     Call<ResponseBody> submitNote(@Body SAPNote note, @Header("x-csrf-token") String Token);
+
+    @POST("DriverSet")
+    Call<ResponseBody> SaveDriver(@Body Driver driver, @Header("x-csrf-token") String Token);
+
+    @POST("VehicleSet")
+    Call<ResponseBody> SaveVechile(@Body Vehicle vehicle, @Header("x-csrf-token") String Token);
 
     @POST("LoadingPlanLoadActionSet")
     Call<ResponseBody> postLoadAction(@Body LoadAction loadAction, @Header("x-csrf-token") String token);

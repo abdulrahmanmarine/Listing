@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -317,23 +318,21 @@ public class LoaderFragment extends Fragment  {
       }
   };
 
-  NoteButtonClicked noteListener = new NoteButtonClicked() {
-      @Override
-      public void noteButtonClicked(int pos) {
-          AppCompatActivity activity = (AppCompatActivity) getView().getContext();
-          FragmentManager fragm = getActivity().getSupportFragmentManager();
-          int selectedPosition = pos;
-          materialAdapter.notifyDataSetChanged();
+  NoteButtonClicked noteListener = pos -> {
+      FragmentManager fragm = getActivity().getSupportFragmentManager();
+      materialAdapter.notifyDataSetChanged();
+      SharedPreferences preferences = requireActivity().getSharedPreferences(getResources().getString(R.string.SharedPrefName), Activity.MODE_PRIVATE);
+      String Mode = preferences.getString(getResources().getString(R.string.UserMode), "");
 
-          Log.i("notes",model.MatrialsList.getValue().get(pos).getNotes().size()+"");
-          notesFragment = new RedesignedNotesFragment(" ", model.MatrialsList.getValue().get(pos),
-                  model.MatrialsList.getValue().get(pos).getNotes(),
-                                            model.Plans.getValue().get(pos).getZuphrLpid(), "0", "0");
-          notesFragment.show(fragm, "Note");
-
+      Log.i("notes",model.MatrialsList.getValue().get(pos).getNotes().size()+"");
+      notesFragment = new RedesignedNotesFragment(" ", model.MatrialsList.getValue().get(pos),
+              model.MatrialsList.getValue().get(pos).getNotes(),
+                                        model.Plans.getValue().get(pos).getZuphrLpid(), "0", "0",
+              requireActivity().getApplication(),Mode);
+      notesFragment.show(fragm, "Note");
 
 
-      }
+
   };
 
 //        CameraButtonClicked cameraListener = new MaterialAdapter.cameraClick() {

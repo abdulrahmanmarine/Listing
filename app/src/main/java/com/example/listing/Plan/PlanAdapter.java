@@ -100,38 +100,42 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
             itemRowBinding.executePendingBindings();
 
 
-            if(load){
-                for(int i = 0; i< plan.getPlanToItems().size() ; i++){
+            if(plan.getPlanToItems()!=null){
 
-                    Log.i("Status",plan.getPlanToItems().get(i).getZuphrStatus());
-                    if(!plan.getPlanToItems().get(i).getZuphrLoada().getStatus().equalsIgnoreCase("LOADED")){
-                        plan.setZuphrStatus("Incomplete");
+                if(load){
+                    for(int i = 0; i< plan.getPlanToItems().size() ; i++){
 
-                        statusText.setText(plan.getZuphrStatus());
-                        statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
-                        break;
-                    }
-                    else{
-                        plan.setZuphrStatus("Complete");
-                        statusText.setText(plan.getZuphrStatus());
-                        statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
+                        Log.i("Status",plan.getPlanToItems().get(i).getZuphrStatus());
+                        if(!plan.getPlanToItems().get(i).getZuphrLoada().getStatus().equalsIgnoreCase("LOADED")){
+                            plan.setZuphrStatus("Incomplete");
+
+                            statusText.setText(plan.getZuphrStatus());
+                            statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
+                            break;
+                        }
+                        else{
+                            plan.setZuphrStatus("Complete");
+                            statusText.setText(plan.getZuphrStatus());
+                            statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
+                        }
                     }
                 }
-            }
-            else{
-                for(int i = 0; i< plan.getPlanToItems().size(); i++){
-                    Material material = plan.getPlanToItems().get(i);
-                    if(material.getZuphrLoada().getVehicle().isEmpty()){
-                        plan.setZuphrStatus("Incomplete");
-                        statusText.setText(plan.getZuphrStatus());
-                        statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
-                        break;
+                else{
+                    for(int i = 0; i< plan.getPlanToItems().size(); i++){
+                        Material material = plan.getPlanToItems().get(i);
+                        if(material.getZuphrLoada().getVehicle().isEmpty()){
+                            plan.setZuphrStatus("Incomplete");
+                            statusText.setText(plan.getZuphrStatus());
+                            statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
+                            break;
 
-                    }else{
-                        plan.setZuphrStatus("Complete");
-                        statusText.setText(plan.getZuphrStatus());
-                        statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
+                        }else{
+                            plan.setZuphrStatus("Complete");
+                            statusText.setText(plan.getZuphrStatus());
+                            statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
+                        }
                     }
+
                 }
 
             }

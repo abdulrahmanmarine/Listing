@@ -35,7 +35,7 @@ class Loader : AppCompatActivity(), PlanClickListener {
         progressBar = findViewById(R.id.progressBarlayout)
 
         model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(PlansDataModel::class.java)
-        model.getplansLoader(application,this)
+        model.getplansLoader(application,this, Loginsession.getInstance().user)
         model.UserRule.value=true
         progressBar.visibility = View.VISIBLE
         Flag.initializer(true, true);
