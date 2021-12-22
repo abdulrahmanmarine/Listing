@@ -38,7 +38,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         setContentView(R.layout.activity_loader)
         this.supportActionBar!!.hide()
 
-        model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(PlansDataModel::class.java)
+        model = ViewModelProvider(this, PlansDataModelFactory(this.application,"")).get(PlansDataModel::class.java)
         model.getplansDispatcher(application,this)
         model.UserRule.value=false
         logout=findViewById(R.id.logout_button)
