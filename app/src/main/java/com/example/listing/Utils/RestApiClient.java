@@ -1,6 +1,7 @@
 package com.example.listing.Utils;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.example.listing.R;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -74,6 +75,7 @@ public class RestApiClient {
 
         return new OkHttpClient.Builder()
                 .addInterceptor(new BasicAuth(application))
+                .addInterceptor(new ReceivedCookiesInterceptor(application))
                 .cookieJar(new JavaNetCookieJar(new CookieManager()))
                 .connectTimeout(900, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)
@@ -88,16 +90,14 @@ public class RestApiClient {
 
     private static class BasicAuth implements Interceptor {
         Application application;
-
         public BasicAuth(Application application) {
             this.application = application;
 
         }
-
-
         @NotNull
         @Override
         public Response intercept(Chain chain) throws IOException {
+            //String creds = Credentials.basic("alsoai0a", "ABeer28121997@121");
             String creds = Credentials.basic("alsaliat", "Welcome@2");
 
             Headers headers = chain.request().headers().newBuilder()
@@ -112,6 +112,24 @@ public class RestApiClient {
             return chain.proceed(request);
         }
     }
+
+
+    private static class  ReceivedCookiesInterceptor implements Interceptor {
+        Application application;
+        public ReceivedCookiesInterceptor(Application application) {
+            this.application = application;
+        }
+
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Response originalResponse = chain.proceed(chain.request());
+
+         Log.i("url call",originalResponse.request().url()+"");
+            return originalResponse;
+        }
+    }
+
+
 
 
 }

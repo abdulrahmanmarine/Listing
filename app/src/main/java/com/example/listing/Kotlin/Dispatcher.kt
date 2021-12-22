@@ -38,11 +38,13 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         setContentView(R.layout.activity_loader)
         this.supportActionBar!!.hide()
 
-        model = ViewModelProvider(this, PlansDataModelFactory(this.application)).get(PlansDataModel::class.java)
+        model = ViewModelProvider(this, PlansDataModelFactory(this.application,"")).get(PlansDataModel::class.java)
         model.getplansDispatcher(application,this)
         model.UserRule.value=false
         logout=findViewById(R.id.logout_button)
-
+        //model.postDriver()
+        model.postVehicle()
+       // model.getdrivers()
         model.Plans.observe(this, { Plans: List<Plan?>? ->
                 for (i in 0..1) {
                     if (Plans != null) {

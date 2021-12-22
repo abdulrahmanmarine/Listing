@@ -27,7 +27,6 @@ public class Loginsession {
         if (instance == null) {
             return null;
         } else {
-
             return instance;
         }
 

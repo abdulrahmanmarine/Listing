@@ -1,5 +1,6 @@
 package com.example.listing.OfflineInterfaces;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -14,10 +15,10 @@ import java.util.List;
 public interface Offline_Notes {
 
     @Query("SELECT * FROM SAPNote WHERE MaterialOfflineID =:id")
-    List<SAPNote> GetItemAll(String id);
+    LiveData<List<SAPNote>> GetItemAll(String id);
 
     @Insert
-    void insertItem(com.example.listing.models.SAPNote stageitem);
+    long insertItem(com.example.listing.models.SAPNote stageitem);
 
     @Update
     void updateItem(com.example.listing.models.SAPNote stageitem);

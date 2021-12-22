@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -132,6 +133,7 @@ public class Login extends AppCompatActivity {
         User user = new User(binding.username.getText().toString(), binding.password.getText().toString());
         if (binding.username.getText().toString().isEmpty() || binding.password.getText().toString().isEmpty()) {
 
+
             Error_Msg.setText(getResources().getString(R.string.Login_Empty_Error_msg));
             Error_Msg.setVisibility(View.VISIBLE);
 
@@ -143,9 +145,10 @@ public class Login extends AppCompatActivity {
                 myProgress.dismiss();
                 if (Loggedin != null) {
                     if (Loggedin) {
-                        Intent intent = new Intent(Login.this, Home.class);
 
+                        Intent intent = new Intent(Login.this, Home.class);
                         startActivity(intent);
+
                     } else {
                         model.Logged_in.setValue(null);
                         Error_Msg.setText(model.ErrorMsg.getValue());

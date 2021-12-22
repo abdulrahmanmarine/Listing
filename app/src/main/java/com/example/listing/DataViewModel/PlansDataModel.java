@@ -9,6 +9,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.listing.Login;
 import com.example.listing.R;
 import com.example.listing.Utils.AppExecutors;
 
@@ -16,16 +17,21 @@ import com.example.listing.Utils.Loginsession;
 import com.example.listing.Utils.OfflineDatabaseClient;
 import com.example.listing.Utils.RestApiClient;
 import com.example.listing.Utils.RetrofitInterface;
+import com.example.listing.models.Device;
+import com.example.listing.models.Deviceunpack;
 import com.example.listing.models.Driver;
 import com.example.listing.models.ImageList;
 import com.example.listing.models.LoadAction;
 import com.example.listing.models.Material;
 import com.example.listing.models.Plan;
 import com.example.listing.models.PlanUnpack;
+import com.example.listing.models.SAPNote;
 import com.example.listing.models.User;
+import com.example.listing.models.Userunpack;
 import com.example.listing.models.Vehicle;
 import com.example.listing.models.imagenode;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -34,6 +40,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -56,6 +63,7 @@ public class PlansDataModel extends ViewModel {
     public MutableLiveData<com.example.listing.models.Material> Matrial = new MutableLiveData<>();
 
     public MutableLiveData<List<imagenode>> MatrialImageList = new MutableLiveData<>();
+    public MutableLiveData<List<SAPNote>> NoteList = new MutableLiveData<>();
     public MutableLiveData<LoadAction> LoadAction = new MutableLiveData<>();
     public MutableLiveData<Boolean> flag = new MutableLiveData<>(true);
     Application application;
@@ -64,7 +72,7 @@ public class PlansDataModel extends ViewModel {
     private static RetrofitInterface retrofitInterface;
 
 
-    public PlansDataModel(Application application) {
+    public PlansDataModel(Application application,String id) {
         super();
         this.application = application;
 
@@ -78,28 +86,27 @@ public class PlansDataModel extends ViewModel {
     }
 
 
-    public void getplansLoader(Application application,LifecycleOwner owner) throws IOException {
+
+    public void getplansLoader(Application application,LifecycleOwner owner ,User user) throws IOException {
         //OFFLINE DATA RETRIEVAL
 
-        if (Mode.equals("offline")) {
-//            AppExecutors.getInstance().diskIO().execute(() -> {
-//                List<Plan> itemlist = db.planitem().GetItemAll(Loginsession.getInstance().getUser().getUserId()).getValue();
-//            });
+        String userid=Loginsession.getInstance().getUser().getUserId().toUpperCase();
 
-            db.planitem().GetItemAll(Loginsession.getInstance().getUser().getUserId()).observe(owner,itemlist->{
+        if (Mode.equals("offline")) {
+
+
+            db.planitem().GetItemAll(userid).observe(owner,itemlist->{
                 Log.i("test plans:",itemlist.size()+"");
 
                 for(int i=0 ;i<itemlist.size();i++){
-                    Plan plan2=itemlist.get(i);
-                    db.Matrial().GetItemAll(String.valueOf(plan2.getPlanId())).observe(owner, matriallist->{
+                    Plan plan=itemlist.get(i);
+                    db.Matrial().GetItemAll(String.valueOf(plan.getPlanId())).observe(owner, matriallist->{
                         Log.i("test matrial:",matriallist.size()+"");
 
                         for(int j=0 ;j<matriallist.size();j++) {
                             Material material=matriallist.get(j);
                             int x=j;
                             db.MatrialLoadAction().GetItemAll(String.valueOf(material.MatrialId)).observe(owner, loadaction->{
-                                Log.i("test loadaction:",loadaction.MatiralOfflineID+"");
-
                                 material.setZuphrLoada(loadaction);
                                 matriallist.set(x,material);
                             });
@@ -117,10 +124,11 @@ public class PlansDataModel extends ViewModel {
                         }
 
 
-                        plan2.setPlanToItems(matriallist);
+
+                        plan.setPlanToItems(matriallist);
                     });
 
-                    itemlist.set(i,plan2);
+                    itemlist.set(i,plan);
                 }
                 Plans.postValue(itemlist);
             });
@@ -137,11 +145,16 @@ public class PlansDataModel extends ViewModel {
                         List<Plan> temp =response.body().getItems();
                         Plans.postValue(temp);
 
-
                          AppExecutors.getInstance().diskIO().execute(() -> {
+                             db.MatrialLoadAction().nukeTable();
+                             db.planitem().nukeTable();
+                             db.Matrial().nukeTable();
+                             db.MatrialDrivers().nukeTable();
+                             db.MatrialImage().nukeTable();
+                             db.Notes().nukeTable();
                             for(int i=0 ;i<temp.size();i++){
                                 Plan plan= temp.get(i);
-                                plan.setZuphrFpName(Loginsession.getInstance().getUser().getUserId().toUpperCase());
+                                plan.setZuphrFpName(userid.toUpperCase());
                                 String id = String.valueOf(db.planitem().insertplan(plan));
 
                                 for(int j=0 ;j<temp.get(i).getPlanToItems().size();j++) {
@@ -186,12 +199,9 @@ public class PlansDataModel extends ViewModel {
 
    }
 
-
     public void postLoadAction(LoadAction loadAction){
-        SharedPreferences preferences=application.getSharedPreferences(application.getResources()
-                .getString(R.string.SharedPrefName), Activity.MODE_PRIVATE);
-        String token2 =preferences.getString("x-csrf-token","");
-        retrofitInterface.postLoadAction(loadAction, token2).enqueue(new Callback<ResponseBody>() {
+
+        retrofitInterface.postLoadAction(loadAction,  Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 ResponseBody responsefromApi = response.body();
@@ -208,16 +218,15 @@ public class PlansDataModel extends ViewModel {
 
     }
 
-
     public void getplansDispatcher(Application application, LifecycleOwner owner) throws IOException {
         //OFFLINE DATA RETRIEVAL
         if (Mode.equals("offline")) {
-            db.planitem().GetItemAll(Loginsession.getInstance().getUser().getUserId()).observe(owner,itemlist->{
+            db.planitem().GetItemAll(Loginsession.getInstance().getUser().getUserId().toUpperCase()).observe(owner,itemlist->{
                 Log.i("test plans:",itemlist.size()+"");
 
                 for(int i=0 ;i<itemlist.size();i++){
-                    Plan plan2=itemlist.get(i);
-                    db.Matrial().GetItemAll(String.valueOf(plan2.getPlanId())).observe(owner, matriallist->{
+                    Plan plan=itemlist.get(i);
+                    db.Matrial().GetItemAll(String.valueOf(plan.getPlanId())).observe(owner, matriallist->{
                         Log.i("test matrial:",matriallist.size()+"");
 
                         for(int j=0 ;j<matriallist.size();j++) {
@@ -228,7 +237,6 @@ public class PlansDataModel extends ViewModel {
 
                                 material.setZuphrLoada(loadaction);
                                 matriallist.set(x,material);
-
                             });
 
 //                            List<Vehicle> vehicles = db.MatrialVehicles().GetItemAll(String.valueOf(material.MatrialId));
@@ -244,10 +252,10 @@ public class PlansDataModel extends ViewModel {
 
 
                         }
-                        plan2.setPlanToItems(matriallist);
+                        plan.setPlanToItems(matriallist);
                     });
 
-                    itemlist.set(i,plan2);
+                    itemlist.set(i,plan);
                 }
                 Plans.postValue(itemlist);
             });
@@ -273,8 +281,6 @@ public class PlansDataModel extends ViewModel {
                                     Material material=temp.get(i).getPlanToItems().get(j);
                                     material.setPlanOfflineID(id);
                                     String Mid= String.valueOf(db.Matrial().insertMatrial(material));
-
-                                    Log.i("matrial:",Mid+"");
                                     LoadAction loadAction=material.getZuphrLoada();
                                     loadAction.setMatiralOfflineID(Mid);
                                     db.MatrialLoadAction().insertLoadAction(loadAction);
@@ -308,116 +314,215 @@ public class PlansDataModel extends ViewModel {
         }
     }
 
+
+    public  void postDriver(){
+        Driver driver=new Driver("ABDK01","Abdullah Khalid",
+                "Heavy vechile driving ","75756",
+                "Saudi","598574933","Abdullah.Khalid@aramco.com");
+        Log.i("posting started","start");
+
+        retrofitInterface.SaveDriver(driver, Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if(response.errorBody()!=null){
+                    try {
+                        Log.i("post driver error response",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                if(response.isSuccessful()){
+                    try {
+                        Log.i("post driver response",response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                Log.i("post driver no response",t.getMessage());
+
+            }
+        });
+
+    }
+    public  void postVehicle(){
+        Vehicle vehicle=new Vehicle("1","Meduim",
+                "Truck","654654", "10000","Red","2012","12-12-2021","54354",
+                new ArrayList<>());
+
+        Log.i("posting Vechile started","start");
+
+        retrofitInterface.SaveVechile(vehicle, Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if(response.errorBody()!=null){
+                    try {
+                        Log.i("post Vechile error response",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                if(response.isSuccessful()){
+                    try {
+                        Log.i("post Vechile response",response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                Log.i("post Vechile no response",t.getMessage());
+
+            }
+        });
+
+    }
+    public  void postDevice(){
+        Vehicle vehicle=new Vehicle("1","Meduim",
+                "Truck","654654", "10000","Red","2012","12-12-2021","54354",
+                new ArrayList<>());
+
+        Log.i("posting Vechile started","start");
+
+        retrofitInterface.SaveVechile(vehicle, Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if(response.errorBody()!=null){
+                    try {
+                        Log.i("post Vechile error response",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                if(response.isSuccessful()){
+                    try {
+                        Log.i("post Vechile response",response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                Log.i("post Vechile no response",t.getMessage());
+
+            }
+        });
+
+    }
+
+    public  void getdrivers(){
+
+        retrofitInterface.GetLoader(Loginsession.getInstance().getToken(),"ZuphrDriverid eq '1' or ZuphrDriverid eq '2'").enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if(response.errorBody()!=null){
+                    try {
+                        Log.i("get driver error response",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                if(response.isSuccessful()){
+                    try {
+                        Log.i("get driver response",response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                Log.i("get driver no response",t.getMessage());
+
+            }
+        });
+
+
+    }
+
+
+
     public  void getVechiles(){
 
-       Driver driver1 = new Driver("1", "Abdul", "Heavy Vehicle Driving",
-               "456324", "Saudi", "91 66778899", "driver.test@gmail.com");
-       Driver driver2 = new Driver("2", "Ahmed", "Small Vehicle Driving",
-               "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
-       Driver driver3 = new Driver("3", "Ali", "Small Vehicle Driving",
-               "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
-       Driver driver4 = new Driver("4", "Murada", "Small Vehicle Driving",
-               "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
-       Driver driver5 = new Driver("5", "Yousef", "Small Vehicle Driving",
-               "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
-       Driver driver6 = new Driver("6", "Mohammed", "Small Vehicle Driving",
-               "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
+        Driver driver1 = new Driver("1", "Abdul", "Heavy Vehicle Driving",
+                "456324", "Saudi", "91 66778899", "driver.test@gmail.com");
+        Driver driver2 = new Driver("2", "Ahmed", "Small Vehicle Driving",
+                "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
+        Driver driver3 = new Driver("3", "Ali", "Small Vehicle Driving",
+                "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
+        Driver driver4 = new Driver("4", "Murada", "Small Vehicle Driving",
+                "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
+        Driver driver5 = new Driver("5", "Yousef", "Small Vehicle Driving",
+                "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
+        Driver driver6 = new Driver("6", "Mohammed", "Small Vehicle Driving",
+                "456324", "Kuwaiti", "91 66778899", "Ahmed.test@gmail.com");
 
 
-       Vehicle vehicle1 = new Vehicle("1","Medium", "Truck", "456234", "1000",
-               "Red", "2012", "DDMMYYYY", "123456",null);
-       Vehicle vehicle2 = new Vehicle("2","Medium", "Crane", "456234", "1000",
-               "Red", "2012", "DDMMYYYY", "123456",null);
-       Vehicle vehicle3 = new Vehicle("3","Medium", "Two Wheel", "456234", "1000",
-               "Red", "2012", "DDMMYYYY", "123456",null);
-       Vehicle vehicle4 = new Vehicle("4","Medium", "Four Wheel", "456234", "1000",
-               "Red", "2012", "DDMMYYYY", "123456",null);
-       Vehicle vehicle5 = new Vehicle("5","Medium", "Small Truck", "456234", "1000",
-               "Red", "2012", "DDMMYYYY", "123456",null);
-       Vehicle vehicle6 = new Vehicle("6","Medium", "Huge Truck", "456234", "1000",
-               "Red", "2012", "DDMMYYYY", "123456",null);
+        Vehicle vehicle1 = new Vehicle("1","Medium", "Truck", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456",null);
+        Vehicle vehicle2 = new Vehicle("2","Medium", "Crane", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456",null);
+        Vehicle vehicle3 = new Vehicle("3","Medium", "Two Wheel", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456",null);
+        Vehicle vehicle4 = new Vehicle("4","Medium", "Four Wheel", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456",null);
+        Vehicle vehicle5 = new Vehicle("5","Medium", "Small Truck", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456",null);
+        Vehicle vehicle6 = new Vehicle("6","Medium", "Huge Truck", "456234", "1000",
+                "Red", "2012", "DDMMYYYY", "123456",null);
 
         ArrayList<Driver> driversList = new ArrayList<>();
         ArrayList<Vehicle> vehiclesList = new ArrayList<>();
 
-       driversList.add(driver1);
-       driversList.add(driver2);
-       driversList.add(driver3);
-       driversList.add(driver4);
-       driversList.add(driver5);
-       driversList.add(driver6);
-       MasterdriversList.setValue(driversList);
+        driversList.add(driver1);
+        driversList.add(driver2);
+        driversList.add(driver3);
+        driversList.add(driver4);
+        driversList.add(driver5);
+        driversList.add(driver6);
+        MasterdriversList.setValue(driversList);
 
 
 
-       vehiclesList.add(vehicle1);
-       vehiclesList.add(vehicle2);
-       vehiclesList.add(vehicle3);
-       vehiclesList.add(vehicle4);
-       vehiclesList.add(vehicle5);
-       vehiclesList.add(vehicle6);
-       MastervehiclesList.setValue(vehiclesList);
+        vehiclesList.add(vehicle1);
+        vehiclesList.add(vehicle2);
+        vehiclesList.add(vehicle3);
+        vehiclesList.add(vehicle4);
+        vehiclesList.add(vehicle5);
+        vehiclesList.add(vehicle6);
+        MastervehiclesList.setValue(vehiclesList);
 
 
-   }
-
-    public void GetVehicle (Application application ,String Vehicleid){
-
-        retrofitInterface.GetVehicle("VehicleSet('"+Vehicleid+"')").enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                Log.i("response-plan" ,response.code()+""+response.message());
-                if (response.isSuccessful()) {
-
-                    Log.i("response-plan" ,response.body().toString());
-
-                }
-                else {
-                    Log.i("response-plan-error1" ,response.code()+""+response.message());
-                    try {
-                        Log.i("response-plan-error2" ,response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.i("response-http" ,t.getMessage()+t.getLocalizedMessage());
-
-            }
-        });
     }
 
-    public void GetVehicles (Application application ){
-
-        retrofitInterface.GetVehicle("VehicleSet?$filter=Vehid eq '1' or Vehid eq '2'").enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                Log.i("response-plan" ,response.code()+""+response.message());
-                if (response.isSuccessful()) {
-
-                    Log.i("response-plan" ,response.body().toString());
-
-                }
-                else {
-                    Log.i("response-plan-error1" ,response.code()+""+response.message());
-                    try {
-                        Log.i("response-plan-error2" ,response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.i("response-http" ,t.getMessage()+t.getLocalizedMessage());
-
-            }
-        });
-    }
 
     public void GetImages(Application application,  String MaterialId){
 
@@ -437,7 +542,6 @@ public class PlansDataModel extends ViewModel {
             }
         });
     }
-
 
     public void StroingImages(Application application, List<imagenode> imagenode,String MatrialId)
             throws JSONException {
