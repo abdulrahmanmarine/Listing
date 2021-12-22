@@ -137,6 +137,7 @@ public class PlansDataModel extends ViewModel {
                         List<Plan> temp =response.body().getItems();
                         Plans.postValue(temp);
 
+
                          AppExecutors.getInstance().diskIO().execute(() -> {
                             for(int i=0 ;i<temp.size();i++){
                                 Plan plan= temp.get(i);
