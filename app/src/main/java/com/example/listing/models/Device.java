@@ -31,7 +31,7 @@ public class Device implements Serializable {
     public Device() {
 
     }
-    @JsonProperty("Devid")
+    @JsonProperty("DevId")
     String Devid;
 
     @JsonProperty("Name")

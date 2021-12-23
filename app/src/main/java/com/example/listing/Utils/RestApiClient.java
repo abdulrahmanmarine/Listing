@@ -113,7 +113,6 @@ public class RestApiClient {
         }
     }
 
-
     private static class  ReceivedCookiesInterceptor implements Interceptor {
         Application application;
         public ReceivedCookiesInterceptor(Application application) {

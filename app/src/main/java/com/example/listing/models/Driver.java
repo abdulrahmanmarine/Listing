@@ -35,7 +35,7 @@ public class Driver implements Serializable{
     @JsonProperty("ZuphrDriverid")
     String ZuphrDriverid;
 
-    @JsonProperty("ZuphrdrvrName")
+    @JsonProperty("ZuphrDrvrName")
     String ZuphrdrvrName;
 
 
