@@ -35,7 +35,9 @@ import com.example.listing.R;
 import com.example.listing.models.Driver;
 import com.example.listing.models.LoadAction;
 import com.example.listing.models.Material;
+import com.example.listing.models.MatrialDispatching;
 import com.example.listing.models.Plan;
+import com.example.listing.models.VehAssign;
 import com.example.listing.models.Vehicle;
 
 import java.util.ArrayList;
@@ -58,6 +60,10 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
     private LoaderAdapter loaderAdapter;
     private VehicleAdapter vehicleAdapter;
 
+    private MatrialDispatching MatrialDispatch;
+
+    List<VehAssign> Vehassignment= new ArrayList<>();
+    VehAssign Vehassign;
 
     private Manual_Assignment_Adapter chosenVehicleAdapter;
     private ArrayList<Driver> chosenDrivers = new ArrayList<>();
@@ -134,6 +140,14 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         materialParam = (Material) getArguments().getSerializable(MATERIAL_2);
 
 
+        Vehassign=new VehAssign(
+                materialParam.getZuphrLpid(),materialParam.getZuphrMjahr(),
+                materialParam.getZuphrMblpo(),materialParam.getZuphrStgid(),
+                materialParam.getZuphrMatnr(), materialParam.getZuphrReqid(),
+                materialParam.getZuphrReqitm(),materialParam.getZuphrShortxt(),
+                materialParam.getZuphrDescrip(),materialParam.getZuphrOffshore(),
+                "","","","","","");
+
         Bitmap decodedByte ;
         materialName.setText(materialParam.getZuphrShortxt());
         if(materialParam.getZuphrContents().length()> 100) {
@@ -175,6 +189,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
                            loaderAdapter = new LoaderAdapter((ArrayList<Driver>) model.MasterdriversList.getValue(),this::Driverselected);
                            loaderList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                            loaderList.setAdapter(loaderAdapter);
+                   ;
                            break;
                        }
                    }
@@ -203,6 +218,17 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
             plan.setPlanToItems(list);
             model.plan.setValue(plan);
             List<Plan> plans=model.Plans.getValue();
+            for(int i=0 ;i<chosenVehicles.size();i++) {
+                Vehassign.setZuphrVehid(chosenVehicles.get(i).getVehid());
+                for (int j = 0; j < chosenVehicles.get(i).getLoaders().size(); j++) {
+                    Vehassign.setZuphrDriverid(chosenVehicles.get(i).getLoaders().get(j).getZuphrDriverid());
+                    Vehassignment.add(Vehassign);
+                }
+            }
+
+            MatrialDispatch=new MatrialDispatching(plan.getZuphrLpid(),"",Vehassignment);
+            model.AssignValue(MatrialDispatch);
+
             for(int i=0;i<model.Plans.getValue().size();i++){
                 if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
                     plans.set(i,model.plan.getValue());

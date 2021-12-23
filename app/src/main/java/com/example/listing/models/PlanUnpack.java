@@ -13,7 +13,6 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PlanUnpack {
     List<Plan> items = new ArrayList<>();
-    Plan stageitem =new Plan();
 
     public List<Plan> getItems() {
         return items;

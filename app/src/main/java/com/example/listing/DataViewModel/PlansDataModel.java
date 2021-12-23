@@ -13,6 +13,7 @@ import com.example.listing.Login;
 import com.example.listing.R;
 import com.example.listing.Utils.AppExecutors;
 
+import com.example.listing.Utils.DataClass;
 import com.example.listing.Utils.Loginsession;
 import com.example.listing.Utils.OfflineDatabaseClient;
 import com.example.listing.Utils.RestApiClient;
@@ -20,9 +21,11 @@ import com.example.listing.Utils.RetrofitInterface;
 import com.example.listing.models.Device;
 import com.example.listing.models.Deviceunpack;
 import com.example.listing.models.Driver;
+import com.example.listing.models.DriverUnpack;
 import com.example.listing.models.ImageList;
 import com.example.listing.models.LoadAction;
 import com.example.listing.models.Material;
+import com.example.listing.models.MatrialDispatching;
 import com.example.listing.models.Plan;
 import com.example.listing.models.PlanUnpack;
 import com.example.listing.models.SAPNote;
@@ -198,26 +201,6 @@ public class PlansDataModel extends ViewModel {
 
 
    }
-
-    public void postLoadAction(LoadAction loadAction){
-
-        retrofitInterface.postLoadAction(loadAction,  Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                ResponseBody responsefromApi = response.body();
-                String offlineMaterialId = loadAction.getMatiralOfflineID();
-
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-
-    }
-
     public void getplansDispatcher(Application application, LifecycleOwner owner) throws IOException {
         //OFFLINE DATA RETRIEVAL
         if (Mode.equals("offline")) {
@@ -264,6 +247,10 @@ public class PlansDataModel extends ViewModel {
 
         //ONLINE DATA RETRIEVAL
         else {
+
+     //     Plans.setValue(DataClass.getInstance().getPlans());
+
+
             retrofitInterface.getPlansDispatcher("Fetch").enqueue(new Callback<PlanUnpack>() {
                 @Override
                 public void onResponse(Call<PlanUnpack> call, retrofit2.Response<PlanUnpack> response) {
@@ -311,165 +298,11 @@ public class PlansDataModel extends ViewModel {
 
                 }
         });
+
+
+
         }
     }
-
-
-    public  void postDriver(){
-        Driver driver=new Driver("ABDK01","Abdullah Khalid",
-                "Heavy vechile driving ","75756",
-                "Saudi","598574933","Abdullah.Khalid@aramco.com");
-        Log.i("posting started","start");
-
-        retrofitInterface.SaveDriver(driver, Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                if(response.errorBody()!=null){
-                    try {
-                        Log.i("post driver error response",response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-                if(response.isSuccessful()){
-                    try {
-                        Log.i("post driver response",response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                Log.i("post driver no response",t.getMessage());
-
-            }
-        });
-
-    }
-    public  void postVehicle(){
-        Vehicle vehicle=new Vehicle("1","Meduim",
-                "Truck","654654", "10000","Red","2012","12-12-2021","54354",
-                new ArrayList<>());
-
-        Log.i("posting Vechile started","start");
-
-        retrofitInterface.SaveVechile(vehicle, Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                if(response.errorBody()!=null){
-                    try {
-                        Log.i("post Vechile error response",response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-                if(response.isSuccessful()){
-                    try {
-                        Log.i("post Vechile response",response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                Log.i("post Vechile no response",t.getMessage());
-
-            }
-        });
-
-    }
-    public  void postDevice(){
-        Vehicle vehicle=new Vehicle("1","Meduim",
-                "Truck","654654", "10000","Red","2012","12-12-2021","54354",
-                new ArrayList<>());
-
-        Log.i("posting Vechile started","start");
-
-        retrofitInterface.SaveVechile(vehicle, Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                if(response.errorBody()!=null){
-                    try {
-                        Log.i("post Vechile error response",response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-                if(response.isSuccessful()){
-                    try {
-                        Log.i("post Vechile response",response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                Log.i("post Vechile no response",t.getMessage());
-
-            }
-        });
-
-    }
-
-    public  void getdrivers(){
-
-        retrofitInterface.GetLoader(Loginsession.getInstance().getToken(),"ZuphrDriverid eq '1' or ZuphrDriverid eq '2'").enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                if(response.errorBody()!=null){
-                    try {
-                        Log.i("get driver error response",response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-                if(response.isSuccessful()){
-                    try {
-                        Log.i("get driver response",response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                Log.i("get driver no response",t.getMessage());
-
-            }
-        });
-
-
-    }
-
-
-
     public  void getVechiles(){
 
         Driver driver1 = new Driver("1", "Abdul", "Heavy Vehicle Driving",
@@ -508,7 +341,7 @@ public class PlansDataModel extends ViewModel {
         driversList.add(driver4);
         driversList.add(driver5);
         driversList.add(driver6);
-        MasterdriversList.setValue(driversList);
+       // MasterdriversList.setValue(driversList);
 
 
 
@@ -520,6 +353,301 @@ public class PlansDataModel extends ViewModel {
         vehiclesList.add(vehicle6);
         MastervehiclesList.setValue(vehiclesList);
 
+
+        retrofitInterface.GetVehicle().enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if(response.errorBody()!=null){
+                    try {
+                        Log.i("get driver error response",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                if(response.isSuccessful()){
+                    try {
+                        Log.i("get driver response",response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                Log.i("get driver no response",t.getMessage());
+
+            }
+        });
+
+
+
+    }
+    public  void getDevice(){
+
+        retrofitInterface.GetDevice().enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if(response.errorBody()!=null){
+                    try {
+                        Log.i("get device error response",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                if(response.isSuccessful()){
+                    try {
+                        Log.i("get device response",response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                Log.i("get driver no response",t.getMessage());
+
+            }
+        });
+
+
+
+    }
+    public  void getdrivers(){
+
+        retrofitInterface.GetLoader().enqueue(new Callback<DriverUnpack>() {
+            @Override
+            public void onResponse(Call<DriverUnpack> call, Response<DriverUnpack> response) {
+
+                if(response.errorBody()!=null){
+                    try {
+                        Log.i("get driver error response",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                if(response.isSuccessful()){
+                    Log.i("get driver error response",response.body().getriverlist().size()+"");
+                    MasterdriversList.setValue(response.body().getriverlist());
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<DriverUnpack> call, Throwable t) {
+
+                Log.i("get driver no response",t.getMessage());
+
+            }
+        });
+    }
+    public  void getDispatchMtr(String Lpid){
+
+        retrofitInterface.getDispatch(Loginsession.getInstance().getToken(),"LpHdrSet('"+Lpid+"')?$expand=NavLpToVehAssign").enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if(response.errorBody()!=null){
+                    try {
+                        Log.i("get plan error response",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                if(response.isSuccessful()){
+                    try {
+                        Log.i("get plan response",response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                Log.i("get plan no response",t.getMessage());
+
+            }
+        });
+    }
+
+
+    public  void postDriver(){
+        Driver driver=new Driver("ABDK01","Abdullah Khalid",
+                "Truck","75756",
+                "Saudi","598574933","Abdullah.Khalid@aramco.com");
+        Log.i("posting started","start");
+
+        retrofitInterface.SaveDriver(driver, Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if(response.errorBody()!=null){
+                    try {
+                        Log.i("post driver error response",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                if(response.isSuccessful()){
+                    try {
+                        Log.i("post driver response",response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                Log.i("post driver no response",t.getMessage());
+
+            }
+        });
+
+    }
+    public  void postVehicle(){
+
+        Vehicle vehicle=new Vehicle("1","Meduim",
+                "Truck","654654", "10000","Red","2012","20211212","54354",
+                new ArrayList<>());
+
+        Log.i("posting Vechile started","start");
+
+        retrofitInterface.SaveVechile(vehicle, Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if(response.errorBody()!=null){
+                    try {
+                        Log.i("post Vechile error response",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                if(response.isSuccessful()){
+                    try {
+                        Log.i("post Vechile response",response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                Log.i("post Vechile no response",t.getMessage());
+
+            }
+        });
+
+    }
+    public  void postDevice(){
+
+        Device device=new Device("1","Androidtablet",
+                "54644564","654654");
+
+        Log.i("posting Vechile started","start");
+
+        retrofitInterface.SaveDevice(device, Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if(response.errorBody()!=null){
+                    try {
+                        Log.i("post deivce error response",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                if(response.isSuccessful()){
+                    try {
+                        Log.i("post device response",response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                Log.i("post Vechile no response",t.getMessage());
+
+            }
+        });
+
+    }
+    public void AssignValue(MatrialDispatching matrialDispatch) {
+
+        retrofitInterface.Dispatch(matrialDispatch,Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                Log.d("response-post", response.code() + "");
+                if (response.code() == 201) {
+                    ResponseBody temp = response.body();
+
+                    try {
+                        Log.i("response-post", temp.string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i("response-error", t.getMessage());
+
+
+            }
+        });
+    }
+    public void postLoadAction(LoadAction loadAction){
+
+        retrofitInterface.postLoadAction(loadAction,  Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                ResponseBody responsefromApi = response.body();
+                String offlineMaterialId = loadAction.getMatiralOfflineID();
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
 
     }
 
@@ -542,7 +670,6 @@ public class PlansDataModel extends ViewModel {
             }
         });
     }
-
     public void StroingImages(Application application, List<imagenode> imagenode,String MatrialId)
             throws JSONException {
 
@@ -581,5 +708,5 @@ public class PlansDataModel extends ViewModel {
 
     }
 
+    }
 
-}

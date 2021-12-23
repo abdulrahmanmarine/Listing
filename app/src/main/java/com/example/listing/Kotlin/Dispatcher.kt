@@ -42,9 +42,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         model.getplansDispatcher(application,this)
         model.UserRule.value=false
         logout=findViewById(R.id.logout_button)
-        //model.postDriver()
-        model.postVehicle()
-       // model.getdrivers()
+
         model.Plans.observe(this, { Plans: List<Plan?>? ->
                 for (i in 0..1) {
                     if (Plans != null) {
@@ -79,6 +77,9 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
 
     override fun onItemClick(plan: Plan?, pos: Int) {
+
+        model.getDispatchMtr(plan?.ZuphrLpid)
+
         model.plan.value = plan
         LoaderFragmentInteraction(pos)
         po = pos

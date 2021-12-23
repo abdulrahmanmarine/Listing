@@ -3,7 +3,9 @@ package com.example.listing.Utils;
 import com.example.listing.models.Device;
 import com.example.listing.models.Deviceunpack;
 import com.example.listing.models.Driver;
+import com.example.listing.models.DriverUnpack;
 import com.example.listing.models.LoadAction;
+import com.example.listing.models.MatrialDispatching;
 import com.example.listing.models.Plan;
 import com.example.listing.models.ImageList;
 
@@ -37,11 +39,13 @@ public interface RetrofitInterface {
 
 
     @GET("VehicleSet")
-    Call<ResponseBody> GetVehicle(@Url String filter);
-
-    @GET("DriverSet('ABDK01')")
-    Call<ResponseBody> GetLoader(@Header("x-csrf-token") String token,@Query("$filter") String filter);
-
+    Call<ResponseBody> GetVehicle();
+    @GET("DriverSet")
+    Call<DriverUnpack> GetLoader();
+    @GET("DeviceSet")
+    Call<ResponseBody> GetDevice();
+    @GET
+    Call<ResponseBody> getDispatch(@Header("x-csrf-token") String token,@Url String url);
 
 
 
@@ -59,12 +63,14 @@ public interface RetrofitInterface {
 
     @POST("DriverSet")
     Call<ResponseBody> SaveDriver(@Body Driver driver, @Header("x-csrf-token") String Token);
-
     @POST("DeviceSet")
     Call<ResponseBody> SaveDevice(@Body Device device, @Header("x-csrf-token") String Token);
-
     @POST("VehicleSet")
     Call<ResponseBody> SaveVechile(@Body Vehicle vehicle, @Header("x-csrf-token") String Token);
+    @POST("DispatcherSet")
+    Call<ResponseBody> Dispatch(  @Body  MatrialDispatching matrialDispatch, @Header("x-csrf-token") String token);
+
+
 
     @POST("LoadingPlanLoadActionSet")
     Call<ResponseBody> postLoadAction(@Body LoadAction loadAction, @Header("x-csrf-token") String token);
@@ -73,7 +79,9 @@ public interface RetrofitInterface {
     Call<Userunpack> DVClogin(@Header("x-csrf-token") String fetch);
 
 
-    @GET("DeviceSet")
-    Call<Deviceunpack> GetDevice(@Query("$filter") String filter);
 
-}
+
+
+
+
+   }
