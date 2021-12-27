@@ -12,6 +12,7 @@ import com.example.listing.models.ImageList;
 import com.example.listing.models.PlanUnpack;
 import com.example.listing.models.Userunpack;
 import com.example.listing.models.Vehicle;
+import com.example.listing.models.VehicleUnpack;
 import com.example.listing.models.imagenode;
 import com.example.listing.models.SAPNote;
 
@@ -39,7 +40,7 @@ public interface RetrofitInterface {
 
 
     @GET("VehicleSet")
-    Call<ResponseBody> GetVehicle();
+    Call<VehicleUnpack> GetVehicle(@Header("x-csrf-token") String token);
     @GET("DriverSet")
     Call<DriverUnpack> GetLoader();
     @GET("DeviceSet")

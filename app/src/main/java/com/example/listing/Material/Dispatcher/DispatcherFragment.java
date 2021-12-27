@@ -178,6 +178,7 @@ public class DispatcherFragment extends Fragment {
 
         //model.postDriver();
         model.getdrivers();
+        model.getVechiles();
 
         //model.postDevice();
         //model.getDevice();

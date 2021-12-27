@@ -32,6 +32,7 @@ import com.example.listing.models.SAPNote;
 import com.example.listing.models.User;
 import com.example.listing.models.Userunpack;
 import com.example.listing.models.Vehicle;
+import com.example.listing.models.VehicleUnpack;
 import com.example.listing.models.imagenode;
 
 import org.jetbrains.annotations.NotNull;
@@ -305,6 +306,30 @@ public class PlansDataModel extends ViewModel {
     }
     public  void getVechiles(){
 
+        retrofitInterface.GetVehicle("Fetch").enqueue(new Callback<VehicleUnpack>() {
+            @Override
+            public void onResponse(Call<VehicleUnpack> call, Response<VehicleUnpack> response) {
+                if(response.errorBody()!=null){
+                    try {
+                        Log.i("get Vehicle error response",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if(response.isSuccessful()){
+                    List<Vehicle> vehicles = response.body().getItems();
+                    Log.i("vehicles", "vehi size: " + vehicles.size());
+                    MastervehiclesList.setValue(vehicles);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VehicleUnpack> call, Throwable t) {
+                Log.i("response-http", t.getMessage()+t.getLocalizedMessage());
+            }
+        });
+
         Driver driver1 = new Driver("1", "Abdul", "Heavy Vehicle Driving",
                 "456324", "Saudi", "91 66778899", "driver.test@gmail.com");
         Driver driver2 = new Driver("2", "Ahmed", "Small Vehicle Driving",
@@ -354,36 +379,36 @@ public class PlansDataModel extends ViewModel {
         MastervehiclesList.setValue(vehiclesList);
 
 
-        retrofitInterface.GetVehicle().enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                if(response.errorBody()!=null){
-                    try {
-                        Log.i("get driver error response",response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-                if(response.isSuccessful()){
-                    try {
-                        Log.i("get driver response",response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                Log.i("get driver no response",t.getMessage());
-
-            }
-        });
+//        retrofitInterface.GetVehicle().enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//
+//                if(response.errorBody()!=null){
+//                    try {
+//                        Log.i("get driver error response",response.errorBody().string());
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//                if(response.isSuccessful()){
+//                    try {
+//                        Log.i("get driver response",response.body().string());
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//
+//                Log.i("get driver no response",t.getMessage());
+//
+//            }
+//        });
 
 
 
@@ -439,7 +464,7 @@ public class PlansDataModel extends ViewModel {
 
                 }
                 if(response.isSuccessful()){
-                    Log.i("get driver error response",response.body().getriverlist().size()+"");
+                    Log.i("ger driver success response",response.body().getriverlist().size()+"");
                     MasterdriversList.setValue(response.body().getriverlist());
                 }
 
