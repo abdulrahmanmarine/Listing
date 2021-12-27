@@ -44,7 +44,7 @@ public class Vehicle implements Serializable{
     public  String MaterialOfflineID;
 
 
-    @JsonProperty("Vehid")
+    @JsonProperty("VehId")
     String Vehid;
 
     @JsonProperty("Category")

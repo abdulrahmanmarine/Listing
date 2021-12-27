@@ -176,11 +176,14 @@ public class DispatcherFragment extends Fragment {
         dest_tv = v.findViewById(R.id.dest_tv);
         dest_tv.setText(mParam4);
 
-        //model.postDriver();
-        model.getdrivers();
+       // model.postDriver();
+       // model.postVehicle();
+       // model.postDevice();
 
-        //model.postDevice();
-        //model.getDevice();
+        model.getdrivers();
+        model.getVechiles();
+       // model.getDevice();
+
 
         model.MatrialsList.observe(getViewLifecycleOwner(),materialList->{
          String x = null;

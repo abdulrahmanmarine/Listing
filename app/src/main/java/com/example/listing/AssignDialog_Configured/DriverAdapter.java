@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -55,6 +56,7 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
         Material material = materials.get(position);
         holder.bind(material);
         holder.itemRowBinding.setAddButtonListen(addListener);
+
 
         ChosenVehicleCardAdapter chosenVehicleCardAdapter = new ChosenVehicleCardAdapter((ArrayList<Vehicle>) material.getZuphrLoada().getVehicle());
         holder.chosenVehicleList.setLayoutManager(new LinearLayoutManager(context));

@@ -18,6 +18,7 @@ import com.example.listing.Utils.Loginsession;
 import com.example.listing.Utils.OfflineDatabaseClient;
 import com.example.listing.Utils.RestApiClient;
 import com.example.listing.Utils.RetrofitInterface;
+import com.example.listing.models.AssignmentUnpack;
 import com.example.listing.models.Device;
 import com.example.listing.models.Deviceunpack;
 import com.example.listing.models.Driver;
@@ -31,7 +32,9 @@ import com.example.listing.models.PlanUnpack;
 import com.example.listing.models.SAPNote;
 import com.example.listing.models.User;
 import com.example.listing.models.Userunpack;
+import com.example.listing.models.VehAssign;
 import com.example.listing.models.Vehicle;
+import com.example.listing.models.VehicleUnpack;
 import com.example.listing.models.imagenode;
 
 import org.jetbrains.annotations.NotNull;
@@ -351,12 +354,13 @@ public class PlansDataModel extends ViewModel {
         vehiclesList.add(vehicle4);
         vehiclesList.add(vehicle5);
         vehiclesList.add(vehicle6);
-        MastervehiclesList.setValue(vehiclesList);
+        //MastervehiclesList.setValue(vehiclesList);
 
 
-        retrofitInterface.GetVehicle().enqueue(new Callback<ResponseBody>() {
+
+        retrofitInterface.GetVehicle().enqueue(new Callback<VehicleUnpack>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<VehicleUnpack> call, Response<VehicleUnpack> response) {
 
                 if(response.errorBody()!=null){
                     try {
@@ -367,18 +371,16 @@ public class PlansDataModel extends ViewModel {
 
                 }
                 if(response.isSuccessful()){
-                    try {
-                        Log.i("get driver response",response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+
+                        MastervehiclesList.setValue(response.body().getvehiclelist());
+
                 }
 
 
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<VehicleUnpack> call, Throwable t) {
 
                 Log.i("get driver no response",t.getMessage());
 
@@ -389,10 +391,9 @@ public class PlansDataModel extends ViewModel {
 
     }
     public  void getDevice(){
-
-        retrofitInterface.GetDevice().enqueue(new Callback<ResponseBody>() {
+        retrofitInterface.GetDevice().enqueue(new Callback<Deviceunpack>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<Deviceunpack> call, Response<Deviceunpack> response) {
 
                 if(response.errorBody()!=null){
                     try {
@@ -403,18 +404,15 @@ public class PlansDataModel extends ViewModel {
 
                 }
                 if(response.isSuccessful()){
-                    try {
-                        Log.i("get device response",response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                        Log.i("get device response",response.body().getdevice().getSno()+"");
+
                 }
 
 
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<Deviceunpack> call, Throwable t) {
 
                 Log.i("get driver no response",t.getMessage());
 
@@ -454,11 +452,11 @@ public class PlansDataModel extends ViewModel {
             }
         });
     }
-    public  void getDispatchMtr(String Lpid){
+    public  void getDispatchMtr(String Lpid ,int pos){
 
-        retrofitInterface.getDispatch(Loginsession.getInstance().getToken(),"LpHdrSet('"+Lpid+"')?$expand=NavLpToVehAssign").enqueue(new Callback<ResponseBody>() {
+        retrofitInterface.getDispatch(Loginsession.getInstance().getToken(),"LpHdrSet('"+Lpid+"')?$expand=NavLpToVehAssign").enqueue(new Callback<AssignmentUnpack>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<AssignmentUnpack> call, Response<AssignmentUnpack> response) {
 
                 if(response.errorBody()!=null){
                     try {
@@ -469,30 +467,42 @@ public class PlansDataModel extends ViewModel {
 
                 }
                 if(response.isSuccessful()){
-                    try {
-                        Log.i("get plan response",response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    List<VehAssign> vehAssigns =response.body().getAssignment().getVehassign();
+
+                    List<Material> materials=plan.getValue().getPlanToItems();
+                    List<Driver> drivers=new ArrayList<>();
+                    Driver driver=new Driver();
+
+                    for(int i=0 ; i<vehAssigns.size();i++){
+                        for(int j=0; j<materials.size();j++){
+                            if(vehAssigns.get(i).getZuphrMblpo().equals(materials.get(j)))
+                            {
+                                driver.setZuphrDriverid(vehAssigns.get(i).getZuphrDriverid());
+                                drivers.add(driver);
+
+//                               materials.get(j).setVehicles(new Vehicle("","",));
+                            }
+                        }
                     }
+
+
                 }
 
 
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<AssignmentUnpack> call, Throwable t) {
 
                 Log.i("get plan no response",t.getMessage());
 
             }
         });
     }
-
-
     public  void postDriver(){
-        Driver driver=new Driver("ABDK01","Abdullah Khalid",
-                "Truck","75756",
-                "Saudi","598574933","Abdullah.Khalid@aramco.com");
+        Driver driver=new Driver("OS20MA","Osamah Mohammed",
+                "Heavy Truck","74352",
+                "Saudi","05895798","Osamah.Mohammed@aramco.com");
         Log.i("posting started","start");
 
         retrofitInterface.SaveDriver(driver, Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
@@ -529,10 +539,10 @@ public class PlansDataModel extends ViewModel {
     }
     public  void postVehicle(){
 
-        Vehicle vehicle=new Vehicle("1","Meduim",
-                "Truck","654654", "10000","Red","2012","20211212","54354",
+        Vehicle vehicle=new Vehicle("54353","Meduim",
+                "Truck","654654", "10000","Red","2012",
+                "2022-01-12T00:00:00","54354",
                 new ArrayList<>());
-
         Log.i("posting Vechile started","start");
 
         retrofitInterface.SaveVechile(vehicle, Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
@@ -607,25 +617,30 @@ public class PlansDataModel extends ViewModel {
 
     }
     public void AssignValue(MatrialDispatching matrialDispatch) {
-
-        retrofitInterface.Dispatch(matrialDispatch,Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
+        retrofitInterface.Dispatch(matrialDispatch,Loginsession.getInstance().getToken()).enqueue(new Callback<AssignmentUnpack>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                Log.d("response-post", response.code() + "");
-                if (response.code() == 201) {
-                    ResponseBody temp = response.body();
+            public void onResponse(Call<AssignmentUnpack> call, retrofit2.Response<AssignmentUnpack> response) {
 
+
+                if(response.errorBody()!=null){
                     try {
-                        Log.i("response-post", temp.string());
+                        Log.i("post dispatch error response",response.errorBody().string());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                 }
+                if(response.isSuccessful()){
+
+                     //   Log.i("post dispatch response",response.body());
+
+                }
+
+
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<AssignmentUnpack> call, Throwable t) {
                 Log.i("response-error", t.getMessage());
 
 
@@ -650,8 +665,6 @@ public class PlansDataModel extends ViewModel {
         });
 
     }
-
-
     public void GetImages(Application application,  String MaterialId){
 
         retrofitInterface.getImageList("ImageHandlingSet?$filter=ZuphrId eq'"+MaterialId+
