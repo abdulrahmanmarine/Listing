@@ -1,5 +1,6 @@
 package com.example.listing.Utils;
 
+import com.example.listing.models.AssignmentUnpack;
 import com.example.listing.models.Device;
 import com.example.listing.models.Deviceunpack;
 import com.example.listing.models.Driver;
@@ -40,13 +41,13 @@ public interface RetrofitInterface {
 
 
     @GET("VehicleSet")
-    Call<VehicleUnpack> GetVehicle(@Header("x-csrf-token") String token);
+    Call<VehicleUnpack> GetVehicle();
     @GET("DriverSet")
     Call<DriverUnpack> GetLoader();
     @GET("DeviceSet")
-    Call<ResponseBody> GetDevice();
+    Call<Deviceunpack> GetDevice();
     @GET
-    Call<ResponseBody> getDispatch(@Header("x-csrf-token") String token,@Url String url);
+    Call<AssignmentUnpack> getDispatch(@Header("x-csrf-token") String token,@Url String url);
 
 
 
@@ -68,8 +69,9 @@ public interface RetrofitInterface {
     Call<ResponseBody> SaveDevice(@Body Device device, @Header("x-csrf-token") String Token);
     @POST("VehicleSet")
     Call<ResponseBody> SaveVechile(@Body Vehicle vehicle, @Header("x-csrf-token") String Token);
-    @POST("DispatcherSet")
-    Call<ResponseBody> Dispatch(  @Body  MatrialDispatching matrialDispatch, @Header("x-csrf-token") String token);
+    @POST("LpHdrSet")
+    Call<AssignmentUnpack> Dispatch(@Body  MatrialDispatching matrialDispatch, @Header("x-csrf-token") String token
+    );
 
 
 

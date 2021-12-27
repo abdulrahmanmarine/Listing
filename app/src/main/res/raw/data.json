@@ -1,17 +1,112 @@
-
-[
-  {
-    "mandt":"025" ,
-    "zuphrLpid": "99001",
-    "zuphrMjahr": "2021",
-    "zuphrMblpo": "1",
-    "zuphrLoadid": "5",
-    "zuphrActtype": "STEV",
-    "zuphrAsinQuan": "100.000",
-    "zuphrMeins": "EA",
-    "zuphrFpDate": "2021-08-24",
-    "zuphrFpTime": "16:13:13",
-    "zuphrFpName": "AWAMAS0F"
+{
+  "d" : {
+    "__metadata" : {
+      "id" : "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/LpHdrSet('9000000004')",
+      "uri" : "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/LpHdrSet('9000000004')",
+      "type" : "ZU_UPHR_MAIN_SRV.LpHdr"
+    },
+    "ZuphrLpid" : "9000000004",
+    "Zuphr" : "",
+    "NavLpToVehAssign" : {
+      "results" : [
+        {
+          "__metadata" : {
+            "id" : "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/VehAssignSet(ZuphrLpid='9000000004',ZuphrMjahr='2021',ZuphrMblpo='0004')",
+            "uri" : "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/VehAssignSet(ZuphrLpid='9000000004',ZuphrMjahr='2021',ZuphrMblpo='0004')",
+            "type" : "ZU_UPHR_MAIN_SRV.VehAssign"
+          },
+          "ZuphrLpid" : "9000000004",
+          "ZuphrMjahr" : "2021",
+          "ZuphrMblpo" : "0004",
+          "ZuphrStgid" : "2000000104",
+          "ZuphrMatnr" : "",
+          "ZuphrReqid" : "1000000110",
+          "ZuphrReqitm" : "0001",
+          "ZuphrShortxt" : "Drilling Pipe",
+          "ZuphrDescrip" : "Drilling Pipe.",
+          "ZuphrOffshore" : "",
+          "ZuphrDriverid" : "ABDK01",
+          "ZuphrVehid" : "8000000001",
+          "ZuphrLoad" : "",
+          "ZuphrUload" : "",
+          "ZuphrNfound" : "",
+          "ZuphrDone" : ""
+        },
+        {
+          "__metadata" : {
+            "id" : "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/VehAssignSet(ZuphrLpid='9000000004',ZuphrMjahr='2021',ZuphrMblpo='0001')",
+            "uri" : "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/VehAssignSet(ZuphrLpid='9000000004',ZuphrMjahr='2021',ZuphrMblpo='0001')",
+            "type" : "ZU_UPHR_MAIN_SRV.VehAssign"
+          },
+          "ZuphrLpid" : "9000000004",
+          "ZuphrMjahr" : "2021",
+          "ZuphrMblpo" : "0001",
+          "ZuphrStgid" : "2000000108",
+          "ZuphrMatnr" : "",
+          "ZuphrReqid" : "1000000107",
+          "ZuphrReqitm" : "0001",
+          "ZuphrShortxt" : "Pipes",
+          "ZuphrDescrip" : "Pipes Pipes Pipes Pipes Pipes",
+          "ZuphrOffshore" : "",
+          "ZuphrDriverid" : "ABDK01",
+          "ZuphrVehid" : "8000000001",
+          "ZuphrLoad" : "",
+          "ZuphrUload" : "",
+          "ZuphrNfound" : "",
+          "ZuphrDone" : ""
+        },
+        {
+          "__metadata" : {
+            "id" : "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/VehAssignSet(ZuphrLpid='9000000004',ZuphrMjahr='2021',ZuphrMblpo='0002')",
+            "uri" : "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/VehAssignSet(ZuphrLpid='9000000004',ZuphrMjahr='2021',ZuphrMblpo='0002')",
+            "type" : "ZU_UPHR_MAIN_SRV.VehAssign"
+          },
+          "ZuphrLpid" : "9000000004",
+          "ZuphrMjahr" : "2021",
+          "ZuphrMblpo" : "0002",
+          "ZuphrStgid" : "2000000109",
+          "ZuphrMatnr" : "",
+          "ZuphrReqid" : "1000000104",
+          "ZuphrReqitm" : "0001",
+          "ZuphrShortxt" : "Pipes  -Type C",
+          "ZuphrDescrip" : "Pipes Pipes Pipes Pipes Pipes",
+          "ZuphrOffshore" : "",
+          "ZuphrDriverid" : "ABDK01",
+          "ZuphrVehid" : "8000000001",
+          "ZuphrLoad" : "",
+          "ZuphrUload" : "",
+          "ZuphrNfound" : "",
+          "ZuphrDone" : ""
+        },
+        {
+          "__metadata" : {
+            "id" : "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/VehAssignSet(ZuphrLpid='9000000004',ZuphrMjahr='2021',ZuphrMblpo='0003')",
+            "uri" : "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/VehAssignSet(ZuphrLpid='9000000004',ZuphrMjahr='2021',ZuphrMblpo='0003')",
+            "type" : "ZU_UPHR_MAIN_SRV.VehAssign"
+          },
+          "ZuphrLpid" : "9000000004",
+          "ZuphrMjahr" : "2021",
+          "ZuphrMblpo" : "0003",
+          "ZuphrStgid" : "2000000102",
+          "ZuphrMatnr" : "1000000303",
+          "ZuphrReqid" : "1000000101",
+          "ZuphrReqitm" : "0001",
+          "ZuphrShortxt" : "Drilling Head - Type",
+          "ZuphrDescrip" : "Drilling Head - Type A Drilling Head - Type A Drilling Head - Type A",
+          "ZuphrOffshore" : "",
+          "ZuphrDriverid" : "ABDK01",
+          "ZuphrVehid" : "8000000001",
+          "ZuphrLoad" : "",
+          "ZuphrUload" : "",
+          "ZuphrNfound" : "",
+          "ZuphrDone" : ""
+        }
+      ]
+    },
+    "NavLpToReturn" : {
+      "__deferred" : {
+        "uri" : "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/LpHdrSet('9000000004')/NavLpToReturn"
+      }
+    }
   }
-]
-  
+}

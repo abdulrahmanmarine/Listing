@@ -23,7 +23,7 @@ import com.example.listing.models.Vehicle;
 import com.example.listing.models.imagenode;
 
 @Database(entities = {Plan.class, Material.class, LoadAction.class, imagenode.class, Driver.class,
-        Vehicle.class, com.example.listing.models.User.class, SAPNote.class} , version = 14)
+        Vehicle.class, com.example.listing.models.User.class, SAPNote.class} , version = 15)
 public abstract class OfflineDatabaseClient extends RoomDatabase {
     private static final String DB_Name ="App_db";
     private static OfflineDatabaseClient instance;
