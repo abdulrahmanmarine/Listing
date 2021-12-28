@@ -1,6 +1,7 @@
 package com.example.listing.models;
 
 
+
         import com.fasterxml.jackson.annotation.JsonProperty;
 
         import java.util.List;

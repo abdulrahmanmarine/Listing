@@ -364,15 +364,17 @@ public class PlansDataModel extends ViewModel {
 
                 if(response.errorBody()!=null){
                     try {
-                        Log.i("get driver error response",response.errorBody().string());
+                        Log.i("get vehicle error response",response.errorBody().string());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                 }
                 if(response.isSuccessful()){
-
                         MastervehiclesList.setValue(response.body().getvehiclelist());
+
+                    Log.i("get vehi error response",response.body().getvehiclelist().size() + " ");
+
 
                 }
 

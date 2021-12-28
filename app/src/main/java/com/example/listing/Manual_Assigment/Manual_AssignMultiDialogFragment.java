@@ -63,7 +63,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
     private MatrialDispatching MatrialDispatch;
 
     List<VehAssign> Vehassignment= new ArrayList<>();
-    VehAssign Vehassign;
+    VehAssign Vehassign, vehAssign2;
 
     private Manual_Assignment_Adapter chosenVehicleAdapter;
     private ArrayList<Driver> chosenDrivers = new ArrayList<>();
@@ -211,35 +211,27 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
             plan.setPlanToItems(list);
             model.plan.setValue(plan);
             List<Plan> plans=model.Plans.getValue();
+
+
+
             for(int i=0 ;i<plan.getPlanToItems().get(Mpostion).getVehicles().size();i++) {
                 for (int j = 0; j < plan.getPlanToItems().get(Mpostion).getVehicles().get(i).getLoaders().size(); j++) {
-                    //Vehassign.setZuphrDriverid(plan.getPlanToItems().get(Mpostion).getVehicles().get(i).getLoaders().get(j).getZuphrDriverid());
-                    //Vehassignment.add(Vehassign);
+                    Vehassign=new VehAssign(
+                            materialParam.getZuphrLpid(),materialParam.getZuphrMjahr(),
+                            materialParam.getZuphrMblpo(),materialParam.getZuphrStgid(),
+                            materialParam.getZuphrMatnr(), materialParam.getZuphrReqid(),
+                            materialParam.getZuphrReqitm(),materialParam.getZuphrShortxt(),
+                            materialParam.getZuphrDescrip(),materialParam.getZuphrOffshore(),
+                            "","","","","","");
 
-
+                    Vehassign.setZuphrDriverid(plan.getPlanToItems().get(Mpostion).getVehicles().get(i).getLoaders().get(j).getZuphrDriverid());
+                    Vehassignment.add(Vehassign);
                 }
+
+                Vehassign.setZuphrVehid(plan.getPlanToItems().get(Mpostion).getVehicles().get(i).getVehid());
 
 
             }
-
-            Vehassign=new VehAssign(
-                    materialParam.getZuphrLpid(),materialParam.getZuphrMjahr(),
-                    materialParam.getZuphrMblpo(),materialParam.getZuphrStgid(),
-                    materialParam.getZuphrMatnr(), materialParam.getZuphrReqid(),
-                    materialParam.getZuphrReqitm(),materialParam.getZuphrShortxt(),
-                    materialParam.getZuphrDescrip(),materialParam.getZuphrOffshore(),
-                    "ABDK01","8000000001","","","","");
-            Vehassignment.add(Vehassign);
-
-            Vehassign=new VehAssign(
-                    materialParam.getZuphrLpid(),materialParam.getZuphrMjahr(),
-                    materialParam.getZuphrMblpo(),materialParam.getZuphrStgid(),
-                    materialParam.getZuphrMatnr(), materialParam.getZuphrReqid(),
-                    materialParam.getZuphrReqitm(),materialParam.getZuphrShortxt(),
-                    materialParam.getZuphrDescrip(),materialParam.getZuphrOffshore(),
-                    "OS20MA","8000000001","","","","");
-          //  Vehassignment.add(Vehassign);
-
 
             MatrialDispatch=new MatrialDispatching(plan.getZuphrLpid(),"",Vehassignment);
             model.AssignValue(MatrialDispatch);
