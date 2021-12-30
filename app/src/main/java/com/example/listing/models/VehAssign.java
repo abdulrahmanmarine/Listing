@@ -119,6 +119,10 @@ public class VehAssign implements Serializable {
         ZuphrDone = zuphrDone;
     }
 
+    public VehAssign() {
+
+    }
+
     public int getDispatch() {
         return Dispatch;
     }
