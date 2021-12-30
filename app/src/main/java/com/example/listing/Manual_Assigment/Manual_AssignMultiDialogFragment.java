@@ -117,7 +117,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         //add new pair button
         Button addBut = view.findViewById(R.id.add_btn), cancel_but = view.findViewById(R.id.dialog_cancel);
         //Loader recview
-         loaderList = view.findViewById(R.id.loader_list);
+        loaderList = view.findViewById(R.id.loader_list);
         //vehicle recview
         RecyclerView vehicleList = view.findViewById(R.id.vehicle_list);
         //pair recview
@@ -135,7 +135,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
 
 
-         model.getVechiles();
+        model.getVechiles();
 
         materialParam =model.MatrialsList.getValue().get(Mpostion);
 
@@ -171,28 +171,28 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
         addBut.setOnClickListener(v -> {
 
-               if(chosenVehicle.getLoaders().size()>0){
+            if(chosenVehicle.getLoaders().size()>0){
 
-                   chosenVehicles.add(chosenVehicle);
-                   ArrayList<Vehicle> vehiclesList = (ArrayList<Vehicle>) model.MastervehiclesList.getValue();
+                chosenVehicles.add(chosenVehicle);
+                ArrayList<Vehicle> vehiclesList = (ArrayList<Vehicle>) model.MastervehiclesList.getValue();
 
-                   for(int i=0 ;i<vehiclesList.size();i++){
-                       if(chosenVehicle.equals(vehiclesList.get(i))){
-                           vehiclesList.remove(i);
-                           model.MastervehiclesList.setValue(vehiclesList);
-                           loaderAdapter = new LoaderAdapter((ArrayList<Driver>) model.MasterdriversList.getValue(),this::Driverselected);
-                           loaderList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-                           loaderList.setAdapter(loaderAdapter);
+                for(int i=0 ;i<vehiclesList.size();i++){
+                    if(chosenVehicle.equals(vehiclesList.get(i))){
+                        vehiclesList.remove(i);
+                        model.MastervehiclesList.setValue(vehiclesList);
+                        loaderAdapter = new LoaderAdapter((ArrayList<Driver>) model.MasterdriversList.getValue(),this::Driverselected);
+                        loaderList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+                        loaderList.setAdapter(loaderAdapter);
 
-                           break;
-                       }
-                   }
-                   chosenVehicleAdapter.notifyDataSetChanged();
+                        break;
+                    }
+                }
+                chosenVehicleAdapter.notifyDataSetChanged();
 
-               }
-               else {
-                   Toast.makeText(getContext(),"Assign drivers to the vehicle first",Toast.LENGTH_SHORT).show();
-               }
+            }
+            else {
+                Toast.makeText(getContext(),"Assign drivers to the vehicle first",Toast.LENGTH_SHORT).show();
+            }
 
 
 
@@ -299,6 +299,3 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
 
 }
-
-
-

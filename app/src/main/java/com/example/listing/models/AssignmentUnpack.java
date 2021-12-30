@@ -1,5 +1,7 @@
 package com.example.listing.models;
 
+import android.util.Log;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -18,8 +20,8 @@ public class AssignmentUnpack {
 
     @JsonProperty("d")
     public void unpackd(MatrialDispatching d) {
+
         Assignment =d;
     }
-
 
 }
