@@ -85,7 +85,7 @@ Application application;
 //                ErrorMsg.setValue(t.getLocalizedMessage());
 //            }
 //        });
-        RestApiClient.initializer(null, application);
+        RestApiClient.initializer(null, application,credentials);
         RestApiClient.getInstance(application).getRetrofitInterface().DVClogin("Fetch").enqueue(new Callback<Userunpack>() {
             @Override
             public void onResponse(@NotNull Call<Userunpack> call, @NotNull retrofit2.Response<Userunpack> response) {

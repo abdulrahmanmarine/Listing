@@ -37,15 +37,15 @@ public class Plan implements Serializable {
     public String ZuphrActquan;
 
     @JsonIgnore
-    @Ignore
-    LoadAction ZuphrLoada;
+    Boolean Loaded;
+//
+//
+//    @JsonProperty("ZuphrLoada")
+//    @Ignore
+//    public void unpackload(Map<String, List<LoadAction>> d) {
+//       Log.i("loadaction",d.keySet().toString());
+//    }
 
-
-    @JsonProperty("ZuphrLoada")
-    @Ignore
-    public void unpackload(Map<String, List<LoadAction>> d) {
-       Log.i("loadaction",d.keySet().toString());
-    }
 
     @JsonProperty("ZuphrLoadtype")
     @ColumnInfo(name="ZuphrLoadtype")
@@ -588,6 +588,12 @@ public class Plan implements Serializable {
         PlanId = planId;
     }
 
+    public Boolean getLoaded() {
+        return Loaded;
+    }
 
+    public void setLoaded(Boolean loaded) {
+        Loaded = loaded;
+    }
 }
 

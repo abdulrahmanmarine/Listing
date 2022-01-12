@@ -237,7 +237,6 @@
                         android:ems="5"
 
                         android:gravity="center"
-                        android:text="@{mat.zuphrLoada.status}"
                         android:textSize="14sp" />
 
                 </LinearLayout>

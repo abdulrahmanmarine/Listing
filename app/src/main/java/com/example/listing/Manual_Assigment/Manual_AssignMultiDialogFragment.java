@@ -19,21 +19,16 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import com.example.listing.Kotlin.pictureMode;
-import com.example.listing.AddButtonClicked;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.DriverDeleteButtonClicked;
-import com.example.listing.Kotlin.Dispatcher;
-import com.example.listing.Kotlin.Loader;
 import com.example.listing.R;
 import com.example.listing.models.Driver;
-import com.example.listing.models.LoadAction;
 import com.example.listing.models.Material;
 import com.example.listing.models.MatrialDispatching;
 import com.example.listing.models.Plan;
@@ -203,9 +198,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
             Log.i("matposition", Mpostion+"");
             List<Material> list =model.MatrialsList.getValue();
-            LoadAction loadAction=materialParam.getZuphrLoada();
-            loadAction.setVehicle(chosenVehicles);
-            materialParam.setZuphrLoada(loadAction);
+            materialParam.setVehicles(chosenVehicles);
             list.set(Mpostion,materialParam);
             Plan plan= model.plan.getValue();
             plan.setPlanToItems(list);

@@ -9,11 +9,9 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.listing.Login;
 import com.example.listing.R;
 import com.example.listing.Utils.AppExecutors;
 
-import com.example.listing.Utils.DataClass;
 import com.example.listing.Utils.Loginsession;
 import com.example.listing.Utils.OfflineDatabaseClient;
 import com.example.listing.Utils.RestApiClient;
@@ -24,29 +22,21 @@ import com.example.listing.models.Deviceunpack;
 import com.example.listing.models.Driver;
 import com.example.listing.models.DriverUnpack;
 import com.example.listing.models.ImageList;
-import com.example.listing.models.LoadAction;
 import com.example.listing.models.Material;
 import com.example.listing.models.MatrialDispatching;
 import com.example.listing.models.Plan;
 import com.example.listing.models.PlanUnpack;
-import com.example.listing.models.SAPNote;
 import com.example.listing.models.User;
-import com.example.listing.models.Userunpack;
 import com.example.listing.models.VehAssign;
 import com.example.listing.models.Vehicle;
 import com.example.listing.models.VehicleUnpack;
 import com.example.listing.models.imagenode;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -66,7 +56,7 @@ public class PlansDataModel extends ViewModel {
     public  MutableLiveData<List<Driver>> MasterdriversList = new MutableLiveData<>();
     public MutableLiveData<List<Vehicle>> MastervehiclesList = new MutableLiveData<>();
     public MutableLiveData<List<imagenode>> MatrialImageList = new MutableLiveData<>();
-    public MutableLiveData<LoadAction> LoadAction = new MutableLiveData<>();
+
     public MutableLiveData<Boolean> flag = new MutableLiveData<>(true);
     Application application;
 
@@ -108,10 +98,7 @@ public class PlansDataModel extends ViewModel {
                         for(int j=0 ;j<matriallist.size();j++) {
                             Material material=matriallist.get(j);
                             int x=j;
-                            db.MatrialLoadAction().GetItemAll(String.valueOf(material.MatrialId)).observe(owner, loadaction->{
-                                material.setZuphrLoada(loadaction);
-                                matriallist.set(x,material);
-                            });
+
 
 //                            List<Vehicle> vehicles = db.MatrialVehicles().GetItemAll(String.valueOf(material.MatrialId));
 //                            material.setVehicles(vehicles);
@@ -145,10 +132,9 @@ public class PlansDataModel extends ViewModel {
                 public void onResponse(Call<PlanUnpack> call, retrofit2.Response<PlanUnpack> response) {
                     if (response.isSuccessful()) {
                         List<Plan> temp =response.body().getItems();
+                        Log.i("response-plans" ,temp.size()+"");
                         Plans.postValue(temp);
-
                          AppExecutors.getInstance().diskIO().execute(() -> {
-                             db.MatrialLoadAction().nukeTable();
                              db.planitem().nukeTable();
                              db.Matrial().nukeTable();
                              db.MatrialDrivers().nukeTable();
@@ -163,9 +149,7 @@ public class PlansDataModel extends ViewModel {
                                     Material material=temp.get(i).getPlanToItems().get(j);
                                     material.setPlanOfflineID(id);
                                     String Mid= String.valueOf(db.Matrial().insertMatrial(material));
-                                    LoadAction loadAction=material.getZuphrLoada();
-                                    loadAction.setMatiralOfflineID(Mid);
-                                    db.MatrialLoadAction().insertLoadAction(loadAction);
+
 
 //                                    for(int x=0 ; x<material.getVehicles().size();x++){
 //                                        Vehicle vehicle = material.getVehicles().get(j);
@@ -214,12 +198,7 @@ public class PlansDataModel extends ViewModel {
                         for(int j=0 ;j<matriallist.size();j++) {
                             Material material=matriallist.get(j);
                             int x=j;
-                            db.MatrialLoadAction().GetItemAll(String.valueOf(material.MatrialId)).observe(owner, loadaction->{
-                                Log.i("test loadaction:",loadaction.MatiralOfflineID+"");
 
-                                material.setZuphrLoada(loadaction);
-                                matriallist.set(x,material);
-                            });
 
 //                            List<Vehicle> vehicles = db.MatrialVehicles().GetItemAll(String.valueOf(material.MatrialId));
 //                            material.setVehicles(vehicles);
@@ -267,9 +246,7 @@ public class PlansDataModel extends ViewModel {
                                     Material material=temp.get(i).getPlanToItems().get(j);
                                     material.setPlanOfflineID(id);
                                     String Mid= String.valueOf(db.Matrial().insertMatrial(material));
-                                    LoadAction loadAction=material.getZuphrLoada();
-                                    loadAction.setMatiralOfflineID(Mid);
-                                    db.MatrialLoadAction().insertLoadAction(loadAction);
+
 
 //                                    for(int x=0 ; x<material.getVehicles().size();x++){
 //                                        Vehicle vehicle = material.getVehicles().get(j);
@@ -671,23 +648,41 @@ public class PlansDataModel extends ViewModel {
             }
         });
     }
-    public void postLoadAction(LoadAction loadAction){
-
-        retrofitInterface.postLoadAction(loadAction,  Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
+    public void AssignValueLoader(VehAssign vehAssign) {
+        retrofitInterface.LoaderStatus(vehAssign,Loginsession.getInstance().getToken())
+                .enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                ResponseBody responsefromApi = response.body();
-                String offlineMaterialId = loadAction.getMatiralOfflineID();
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+
+
+                if(response.errorBody()!=null){
+                    try {
+                        Log.i("post loader error response",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                if(response.isSuccessful()){
+
+                    try {
+                        Log.i("post loader sucess response",response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
 
 
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i("post loader response-error", t.getMessage());
+
 
             }
         });
-
     }
     public void GetImages(Application application,  String MaterialId){
 
@@ -744,6 +739,5 @@ public class PlansDataModel extends ViewModel {
         }
 
     }
-
     }
 
