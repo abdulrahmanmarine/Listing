@@ -16,7 +16,7 @@
             android:id="@+id/chosen_driver_card_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{chosenDriver.zuphrdrvrName}" />
+            android:text="@{chosenDriver.zuphrDriverid}" />
 
         <View
             android:layout_width="1dp"

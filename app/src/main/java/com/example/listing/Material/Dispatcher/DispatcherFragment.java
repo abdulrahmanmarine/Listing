@@ -35,7 +35,9 @@ import com.example.listing.R;
 import com.example.listing.Plan.PlanFragment;
 import com.example.listing.Utils.DataClass;
 import com.example.listing.models.Driver;
+import com.example.listing.models.LoadAction;
 import com.example.listing.models.Material;
+import com.example.listing.models.Plan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -188,13 +190,15 @@ public class DispatcherFragment extends Fragment {
         model.MatrialsList.observe(getViewLifecycleOwner(),materialList->{
          String x = null;
             AddButtonClicked addListener = pos -> {
+
                 ((Dispatcher) getActivity()).showAssignDialog(pos, materialList.get(pos));
                 driverAdapter.notifyDataSetChanged();
                 notifDataAddChanged();
+
             };
 
             driverAdapter = new DriverAdapter(materialList, addListener,getContext());
-////        myAdapter = detAdapter;
+
 
             //animation
             final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.layout_animation);
@@ -203,7 +207,10 @@ public class DispatcherFragment extends Fragment {
             rv.scheduleLayoutAnimation();
             rv.setAdapter(driverAdapter);
 
+
+//            driverAdapter.updateChosen();
         });
+
 
 
 

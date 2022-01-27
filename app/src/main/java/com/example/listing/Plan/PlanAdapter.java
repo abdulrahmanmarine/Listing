@@ -106,9 +106,11 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
                 if(load){
                     for(int i = 0; i< plan.getPlanToItems().size() ; i++){
 
-                        Log.i("Status",plan.getPlanToItems().get(i).isComplete()+"");
-                        if(!plan.getPlanToItems().get(i).isComplete()){
+                        Log.i("Status",plan.getPlanToItems().get(i).getZuphrStatus());
+                        if(!plan.getPlanToItems().get(i).getZuphrStatus().equalsIgnoreCase("LOADED")){
+//                                getZuphrLoada().getStatus().equalsIgnoreCase("LOADED")){
                             plan.setZuphrStatus("Incomplete");
+
                             statusText.setText(plan.getZuphrStatus());
                             statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
                             break;
@@ -120,7 +122,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
                         }
                     }
                 }
-               else{
+                else{
                     for(int i = 0; i< plan.getPlanToItems().size(); i++){
                         Material material = plan.getPlanToItems().get(i);
                         if(material.getVehicles().isEmpty()){
@@ -128,6 +130,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
                             statusText.setText(plan.getZuphrStatus());
                             statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
                             break;
+
                         }else{
                             plan.setZuphrStatus("Complete");
                             statusText.setText(plan.getZuphrStatus());

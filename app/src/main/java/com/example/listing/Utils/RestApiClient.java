@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.CookieManager;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Credentials;
 import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.JavaNetCookieJar;
@@ -29,18 +30,15 @@ public class RestApiClient {
     private static Retrofit retrofit;
     private final RetrofitInterface retrofitInterface;
 
-    private  static String credns;
-
 
     private RestApiClient(OkHttpClient client, Application application) {
         retrofitInterface = Login(client, application);
     }
 
-    public static void initializer(OkHttpClient client, Application application,String creds) {
+    public static void initializer(OkHttpClient client, Application application) {
         if (instance == null) {
             synchronized (RestApiClient.class) {
                 instance = new RestApiClient(client, application);
-                credns=creds;
             }
         }
     }
@@ -53,15 +51,15 @@ public class RestApiClient {
 
     }
 
-
-
-
     public static RetrofitInterface Login(OkHttpClient client, Application application) {
+
         return CreateClient(client, application).create(RetrofitInterface.class);
     }
 
     public static Retrofit CreateClient(OkHttpClient client, Application application) {
         if (retrofit == null) {
+
+
             retrofit = new Retrofit.Builder()
                     .baseUrl(application.getString(R.string.dvcURL))
                     //.client(client)
@@ -73,16 +71,13 @@ public class RestApiClient {
         return retrofit;
     }
 
-
-
-
     static OkHttpClient headersInterceptors(Application application) {
 
         return new OkHttpClient.Builder()
                 .addInterceptor(new BasicAuth(application))
+                .addInterceptor(new ReceivedCookiesInterceptor(application))
                 .cookieJar(new JavaNetCookieJar(new CookieManager()))
                 .connectTimeout(900, TimeUnit.SECONDS)
-                .addInterceptor(new ReceivedCookiesInterceptor(application))
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
                 .build();
@@ -93,27 +88,24 @@ public class RestApiClient {
         return retrofitInterface;
     }
 
-
     private static class BasicAuth implements Interceptor {
         Application application;
-
         public BasicAuth(Application application) {
             this.application = application;
 
         }
-
-
         @NotNull
         @Override
-        public Response intercept(Chain chain) throws IOException {
+        public
+        Response intercept(Chain chain) throws IOException {
+            //String creds = Credentials.basic("alsoai0a", "ABeer28121997@121");
+            String creds = Credentials.basic("T_CBAD_PPLN", "Welcome.2");
 
             Headers headers = chain.request().headers().newBuilder()
+                    .add("Authorization", creds)
                     .add("Content-Type", application.getResources().getString(R.string.Content_Type))
-                    .add("Authorization",credns)
                     .add("Accept", application.getResources().getString(R.string.accept))
                     .add("sap-client", application.getResources().getString(R.string.sapclient_25))
-                    .add("User-Agent", application.getResources().getString(R.string.user_agent))
-
                     .build();
 
             Request request = chain.request().newBuilder().headers(headers).build();
@@ -122,20 +114,17 @@ public class RestApiClient {
         }
     }
 
-
-    private static class ReceivedCookiesInterceptor implements Interceptor {
+    private static class  ReceivedCookiesInterceptor implements Interceptor {
         Application application;
-
         public ReceivedCookiesInterceptor(Application application) {
             this.application = application;
         }
 
-        @NotNull
         @Override
         public Response intercept(Chain chain) throws IOException {
             Response originalResponse = chain.proceed(chain.request());
-            Log.i("url:", originalResponse.request().url().toString());
 
+         Log.i("url call",originalResponse.request().url()+"");
             return originalResponse;
         }
     }

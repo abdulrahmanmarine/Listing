@@ -1,6 +1,7 @@
 package com.example.listing.models;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -23,7 +24,7 @@ import java.util.List;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY,getterVisibility = JsonAutoDetect.Visibility.NONE,
         setterVisibility = JsonAutoDetect.Visibility.NONE,creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Driver implements Serializable{
+public class Driver implements Serializable, Comparable<Driver>{
 
     @Expose(serialize = false,deserialize = false)
     @PrimaryKey(autoGenerate = true)
@@ -140,5 +141,22 @@ public class Driver implements Serializable{
 
     public void setVechileId(String vechileId) {
         VechileId = vechileId;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj == null){
+            return false;
+        }
+        final Driver other = (Driver) obj;
+        if(this.getZuphrDriverid().equals(other.ZuphrDriverid)){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int compareTo(Driver o) {
+        return this.getZuphrDriverid().compareTo(o.ZuphrDriverid);
     }
 }
