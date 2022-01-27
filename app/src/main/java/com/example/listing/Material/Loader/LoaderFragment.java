@@ -57,7 +57,6 @@ import java.util.regex.Pattern;
  * create an instance of this fragment.
  */
 public class LoaderFragment extends Fragment  {
-    private int pPos = 0;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -68,39 +67,23 @@ public class LoaderFragment extends Fragment  {
 
 
     // TODO: Rename and change types of parameters
-    List<Plan> plans;
     private String mParam2, mParam3, mParam4;
-    //private ArrayList<Material> mParam1 = new ArrayList<>();
     private ArrayList<Material> mParam1 = new ArrayList<>();
     private MaterialAdapter materialAdapter;
-    private static Context contexts;
-    private static LoaderFragment fragment = null;
     private static RedesignedNotesFragment notesFragment= null;
-    private Boolean isLoad = true;
     ImageButton btnCapture;
     PlansDataModel model;
 
 
 
     public LoaderFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     * <p>
-     * <p>
-     * //     * @param param2 Parameter 2.
-     *
-     * @return A new instance of fragment TextFragment.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static LoaderFragment newInstance(ArrayList<Material> param1, String param2, String param3, String param4) {
         LoaderFragment fragment = new LoaderFragment();
         Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-
         args.putSerializable(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         args.putString(ARG_PARAM3, param3);
@@ -114,9 +97,6 @@ public class LoaderFragment extends Fragment  {
         materialAdapter.notifyDataSetChanged();
     }
 
-//    public void changeLoading(boolean loadOrNot){
-//        isLoad = loadOrNot;
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -166,7 +146,7 @@ public class LoaderFragment extends Fragment  {
 
         View v = inflater.inflate(R.layout.fragment_text, container, false);
 
-        EditText editText1 = (EditText) v.findViewById(R.id.search_material);
+        EditText editText1 =v.findViewById(R.id.search_material);
 
         editText1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -188,7 +168,7 @@ public class LoaderFragment extends Fragment  {
 
 
 
-        btnCapture = (ImageButton) v.findViewById(R.id.camerabutton);
+        btnCapture =v.findViewById(R.id.camerabutton);
 
         //set recyclerview adapter
         RecyclerView rv = v.findViewById(R.id.textrecview);

@@ -65,7 +65,7 @@ public class RestApiClient {
             retrofit = new Retrofit.Builder()
                     .baseUrl(application.getString(R.string.dvcURL))
                     //.client(client)
-                         .client(headersInterceptors(application))
+                    .client(headersInterceptors(application))
                     .addConverterFactory(JacksonConverterFactory.create(jacksonObjectMapper().
                             setPropertyNamingStrategy(new PropertyNamingStrategies.UpperCamelCaseStrategy())))
                     .build();

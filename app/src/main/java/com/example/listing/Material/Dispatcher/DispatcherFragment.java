@@ -203,7 +203,6 @@ public class DispatcherFragment extends Fragment {
             rv.scheduleLayoutAnimation();
             rv.setAdapter(driverAdapter);
 
-
         });
 
 

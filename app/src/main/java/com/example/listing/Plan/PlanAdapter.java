@@ -120,23 +120,22 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
                         }
                     }
                 }
-//                else{
-//                    for(int i = 0; i< plan.getPlanToItems().size(); i++){
-//                        Material material = plan.getPlanToItems().get(i);
-//                        if(material.getVehicle()..isEmpty()){
-//                            plan.setZuphrStatus("Incomplete");
-//                            statusText.setText(plan.getZuphrStatus());
-//                            statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
-//                            break;
-//
-//                        }else{
-//                            plan.setZuphrStatus("Complete");
-//                            statusText.setText(plan.getZuphrStatus());
-//                            statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
-//                        }
-//                    }
-//
-//                }
+               else{
+                    for(int i = 0; i< plan.getPlanToItems().size(); i++){
+                        Material material = plan.getPlanToItems().get(i);
+                        if(material.getVehicles().isEmpty()){
+                            plan.setZuphrStatus("Incomplete");
+                            statusText.setText(plan.getZuphrStatus());
+                            statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
+                            break;
+                        }else{
+                            plan.setZuphrStatus("Complete");
+                            statusText.setText(plan.getZuphrStatus());
+                            statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
+                        }
+                    }
+
+                }
 
             }
             String planTime = plan.getZuphrFpTime();
