@@ -31,6 +31,7 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
     private AddButtonClicked addListener;
     private ImageView materialImage;
     private  Context context;
+    private ChosenVehicleCardAdapter chosenVehicleCardAdapter;
 
 
 
@@ -58,7 +59,7 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
         holder.itemRowBinding.setAddButtonListen(addListener);
 
 
-        ChosenVehicleCardAdapter chosenVehicleCardAdapter = new ChosenVehicleCardAdapter((ArrayList<Vehicle>) material.getZuphrLoada().getVehicle());
+        chosenVehicleCardAdapter = new ChosenVehicleCardAdapter((ArrayList<Vehicle>) material.getVehicles());
         holder.chosenVehicleList.setLayoutManager(new LinearLayoutManager(context));
         holder.chosenVehicleList.setAdapter(chosenVehicleCardAdapter);
     }
@@ -72,6 +73,9 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
         materials = filteredList;
         notifyDataSetChanged();
     }
+
+
+
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -109,7 +113,7 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
                 itemRowBinding.assignstat.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
             }
 
-            if(material.getZuphrLoada().getVehicle().isEmpty()){
+            if(material.getVehicles().isEmpty()){
                 itemRowBinding.assignstat.setText("Not Assigned");
                 itemRowBinding.assignstat.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
             }else{
@@ -118,5 +122,8 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
                 itemRowBinding.assignstat.setPadding(50, 0, 50, 0);
             }
         }
+    }
+    public void updateChosen(){
+        chosenVehicleCardAdapter.notifyDataSetChanged();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.listing.models;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -26,7 +27,7 @@ import java.util.List;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY,getterVisibility = JsonAutoDetect.Visibility.NONE,
         setterVisibility = JsonAutoDetect.Visibility.NONE,creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Vehicle implements Serializable{
+public class Vehicle implements Serializable, Comparable<Vehicle>{
 
     public Vehicle() {
 
@@ -160,6 +161,23 @@ public class Vehicle implements Serializable{
         this.loaders = loaders;
     }
 
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj == null){
+            return false;
+        }
+        final Vehicle other = (Vehicle) obj;
+        if(this.getVehid().equals(other.Vehid)){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int compareTo(Vehicle o) {
+        return this.getVehid().compareTo(o.Vehid);
+    }
+
     public Vehicle(String vehid, String category, String vehType, String identifier, String maxWeight, String color, String model,
                    String mfgYear, String plateNo, List<Driver> laoders) {
         Vehid = vehid;
@@ -174,5 +192,7 @@ public class Vehicle implements Serializable{
         loaders = laoders;
 
     }
+
+
 
 }

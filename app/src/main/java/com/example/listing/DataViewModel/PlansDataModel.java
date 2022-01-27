@@ -10,6 +10,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.listing.Login;
+import com.example.listing.Manual_Assigment.Manual_AssignMultiDialogFragment;
+import com.example.listing.Manual_Assigment.Manual_Assignment_Adapter;
 import com.example.listing.R;
 import com.example.listing.Utils.AppExecutors;
 
@@ -68,6 +70,7 @@ public class PlansDataModel extends ViewModel {
     public MutableLiveData<List<imagenode>> MatrialImageList = new MutableLiveData<>();
     public MutableLiveData<LoadAction> LoadAction = new MutableLiveData<>();
     public MutableLiveData<Boolean> flag = new MutableLiveData<>(true);
+    private Manual_AssignMultiDialogFragment manualAssignMultiDialogFragment;
     Application application;
 
 
@@ -464,52 +467,141 @@ public class PlansDataModel extends ViewModel {
 
                 }
                 if(response.isSuccessful()){
+
                     List<VehAssign> vehAssigns =response.body().getAssignment().getVehassign();
                     Log.i("list of objects",response.body().getAssignment().getVehassign().size()+"");
                     List<Material> materials=plan.getValue().getPlanToItems();
-                    List<Driver> drivers=new ArrayList<>();
+
+
+    //                    List<Driver> drivers=new ArrayList<>();
                     Driver driver=new Driver();
-                    List<Vehicle> vehicleList= new ArrayList<>();
-                    for(int i=0 ; i<vehAssigns.size();i++){
-                        Log.i("get plan vehAssigns :",vehAssigns.get(i).getZuphrMblpo()+"");
-                        for(int j=0; j<materials.size();j++){
+                    List<Plan> planxx = new ArrayList<>();
 
-                              Vehicle vehicle=null;
+                    for(int i=0 ; i<vehAssigns.size();i++){ // for vehassigns
+                        VehAssign vehAssignObj = vehAssigns.get(i);
+                        Log.i("get plan vehAssigns :",vehAssignObj.getZuphrMblpo()+"");
+                        for(int j=0; j<materials.size();j++){ // for materials
+                            Material loopMaterial = materials.get(j);
+                            Vehicle loopMaterialVehicle = null;
+                            Plan planx = null;
+                            Vehicle vehicle = null;
+                            List<Vehicle> vehicleList= new ArrayList<>();
+                            List<Driver> drivers = new ArrayList<>();
+                            List<Material> Matxx;
 
-                           if(vehAssigns.get(i).getZuphrMblpo().equals(materials.get(j).getZuphrMblpo()))
+                           if(vehAssignObj.getZuphrMblpo().equals(loopMaterial.getZuphrMblpo())) //matching vehassign material id with material material id
                            {
-                               if(materials.get(j).getVehicles()!=null && materials.get(j).getVehicles().size()>0)
-                               vehicleList= materials.get(j).getVehicles();
-                               int posM=j;
-                               int posV=0;
-                               for(int k=0 ;k<materials.get(j).getVehicles().size();k++){
-                                   if(vehAssigns.get(i).getZuphrVehid().equals(materials.get(j).getVehicles().get(k))){
-                                       vehicle=materials.get(j).getVehicles().get(k);
-                                        posV=k;
-                                       break;
+
+                               //BREAKPOINT
+                               if(loopMaterial.getVehicles()!= null && loopMaterial.getVehicles().size() > 0){ // checking if material has list of vehicles
+                                   List<Vehicle> materialVehicleList = loopMaterial.getVehicles(); //material vehicle list
+//                                   vehicleList.clear();
+                                   for (int k = 0 ; k < materialVehicleList.size() ; k++){ //looping through material vehicle list
+                                       loopMaterialVehicle = materialVehicleList.get(k); // material vehicle
+
+                                       if(loopMaterialVehicle.getVehid().equals(vehAssignObj.getZuphrVehid())){
+                                           /*
+                                       checking if material vehicle matches vehassign object (if first time seeing it)
+                                       */
+                                           vehicle = loopMaterialVehicle;
+                                           drivers = loopMaterialVehicle.getLoaders();
+                                       }
+                                       vehicleList.add(vehicle);
+                                   }
+                                   Log.i("vehicle list obj 1",vehicle.getVehid());
+
+                               } else if(loopMaterialVehicle == null){
+//                                   vehicleList.clear();
+                                   drivers.clear();
+                                   driver=new Driver(vehAssignObj.getZuphrDriverid(),"  ",
+                                           "","",
+                                           "","","");
+                                   driver.setZuphrdrvrName("Ahmad");
+//                                   driver.setZuphrDriverid(vehAssignObj.getZuphrDriverid());
+                                   vehicle = new Vehicle(vehAssignObj.getZuphrVehid(),"test","","",
+                                           "","","","","",drivers);
+                                   drivers.add(driver);
+                                   vehicleList.add(vehicle);
+
+                                   Log.i("vehicle list obj 2",vehAssignObj.getZuphrVehid());
+                               }
+                               int count = 0;
+                               for(int d = 0 ; d < drivers.size() ; d++){
+                                   if(drivers.get(d).getZuphrDriverid().equalsIgnoreCase(vehAssignObj.getZuphrDriverid())){
+                                       count++;
                                    }
                                }
+
+                               if(count == 0){
+                                   driver.setZuphrDriverid(vehAssignObj.getZuphrDriverid());
+                                   drivers.add(driver);
+                               }
+
+                               vehicle.setLoaders(drivers);
+//                               vehicleList.add(vehicle);
+
+
+                            /*
+                            ABEER OR OLD SEGMENT
+                               if(loopMaterial.getVehicles()!=null && loopMaterial.getVehicles().size()>0) //CURLY BRACKETS?
+                               vehicleList= loopMaterial.getVehicles();
+                               int posM=j;
+                               int posV=0;
+                               for(int k=0 ;k<vehicleList.size();k++){
+                                   if(vehAssignObj.getZuphrVehid().equals(vehicleList.get(k).getVehid())){
+                                       vehicle=vehicleList.get(k);
+                                       drivers = vehicle.getLoaders();
+                                       posV=k;
+                                   }
+                               }
+
                                if(vehicle==null){
-                                   vehicle=new Vehicle(vehAssigns.get(i).getZuphrVehid(),"","","",
+                                   vehicle=new Vehicle(vehAssignObj.getZuphrVehid(),"test","","",
                                            "","","","","",new ArrayList<>());
                                }
-                               driver.setZuphrDriverid(vehAssigns.get(i).getZuphrDriverid());
+
+                               driver.setZuphrDriverid(vehAssignObj.getZuphrDriverid());
                                vehicle.getLoaders().add(driver);
                                Log.i("get plan materials :",materials.get(j).getZuphrMblpo()+","+vehAssigns.get(i).getZuphrMblpo());
+                               vehicleList.add(vehicle);
+                            */
 
-                               vehicleList.set(posV,vehicle);
+                               loopMaterial.setDrivers(drivers);
+                               loopMaterial.setVehicles(vehicleList);
 
-                               plan.getValue().getPlanToItems().set(j, materials.get(i));
-                               Plans.getValue().set(pos,plan.getValue());
+                               plan.getValue().getPlanToItems().set(j, loopMaterial);
 
-                                break;
+                               planx=plan.getValue();
+                               Matxx=planx.getPlanToItems();
+                               Matxx.set(j,loopMaterial);
+                               planx.setPlanToItems(Matxx);
+                               List<Plan> plans=Plans.getValue();
+                               Log.i("Vech list",loopMaterial.getVehicles().size()+","+loopMaterial.getVehicles().get(0).getLoaders().size());
+                               //plans.set(pos,planx);
+                               Plans.postValue(plans);
+
+                               plan.setValue(planx);
+                               planxx = plans;
+
+
+//                               manualAssignMultiDialogFragment.dataChanged();
                            }
 
+                            plan.getValue(  ).getPlanToItems().set(j, loopMaterial);
+//                            drivers.clear();
+                            int breakpoint = 0;
+//                           plan.setValue(planx);
+//                            vehicleList.clear();
 
-                            }
                         }
+//                        drivers.clear();
+
+//                        vehicleList.clear();
                     }
-                   // plan.getValue().setPlanToItems(materials);
+//                    Plans.postValue(planxx);
+
+
+                }
 
 
                 }

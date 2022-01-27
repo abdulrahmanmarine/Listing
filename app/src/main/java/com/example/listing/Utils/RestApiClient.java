@@ -96,9 +96,10 @@ public class RestApiClient {
         }
         @NotNull
         @Override
-        public Response intercept(Chain chain) throws IOException {
+        public
+        Response intercept(Chain chain) throws IOException {
             //String creds = Credentials.basic("alsoai0a", "ABeer28121997@121");
-            String creds = Credentials.basic("alsaliat", "Welcome@2");
+            String creds = Credentials.basic("T_CBAD_PPLN", "Welcome.2");
 
             Headers headers = chain.request().headers().newBuilder()
                     .add("Authorization", creds)
