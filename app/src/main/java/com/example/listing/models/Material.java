@@ -53,20 +53,6 @@ public class Material implements Serializable {
     String Log;
 
 
-    @JsonProperty("ZuphrLoada")
-    @Ignore
-    LoadAction ZuphrLoada= new LoadAction();
-
-    @JsonProperty("ZuphrLoada")
-    @Ignore
-    public void unpackd(String d) throws JsonProcessingException {
-        ObjectMapper maper=new ObjectMapper();
-        maper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES,true);
-        maper.enable(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);
-        ZuphrLoada=maper.readValue(d, new TypeReference<List<LoadAction>>() {}).get(0);
-        android.util.Log.i("response-plan-item" ,ZuphrLoada.FpName);
-
-    }
 
 
      @ColumnInfo(name="ZuphrMovem")
@@ -301,12 +287,19 @@ public class Material implements Serializable {
 
 
 
-     @JsonIgnore
-     @Ignore
-    List<Driver> Drivers= new ArrayList<>();
+    @JsonIgnore
+    @Ignore
+    boolean Complete =false;
+
      @JsonIgnore
      @Ignore
     List<Vehicle> Vehicles =new ArrayList<>();
+
+    @JsonIgnore
+    @Ignore
+    List<VehAssign> vehAssignList =new ArrayList<>();
+
+
 
 
 //    @JsonProperty("LoadingPlanLoadActionSet")
@@ -322,7 +315,7 @@ public class Material implements Serializable {
 //    String LoadingPlanLoadCheckSet;
 
 
-    public Material(String zuphrActquan, String log, LoadAction zuphrLoada, String zuphrMovem, String zuphrActtype,
+    public Material(String zuphrActquan, String log, String zuphrMovem, String zuphrActtype,
                      String zuphrContents, String zuphrHeight, String zuphrLength, String zuphrLpid,
                      Boolean zuphrObjecte, String zuphrSchar, String zuphrFrom, String zuphrSchtask,
                      String zuphrSeq, String zuphrWidth, String zuphrShipper, String zuphrTo,
@@ -336,10 +329,9 @@ public class Material implements Serializable {
                      String zuphrEquipnumber, String zuphrCnumber, String zuphrTicketno, String zuphrMfrpn,
                      String zuphrBitType, String zuphrBitstatus, String zuphrSrlno, String zuphrGl,
                      String zuphrCostcen, String zuphrMattype, String zuphrFpDate, String zuphrFpTime,
-                     String zuphrFpName , List<Driver> drivers, List<Vehicle> vehicles) {
+                     String zuphrFpName , List<Vehicle> vehicles) {
         ZuphrActquan = zuphrActquan;
         Log = log;
-        ZuphrLoada = zuphrLoada;
         ZuphrMovem = zuphrMovem;
         ZuphrActtype = zuphrActtype;
         ZuphrContents = zuphrContents;
@@ -395,7 +387,6 @@ public class Material implements Serializable {
         ZuphrFpDate = zuphrFpDate;
         ZuphrFpTime = zuphrFpTime;
         ZuphrFpName = zuphrFpName;
-        Drivers = drivers;
         Vehicles = vehicles;
     }
 
@@ -419,13 +410,7 @@ public class Material implements Serializable {
         Log = log;
     }
 
-    public LoadAction getZuphrLoada() {
-        return ZuphrLoada;
-    }
 
-    public void setZuphrLoada(LoadAction zuphrLoada) {
-        ZuphrLoada = zuphrLoada;
-    }
 
     public String getZuphrMovem() {
         return ZuphrMovem;
@@ -435,13 +420,7 @@ public class Material implements Serializable {
         ZuphrMovem = zuphrMovem;
     }
 
-    public List<Driver> getDrivers() {
-        return Drivers;
-    }
 
-    public void setDrivers(List<Driver> drivers) {
-        Drivers = drivers;
-    }
 
     public List<Vehicle> getVehicles() {
         return Vehicles;
@@ -905,6 +884,22 @@ public class Material implements Serializable {
 
     public void setPlanOfflineID(String planOfflineID) {
         PlanOfflineID = planOfflineID;
+    }
+
+    public List<VehAssign> getVehAssignList() {
+        return vehAssignList;
+    }
+
+    public void setVehAssignList(List<VehAssign> vehAssignList) {
+        this.vehAssignList = vehAssignList;
+    }
+
+    public boolean isComplete() {
+        return Complete;
+    }
+
+    public void setComplete(boolean complete) {
+        Complete = complete;
     }
 }
 

@@ -5,13 +5,12 @@ import com.example.listing.models.Device;
 import com.example.listing.models.Deviceunpack;
 import com.example.listing.models.Driver;
 import com.example.listing.models.DriverUnpack;
-import com.example.listing.models.LoadAction;
 import com.example.listing.models.MatrialDispatching;
-import com.example.listing.models.Plan;
 import com.example.listing.models.ImageList;
 
 import com.example.listing.models.PlanUnpack;
 import com.example.listing.models.Userunpack;
+import com.example.listing.models.VehAssign;
 import com.example.listing.models.Vehicle;
 import com.example.listing.models.VehicleUnpack;
 import com.example.listing.models.imagenode;
@@ -23,7 +22,6 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 public interface RetrofitInterface {
@@ -74,9 +72,9 @@ public interface RetrofitInterface {
     );
 
 
+    @POST("VehAssign")
+    Call<ResponseBody> LoaderStatus(@Body VehAssign vehAssign, @Header("x-csrf-token") String token);
 
-    @POST("LoadingPlanLoadActionSet")
-    Call<ResponseBody> postLoadAction(@Body LoadAction loadAction, @Header("x-csrf-token") String token);
 
     @GET("UserInfoSet/")
     Call<Userunpack> DVClogin(@Header("x-csrf-token") String fetch);

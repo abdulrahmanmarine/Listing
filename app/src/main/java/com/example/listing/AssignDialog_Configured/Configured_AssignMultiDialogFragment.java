@@ -1,21 +1,16 @@
 package com.example.listing.AssignDialog_Configured;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,7 +20,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,20 +27,14 @@ import androidx.recyclerview.widget.RecyclerView;
 //import com.example.listing.Kotlin.pictureMode;
 import com.example.listing.AddButtonClicked;
 import com.example.listing.DataViewModel.PlansDataModel;
-import com.example.listing.DriverDeleteButtonClicked;
 import com.example.listing.VehicleDeleteButtonClicked;
-import com.example.listing.Material.Dispatcher.DispatcherFragment;
-import com.example.listing.Plan.PlanFragment;
 import com.example.listing.R;
 import com.example.listing.models.Driver;
-import com.example.listing.models.LoadAction;
 import com.example.listing.models.Material;
 import com.example.listing.models.Plan;
 import com.example.listing.models.Vehicle;
 import com.example.listing.notes.pictureMode;
-import com.fasterxml.jackson.core.Base64Variants;
 
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -239,34 +227,28 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
 
 
 
-        doneBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                materialParam.setDrivers(chosenDrivers);
-                materialParam.setVehicles(chosenVehicles);
+        doneBut.setOnClickListener(v -> {
+            materialParam.setVehicles(chosenVehicles);
 
-               Material Material= model.MatrialsList.getValue().get(Mpostion);
-                List<Material> list =model.MatrialsList.getValue();
-                LoadAction loadAction=Material.getZuphrLoada();
-                loadAction.setVehicle(chosenVehicles);
-                Material.setZuphrLoada(loadAction);
-                list.set(Mpostion,Material);
-                Plan plan= model.plan.getValue();
-                plan.setPlanToItems(list);
-                model.plan.setValue(plan);
+           Material Material= model.MatrialsList.getValue().get(Mpostion);
+            List<Material> list =model.MatrialsList.getValue();
+            Material.setVehicles(chosenVehicles);
+            list.set(Mpostion,Material);
+            Plan plan= model.plan.getValue();
+            plan.setPlanToItems(list);
+            model.plan.setValue(plan);
 
 
-                List<Plan> plans=model.Plans.getValue();
-                for(int i=0;i<model.Plans.getValue().size();i++){
-                    if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-                        plans.set(i,model.plan.getValue());
-                        model.Plans.setValue(plans);
-                    }
+            List<Plan> plans=model.Plans.getValue();
+            for(int i=0;i<model.Plans.getValue().size();i++){
+                if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
+                    plans.set(i,model.plan.getValue());
+                    model.Plans.setValue(plans);
                 }
-
-
-                dismiss();
             }
+
+
+            dismiss();
         });
 
         closeBut.setOnClickListener(new View.OnClickListener() {

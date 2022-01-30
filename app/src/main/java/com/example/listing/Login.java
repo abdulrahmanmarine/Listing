@@ -127,8 +127,9 @@ public class Login extends AppCompatActivity {
     public void login() {
         Error_Msg.setVisibility(View.INVISIBLE);
         saveMode("online");
-        binding.password.setText("000000");
-        binding.username.setText("alsaliat");
+
+        binding.username.setText("T_CBAD_SUPP");
+        binding.password.setText("T_cbad_supp1");
 
         User user = new User(binding.username.getText().toString(), binding.password.getText().toString());
         if (binding.username.getText().toString().isEmpty() || binding.password.getText().toString().isEmpty()) {

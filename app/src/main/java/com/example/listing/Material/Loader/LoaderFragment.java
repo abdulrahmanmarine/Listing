@@ -1,20 +1,14 @@
 package com.example.listing.Material.Loader;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.DimenRes;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,11 +16,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.transition.Fade;
-import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +29,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.listing.CameraButtonClicked;
-import com.example.listing.DataViewModel.Flag;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.FoundButtonClicked;
 import com.example.listing.LoadButtonClicked;
@@ -48,10 +38,10 @@ import com.example.listing.NoteButtonClicked;
 import com.example.listing.PrcButtonClicked;
 import com.example.listing.R;
 import com.example.listing.UnloadButtonClicked;
-import com.example.listing.databinding.FragmentAddBinding;
-import com.example.listing.models.LoadAction;
+import com.example.listing.Utils.Loginsession;
 import com.example.listing.models.Material;
 import com.example.listing.models.Plan;
+import com.example.listing.models.VehAssign;
 import com.example.listing.notes.RedesignedNotesFragment;
 import com.fasterxml.jackson.core.Base64Variants;
 
@@ -213,8 +203,6 @@ public class LoaderFragment extends Fragment  {
         dest_tv = v.findViewById(R.id.dest_tv);
         dest_tv.setText(mParam4);
 
-
-
         CameraButtonClicked cameraListener = pos -> {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             try{
@@ -223,15 +211,36 @@ public class LoaderFragment extends Fragment  {
 
             }
         };
-
         LoadButtonClicked loadListener = pos -> {
             Material Material= model.MatrialsList.getValue().get(pos);
+            VehAssign vehAssign=new VehAssign(Material.getZuphrLpid(),Material.getZuphrMjahr(),
+                    Material.getZuphrMblpo(),Material.getZuphrStgid(),Material.getZuphrMatnr(),
+                    Material.getZuphrReqid(),Material.getZuphrReqitm(),Material.getZuphrShortxt(),
+                    Material.getZuphrDescrip(),Material.getZuphrOffshore(),Loginsession.getInstance().getUser().UserId,
+                    "","X","","","");
+            Material.getVehAssignList().clear();
+            for(int i=0;i<Material.getVehAssignList().size();i++){
+
+                if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
+                 vehAssign=Material.getVehAssignList().get(i);
+                    break;
+                }
+
+            }
+
+
+            model.AssignValueLoader(vehAssign);
+            Material.getVehAssignList().add(vehAssign);
+            boolean FLAG=true;
+            for(int i=0;i<Material.getVehAssignList().size();i++){
+                if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
+                    FLAG = false;
+                }
+            }
+            Material.setComplete(FLAG);
             List<Material> list = model.MatrialsList.getValue();
-            LoadAction loadAction= Material.getZuphrLoada();
-            loadAction.setStatus("Loaded");
             list.set(pos,Material);
             Plan plan= model.plan.getValue();
-
             plan.setPlanToItems(list);
             model.plan.setValue(plan);
             List<Plan> plans=model.Plans.getValue();
@@ -244,17 +253,36 @@ public class LoaderFragment extends Fragment  {
 
 
         };
-
         UnloadButtonClicked unloadListener = pos -> {
             Material Material= model.MatrialsList.getValue().get(pos);
+            VehAssign vehAssign=new VehAssign(Material.getZuphrLpid(),Material.getZuphrMjahr(),
+                    Material.getZuphrMblpo(),Material.getZuphrStgid(),Material.getZuphrMatnr(),
+                    Material.getZuphrReqid(),Material.getZuphrReqitm(),Material.getZuphrShortxt(),
+                    Material.getZuphrDescrip(),Material.getZuphrOffshore(),Loginsession.getInstance().getUser().UserId,
+                    "","","x","","");
+            Material.getVehAssignList().clear();
+            for(int i=0;i<Material.getVehAssignList().size();i++){
+
+                if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
+                    vehAssign=Material.getVehAssignList().get(i);
+                    break;
+                }
+
+            }
+            model.AssignValueLoader(vehAssign);
+            Material.getVehAssignList().add(vehAssign);
+            boolean FLAG=true;
+            for(int i=0;i<Material.getVehAssignList().size();i++){
+                if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
+                    FLAG = false;
+                }
+            }
+            Material.setComplete(FLAG);
             List<Material> list = model.MatrialsList.getValue();
-            LoadAction loadAction= Material.getZuphrLoada();
-            loadAction.setStatus("Unloaded");
             list.set(pos,Material);
             Plan plan= model.plan.getValue();
             plan.setPlanToItems(list);
             model.plan.setValue(plan);
-
             List<Plan> plans=model.Plans.getValue();
             for(int i=0;i<model.Plans.getValue().size();i++){
                 if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
@@ -262,18 +290,77 @@ public class LoaderFragment extends Fragment  {
                     model.Plans.setValue(plans);
                 }
             }
-        };
 
+        };
+        FoundButtonClicked foundListener = pos -> {
+            Material Material= model.MatrialsList.getValue().get(pos);
+            VehAssign vehAssign=new VehAssign(Material.getZuphrLpid(),Material.getZuphrMjahr(),
+                    Material.getZuphrMblpo(),Material.getZuphrStgid(),Material.getZuphrMatnr(),
+                    Material.getZuphrReqid(),Material.getZuphrReqitm(),Material.getZuphrShortxt(),
+                    Material.getZuphrDescrip(),Material.getZuphrOffshore(),Loginsession.getInstance().getUser().UserId,
+                    "","","","X","");
+            Material.getVehAssignList().clear();
+            for(int i=0;i<Material.getVehAssignList().size();i++){
+
+                if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
+                    vehAssign=Material.getVehAssignList().get(i);
+                    break;
+                }
+
+            }
+            model.AssignValueLoader(vehAssign);
+            Material.getVehAssignList().add(vehAssign);
+            boolean FLAG=true;
+            for(int i=0;i<Material.getVehAssignList().size();i++){
+                if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
+                    FLAG = false;
+                }
+            }
+            Material.setComplete(FLAG);
+            List<Material> list = model.MatrialsList.getValue();
+            list.set(pos,Material);
+            Plan plan= model.plan.getValue();
+            plan.setPlanToItems(list);
+            model.plan.setValue(plan);
+            List<Plan> plans=model.Plans.getValue();
+            for(int i=0;i<model.Plans.getValue().size();i++){
+                if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
+                    plans.set(i,model.plan.getValue());
+                    model.Plans.setValue(plans);
+                }
+            }
+
+        };
         PrcButtonClicked prcListener = pos -> {
             Material Material= model.MatrialsList.getValue().get(pos);
+            VehAssign vehAssign=new VehAssign(Material.getZuphrLpid(),Material.getZuphrMjahr(),
+                    Material.getZuphrMblpo(),Material.getZuphrStgid(),Material.getZuphrMatnr(),
+                    Material.getZuphrReqid(),Material.getZuphrReqitm(),Material.getZuphrShortxt(),
+                    Material.getZuphrDescrip(),Material.getZuphrOffshore(),Loginsession.getInstance().getUser().UserId,
+                    "","","","","x");
+            Material.getVehAssignList().clear();
+            for(int i=0;i<Material.getVehAssignList().size();i++){
+
+                if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
+                    vehAssign=Material.getVehAssignList().get(i);
+                    break;
+                }
+
+            }
+            model.AssignValueLoader(vehAssign);
+            Material.getVehAssignList().add(vehAssign);
+            boolean FLAG=true;
+            for(int i=0;i<Material.getVehAssignList().size();i++){
+                if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
+                    FLAG = false;
+                }
+            }
+            Material.setComplete(FLAG);
             List<Material> list = model.MatrialsList.getValue();
-            LoadAction loadAction= Material.getZuphrLoada();
-            loadAction.setStatus("Processing");
             list.set(pos,Material);
             Plan plan= model.plan.getValue();
             plan.setPlanToItems(list);
             model.plan.setValue(plan);
-
             List<Plan> plans=model.Plans.getValue();
             for(int i=0;i<model.Plans.getValue().size();i++){
                 if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
@@ -282,30 +369,8 @@ public class LoaderFragment extends Fragment  {
                 }
             }
 
+
         };
-
-
-
-  FoundButtonClicked foundListener = pos -> {
-      Material Material= model.MatrialsList.getValue().get(pos);
-      List<Material> list = model.MatrialsList.getValue();
-      LoadAction loadAction= Material.getZuphrLoada();
-      loadAction.setStatus("Not Found");
-      list.set(pos,Material);
-      Plan plan= model.plan.getValue();
-      plan.setPlanToItems(list);
-      model.plan.setValue(plan);
-
-
-      List<Plan> plans=model.Plans.getValue();
-      for(int i=0;i<model.Plans.getValue().size();i++){
-          if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-              plans.set(i,model.plan.getValue());
-              model.Plans.setValue(plans);
-          }
-      }
-
-  };
 
   NoteButtonClicked noteListener = pos -> {
 
@@ -316,8 +381,7 @@ public class LoaderFragment extends Fragment  {
       String Mode = preferences.getString(getResources().getString(R.string.UserMode), "");
 
       Log.i("notes",model.MatrialsList.getValue().get(pos).getNotes().size()+"");
-      notesFragment =
-              new RedesignedNotesFragment( model.MatrialsList.getValue().get(pos),
+      notesFragment = new RedesignedNotesFragment( model.MatrialsList.getValue().get(pos),
               model.Plans.getValue().get(pos).getZuphrLpid(), "0", Calendar.getInstance().get(Calendar.YEAR) + "",
               requireActivity().getApplication(),Mode);
 
