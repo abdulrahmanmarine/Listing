@@ -277,8 +277,6 @@ public class PlansDataModel extends ViewModel {
 
         }
     }
-
-
     public  void getVechiles(){
 
         Driver driver1 = new Driver("1", "Abdul", "Heavy Vehicle Driving",
