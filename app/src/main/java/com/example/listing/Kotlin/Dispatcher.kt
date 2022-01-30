@@ -79,6 +79,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
     override fun onItemClick(plan: Plan?, pos: Int) {
 
         model.getDispatchMtr(plan?.ZuphrLpid,pos)
+
         model.plan.value = plan
         LoaderFragmentInteraction(pos)
         po = pos

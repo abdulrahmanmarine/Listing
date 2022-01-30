@@ -104,22 +104,28 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
             if(plan.getPlanToItems()!=null){
 
                 if(load){
+
+                    Boolean flag=false;
                     for(int i = 0; i< plan.getPlanToItems().size() ; i++){
 
-                        Log.i("Status",plan.getPlanToItems().get(i).getZuphrStatus());
-                        if(!plan.getPlanToItems().get(i).getZuphrStatus().equalsIgnoreCase("LOADED")){
-//                                getZuphrLoada().getStatus().equalsIgnoreCase("LOADED")){
-                            plan.setZuphrStatus("Incomplete");
-
-                            statusText.setText(plan.getZuphrStatus());
-                            statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
+                       if(!plan.getPlanToItems().get(i).isComplete())
+                       {   flag=false;
                             break;
-                        }
-                        else{
-                            plan.setZuphrStatus("Complete");
-                            statusText.setText(plan.getZuphrStatus());
-                            statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
-                        }
+                       }
+                       else flag=true;
+
+                    }
+
+                    if(!flag){
+                        plan.setZuphrStatus("InComplete");
+                        statusText.setText(plan.getZuphrStatus());
+                        statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
+
+                    }
+                    else{
+                        plan.setZuphrStatus("Complete");
+                        statusText.setText(plan.getZuphrStatus());
+                        statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
                     }
                 }
                 else{

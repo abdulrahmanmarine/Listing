@@ -45,7 +45,7 @@ public interface RetrofitInterface {
     @GET("DeviceSet")
     Call<Deviceunpack> GetDevice();
     @GET
-    Call<AssignmentUnpack> getDispatch(@Header("x-csrf-token") String token,@Url String url);
+    Call<AssignmentUnpack> getDispatch(@Url String url);
 
 
 
@@ -73,7 +73,7 @@ public interface RetrofitInterface {
 
 
     @POST("VehAssign")
-    Call<ResponseBody> LoaderStatus(@Body VehAssign vehAssign, @Header("x-csrf-token") String token);
+    Call<AssignmentUnpack> LoaderStatus(@Body MatrialDispatching matrialDispatch, @Header("x-csrf-token") String token);
 
 
     @GET("UserInfoSet/")

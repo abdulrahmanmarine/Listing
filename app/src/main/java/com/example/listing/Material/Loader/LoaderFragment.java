@@ -40,6 +40,7 @@ import com.example.listing.R;
 import com.example.listing.UnloadButtonClicked;
 import com.example.listing.Utils.Loginsession;
 import com.example.listing.models.Material;
+import com.example.listing.models.MatrialDispatching;
 import com.example.listing.models.Plan;
 import com.example.listing.models.VehAssign;
 import com.example.listing.notes.RedesignedNotesFragment;
@@ -73,6 +74,8 @@ public class LoaderFragment extends Fragment  {
     private static RedesignedNotesFragment notesFragment= null;
     ImageButton btnCapture;
     PlansDataModel model;
+
+    private MatrialDispatching MatrialDispatch;
 
 
 
@@ -193,24 +196,24 @@ public class LoaderFragment extends Fragment  {
         };
         LoadButtonClicked loadListener = pos -> {
             Material Material= model.MatrialsList.getValue().get(pos);
-            VehAssign vehAssign=new VehAssign(Material.getZuphrLpid(),Material.getZuphrMjahr(),
-                    Material.getZuphrMblpo(),Material.getZuphrStgid(),Material.getZuphrMatnr(),
-                    Material.getZuphrReqid(),Material.getZuphrReqitm(),Material.getZuphrShortxt(),
-                    Material.getZuphrDescrip(),Material.getZuphrOffshore(),Loginsession.getInstance().getUser().UserId,
-                    "","X","","","");
-            Material.getVehAssignList().clear();
-            for(int i=0;i<Material.getVehAssignList().size();i++){
+            VehAssign vehAssign;
 
+            Log.i("vechassginlength_LOAD",Material.getVehAssignList().size()+"");
+            for(int i=0;i<Material.getVehAssignList().size();i++){
                 if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
                  vehAssign=Material.getVehAssignList().get(i);
+                 vehAssign.setZuphrLoad("X");
+                 vehAssign.setZuphrUload("");
+                 vehAssign.setZuphrNfound("");
+                 vehAssign.setZuphrProc("");
                     break;
                 }
 
             }
 
+            MatrialDispatch = new MatrialDispatching(Material.getZuphrLpid(), "", Material.getVehAssignList());
+            model.AssignValueLoader(MatrialDispatch);
 
-            model.AssignValueLoader(vehAssign);
-            Material.getVehAssignList().add(vehAssign);
             boolean FLAG=true;
             for(int i=0;i<Material.getVehAssignList().size();i++){
                 if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
@@ -235,22 +238,24 @@ public class LoaderFragment extends Fragment  {
         };
         UnloadButtonClicked unloadListener = pos -> {
             Material Material= model.MatrialsList.getValue().get(pos);
-            VehAssign vehAssign=new VehAssign(Material.getZuphrLpid(),Material.getZuphrMjahr(),
-                    Material.getZuphrMblpo(),Material.getZuphrStgid(),Material.getZuphrMatnr(),
-                    Material.getZuphrReqid(),Material.getZuphrReqitm(),Material.getZuphrShortxt(),
-                    Material.getZuphrDescrip(),Material.getZuphrOffshore(),Loginsession.getInstance().getUser().UserId,
-                    "","","x","","");
-            Material.getVehAssignList().clear();
-            for(int i=0;i<Material.getVehAssignList().size();i++){
+            VehAssign vehAssign;
 
+            Log.i("vechassginlength_UNLOAD",Material.getVehAssignList().size()+"");
+            for(int i=0;i<Material.getVehAssignList().size();i++){
                 if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
                     vehAssign=Material.getVehAssignList().get(i);
+                    vehAssign.setZuphrLoad("");
+                    vehAssign.setZuphrUload("X");
+                    vehAssign.setZuphrNfound("");
+                    vehAssign.setZuphrProc("");
                     break;
                 }
 
             }
-            model.AssignValueLoader(vehAssign);
-            Material.getVehAssignList().add(vehAssign);
+
+            MatrialDispatch = new MatrialDispatching(Material.getZuphrLpid(), "", Material.getVehAssignList());
+            model.AssignValueLoader(MatrialDispatch);
+
             boolean FLAG=true;
             for(int i=0;i<Material.getVehAssignList().size();i++){
                 if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
@@ -274,22 +279,24 @@ public class LoaderFragment extends Fragment  {
         };
         FoundButtonClicked foundListener = pos -> {
             Material Material= model.MatrialsList.getValue().get(pos);
-            VehAssign vehAssign=new VehAssign(Material.getZuphrLpid(),Material.getZuphrMjahr(),
-                    Material.getZuphrMblpo(),Material.getZuphrStgid(),Material.getZuphrMatnr(),
-                    Material.getZuphrReqid(),Material.getZuphrReqitm(),Material.getZuphrShortxt(),
-                    Material.getZuphrDescrip(),Material.getZuphrOffshore(),Loginsession.getInstance().getUser().UserId,
-                    "","","","X","");
-            Material.getVehAssignList().clear();
-            for(int i=0;i<Material.getVehAssignList().size();i++){
+            VehAssign vehAssign;
 
+            Log.i("vechassginlength_FOUND",Material.getVehAssignList().size()+"");
+            for(int i=0;i<Material.getVehAssignList().size();i++){
                 if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
                     vehAssign=Material.getVehAssignList().get(i);
+                    vehAssign.setZuphrLoad("");
+                    vehAssign.setZuphrUload("");
+                    vehAssign.setZuphrNfound("X");
+                    vehAssign.setZuphrProc("");
                     break;
                 }
 
             }
-            model.AssignValueLoader(vehAssign);
-            Material.getVehAssignList().add(vehAssign);
+
+            MatrialDispatch = new MatrialDispatching(Material.getZuphrLpid(), "", Material.getVehAssignList());
+            model.AssignValueLoader(MatrialDispatch);
+
             boolean FLAG=true;
             for(int i=0;i<Material.getVehAssignList().size();i++){
                 if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
@@ -301,8 +308,10 @@ public class LoaderFragment extends Fragment  {
             list.set(pos,Material);
             Plan plan= model.plan.getValue();
             plan.setPlanToItems(list);
+
             model.plan.setValue(plan);
             List<Plan> plans=model.Plans.getValue();
+
             for(int i=0;i<model.Plans.getValue().size();i++){
                 if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
                     plans.set(i,model.plan.getValue());
@@ -310,25 +319,28 @@ public class LoaderFragment extends Fragment  {
                 }
             }
 
+
         };
         PrcButtonClicked prcListener = pos -> {
             Material Material= model.MatrialsList.getValue().get(pos);
-            VehAssign vehAssign=new VehAssign(Material.getZuphrLpid(),Material.getZuphrMjahr(),
-                    Material.getZuphrMblpo(),Material.getZuphrStgid(),Material.getZuphrMatnr(),
-                    Material.getZuphrReqid(),Material.getZuphrReqitm(),Material.getZuphrShortxt(),
-                    Material.getZuphrDescrip(),Material.getZuphrOffshore(),Loginsession.getInstance().getUser().UserId,
-                    "","","","","x");
-            Material.getVehAssignList().clear();
-            for(int i=0;i<Material.getVehAssignList().size();i++){
+            VehAssign vehAssign;
 
+            Log.i("vechassginlength_pROCEED",Material.getVehAssignList().size()+"");
+            for(int i=0;i<Material.getVehAssignList().size();i++){
                 if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
                     vehAssign=Material.getVehAssignList().get(i);
+                    vehAssign.setZuphrLoad("");
+                    vehAssign.setZuphrUload("");
+                    vehAssign.setZuphrNfound("");
+                    vehAssign.setZuphrProc("X");
                     break;
                 }
 
             }
-            model.AssignValueLoader(vehAssign);
-            Material.getVehAssignList().add(vehAssign);
+
+            MatrialDispatch = new MatrialDispatching(Material.getZuphrLpid(), "", Material.getVehAssignList());
+            model.AssignValueLoader(MatrialDispatch);
+
             boolean FLAG=true;
             for(int i=0;i<Material.getVehAssignList().size();i++){
                 if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
@@ -342,6 +354,10 @@ public class LoaderFragment extends Fragment  {
             plan.setPlanToItems(list);
             model.plan.setValue(plan);
             List<Plan> plans=model.Plans.getValue();
+
+
+            
+            
             for(int i=0;i<model.Plans.getValue().size();i++){
                 if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
                     plans.set(i,model.plan.getValue());

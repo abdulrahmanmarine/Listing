@@ -104,6 +104,8 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.Materi
 
             if(material.getVehAssignList()!=null &&material.getVehAssignList().size()>0){
                 for(int i=0; i<material.getVehAssignList().size();i++){
+
+
                     if(material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")){
                         itemRowBinding.statusTv.setText("Loaded");
                         itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.green_border));
@@ -114,9 +116,11 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.Materi
                         itemRowBinding.statusTv.setText("NotFound");
                         itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
                     }
-                    else if (material.getVehAssignList().get(i).getZuphrDone().equalsIgnoreCase("x")){
+                    else if (material.getVehAssignList().get(i).getZuphrProc().equalsIgnoreCase("x")){
                         itemRowBinding.statusTv.setText("Proccessd");
                         itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.yellow_border));}
+
+
                 }
 
             }else {

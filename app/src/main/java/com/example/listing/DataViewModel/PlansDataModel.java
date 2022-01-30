@@ -79,15 +79,13 @@ public class PlansDataModel extends ViewModel {
 
 
 
-    public void getplansLoader(Application application,LifecycleOwner owner ,User user) throws IOException {
+    public void getplansLoader(LifecycleOwner owner) throws IOException {
         //OFFLINE DATA RETRIEVAL
-
-        String userid=Loginsession.getInstance().getUser().getUserId().toUpperCase();
 
         if (Mode.equals("offline")) {
 
 
-            db.planitem().GetItemAll(userid).observe(owner,itemlist->{
+            db.planitem().GetItemAll(Loginsession.getInstance().getUser().getUserId().toUpperCase()).observe(owner,itemlist->{
                 Log.i("test plans:",itemlist.size()+"");
 
                 for(int i=0 ;i<itemlist.size();i++){
@@ -142,7 +140,7 @@ public class PlansDataModel extends ViewModel {
                              db.Notes().nukeTable();
                             for(int i=0 ;i<temp.size();i++){
                                 Plan plan= temp.get(i);
-                                plan.setZuphrFpName(userid.toUpperCase());
+                          //      plan.setZuphrFpName(Loginsession.getInstance().getUser().getUserId().toUpperCase());
                                 String id = String.valueOf(db.planitem().insertplan(plan));
 
                                 for(int j=0 ;j<temp.get(i).getPlanToItems().size();j++) {
@@ -279,6 +277,8 @@ public class PlansDataModel extends ViewModel {
 
         }
     }
+
+
     public  void getVechiles(){
 
         Driver driver1 = new Driver("1", "Abdul", "Heavy Vehicle Driving",
@@ -425,8 +425,9 @@ public class PlansDataModel extends ViewModel {
             }
         });
     }
+
     public  void getDispatchMtr(String Lpid ,int pos){
-        retrofitInterface.getDispatch(Loginsession.getInstance().getToken(),"LpHdrSet('"+Lpid+"')?$expand=NavLpToVehAssign").enqueue(new Callback<AssignmentUnpack>() {
+        retrofitInterface.getDispatch("LpHdrSet('"+Lpid+"')?$expand=NavLpToVehAssign").enqueue(new Callback<AssignmentUnpack>() {
             @Override
             public void onResponse(Call<AssignmentUnpack> call, Response<AssignmentUnpack> response) {
 
@@ -439,55 +440,106 @@ public class PlansDataModel extends ViewModel {
 
                 }
                 if(response.isSuccessful()){
+
                     List<VehAssign> vehAssigns =response.body().getAssignment().getVehassign();
                     Log.i("list of objects",response.body().getAssignment().getVehassign().size()+"");
                     List<Material> materials=plan.getValue().getPlanToItems();
-                    List<Driver> drivers=new ArrayList<>();
+
+
+                    //                    List<Driver> drivers=new ArrayList<>();
                     Driver driver=new Driver();
-                    List<Vehicle> vehicleList= new ArrayList<>();
-                    for(int i=0 ; i<vehAssigns.size();i++){
-                        Log.i("get plan vehAssigns :",vehAssigns.get(i).getZuphrMblpo()+"");
-                        for(int j=0; j<materials.size();j++){
 
-                              Vehicle vehicle=null;
+                    for(int i=0 ; i<vehAssigns.size();i++){ // for vehassigns
+                        VehAssign vehAssignObj = vehAssigns.get(i);
+                        Log.i("get plan vehAssigns :",vehAssignObj.getZuphrMblpo()+"");
+                        for(int j=0; j<materials.size();j++){ // for materials
+                            Material loopMaterial = materials.get(j);
+                            Vehicle loopMaterialVehicle = null;
+                            Plan planx = null;
+                            Vehicle vehicle = null;
+                            List<Vehicle> vehicleList= new ArrayList<>();
+                            List<Driver> drivers = new ArrayList<>();
+                            List<Material> Matxx;
 
-                           if(vehAssigns.get(i).getZuphrMblpo().equals(materials.get(j).getZuphrMblpo()))
-                           {
-                               if(materials.get(j).getVehicles()!=null && materials.get(j).getVehicles().size()>0)
-                               vehicleList= materials.get(j).getVehicles();
-                               int posM=j;
-                               int posV=0;
-                               for(int k=0 ;k<materials.get(j).getVehicles().size();k++){
-                                   if(vehAssigns.get(i).getZuphrVehid().equals(materials.get(j).getVehicles().get(k))){
-                                       vehicle=materials.get(j).getVehicles().get(k);
-                                        posV=k;
-                                       break;
-                                   }
-                               }
-                               if(vehicle==null){
-                                   vehicle=new Vehicle(vehAssigns.get(i).getZuphrVehid(),"","","",
-                                           "","","","","",new ArrayList<>());
-                               }
-                               driver.setZuphrDriverid(vehAssigns.get(i).getZuphrDriverid());
-                               vehicle.getLoaders().add(driver);
-                               Log.i("get plan materials :",materials.get(j).getZuphrMblpo()+","+vehAssigns.get(i).getZuphrMblpo());
+                            if(vehAssignObj.getZuphrMblpo().equals(loopMaterial.getZuphrMblpo())) //matching vehassign material id with material material id
+                            {
 
-                               vehicleList.set(posV,vehicle);
 
-                               plan.getValue().getPlanToItems().set(j, materials.get(i));
-                               Plans.getValue().set(pos,plan.getValue());
+                                //BREAKPOINT
+                                if(loopMaterial.getVehicles()!= null && loopMaterial.getVehicles().size() > 0){ // checking if material has list of vehicles
+                                    List<Vehicle> materialVehicleList = loopMaterial.getVehicles(); //material vehicle list
 
-                                break;
-                           }
+                                    for (int k = 0 ; k < materialVehicleList.size() ; k++){ //looping through material vehicle list
+                                        loopMaterialVehicle = materialVehicleList.get(k); // material vehicle
 
+                                        if(loopMaterialVehicle.getVehid().equals(vehAssignObj.getZuphrVehid())){
+                                           /*
+                                       checking if material vehicle matches vehassign object (if first time seeing it)
+                                       */
+                                            vehicle = loopMaterialVehicle;
+                                            drivers = loopMaterialVehicle.getLoaders();
+                                        }
+                                        vehicleList.add(vehicle);
+                                    }
+                                    Log.i("vehicle list obj 1",vehicle.getVehid());
+
+                                } else if(loopMaterialVehicle == null){
+
+                                    drivers.clear();
+                                    driver=new Driver(vehAssignObj.getZuphrDriverid(),"  ",
+                                            "","",
+                                            "","","");
+                                    driver.setZuphrdrvrName("Ahmad");
+
+                                    vehicle = new Vehicle(vehAssignObj.getZuphrVehid(),"test","","",
+                                            "","","","","",drivers);
+                                    drivers.add(driver);
+                                    vehicleList.add(vehicle);
+
+                                    Log.i("vehicle list obj 2",vehAssignObj.getZuphrVehid());
+                                }
+                                int count = 0;
+                                for(int d = 0 ; d < drivers.size() ; d++){
+                                    if(drivers.get(d).getZuphrDriverid().equalsIgnoreCase(vehAssignObj.getZuphrDriverid())){
+                                        count++;
+                                    }
+                                }
+
+                                if(count == 0){
+                                    driver.setZuphrDriverid(vehAssignObj.getZuphrDriverid());
+                                    drivers.add(driver);
+                                }
+
+                                vehicle.setLoaders(drivers);
+
+                                loopMaterial.setVehicles(vehicleList);
+
+                                plan.getValue().getPlanToItems().set(j, loopMaterial);
+
+                                planx=plan.getValue();
+                                Matxx=planx.getPlanToItems();
+                                Matxx.set(j,loopMaterial);
+                                planx.setPlanToItems(Matxx);
+                                List<Plan> plans=Plans.getValue();
+                                Log.i("Vech list",loopMaterial.getVehicles().size()+","+loopMaterial.getVehicles().get(0).getLoaders().size());
+                                //plans.set(pos,planx);
+                                Plans.postValue(plans);
+
+                                plan.setValue(planx);
 
                             }
+
+                            plan.getValue(  ).getPlanToItems().set(j, loopMaterial);
+
                         }
+
                     }
-                   // plan.getValue().setPlanToItems(materials);
 
 
                 }
+
+
+            }
 
 
 
@@ -500,6 +552,83 @@ public class PlansDataModel extends ViewModel {
             }
         });
     }
+
+    public  void getLoaderMtr(String Lpid ,int pos){
+
+        retrofitInterface.getDispatch(
+                "LpHdrSet('"+Lpid+"')?$expand=NavLpToVehAssign").enqueue(new Callback<AssignmentUnpack>() {
+            @Override
+            public void onResponse(Call<AssignmentUnpack> call, Response<AssignmentUnpack> response) {
+
+                if(response.errorBody()!=null){
+                    try {
+                        Log.i("get plan error response",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                if(response.isSuccessful()){
+
+                    List<VehAssign> vehAssigns =response.body().getAssignment().getVehassign();
+                    Log.i("list of objects",response.body().getAssignment().getVehassign().size()+"");
+                    List<Material> materials=plan.getValue().getPlanToItems();
+
+
+                    for(int i=0 ; i<vehAssigns.size();i++){ // for vehassigns
+                        VehAssign vehAssignObj = vehAssigns.get(i);
+                        Log.i("get plan vehAssigns :",vehAssignObj.getZuphrMblpo()+"");
+                        for(int j=0; j<materials.size();j++){ // for materials
+                            Material loopMaterial = materials.get(j);
+                            Plan planx = null;
+                             List<VehAssign> vechassignlist= new ArrayList<>();
+                           List<Material> Matxx;
+
+                            if(vehAssignObj.getZuphrMblpo().equals(loopMaterial.getZuphrMblpo())) //matching vehassign material id with material material id
+                            {
+
+                                vechassignlist.add(vehAssignObj);
+                                loopMaterial.setVehAssignList(vechassignlist);
+                                plan.getValue().getPlanToItems().set(j, loopMaterial);
+
+                                planx=plan.getValue();
+                                Matxx=planx.getPlanToItems();
+                                Matxx.set(j,loopMaterial);
+                                planx.setPlanToItems(Matxx);
+                                List<Plan> plans=Plans.getValue();
+
+                                 Plans.postValue(plans);
+
+                                plan.setValue(planx);
+
+                            }
+
+                            plan.getValue().getPlanToItems().set(j, loopMaterial);
+
+                        }
+
+                    }
+
+
+                }
+
+
+            }
+
+
+
+
+            @Override
+            public void onFailure(Call<AssignmentUnpack> call, Throwable t) {
+
+                Log.i("get plan no response",t.getMessage());
+
+            }
+        });
+    }
+
+
+
     public  void postDriver(){
         Driver driver=new Driver("OS20MA","Osamah Mohammed",
                 "Heavy Truck","74352",
@@ -617,7 +746,7 @@ public class PlansDataModel extends ViewModel {
         });
 
     }
-    public void AssignValue(MatrialDispatching matrialDispatch) {
+    public void AssignValueDispatch(MatrialDispatching matrialDispatch) {
         retrofitInterface.Dispatch(matrialDispatch,Loginsession.getInstance().getToken()).enqueue(new Callback<AssignmentUnpack>() {
             @Override
             public void onResponse(Call<AssignmentUnpack> call, retrofit2.Response<AssignmentUnpack> response) {
@@ -648,11 +777,13 @@ public class PlansDataModel extends ViewModel {
             }
         });
     }
-    public void AssignValueLoader(VehAssign vehAssign) {
-        retrofitInterface.LoaderStatus(vehAssign,Loginsession.getInstance().getToken())
-                .enqueue(new Callback<ResponseBody>() {
+
+    public void AssignValueLoader(MatrialDispatching matrialDispatch) {
+
+
+        retrofitInterface.LoaderStatus(matrialDispatch,Loginsession.getInstance().getToken()).enqueue(new Callback<AssignmentUnpack>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+            public void onResponse(Call<AssignmentUnpack> call, retrofit2.Response<AssignmentUnpack> response) {
 
 
                 if(response.errorBody()!=null){
@@ -665,25 +796,110 @@ public class PlansDataModel extends ViewModel {
                 }
                 if(response.isSuccessful()){
 
-                    try {
-                        Log.i("post loader sucess response",response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    List<VehAssign> vehAssigns =response.body().getAssignment().getVehassign();
+                    Log.i("list of objects",response.body().getAssignment().getVehassign().size()+"");
+                    List<Material> materials=plan.getValue().getPlanToItems();
+
+                    Driver driver=new Driver();
+
+                    for(int i=0 ; i<vehAssigns.size();i++){ // for vehassigns
+                        VehAssign vehAssignObj = vehAssigns.get(i);
+                        Log.i("get plan vehAssigns :",vehAssignObj.getZuphrMblpo()+"");
+                        for(int j=0; j<materials.size();j++){ // for materials
+                            Material loopMaterial = materials.get(j);
+                            Vehicle loopMaterialVehicle = null;
+                            Plan planx = null;
+                            Vehicle vehicle = null;
+                            List<Vehicle> vehicleList= new ArrayList<>();
+                            List<Driver> drivers = new ArrayList<>();
+                            List<Material> Matxx;
+
+                            if(vehAssignObj.getZuphrMblpo().equals(loopMaterial.getZuphrMblpo())) //matching vehassign material id with material material id
+                            {
+
+             if(loopMaterial.getVehicles()!= null && loopMaterial.getVehicles().size() > 0){ // checking if material has list of vehicles
+                                    List<Vehicle> materialVehicleList = loopMaterial.getVehicles(); //material vehicle list
+                                    for (int k = 0 ; k < materialVehicleList.size() ; k++){ //looping through material vehicle list
+                                        loopMaterialVehicle = materialVehicleList.get(k); // material vehicle
+
+                                        if(loopMaterialVehicle.getVehid().equals(vehAssignObj.getZuphrVehid())){
+                                           /*
+                                       checking if material vehicle matches vehassign object (if first time seeing it)
+                                       */
+                                            vehicle = loopMaterialVehicle;
+                                            drivers = loopMaterialVehicle.getLoaders();
+                                        }
+                                        vehicleList.add(vehicle);
+                                    }
+                                    Log.i("vehicle list obj 1",vehicle.getVehid());
+
+                                } else if(loopMaterialVehicle == null){
+
+                                    drivers.clear();
+                                    driver=new Driver(vehAssignObj.getZuphrDriverid(),"  ",
+                                            "","",
+                                            "","","");
+                                    driver.setZuphrdrvrName("Ahmad");
+
+                                    vehicle = new Vehicle(vehAssignObj.getZuphrVehid(),"test","","",
+                                            "","","","","",drivers);
+                                    drivers.add(driver);
+                                    vehicleList.add(vehicle);
+
+                                    Log.i("vehicle list obj 2",vehAssignObj.getZuphrVehid());
+                                }
+                                int count = 0;
+                                for(int d = 0 ; d < drivers.size() ; d++){
+                                    if(drivers.get(d).getZuphrDriverid().equalsIgnoreCase(vehAssignObj.getZuphrDriverid())){
+                                        count++;
+                                    }
+                                }
+
+                                if(count == 0){
+                                    driver.setZuphrDriverid(vehAssignObj.getZuphrDriverid());
+                                    drivers.add(driver);
+                                }
+
+                                vehicle.setLoaders(drivers);
+
+                                loopMaterial.setVehicles(vehicleList);
+
+                                plan.getValue().getPlanToItems().set(j, loopMaterial);
+
+                                planx=plan.getValue();
+                                Matxx=planx.getPlanToItems();
+                                Matxx.set(j,loopMaterial);
+                                planx.setPlanToItems(Matxx);
+                                List<Plan> plans=Plans.getValue();
+                                Log.i("Vech list",loopMaterial.getVehicles().size()+","+loopMaterial.getVehicles().get(0).getLoaders().size());
+                               Plans.postValue(plans);
+
+                                plan.setValue(planx);
+                            }
+
+                            plan.getValue(  ).getPlanToItems().set(j, loopMaterial);
+                        }
+
                     }
 
+
                 }
+
 
 
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<AssignmentUnpack> call, Throwable t) {
                 Log.i("post loader response-error", t.getMessage());
 
 
             }
         });
+
     }
+
+
     public void GetImages(Application application,  String MaterialId){
 
         retrofitInterface.getImageList("ImageHandlingSet?$filter=ZuphrId eq'"+MaterialId+
@@ -702,15 +918,17 @@ public class PlansDataModel extends ViewModel {
             }
         });
     }
+
     public void StroingImages(Application application, List<imagenode> imagenode,String MatrialId)
             throws JSONException {
 
         SharedPreferences preferences=application.getSharedPreferences(application.getResources()
                 .getString(R.string.SharedPrefName), Activity.MODE_PRIVATE);
         String token2 =preferences.getString("x-csrf-token","");
-
         Log.i("Imagelist",imagenode.size()+"");
+
         for(int i=0;i<imagenode.size();i++) {
+
             imagenode imagenode1 = imagenode.get(i);
             imagenode1.setZuphrId(MatrialId);
             retrofitInterface.SaveImages(token2, imagenode1).enqueue(new Callback<ResponseBody>() {
@@ -736,8 +954,9 @@ public class PlansDataModel extends ViewModel {
 
                         }
                     });
-        }
 
+
+        }
     }
     }
 

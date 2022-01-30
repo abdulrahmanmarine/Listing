@@ -35,7 +35,7 @@ import com.example.listing.Kotlin.Loader;
 import com.example.listing.Plan.PlanFragment;
 import com.example.listing.R;
 import com.example.listing.models.Driver;
-import com.example.listing.models.LoadAction;
+
 import com.example.listing.models.Material;
 import com.example.listing.models.MatrialDispatching;
 import com.example.listing.models.Plan;
@@ -68,7 +68,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
     private MatrialDispatching MatrialDispatch;
 
     List<VehAssign> Vehassignment = new ArrayList<>();
-    VehAssign Vehassign, vehAssign2;
+    VehAssign Vehassign;
 
     private Manual_Assignment_Adapter chosenVehicleAdapter;
     private ArrayList<Driver> chosenDrivers = new ArrayList<>();
@@ -299,9 +299,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
             Log.i("matposition", Mpostion + "");
             List<Material> list = model.MatrialsList.getValue();
-            LoadAction loadAction = materialParam.getZuphrLoada();
-            loadAction.setVehicle(chosenVehicles);
-            materialParam.setZuphrLoada(loadAction);
+
             list.set(Mpostion, materialParam);
             Plan plan = model.plan.getValue();
             plan.setPlanToItems(list);
@@ -330,13 +328,8 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
             }
 
             MatrialDispatch = new MatrialDispatching(plan.getZuphrLpid(), "", Vehassignment);
-            model.AssignValue(MatrialDispatch);
-//            for(int i=0;i<model.Plans.getValue().size();i++){
-//                if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-//                    plans.set(i,model.plan.getValue());
-//                    model.Plans.setValue(plans);
-//                }
-//            }
+            model.AssignValueDispatch(MatrialDispatch);
+
             dismiss();
         });
 

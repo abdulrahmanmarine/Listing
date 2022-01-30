@@ -40,7 +40,7 @@ class Loader : AppCompatActivity(), PlanClickListener {
         )
 
         model = ViewModelProvider(this, PlansDataModelFactory(this.application,android_id)).get(PlansDataModel::class.java)
-        model.getplansLoader(application, this, Loginsession.getInstance().user)
+        model.getplansLoader( this)
         model.UserRule.value=true
         progressBar.visibility = View.VISIBLE
         Flag.initializer(true, true);
@@ -74,26 +74,16 @@ class Loader : AppCompatActivity(), PlanClickListener {
     }
 
 
-//    override fun onItemClick(plan: Plan?, pos: Int) {
-//        if (plan != null) {
-//            val sie = plan.planToItems.size
-//            Log.i("mateials in","" + sie);
-//        };
-//        LoaderFragmentInteraction(reqs[pos]!!)
-//        //Toast.makeText(this,pos,Toast.LENGTH_SHORT).show()
-//    }
+
 
     override fun onItemClick(plan: Plan?, pos: Int) {
         model.plan.value = plan
         LoaderFragmentInteraction(plan!!, pos)
+        model.getLoaderMtr(plan?.ZuphrLpid,pos)
 
 
-        // LoaderFragmentInteraction(reqs[pos]!!)
-//        model = ViewModelProviders.of(active)
-//
-//        model.Plans.value?.let { LoaderFragmentInteraction(it[pos]) }
 
-        //Toast.makeText(this,pos,Toast.LENGTH_SHORT).show()
+
     }
 
     fun LoaderFragmentInteraction(plan: Plan, pos: Int) {

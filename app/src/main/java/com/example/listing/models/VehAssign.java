@@ -75,9 +75,18 @@ public class VehAssign implements Serializable {
     @ColumnInfo(name = "ZuphrDriverid")
     String ZuphrDriverid;
 
+    @JsonProperty("ZuphrDriverName")
+    @ColumnInfo(name = "ZuphrDriverName")
+    String ZuphrDriverName;
+
+
     @JsonProperty("ZuphrVehid")
     @ColumnInfo(name = "ZuphrVehid")
     String ZuphrVehid;
+
+    @JsonProperty("ZuphrVehType")
+    @ColumnInfo(name = "ZuphrVehType")
+    String ZuphrVehType;
 
 
     @JsonProperty("ZuphrLoad")
@@ -93,14 +102,14 @@ public class VehAssign implements Serializable {
     String ZuphrNfound;
 
 
-    @JsonProperty("ZuphrDone")
-    @ColumnInfo(name = "ZuphrDone")
-    String ZuphrDone;
+    @JsonProperty("ZuphrProc")
+    @ColumnInfo(name = "ZuphrProc")
+    String ZuphrProc;
 
     public VehAssign( String zuphrLpid, String zuphrMjahr, String zuphrMblpo, String zuphrStgid,
                      String zuphrMatnr, String zuphrReqid, String zuphrReqitm, String zuphrShortxt,
                      String zuphrDescrip, String zuphrOffshore, String zuphrDriverid, String zuphrVehid,
-                     String zuphrLoad, String zuphrUload, String zuphrNfound, String zuphrDone) {
+                     String zuphrLoad, String zuphrUload, String zuphrNfound, String zuphrProc) {
         ZuphrLpid = zuphrLpid;
         ZuphrMjahr = zuphrMjahr;
         ZuphrMblpo = zuphrMblpo;
@@ -116,7 +125,7 @@ public class VehAssign implements Serializable {
         ZuphrLoad = zuphrLoad;
         ZuphrUload = zuphrUload;
         ZuphrNfound = zuphrNfound;
-        ZuphrDone = zuphrDone;
+        ZuphrProc = zuphrProc;
     }
 
     public VehAssign() {
@@ -215,6 +224,10 @@ public class VehAssign implements Serializable {
         return ZuphrDriverid;
     }
 
+    public String getZuphrDriverName() { return ZuphrDriverName; }
+
+    public void setZuphrDriverName(String zuphrDriverName) { ZuphrDriverName = zuphrDriverName; }
+
     public void setZuphrDriverid(String zuphrDriverid) {
         ZuphrDriverid = zuphrDriverid;
     }
@@ -222,6 +235,10 @@ public class VehAssign implements Serializable {
     public String getZuphrVehid() {
         return ZuphrVehid;
     }
+
+    public String getZuphrVehType() { return ZuphrVehType; }
+
+    public void setZuphrVehType(String zuphrVehType) { ZuphrVehType = zuphrVehType; }
 
     public void setZuphrVehid(String zuphrVehid) {
         ZuphrVehid = zuphrVehid;
@@ -251,12 +268,12 @@ public class VehAssign implements Serializable {
         ZuphrNfound = zuphrNfound;
     }
 
-    public String getZuphrDone() {
-        return ZuphrDone;
+    public String getZuphrProc() {
+        return ZuphrProc;
     }
 
-    public void setZuphrDone(String zuphrDone) {
-        ZuphrDone = zuphrDone;
+    public void setZuphrProc(String zuphrDone) {
+        ZuphrProc = zuphrDone;
     }
 }
 
