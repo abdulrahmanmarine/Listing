@@ -10,13 +10,25 @@
         <entry key="app/src/main/res/drawable/dialogborder.xml" value="0.21927083333333333" />
         <entry key="app/src/main/res/layout/activity_loader.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.26268115942028986" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.13333333333333333" />
         <entry key="app/src/main/res/layout/assign_card.xml" value="0.34375" />
+        <entry key="app/src/main/res/layout/assign_chosen_item.xml" value="0.13333333333333333" />
+        <entry key="app/src/main/res/layout/assign_configured_chosen_item.xml" value="0.11457398890084496" />
         <entry key="app/src/main/res/layout/assign_configured_layout.xml" value="0.203125" />
+        <entry key="app/src/main/res/layout/assign_configured_list_item.xml" value="0.13333333333333333" />
+        <entry key="app/src/main/res/layout/assign_configured_loader_name.xml" value="0.335" />
         <entry key="app/src/main/res/layout/assign_manual.xml" value="0.2622834331053229" />
+        <entry key="app/src/main/res/layout/assign_spinner.xml" value="0.22395833333333334" />
+        <entry key="app/src/main/res/layout/assign_spinner_item.xml" value="0.13333333333333333" />
+        <entry key="app/src/main/res/layout/assign_spinner_vehicle.xml" value="0.3619791666666667" />
+        <entry key="app/src/main/res/layout/chosen_driver_card_item.xml" value="1.624789522099815" />
+        <entry key="app/src/main/res/layout/chosen_vehicle_card_item.xml" value="0.3619791666666667" />
+        <entry key="app/src/main/res/layout/chosen_vehicle_card_item_vert.xml" value="0.3619791666666667" />
+        <entry key="app/src/main/res/layout/chosen_vehicle_item.xml" value="0.13333333333333333" />
         <entry key="app/src/main/res/layout/dialog_spinner.xml" value="0.14583333333333334" />
-        <entry key="app/src/main/res/layout/fragment_text.xml" value="0.14583333333333334" />
+        <entry key="app/src/main/res/layout/fragment_text.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragmentlist.xml" value="0.33559782608695654" />
-        <entry key="app/src/main/res/layout/load_item_card.xml" value="0.18958333333333333" />
+        <entry key="app/src/main/res/layout/load_item_card.xml" value="0.5" />
         <entry key="app/src/main/res/layout/manual_assigment_card.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/manual_choosen_driver_list.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/plan_card.xml" value="0.14583333333333334" />
@@ -26,7 +38,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
