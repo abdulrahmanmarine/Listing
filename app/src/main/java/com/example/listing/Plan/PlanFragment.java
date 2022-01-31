@@ -163,7 +163,12 @@ public class PlanFragment extends Fragment {
                         }
                     });
 
+                }else {
+
+
+
                 }
+
 
 
             }

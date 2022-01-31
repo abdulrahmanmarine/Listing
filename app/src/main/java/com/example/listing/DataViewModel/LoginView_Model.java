@@ -92,7 +92,9 @@ Application application;
 
                 if(response.errorBody()!=null){
                     try {
+                        Log.i("response-error",response.errorBody().string());
                         ErrorMsg.setValue(response.errorBody().string());
+                        Logged_in.postValue(false);
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -100,7 +102,7 @@ Application application;
                 }
                 if (response.isSuccessful()) {
                     User user1 = response.body().getUser();
-
+                    Log.i("response-error",response.body().getUser().UserId);
                     db.Users().GetUser(user1.getUserId().toUpperCase()).observe(owner, user -> {
                         if (user == null) {
                             AppExecutors.getInstance().diskIO().execute(() -> {
@@ -109,7 +111,7 @@ Application application;
                             });
                         }
                     });
-                    Loginsession.initializer( response.headers().get("x-csrf-token"), user1);
+                    Loginsession.initializer(response.headers().get("x-csrf-token"), user1);
                     Logged_in.postValue(true);
 
 

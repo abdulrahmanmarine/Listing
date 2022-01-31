@@ -176,12 +176,9 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         addBut.setOnClickListener(v -> {
 
             if (chosenVehicle.getLoaders().size() > 0) {
-                Log.i("Add button", "add buttin test");
-//                chosenVehicles.add(chosenVehicle);
-                Driver mergedD;
+
                 ArrayList<Vehicle> vehiclesList = (ArrayList<Vehicle>) model.MastervehiclesList.getValue();
                 Boolean found = null;
-                Boolean exact = null;
 
                 if(chosenVehicles.contains(chosenVehicle)){
                     int chosenVehIndex = chosenVehicles.indexOf(chosenVehicle);
@@ -207,68 +204,9 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
                             }
                         }
 
-//                        removeDuplicates(chosenVehicle.getLoaders());
-//                        chosenVehicles.get(j).getLoaders().removeAll((Collection<?>) chosenVehicle.getLoaders());
-//                        chosenVehicles.get(j).getLoaders().addAll(chosenVehicle.getLoaders());
-                        found = true;
-//                        chosenVehicles.get(j).getLoaders().addAll(notFoundDrivers);
-                    }
-/*
-                        for(int c = 0 ; c < chosenVehicle.getLoaders().size() ; c++){
-                            exact = false;
-                            notFoundDrivers.clear();
-                            for(int cv = 0 ; cv < chosenVehicles.get(j).getLoaders().size() ; cv++){
-                                if(chosenVehicle.getLoaders().get(c).getZuphrDriverid().equals(chosenVehicles.get(j).getLoaders().get(cv).getZuphrDriverid())){
-                                    counter++;
-                                    exact = true;
-                                    break;
-                                }
-                            }
-                            if(counter>0){
-                                notFoundDrivers.add(chosenVehicle.getLoaders().get(c));
-                            }
-                        }
-
-//                        if(counter == chosenVehicle.getLoaders().size()){
-//                            exact = true;
-//                        }
-
-
-                        chosenVehicles.get(j).getLoaders().removeAll((Collection<?>) chosenVehicle.getLoaders());
-                        chosenVehicles.get(j).getLoaders().addAll(chosenVehicle.getLoaders());
-                        chosenVehicles.get(j).getLoaders().addAll(notFoundDrivers);
-                        found = true;
-
-
-
-//                        for(int c = 0 ; c < chosenVehicle.getLoaders().size() ; c++){
-//                            for(int cv = 0 ;  cv < chosenVehicles.get(j).getLoaders().size() ; cv++){
-//                                chosenVehicles.removeAll(chosenVehicle.());
-//                                chosenVehicles.addAll(chosenVehicle.getLoaders());
-//                                if(chosenVehicle.getLoaders().get(c).getZuphrDriverid().equals(chosenVehicles.get(j).getLoaders().get(cv).getZuphrDriverid())){
-//                                    counter++;
-////                                    break;
-//                                }else{
-//                                    chosenVehiclesForDisplay.add(chosenVehicle);
-//                                }
-//
-//                            }
-//                            if(counter == chosenVehicle.getLoaders().size()){
-//                                found = true;
-//                                Toast.makeText(getContext(), "Vehicle has already been assigned to material", Toast.LENGTH_SHORT).show();
-//                                break;
-//                            }
-//                        }
-
                     }
 
-*/
                 }
-
-
-//                if (!found) {
-//                    chosenVehicles.add(chosenVehicle);
-                    
                     for (int i = 0; i < vehiclesList.size(); i++) {
                         if (chosenVehicle.equals(vehiclesList.get(i))) {
                             vehiclesList.remove(i);
@@ -282,9 +220,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
                             break;
                         }
                     }
-//                }
 
-                List<Material> list2 = model.MatrialsList.getValue();
                 chosenVehicleAdapter.notifyDataSetChanged();
 
             } else {
@@ -316,9 +252,13 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
                             materialParam.getZuphrMatnr(), materialParam.getZuphrReqid(),
                             materialParam.getZuphrReqitm(), materialParam.getZuphrShortxt(),
                             materialParam.getZuphrDescrip(), materialParam.getZuphrOffshore(),
-                            "", "", "", "", "", "");
+                            plan.getPlanToItems().get(Mpostion).getVehicles().get(i).getLoaders().get(j).getZuphrDriverid(),
+                            plan.getPlanToItems().get(Mpostion).getVehicles().get(i).getLoaders().get(j).getZuphrdrvrName(),
+                            plan.getPlanToItems().get(Mpostion).getVehicles().get(i).getVehid(),
+                            plan.getPlanToItems().get(Mpostion).getVehicles().get(i).getVehType(),
+                            "","", "", "");
 
-                    Vehassign.setZuphrDriverid(plan.getPlanToItems().get(Mpostion).getVehicles().get(i).getLoaders().get(j).getZuphrDriverid());
+
                     Vehassignment.add(Vehassign);
                 }
 

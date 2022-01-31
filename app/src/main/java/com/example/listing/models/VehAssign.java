@@ -75,8 +75,9 @@ public class VehAssign implements Serializable {
     @ColumnInfo(name = "ZuphrDriverid")
     String ZuphrDriverid;
 
-    @JsonProperty("ZuphrDriverName")
-    @ColumnInfo(name = "ZuphrDriverName")
+   // @JsonProperty("ZUphrDrvrName")
+    @JsonProperty("ZUphrDrvrName")
+    @ColumnInfo(name = "ZUphrDrvrName")
     String ZuphrDriverName;
 
 
@@ -84,8 +85,9 @@ public class VehAssign implements Serializable {
     @ColumnInfo(name = "ZuphrVehid")
     String ZuphrVehid;
 
-    @JsonProperty("ZuphrVehType")
-    @ColumnInfo(name = "ZuphrVehType")
+   // @JsonProperty("ZphrVehType")
+    @JsonProperty("ZphrVehType")
+    @ColumnInfo(name = "ZphrVehType")
     String ZuphrVehType;
 
 
@@ -108,7 +110,7 @@ public class VehAssign implements Serializable {
 
     public VehAssign( String zuphrLpid, String zuphrMjahr, String zuphrMblpo, String zuphrStgid,
                      String zuphrMatnr, String zuphrReqid, String zuphrReqitm, String zuphrShortxt,
-                     String zuphrDescrip, String zuphrOffshore, String zuphrDriverid, String zuphrVehid,
+                     String zuphrDescrip, String zuphrOffshore, String zuphrDriverid,String DriverName, String zuphrVehid,String VechType,
                      String zuphrLoad, String zuphrUload, String zuphrNfound, String zuphrProc) {
         ZuphrLpid = zuphrLpid;
         ZuphrMjahr = zuphrMjahr;
@@ -121,7 +123,9 @@ public class VehAssign implements Serializable {
         ZuphrDescrip = zuphrDescrip;
         ZuphrOffshore = zuphrOffshore;
         ZuphrDriverid = zuphrDriverid;
+        ZuphrDriverName=DriverName;
         ZuphrVehid = zuphrVehid;
+        ZuphrVehType=VechType;
         ZuphrLoad = zuphrLoad;
         ZuphrUload = zuphrUload;
         ZuphrNfound = zuphrNfound;

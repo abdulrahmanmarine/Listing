@@ -46,32 +46,19 @@ public class MatrialDispatching implements Serializable {
     String Zuphr;
 
 
-    String text;
-   // @JsonProperty(value = "NavLpToVehAssign", access = JsonProperty.Access.WRITE_ONLY)
-    @Ignore
-     @JsonIgnore
+    @JsonProperty(value = "NavLpToVehAssign",access = JsonProperty.Access.READ_ONLY)
     List<VehAssign> Vehassignment;
 
-
-
-    @JsonProperty(value = "NavLpToVehAssign", access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(value = "NavLpToVehAssign",access = JsonProperty.Access.WRITE_ONLY)
     public void unpackVehAssign(Map<String ,List<VehAssign>> d) {
-
         Vehassignment=d.get("results");
-    }
-
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     @JsonProperty(value = "NavLpToReturn", access = JsonProperty.Access.READ_ONLY)
     @ColumnInfo(name = "NavLpToReturn")
     List<String> NavLpToReturn=new ArrayList<>();
+
+
 
     @JsonPropertyOrder({"ZuphrLpid","Zuphr","NavLpToVehAssign","NavLpToReturn"})
 
@@ -117,5 +104,7 @@ public class MatrialDispatching implements Serializable {
         Vehassignment = vehassign;
     }
 }
+
+
 
 

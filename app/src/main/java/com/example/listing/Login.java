@@ -127,7 +127,7 @@ public class Login extends AppCompatActivity {
     public void login() {
         Error_Msg.setVisibility(View.INVISIBLE);
         saveMode("online");
-        binding.username.setText("T_CBAD_PPLN");
+        binding.username.setText("T_CBAD_PSTG");
         binding.password.setText("Welcome.2");
 
         User user = new User(binding.username.getText().toString(), binding.password.getText().toString());
@@ -145,10 +145,8 @@ public class Login extends AppCompatActivity {
                 myProgress.dismiss();
                 if (Loggedin != null) {
                     if (Loggedin) {
-
                         Intent intent = new Intent(Login.this, Home.class);
                         startActivity(intent);
-
                     } else {
                         model.Logged_in.setValue(null);
                         Error_Msg.setText(model.ErrorMsg.getValue());

@@ -120,7 +120,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
                         plan.setZuphrStatus("InComplete");
                         statusText.setText(plan.getZuphrStatus());
                         statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
-
                     }
                     else{
                         plan.setZuphrStatus("Complete");

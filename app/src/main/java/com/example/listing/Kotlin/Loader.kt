@@ -77,11 +77,12 @@ class Loader : AppCompatActivity(), PlanClickListener {
 
 
     override fun onItemClick(plan: Plan?, pos: Int) {
-        model.plan.value = plan
-        LoaderFragmentInteraction(plan!!, pos)
+
         model.getLoaderMtr(plan?.ZuphrLpid,pos)
 
-
+        model.plan.value = plan
+        LoaderFragmentInteraction(plan!!,pos)
+        po = pos
 
 
     }

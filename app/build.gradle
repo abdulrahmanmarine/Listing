@@ -4,6 +4,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        depug {
+            storeFile file('/Users/hmddeveloper/Downloads/Stevedoring Key')
+            storePassword 'marine123'
+            keyPassword 'marine123'
+            keyAlias 'key0'
+        }
+    }
     compileSdk 30
     useLibrary 'org.apache.http.legacy'
     buildFeatures{

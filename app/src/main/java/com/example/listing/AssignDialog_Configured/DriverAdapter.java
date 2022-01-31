@@ -107,9 +107,6 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
 
 
 
-//            if(material.getZuphrLoada().getStatus() == "LFMS"){
-//                itemRowBinding.assignstat.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
-//            }
 
             if(material.getVehicles().isEmpty()){
                 itemRowBinding.assignstat.setText("Not Assigned");

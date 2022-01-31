@@ -195,176 +195,16 @@ public class LoaderFragment extends Fragment  {
             }
         };
         LoadButtonClicked loadListener = pos -> {
-            Material Material= model.MatrialsList.getValue().get(pos);
-            VehAssign vehAssign;
-
-            Log.i("vechassginlength_LOAD",Material.getVehAssignList().size()+"");
-            for(int i=0;i<Material.getVehAssignList().size();i++){
-                if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
-                 vehAssign=Material.getVehAssignList().get(i);
-                 vehAssign.setZuphrLoad("X");
-                 vehAssign.setZuphrUload("");
-                 vehAssign.setZuphrNfound("");
-                 vehAssign.setZuphrProc("");
-                    break;
-                }
-
-            }
-
-            MatrialDispatch = new MatrialDispatching(Material.getZuphrLpid(), "", Material.getVehAssignList());
-            model.AssignValueLoader(MatrialDispatch);
-
-            boolean FLAG=true;
-            for(int i=0;i<Material.getVehAssignList().size();i++){
-                if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
-                    FLAG = false;
-                }
-            }
-            Material.setComplete(FLAG);
-            List<Material> list = model.MatrialsList.getValue();
-            list.set(pos,Material);
-            Plan plan= model.plan.getValue();
-            plan.setPlanToItems(list);
-            model.plan.setValue(plan);
-            List<Plan> plans=model.Plans.getValue();
-            for(int i=0;i<model.Plans.getValue().size();i++){
-                if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-                    plans.set(i,model.plan.getValue());
-                  model.Plans.setValue(plans);
-                }
-            }
-
-
+            typemethod(pos,"x","","","");
         };
         UnloadButtonClicked unloadListener = pos -> {
-            Material Material= model.MatrialsList.getValue().get(pos);
-            VehAssign vehAssign;
-
-            Log.i("vechassginlength_UNLOAD",Material.getVehAssignList().size()+"");
-            for(int i=0;i<Material.getVehAssignList().size();i++){
-                if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
-                    vehAssign=Material.getVehAssignList().get(i);
-                    vehAssign.setZuphrLoad("");
-                    vehAssign.setZuphrUload("X");
-                    vehAssign.setZuphrNfound("");
-                    vehAssign.setZuphrProc("");
-                    break;
-                }
-
-            }
-
-            MatrialDispatch = new MatrialDispatching(Material.getZuphrLpid(), "", Material.getVehAssignList());
-            model.AssignValueLoader(MatrialDispatch);
-
-            boolean FLAG=true;
-            for(int i=0;i<Material.getVehAssignList().size();i++){
-                if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
-                    FLAG = false;
-                }
-            }
-            Material.setComplete(FLAG);
-            List<Material> list = model.MatrialsList.getValue();
-            list.set(pos,Material);
-            Plan plan= model.plan.getValue();
-            plan.setPlanToItems(list);
-            model.plan.setValue(plan);
-            List<Plan> plans=model.Plans.getValue();
-            for(int i=0;i<model.Plans.getValue().size();i++){
-                if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-                    plans.set(i,model.plan.getValue());
-                    model.Plans.setValue(plans);
-                }
-            }
-
+            typemethod(pos,"","x","","");
         };
         FoundButtonClicked foundListener = pos -> {
-            Material Material= model.MatrialsList.getValue().get(pos);
-            VehAssign vehAssign;
-
-            Log.i("vechassginlength_FOUND",Material.getVehAssignList().size()+"");
-            for(int i=0;i<Material.getVehAssignList().size();i++){
-                if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
-                    vehAssign=Material.getVehAssignList().get(i);
-                    vehAssign.setZuphrLoad("");
-                    vehAssign.setZuphrUload("");
-                    vehAssign.setZuphrNfound("X");
-                    vehAssign.setZuphrProc("");
-                    break;
-                }
-
-            }
-
-            MatrialDispatch = new MatrialDispatching(Material.getZuphrLpid(), "", Material.getVehAssignList());
-            model.AssignValueLoader(MatrialDispatch);
-
-            boolean FLAG=true;
-            for(int i=0;i<Material.getVehAssignList().size();i++){
-                if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
-                    FLAG = false;
-                }
-            }
-            Material.setComplete(FLAG);
-            List<Material> list = model.MatrialsList.getValue();
-            list.set(pos,Material);
-            Plan plan= model.plan.getValue();
-            plan.setPlanToItems(list);
-
-            model.plan.setValue(plan);
-            List<Plan> plans=model.Plans.getValue();
-
-            for(int i=0;i<model.Plans.getValue().size();i++){
-                if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-                    plans.set(i,model.plan.getValue());
-                    model.Plans.setValue(plans);
-                }
-            }
-
-
+            typemethod(pos,"","","X","");
         };
         PrcButtonClicked prcListener = pos -> {
-            Material Material= model.MatrialsList.getValue().get(pos);
-            VehAssign vehAssign;
-
-            Log.i("vechassginlength_pROCEED",Material.getVehAssignList().size()+"");
-            for(int i=0;i<Material.getVehAssignList().size();i++){
-                if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
-                    vehAssign=Material.getVehAssignList().get(i);
-                    vehAssign.setZuphrLoad("");
-                    vehAssign.setZuphrUload("");
-                    vehAssign.setZuphrNfound("");
-                    vehAssign.setZuphrProc("X");
-                    break;
-                }
-
-            }
-
-            MatrialDispatch = new MatrialDispatching(Material.getZuphrLpid(), "", Material.getVehAssignList());
-            model.AssignValueLoader(MatrialDispatch);
-
-            boolean FLAG=true;
-            for(int i=0;i<Material.getVehAssignList().size();i++){
-                if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
-                    FLAG = false;
-                }
-            }
-            Material.setComplete(FLAG);
-            List<Material> list = model.MatrialsList.getValue();
-            list.set(pos,Material);
-            Plan plan= model.plan.getValue();
-            plan.setPlanToItems(list);
-            model.plan.setValue(plan);
-            List<Plan> plans=model.Plans.getValue();
-
-
-            
-            
-            for(int i=0;i<model.Plans.getValue().size();i++){
-                if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-                    plans.set(i,model.plan.getValue());
-                    model.Plans.setValue(plans);
-                }
-            }
-
+            typemethod(pos,"","","","X");
 
         };
 
@@ -439,6 +279,83 @@ public class LoaderFragment extends Fragment  {
 //            TransitionManager.beginDelayedTransition(vg, fade);
 //        }
         return v;
+    }
+
+
+
+    public void typemethod(int pos ,String load,String UNload,String Nfound,String Proc){
+
+
+        Material Material= model.MatrialsList.getValue().get(pos);
+        VehAssign vehAssign=new VehAssign();
+
+        List<Material> list = model.MatrialsList.getValue();
+        Plan plan= model.plan.getValue();
+        Log.i("vechassginlength_found",Material.getVehAssignList().size()+"");
+        for(int i=0;i<Material.getVehAssignList().size();i++){
+         //   if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
+
+            vehAssign = new VehAssign(
+                    Material.getZuphrLpid(), Material.getZuphrMjahr(),
+                    Material.getZuphrMblpo(), Material.getZuphrStgid(),
+                    Material.getZuphrMatnr(), Material.getZuphrReqid(),
+                    Material.getZuphrReqitm(), Material.getZuphrShortxt(),
+                    Material.getZuphrDescrip(), Material.getZuphrOffshore(),
+                    Material.getVehAssignList().get(i).getZuphrDriverid(),
+                    Material.getVehAssignList().get(i).getZuphrDriverName(),
+                    plan.getPlanToItems().get(pos).getVehicles().get(i).getVehid(),
+                    plan.getPlanToItems().get(pos).getVehicles().get(i).getVehType(),
+                    load, UNload, Nfound, Proc);
+
+
+            Material.getVehAssignList().set(i, vehAssign);
+
+            break;
+
+
+          //  }
+
+        }
+        boolean FLAG=true;
+        for(int i=0;i<Material.getVehAssignList().size();i++){
+
+            if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
+                FLAG = false;
+            }
+
+        }
+
+
+        Material.setComplete(FLAG);
+        list.set(pos,Material);
+        plan.setPlanToItems(list);
+        model.plan.setValue(plan);
+        List<Plan> plans=model.Plans.getValue();
+
+        for(int i=0;i<model.Plans.getValue().size();i++){
+            if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
+                plans.set(i,model.plan.getValue());
+                model.Plans.setValue(plans);
+            }
+        }
+
+        List<VehAssign> Vlist =new ArrayList<>();
+
+
+        for(int i=0; i<plan.getPlanToItems().size();i++){
+
+            for(int j=0; j<plan.getPlanToItems().get(i).getVehAssignList().size();j++){
+
+                Vlist.add(plan.getPlanToItems().get(i).getVehAssignList().get(j));
+            }
+        }
+
+
+        MatrialDispatch = new MatrialDispatching(plan.getZuphrLpid(), "", Vlist);
+        model.AssignValueDispatch(MatrialDispatch);
+
+
+
     }
 
 }

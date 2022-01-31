@@ -67,13 +67,13 @@ public interface RetrofitInterface {
     Call<ResponseBody> SaveDevice(@Body Device device, @Header("x-csrf-token") String Token);
     @POST("VehicleSet")
     Call<ResponseBody> SaveVechile(@Body Vehicle vehicle, @Header("x-csrf-token") String Token);
+
     @POST("LpHdrSet")
-    Call<AssignmentUnpack> Dispatch(@Body  MatrialDispatching matrialDispatch, @Header("x-csrf-token") String token
-    );
+    Call<ResponseBody> Dispatch(@Body  MatrialDispatching matrialDispatch, @Header("x-csrf-token") String token);
 
 
     @POST("VehAssign")
-    Call<AssignmentUnpack> LoaderStatus(@Body MatrialDispatching matrialDispatch, @Header("x-csrf-token") String token);
+    Call<ResponseBody> LoaderStatus(@Body VehAssign matrialDispatch, @Header("x-csrf-token") String token);
 
 
     @GET("UserInfoSet/")

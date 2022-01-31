@@ -19,6 +19,7 @@ import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okio.Buffer;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -99,8 +100,8 @@ public class RestApiClient {
         public
         Response intercept(Chain chain) throws IOException {
             //String creds = Credentials.basic("alsoai0a", "ABeer28121997@121");
-            String creds = Credentials.basic("T_CBAD_PPLN", "Welcome.2");
 
+            String creds = Credentials.basic("T_CBAD_PPLN", "Welcome.3");
             Headers headers = chain.request().headers().newBuilder()
                     .add("Authorization", creds)
                     .add("Content-Type", application.getResources().getString(R.string.Content_Type))
@@ -125,6 +126,16 @@ public class RestApiClient {
             Response originalResponse = chain.proceed(chain.request());
 
          Log.i("url call",originalResponse.request().url()+"");
+
+                final Request copy = chain.request().newBuilder().build();
+                final Buffer buffer = new Buffer();
+                if(copy.body()!=null) {
+                    copy.body().writeTo(buffer);
+
+                    Log.i("url body", buffer.readUtf8() + "");
+                }
+
+
             return originalResponse;
         }
     }
