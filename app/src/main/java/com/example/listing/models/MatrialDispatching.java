@@ -46,7 +46,6 @@ public class MatrialDispatching implements Serializable {
     String Zuphr;
 
 
-    String text;
    // @JsonProperty(value = "NavLpToVehAssign", access = JsonProperty.Access.WRITE_ONLY)
     @Ignore
      @JsonIgnore
@@ -61,13 +60,7 @@ public class MatrialDispatching implements Serializable {
     }
 
 
-    public String getText() {
-        return text;
-    }
 
-    public void setText(String text) {
-        this.text = text;
-    }
 
     @JsonProperty(value = "NavLpToReturn", access = JsonProperty.Access.READ_ONLY)
     @ColumnInfo(name = "NavLpToReturn")

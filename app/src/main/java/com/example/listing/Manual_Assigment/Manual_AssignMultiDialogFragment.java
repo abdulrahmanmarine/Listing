@@ -35,7 +35,7 @@ import com.example.listing.Kotlin.Loader;
 import com.example.listing.Plan.PlanFragment;
 import com.example.listing.R;
 import com.example.listing.models.Driver;
-import com.example.listing.models.LoadAction;
+//import com.example.listing.models.LoadAction;
 import com.example.listing.models.Material;
 import com.example.listing.models.MatrialDispatching;
 import com.example.listing.models.Plan;
@@ -299,9 +299,9 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
             Log.i("matposition", Mpostion + "");
             List<Material> list = model.MatrialsList.getValue();
-            LoadAction loadAction = materialParam.getZuphrLoada();
-            loadAction.setVehicle(chosenVehicles);
-            materialParam.setZuphrLoada(loadAction);
+//            LoadAction loadAction = materialParam.getZuphrLoada();
+//            loadAction.setVehicle(chosenVehicles);
+//            materialParam.setZuphrLoada(loadAction);
             list.set(Mpostion, materialParam);
             Plan plan = model.plan.getValue();
             plan.setPlanToItems(list);

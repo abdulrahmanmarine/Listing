@@ -114,9 +114,9 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.Materi
                         itemRowBinding.statusTv.setText("NotFound");
                         itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
                     }
-                    else if (material.getVehAssignList().get(i).getZuphrDone().equalsIgnoreCase("x")){
-                        itemRowBinding.statusTv.setText("Proccessd");
-                        itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.yellow_border));}
+//                    else if (material.getVehAssignList().get(i).getZuphrDone().equalsIgnoreCase("x")){
+//                        itemRowBinding.statusTv.setText("Proccessd");
+//                        itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.yellow_border));}
                 }
 
             }else {

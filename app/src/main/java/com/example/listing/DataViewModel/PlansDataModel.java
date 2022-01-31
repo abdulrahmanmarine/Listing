@@ -26,7 +26,7 @@ import com.example.listing.models.Deviceunpack;
 import com.example.listing.models.Driver;
 import com.example.listing.models.DriverUnpack;
 import com.example.listing.models.ImageList;
-import com.example.listing.models.LoadAction;
+
 import com.example.listing.models.Material;
 import com.example.listing.models.MatrialDispatching;
 import com.example.listing.models.Plan;
@@ -68,7 +68,7 @@ public class PlansDataModel extends ViewModel {
     public  MutableLiveData<List<Driver>> MasterdriversList = new MutableLiveData<>();
     public MutableLiveData<List<Vehicle>> MastervehiclesList = new MutableLiveData<>();
     public MutableLiveData<List<imagenode>> MatrialImageList = new MutableLiveData<>();
-    public MutableLiveData<LoadAction> LoadAction = new MutableLiveData<>();
+//    public MutableLiveData<LoadAction> LoadAction = new MutableLiveData<>();
     public MutableLiveData<Boolean> flag = new MutableLiveData<>(true);
     private Manual_AssignMultiDialogFragment manualAssignMultiDialogFragment;
     Application application;
@@ -111,10 +111,10 @@ public class PlansDataModel extends ViewModel {
                         for(int j=0 ;j<matriallist.size();j++) {
                             Material material=matriallist.get(j);
                             int x=j;
-                            db.MatrialLoadAction().GetItemAll(String.valueOf(material.MatrialId)).observe(owner, loadaction->{
-                                material.setZuphrLoada(loadaction);
-                                matriallist.set(x,material);
-                            });
+//                            db.MatrialLoadAction().GetItemAll(String.valueOf(material.MatrialId)).observe(owner, loadaction->{
+//                                material.setZuphrLoada(loadaction);
+//                                matriallist.set(x,material);
+//                            });
 
 //                            List<Vehicle> vehicles = db.MatrialVehicles().GetItemAll(String.valueOf(material.MatrialId));
 //                            material.setVehicles(vehicles);
@@ -151,7 +151,7 @@ public class PlansDataModel extends ViewModel {
                         Plans.postValue(temp);
 
                          AppExecutors.getInstance().diskIO().execute(() -> {
-                             db.MatrialLoadAction().nukeTable();
+//                             db.MatrialLoadAction().nukeTable();
                              db.planitem().nukeTable();
                              db.Matrial().nukeTable();
                              db.MatrialDrivers().nukeTable();
@@ -166,9 +166,9 @@ public class PlansDataModel extends ViewModel {
                                     Material material=temp.get(i).getPlanToItems().get(j);
                                     material.setPlanOfflineID(id);
                                     String Mid= String.valueOf(db.Matrial().insertMatrial(material));
-                                    LoadAction loadAction=material.getZuphrLoada();
-                                    loadAction.setMatiralOfflineID(Mid);
-                                    db.MatrialLoadAction().insertLoadAction(loadAction);
+//                                    LoadAction loadAction=material.getZuphrLoada();
+//                                    loadAction.setMatiralOfflineID(Mid);
+//                                    db.MatrialLoadAction().insertLoadAction(loadAction);
 
 //                                    for(int x=0 ; x<material.getVehicles().size();x++){
 //                                        Vehicle vehicle = material.getVehicles().get(j);
@@ -217,12 +217,12 @@ public class PlansDataModel extends ViewModel {
                         for(int j=0 ;j<matriallist.size();j++) {
                             Material material=matriallist.get(j);
                             int x=j;
-                            db.MatrialLoadAction().GetItemAll(String.valueOf(material.MatrialId)).observe(owner, loadaction->{
-                                Log.i("test loadaction:",loadaction.MatiralOfflineID+"");
-
-                                material.setZuphrLoada(loadaction);
-                                matriallist.set(x,material);
-                            });
+//                            db.MatrialLoadAction().GetItemAll(String.valueOf(material.MatrialId)).observe(owner, loadaction->{
+//                                Log.i("test loadaction:",loadaction.MatiralOfflineID+"");
+//
+//                                material.setZuphrLoada(loadaction);
+//                                matriallist.set(x,material);
+//                            });
 
 //                            List<Vehicle> vehicles = db.MatrialVehicles().GetItemAll(String.valueOf(material.MatrialId));
 //                            material.setVehicles(vehicles);
@@ -270,9 +270,9 @@ public class PlansDataModel extends ViewModel {
                                     Material material=temp.get(i).getPlanToItems().get(j);
                                     material.setPlanOfflineID(id);
                                     String Mid= String.valueOf(db.Matrial().insertMatrial(material));
-                                    LoadAction loadAction=material.getZuphrLoada();
-                                    loadAction.setMatiralOfflineID(Mid);
-                                    db.MatrialLoadAction().insertLoadAction(loadAction);
+//                                    LoadAction loadAction=material.getZuphrLoada();
+//                                    loadAction.setMatiralOfflineID(Mid);
+//                                    db.MatrialLoadAction().insertLoadAction(loadAction);
 
 //                                    for(int x=0 ; x<material.getVehicles().size();x++){
 //                                        Vehicle vehicle = material.getVehicles().get(j);
@@ -566,7 +566,7 @@ public class PlansDataModel extends ViewModel {
                                vehicleList.add(vehicle);
                             */
 
-                               loopMaterial.setDrivers(drivers);
+//                               loopMaterial.setDrivers(drivers);
                                loopMaterial.setVehicles(vehicleList);
 
                                plan.getValue().getPlanToItems().set(j, loopMaterial);
@@ -765,24 +765,43 @@ public class PlansDataModel extends ViewModel {
             }
         });
     }
-    public void postLoadAction(LoadAction loadAction){
-
-        retrofitInterface.postLoadAction(loadAction,  Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                ResponseBody responsefromApi = response.body();
-                String offlineMaterialId = loadAction.getMatiralOfflineID();
+    public void AssignValueLoader(VehAssign vehAssign) {
+        retrofitInterface.LoaderStatus(vehAssign,Loginsession.getInstance().getToken())
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
 
 
-            }
+                        if(response.errorBody()!=null){
+                            try {
+                                Log.i("post loader error response",response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        }
+                        if(response.isSuccessful()){
 
-            }
-        });
+                            try {
+                                Log.i("post loader sucess response",response.body().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
 
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.i("post loader response-error", t.getMessage());
+
+
+                    }
+                });
     }
+
     public void GetImages(Application application,  String MaterialId){
 
         retrofitInterface.getImageList("ImageHandlingSet?$filter=ZuphrId eq'"+MaterialId+

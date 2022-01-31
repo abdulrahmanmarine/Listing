@@ -93,9 +93,9 @@ public class VehAssign implements Serializable {
     String ZuphrNfound;
 
 
-    @JsonProperty("ZuphrDone")
-    @ColumnInfo(name = "ZuphrDone")
-    String ZuphrDone;
+//    @JsonProperty("ZuphrDone")
+//    @ColumnInfo(name = "ZuphrDone")
+//    String ZuphrDone;
 
     public VehAssign( String zuphrLpid, String zuphrMjahr, String zuphrMblpo, String zuphrStgid,
                      String zuphrMatnr, String zuphrReqid, String zuphrReqitm, String zuphrShortxt,
@@ -116,7 +116,7 @@ public class VehAssign implements Serializable {
         ZuphrLoad = zuphrLoad;
         ZuphrUload = zuphrUload;
         ZuphrNfound = zuphrNfound;
-        ZuphrDone = zuphrDone;
+//        ZuphrDone = zuphrDone;
     }
 
     public VehAssign() {
@@ -251,13 +251,13 @@ public class VehAssign implements Serializable {
         ZuphrNfound = zuphrNfound;
     }
 
-    public String getZuphrDone() {
-        return ZuphrDone;
-    }
-
-    public void setZuphrDone(String zuphrDone) {
-        ZuphrDone = zuphrDone;
-    }
+//    public String getZuphrDone() {
+//        return ZuphrDone;
+//    }
+//
+//    public void setZuphrDone(String zuphrDone) {
+//        ZuphrDone = zuphrDone;
+//    }
 }
 
 
