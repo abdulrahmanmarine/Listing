@@ -36,8 +36,7 @@ public class Plan implements Serializable {
     @ColumnInfo(name="ZuphrActquan")
     public String ZuphrActquan;
 
-    @JsonIgnore
-    Boolean Loaded;
+
 //
 //
 //    @JsonProperty("ZuphrLoada")
@@ -358,7 +357,9 @@ public class Plan implements Serializable {
     }
 
 
-
+    @JsonIgnore
+    @Ignore
+    public Boolean Flag=false;
 
 
     public Plan() {
@@ -588,12 +589,12 @@ public class Plan implements Serializable {
         PlanId = planId;
     }
 
-    public Boolean getLoaded() {
-        return Loaded;
+    public Boolean getFlag() {
+        return Flag;
     }
 
-    public void setLoaded(Boolean loaded) {
-        Loaded = loaded;
+    public void setFlag(Boolean flag) {
+        Flag = flag;
     }
 }
 

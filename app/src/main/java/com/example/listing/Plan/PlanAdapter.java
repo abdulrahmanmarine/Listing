@@ -102,24 +102,23 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
 
 
             if(plan.getPlanToItems()!=null){
-
                 if(load){
 
                     Boolean flag=false;
                     for(int i = 0; i< plan.getPlanToItems().size() ; i++){
 
-                       if(!plan.getPlanToItems().get(i).isComplete())
-                       {   flag=false;
+                        if(!plan.getPlanToItems().get(i).isComplete())
+                        {   flag=false;
                             break;
-                       }
-                       else flag=true;
+                        }
+                        else flag=true;
 
                     }
-
                     if(!flag){
                         plan.setZuphrStatus("InComplete");
                         statusText.setText(plan.getZuphrStatus());
                         statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
+
                     }
                     else{
                         plan.setZuphrStatus("Complete");

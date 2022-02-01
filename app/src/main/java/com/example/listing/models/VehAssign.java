@@ -75,7 +75,6 @@ public class VehAssign implements Serializable {
     @ColumnInfo(name = "ZuphrDriverid")
     String ZuphrDriverid;
 
-   // @JsonProperty("ZUphrDrvrName")
     @JsonProperty("ZUphrDrvrName")
     @ColumnInfo(name = "ZUphrDrvrName")
     String ZuphrDriverName;
@@ -85,7 +84,6 @@ public class VehAssign implements Serializable {
     @ColumnInfo(name = "ZuphrVehid")
     String ZuphrVehid;
 
-   // @JsonProperty("ZphrVehType")
     @JsonProperty("ZphrVehType")
     @ColumnInfo(name = "ZphrVehType")
     String ZuphrVehType;

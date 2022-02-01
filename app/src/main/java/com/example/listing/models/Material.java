@@ -295,9 +295,11 @@ public class Material implements Serializable {
      @Ignore
     List<Vehicle> Vehicles =new ArrayList<>();
 
+
+
     @JsonIgnore
     @Ignore
-    List<VehAssign> vehAssignList =new ArrayList<>();
+    List<VechAssignLoader> vehAssignList =new ArrayList<>();
 
 
 
@@ -886,11 +888,11 @@ public class Material implements Serializable {
         PlanOfflineID = planOfflineID;
     }
 
-    public List<VehAssign> getVehAssignList() {
+    public List<VechAssignLoader> getVehAssignList() {
         return vehAssignList;
     }
 
-    public void setVehAssignList(List<VehAssign> vehAssignList) {
+    public void setVehAssignList(List<VechAssignLoader> vehAssignList) {
         this.vehAssignList = vehAssignList;
     }
 

@@ -3,7 +3,6 @@ package com.example.listing.Kotlin
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +20,7 @@ import com.example.listing.models.Material
 import com.example.listing.models.Plan
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
+import kotlin.collections.ArrayList
 
 class Loader : AppCompatActivity(), PlanClickListener {
     var reqs = ArrayList<Plan?>()
@@ -35,18 +35,25 @@ class Loader : AppCompatActivity(), PlanClickListener {
 
         progressBar = findViewById(R.id.progressBarlayout)
 
-        val android_id = Settings.Secure.getString(this.getContentResolver(),
+        val android_id = Settings.Secure.getString(
+            this.getContentResolver(),
             Settings.Secure.ANDROID_ID
         )
 
-        model = ViewModelProvider(this, PlansDataModelFactory(this.application,android_id)).get(PlansDataModel::class.java)
-        model.getplansLoader( this)
+        model = ViewModelProvider(this, PlansDataModelFactory(this.application, android_id)).get(
+            PlansDataModel::class.java
+        )
+
+      //  model.postDriver()
+        model.getplansLoader(this)
         model.UserRule.value=true
         progressBar.visibility = View.VISIBLE
         Flag.initializer(true, true);
         Flag.getInstance().planFlag = true;
         Flag.getInstance().materialFlag=true;
         logout=findViewById(R.id.logout_button);
+
+
 
         model.Plans.observe(this,
             { Plans: List<Plan?>? ->
@@ -78,19 +85,21 @@ class Loader : AppCompatActivity(), PlanClickListener {
 
     override fun onItemClick(plan: Plan?, pos: Int) {
 
-        model.getLoaderMtr(plan?.ZuphrLpid,pos)
+        model.getLoaderMtr(plan?.ZuphrLpid)
 
         model.plan.value = plan
-        LoaderFragmentInteraction(plan!!,pos)
+        LoaderFragmentInteraction(plan!!, pos)
         po = pos
 
 
     }
 
-    fun LoaderFragmentInteraction(plan: Plan, pos: Int) {
+    fun LoaderFragmentInteraction(ppln: Plan, pos: Int) {
+
         model.plan.observe(this, { plan: Plan? ->
 
             model.MatrialsList.value = plan?.planToItems
+
 
         })
 
@@ -104,7 +113,6 @@ class Loader : AppCompatActivity(), PlanClickListener {
                 plan.zuphrCaptain
 
             )
-
             var fm = supportFragmentManager
             var ft = fm.beginTransaction()
             ft.replace(R.id.item_recycler, textfragment)

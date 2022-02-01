@@ -89,6 +89,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
         model.plan.observe(this, {plan: Plan? ->
             model.MatrialsList.value=plan?.planToItems
+
         })
 
         model.MatrialsList.observe(this,{MaterialList:List<Material> ->

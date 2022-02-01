@@ -175,7 +175,7 @@ public class DispatcherFragment extends Fragment {
         dest_tv = v.findViewById(R.id.dest_tv);
         dest_tv.setText(mParam4);
 
-       // model.postDriver();
+
        // model.postVehicle();
        // model.postDevice();
 

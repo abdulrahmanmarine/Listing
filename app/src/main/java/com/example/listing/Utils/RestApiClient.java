@@ -99,7 +99,6 @@ public class RestApiClient {
         @Override
         public
         Response intercept(Chain chain) throws IOException {
-            //String creds = Credentials.basic("alsoai0a", "ABeer28121997@121");
 
             String creds = Credentials.basic("T_CBAD_PPLN", "Welcome.3");
             Headers headers = chain.request().headers().newBuilder()
@@ -125,14 +124,16 @@ public class RestApiClient {
         public Response intercept(Chain chain) throws IOException {
             Response originalResponse = chain.proceed(chain.request());
 
-         Log.i("url call",originalResponse.request().url()+"");
+         Log.i("cALL url call",originalResponse.request().url()+"");
+
+         Log.i("cALL url METHOD",originalResponse.request().method()+"");
 
                 final Request copy = chain.request().newBuilder().build();
                 final Buffer buffer = new Buffer();
                 if(copy.body()!=null) {
                     copy.body().writeTo(buffer);
 
-                    Log.i("url body", buffer.readUtf8() + "");
+                    Log.i("cALL url body", buffer.readUtf8() + "");
                 }
 
 

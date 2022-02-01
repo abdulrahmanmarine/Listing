@@ -27,6 +27,7 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.listing.CameraButtonClicked;
 import com.example.listing.DataViewModel.PlansDataModel;
@@ -35,6 +36,7 @@ import com.example.listing.LoadButtonClicked;
 
 import com.example.listing.Material.MaterialAdapter;
 import com.example.listing.NoteButtonClicked;
+import com.example.listing.Plan.PlanFragment;
 import com.example.listing.PrcButtonClicked;
 import com.example.listing.R;
 import com.example.listing.UnloadButtonClicked;
@@ -42,6 +44,7 @@ import com.example.listing.Utils.Loginsession;
 import com.example.listing.models.Material;
 import com.example.listing.models.MatrialDispatching;
 import com.example.listing.models.Plan;
+import com.example.listing.models.VechAssignLoader;
 import com.example.listing.models.VehAssign;
 import com.example.listing.notes.RedesignedNotesFragment;
 import com.fasterxml.jackson.core.Base64Variants;
@@ -74,7 +77,8 @@ public class LoaderFragment extends Fragment  {
     private static RedesignedNotesFragment notesFragment= null;
     ImageButton btnCapture;
     PlansDataModel model;
-
+    List<VechAssignLoader> Vehassignment = new ArrayList<>();
+    VechAssignLoader Vehassign;
     private MatrialDispatching MatrialDispatch;
 
 
@@ -195,10 +199,12 @@ public class LoaderFragment extends Fragment  {
             }
         };
         LoadButtonClicked loadListener = pos -> {
-            typemethod(pos,"x","","","");
+
+            typemethod(pos,"X","","","");
+
         };
         UnloadButtonClicked unloadListener = pos -> {
-            typemethod(pos,"","x","","");
+            typemethod(pos,"","X","","");
         };
         FoundButtonClicked foundListener = pos -> {
             typemethod(pos,"","","X","");
@@ -241,6 +247,7 @@ public class LoaderFragment extends Fragment  {
 
 
 
+
         materialAdapter = new MaterialAdapter(mParam1, loadListener, unloadListener, prcListener, foundListener, noteListener, cameraListener);
         rv.setAdapter(materialAdapter);
 
@@ -254,109 +261,64 @@ public class LoaderFragment extends Fragment  {
 
             grm.offsetChildrenHorizontal(1);
             rv.setLayoutManager(grm);
-            ViewGroup vg = v.findViewById(R.id.cont);
 
-//
-//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-//                Fade fade = new Fade();
-//                TransitionManager.beginDelayedTransition(vg, fade);
-//
-//        }
-
-        //animation
-//        final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.layout_animation);
-//        rv.setLayoutAnimation(controller);
-//        materialAdapter.notifyDataSetChanged();
-//        rv.scheduleLayoutAnimation();
-//
-//        GridLayoutManager grm = new GridLayoutManager(getActivity(), 2);
-//        grm.offsetChildrenHorizontal(1);
-//        rv.setLayoutManager(grm);
-//
-//        ViewGroup vg = v.findViewById(R.id.cont);
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-//            Fade fade = new Fade();
-//            TransitionManager.beginDelayedTransition(vg, fade);
-//        }
         return v;
     }
 
+    public void typemethod(int Mpostion ,String load,String UNload,String Nfound,String Proc){
 
 
-    public void typemethod(int pos ,String load,String UNload,String Nfound,String Proc){
+        Material materialParam= model.MatrialsList.getValue().get(Mpostion);
+        if(materialParam.getVehAssignList()!=null) {
+            if (materialParam.getVehAssignList().size() > 0) {
+
+                //get the matarial & plan object and lists
+
+                Vehassignment = new ArrayList<>();
+
+                //go through the matrial vech assign
+                for (int i = 0; i < materialParam.getVehAssignList().size(); i++) {
+                    Vehassign = new VechAssignLoader(
+                                materialParam.getZuphrLpid(), materialParam.getZuphrMjahr(),
+                                materialParam.getZuphrMblpo(), materialParam.getVehAssignList().get(i).getZuphrDriverid(),
+                                materialParam.getVehAssignList().get(i).getZuphrVehid(),
+                                load, UNload, Nfound, Proc);
+                        materialParam.getVehAssignList().set(i, Vehassign);
+                        Vehassignment.add(Vehassign);
+                        Log.i("vechassign-typeMTR-id", Vehassign.getZuphrDriverid());
+
+                }
 
 
-        Material Material= model.MatrialsList.getValue().get(pos);
-        VehAssign vehAssign=new VehAssign();
+//////////////////////////////////////////////////////////////////////////////////////
 
-        List<Material> list = model.MatrialsList.getValue();
-        Plan plan= model.plan.getValue();
-        Log.i("vechassginlength_found",Material.getVehAssignList().size()+"");
-        for(int i=0;i<Material.getVehAssignList().size();i++){
-         //   if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
-
-            vehAssign = new VehAssign(
-                    Material.getZuphrLpid(), Material.getZuphrMjahr(),
-                    Material.getZuphrMblpo(), Material.getZuphrStgid(),
-                    Material.getZuphrMatnr(), Material.getZuphrReqid(),
-                    Material.getZuphrReqitm(), Material.getZuphrShortxt(),
-                    Material.getZuphrDescrip(), Material.getZuphrOffshore(),
-                    Material.getVehAssignList().get(i).getZuphrDriverid(),
-                    Material.getVehAssignList().get(i).getZuphrDriverName(),
-                    plan.getPlanToItems().get(pos).getVehicles().get(i).getVehid(),
-                    plan.getPlanToItems().get(pos).getVehicles().get(i).getVehType(),
-                    load, UNload, Nfound, Proc);
+                //Go through plan items list to populate all VechAssign list for over all update
 
 
-            Material.getVehAssignList().set(i, vehAssign);
+                //Create object and posting
 
-            break;
+                for (int i = 0; i < Vehassignment.size(); i++) {
+                    model.AssignValueLoader(Vehassignment.get(i));
+                }
 
 
-          //  }
+                model.getLoaderMtr(materialParam.getZuphrLpid());
 
-        }
-        boolean FLAG=true;
-        for(int i=0;i<Material.getVehAssignList().size();i++){
-
-            if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
-                FLAG = false;
             }
+            else
+                Toast.makeText(getContext(), "Not assigend for you", Toast.LENGTH_SHORT).show();
 
-        }
-
-
-        Material.setComplete(FLAG);
-        list.set(pos,Material);
-        plan.setPlanToItems(list);
-        model.plan.setValue(plan);
-        List<Plan> plans=model.Plans.getValue();
-
-        for(int i=0;i<model.Plans.getValue().size();i++){
-            if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-                plans.set(i,model.plan.getValue());
-                model.Plans.setValue(plans);
-            }
-        }
-
-        List<VehAssign> Vlist =new ArrayList<>();
-
-
-        for(int i=0; i<plan.getPlanToItems().size();i++){
-
-            for(int j=0; j<plan.getPlanToItems().get(i).getVehAssignList().size();j++){
-
-                Vlist.add(plan.getPlanToItems().get(i).getVehAssignList().get(j));
-            }
-        }
-
-
-        MatrialDispatch = new MatrialDispatching(plan.getZuphrLpid(), "", Vlist);
-        model.AssignValueDispatch(MatrialDispatch);
-
+        }else
+            Toast.makeText(getContext(), "Not assigend for you", Toast.LENGTH_SHORT).show();
 
 
     }
+
+
+
+
+
+
 
 }
 

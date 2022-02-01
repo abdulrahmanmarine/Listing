@@ -256,7 +256,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
                             plan.getPlanToItems().get(Mpostion).getVehicles().get(i).getLoaders().get(j).getZuphrdrvrName(),
                             plan.getPlanToItems().get(Mpostion).getVehicles().get(i).getVehid(),
                             plan.getPlanToItems().get(Mpostion).getVehicles().get(i).getVehType(),
-                            "","", "", "");
+                            "X","", "", "");
 
 
                     Vehassignment.add(Vehassign);
@@ -268,7 +268,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
             }
 
             MatrialDispatch = new MatrialDispatching(plan.getZuphrLpid(), "", Vehassignment);
-            model.AssignValueDispatch(MatrialDispatch);
+            model.AssignValue(MatrialDispatch);
 
             dismiss();
         });
