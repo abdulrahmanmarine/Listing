@@ -278,11 +278,13 @@ public class LoaderFragment extends Fragment  {
 
                 //go through the matrial vech assign
                 for (int i = 0; i < materialParam.getVehAssignList().size(); i++) {
+
                     Vehassign = new VechAssignLoader(
                                 materialParam.getZuphrLpid(), materialParam.getZuphrMjahr(),
                                 materialParam.getZuphrMblpo(), materialParam.getVehAssignList().get(i).getZuphrDriverid(),
                                 materialParam.getVehAssignList().get(i).getZuphrVehid(),
                                 load, UNload, Nfound, Proc);
+
                         materialParam.getVehAssignList().set(i, Vehassign);
                         Vehassignment.add(Vehassign);
                         Log.i("vechassign-typeMTR-id", Vehassign.getZuphrDriverid());
@@ -300,10 +302,7 @@ public class LoaderFragment extends Fragment  {
                 for (int i = 0; i < Vehassignment.size(); i++) {
                     model.AssignValueLoader(Vehassignment.get(i));
                 }
-
-
-                model.getLoaderMtr(materialParam.getZuphrLpid());
-
+                model.plan.getValue().getPlanToItems().set(Mpostion,materialParam);
             }
             else
                 Toast.makeText(getContext(), "Not assigend for you", Toast.LENGTH_SHORT).show();
@@ -317,6 +316,11 @@ public class LoaderFragment extends Fragment  {
 
 
 
+    public void notifDataAddChanged() {
+        FragmentManager fm = getFragmentManager();
+        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.constraintLayout4);
+        fragm.dataChanged();
+    }
 
 
 
