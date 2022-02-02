@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -107,7 +106,6 @@ public class Login extends AppCompatActivity {
 
 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         builder.setView(input);
-        input.setText("alsaliat".toUpperCase());
 
 // Set up the buttons
         builder.setPositiveButton("OK", (dialog, which) -> {
@@ -128,9 +126,6 @@ public class Login extends AppCompatActivity {
         Error_Msg.setVisibility(View.INVISIBLE);
         saveMode("online");
 
-        binding.username.setText("T_CBAD_PPLN");
-        binding.password.setText("Welcome.3");
-
         User user = new User(binding.username.getText().toString(), binding.password.getText().toString());
         if (binding.username.getText().toString().isEmpty() || binding.password.getText().toString().isEmpty()) {
 
@@ -146,10 +141,8 @@ public class Login extends AppCompatActivity {
                 myProgress.dismiss();
                 if (Loggedin != null) {
                     if (Loggedin) {
-
                         Intent intent = new Intent(Login.this, Home.class);
                         startActivity(intent);
-
                     } else {
                         model.Logged_in.setValue(null);
                         Error_Msg.setText(model.ErrorMsg.getValue());

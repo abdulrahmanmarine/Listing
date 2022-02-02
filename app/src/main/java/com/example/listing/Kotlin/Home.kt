@@ -2,13 +2,10 @@ package com.example.listing.Kotlin
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.listing.Login
 import com.example.listing.R
-import com.example.listing.Utils.DataClass
-import com.example.listing.Utils.Loginsession
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
@@ -24,7 +21,8 @@ class Home : AppCompatActivity() {
         var loader : ConstraintLayout = findViewById(R.id.loader)
         var dispatcher : ConstraintLayout = findViewById(R.id.dispatcher)
         logout=findViewById(R.id.homelogout_button);
-        DataClass.initializer()
+
+
         loader.setOnClickListener {
             var intent = Intent(applicationContext, Loader::class.java)
             startActivity(intent)

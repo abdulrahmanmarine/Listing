@@ -18,7 +18,7 @@ import java.io.Serializable;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
         setterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class VehAssign implements Serializable {
+public class VechAssignLoader implements Serializable {
 
     @Expose(serialize = false, deserialize = false)
     @PrimaryKey(autoGenerate = true)
@@ -39,54 +39,14 @@ public class VehAssign implements Serializable {
     String ZuphrMblpo;
 
 
-    @JsonProperty("ZuphrStgid")
-    @ColumnInfo(name = "ZuphrStgid")
-    String ZuphrStgid;
-
-    @JsonProperty("ZuphrMatnr")
-    @ColumnInfo(name = "ZuphrMatnr")
-    String ZuphrMatnr;
-
-    @JsonProperty("ZuphrReqid")
-    @ColumnInfo(name = "ZuphrReqid")
-    String ZuphrReqid;
-
-    @JsonProperty("ZuphrReqitm")
-    @ColumnInfo(name = "ZuphrReqitm")
-    String ZuphrReqitm;
-
-
-    @JsonProperty("ZuphrShortxt")
-    @ColumnInfo(name = "ZuphrShortxt")
-    String ZuphrShortxt;
-
-
-    @JsonProperty("ZuphrDescrip")
-    @ColumnInfo(name = "ZuphrDescrip")
-    String ZuphrDescrip;
-
-
-    @JsonProperty("ZuphrOffshore")
-    @ColumnInfo(name = "ZuphrOffshore")
-    String ZuphrOffshore;
-
-
     @JsonProperty("ZuphrDriverid")
     @ColumnInfo(name = "ZuphrDriverid")
     String ZuphrDriverid;
-
-    @JsonProperty("ZUphrDrvrName")
-    @ColumnInfo(name = "ZUphrDrvrName")
-    String ZuphrDriverName;
 
 
     @JsonProperty("ZuphrVehid")
     @ColumnInfo(name = "ZuphrVehid")
     String ZuphrVehid;
-
-    @JsonProperty("ZphrVehType")
-    @ColumnInfo(name = "ZphrVehType")
-    String ZuphrVehType;
 
 
     @JsonProperty("ZuphrLoad")
@@ -106,31 +66,20 @@ public class VehAssign implements Serializable {
     @ColumnInfo(name = "ZuphrProc")
     String ZuphrProc;
 
-    public VehAssign( String zuphrLpid, String zuphrMjahr, String zuphrMblpo, String zuphrStgid,
-                     String zuphrMatnr, String zuphrReqid, String zuphrReqitm, String zuphrShortxt,
-                     String zuphrDescrip, String zuphrOffshore, String zuphrDriverid,String DriverName, String zuphrVehid,String VechType,
-                     String zuphrLoad, String zuphrUload, String zuphrNfound, String zuphrProc) {
+    public VechAssignLoader( String zuphrLpid, String zuphrMjahr, String zuphrMblpo,  String zuphrDriverid
+            , String zuphrVehid, String zuphrLoad, String zuphrUload, String zuphrNfound, String zuphrProc) {
         ZuphrLpid = zuphrLpid;
         ZuphrMjahr = zuphrMjahr;
         ZuphrMblpo = zuphrMblpo;
-        ZuphrStgid = zuphrStgid;
-        ZuphrMatnr = zuphrMatnr;
-        ZuphrReqid = zuphrReqid;
-        ZuphrReqitm = zuphrReqitm;
-        ZuphrShortxt = zuphrShortxt;
-        ZuphrDescrip = zuphrDescrip;
-        ZuphrOffshore = zuphrOffshore;
         ZuphrDriverid = zuphrDriverid;
-        ZuphrDriverName=DriverName;
         ZuphrVehid = zuphrVehid;
-        ZuphrVehType=VechType;
         ZuphrLoad = zuphrLoad;
         ZuphrUload = zuphrUload;
         ZuphrNfound = zuphrNfound;
         ZuphrProc = zuphrProc;
     }
 
-    public VehAssign() {
+    public VechAssignLoader() {
 
     }
 
@@ -166,69 +115,10 @@ public class VehAssign implements Serializable {
         ZuphrMblpo = zuphrMblpo;
     }
 
-    public String getZuphrStgid() {
-        return ZuphrStgid;
-    }
-
-    public void setZuphrStgid(String zuphrStgid) {
-        ZuphrStgid = zuphrStgid;
-    }
-
-    public String getZuphrMatnr() {
-        return ZuphrMatnr;
-    }
-
-    public void setZuphrMatnr(String zuphrMatnr) {
-        ZuphrMatnr = zuphrMatnr;
-    }
-
-    public String getZuphrReqid() {
-        return ZuphrReqid;
-    }
-
-    public void setZuphrReqid(String zuphrReqid) {
-        ZuphrReqid = zuphrReqid;
-    }
-
-    public String getZuphrReqitm() {
-        return ZuphrReqitm;
-    }
-
-    public void setZuphrReqitm(String zuphrReqitm) {
-        ZuphrReqitm = zuphrReqitm;
-    }
-
-    public String getZuphrShortxt() {
-        return ZuphrShortxt;
-    }
-
-    public void setZuphrShortxt(String zuphrShortxt) {
-        ZuphrShortxt = zuphrShortxt;
-    }
-
-    public String getZuphrDescrip() {
-        return ZuphrDescrip;
-    }
-
-    public void setZuphrDescrip(String zuphrDescrip) {
-        ZuphrDescrip = zuphrDescrip;
-    }
-
-    public String getZuphrOffshore() {
-        return ZuphrOffshore;
-    }
-
-    public void setZuphrOffshore(String zuphrOffshore) {
-        ZuphrOffshore = zuphrOffshore;
-    }
 
     public String getZuphrDriverid() {
         return ZuphrDriverid;
     }
-
-    public String getZuphrDriverName() { return ZuphrDriverName; }
-
-    public void setZuphrDriverName(String zuphrDriverName) { ZuphrDriverName = zuphrDriverName; }
 
     public void setZuphrDriverid(String zuphrDriverid) {
         ZuphrDriverid = zuphrDriverid;
@@ -238,9 +128,6 @@ public class VehAssign implements Serializable {
         return ZuphrVehid;
     }
 
-    public String getZuphrVehType() { return ZuphrVehType; }
-
-    public void setZuphrVehType(String zuphrVehType) { ZuphrVehType = zuphrVehType; }
 
     public void setZuphrVehid(String zuphrVehid) {
         ZuphrVehid = zuphrVehid;

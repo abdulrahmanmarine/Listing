@@ -6,9 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-
 import com.example.listing.models.Vehicle;
-
 
 import java.util.List;
 

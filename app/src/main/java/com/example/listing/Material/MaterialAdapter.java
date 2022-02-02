@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -104,6 +103,7 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.Materi
 
             if(material.getVehAssignList()!=null &&material.getVehAssignList().size()>0){
                 for(int i=0; i<material.getVehAssignList().size();i++){
+
                     if(material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")){
                         itemRowBinding.statusTv.setText("Loaded");
                         itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.green_border));
@@ -114,13 +114,16 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.Materi
                         itemRowBinding.statusTv.setText("NotFound");
                         itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
                     }
-//                    else if (material.getVehAssignList().get(i).getZuphrDone().equalsIgnoreCase("x")){
-//                        itemRowBinding.statusTv.setText("Proccessd");
-//                        itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.yellow_border));}
+                    else if (material.getVehAssignList().get(i).getZuphrProc().equalsIgnoreCase("x")){
+                        itemRowBinding.statusTv.setText("Proccessd");
+                        itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.yellow_border));
+                    }
+
                 }
 
             }else {
 
+                itemRowBinding.statusTv.setText("No Action");
                 itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
             }
 

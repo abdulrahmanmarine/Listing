@@ -10,13 +10,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -295,9 +289,11 @@ public class Material implements Serializable {
      @Ignore
     List<Vehicle> Vehicles =new ArrayList<>();
 
+
+
     @JsonIgnore
     @Ignore
-    List<VehAssign> vehAssignList =new ArrayList<>();
+    List<VechAssignLoader> vehAssignList =new ArrayList<>();
 
 
 
@@ -886,11 +882,11 @@ public class Material implements Serializable {
         PlanOfflineID = planOfflineID;
     }
 
-    public List<VehAssign> getVehAssignList() {
+    public List<VechAssignLoader> getVehAssignList() {
         return vehAssignList;
     }
 
-    public void setVehAssignList(List<VehAssign> vehAssignList) {
+    public void setVehAssignList(List<VechAssignLoader> vehAssignList) {
         this.vehAssignList = vehAssignList;
     }
 

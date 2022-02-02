@@ -9,7 +9,6 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Rect
@@ -39,7 +38,6 @@ import com.example.listing.Utils.Loginsession
 import com.example.listing.Utils.OfflineDatabaseClient
 import com.example.listing.Utils.RestApiClient
 import com.example.listing.models.Material
-import com.example.listing.models.Plan
 import com.example.listing.models.SAPNote
 import com.fasterxml.jackson.core.Base64Variants
 import com.fasterxml.jackson.module.kotlin.readValue

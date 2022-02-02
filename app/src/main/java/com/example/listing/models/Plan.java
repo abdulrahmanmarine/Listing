@@ -1,8 +1,6 @@
 package com.example.listing.models;
 
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -16,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,8 +33,7 @@ public class Plan implements Serializable {
     @ColumnInfo(name="ZuphrActquan")
     public String ZuphrActquan;
 
-    @JsonIgnore
-    Boolean Loaded;
+
 //
 //
 //    @JsonProperty("ZuphrLoada")
@@ -358,7 +354,9 @@ public class Plan implements Serializable {
     }
 
 
-
+    @JsonIgnore
+    @Ignore
+    public Boolean Flag=false;
 
 
     public Plan() {
@@ -588,12 +586,12 @@ public class Plan implements Serializable {
         PlanId = planId;
     }
 
-    public Boolean getLoaded() {
-        return Loaded;
+    public Boolean getFlag() {
+        return Flag;
     }
 
-    public void setLoaded(Boolean loaded) {
-        Loaded = loaded;
+    public void setFlag(Boolean flag) {
+        Flag = flag;
     }
 }
 

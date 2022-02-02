@@ -1,11 +1,10 @@
 package com.example.listing.models;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-        import com.fasterxml.jackson.annotation.JsonProperty;
-
-        import java.util.List;
-        import java.util.Map;
+import java.util.List;
+import java.util.Map;
 
 public class VehicleUnpack {
 

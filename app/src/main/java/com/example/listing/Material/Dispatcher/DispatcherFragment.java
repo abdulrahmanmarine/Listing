@@ -1,8 +1,20 @@
 package com.example.listing.Material.Dispatcher;
 
-import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.transition.Fade;
+import android.transition.TransitionManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,33 +23,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.transition.Fade;
-import android.transition.TransitionManager;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.example.listing.AddButtonClicked;
 import com.example.listing.AssignDialog_Configured.DriverAdapter;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.Kotlin.Dispatcher;
-import com.example.listing.R;
 import com.example.listing.Plan.PlanFragment;
-import com.example.listing.Utils.DataClass;
-import com.example.listing.models.Driver;
-//import com.example.listing.models.LoadAction;
+import com.example.listing.R;
 import com.example.listing.models.Material;
-import com.example.listing.models.Plan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -178,7 +170,7 @@ public class DispatcherFragment extends Fragment {
         dest_tv = v.findViewById(R.id.dest_tv);
         dest_tv.setText(mParam4);
 
-       // model.postDriver();
+
        // model.postVehicle();
        // model.postDevice();
 

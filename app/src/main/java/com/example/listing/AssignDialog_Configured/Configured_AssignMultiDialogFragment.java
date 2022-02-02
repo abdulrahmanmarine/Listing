@@ -24,11 +24,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-//import com.example.listing.Kotlin.pictureMode;
 import com.example.listing.AddButtonClicked;
 import com.example.listing.DataViewModel.PlansDataModel;
-import com.example.listing.VehicleDeleteButtonClicked;
 import com.example.listing.R;
+import com.example.listing.VehicleDeleteButtonClicked;
 import com.example.listing.models.Driver;
 import com.example.listing.models.Material;
 import com.example.listing.models.Plan;
@@ -37,6 +36,8 @@ import com.example.listing.notes.pictureMode;
 
 import java.util.ArrayList;
 import java.util.List;
+
+//import com.example.listing.Kotlin.pictureMode;
 
 public class Configured_AssignMultiDialogFragment extends DialogFragment{
 
@@ -100,8 +101,7 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.assign_configured_layout, container, false);
-        return v;
+        return inflater.inflate(R.layout.assign_configured_layout, container, false);
     }
 
     @Override
@@ -110,24 +110,20 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
 
         model=new ViewModelProvider(getActivity()).get(PlansDataModel.class);
 
-        AddButtonClicked addButtonClicked = new AddButtonClicked() {
-            @Override
-            public void addButtonClicked(int pos) {
-                chosenVehicles.add(vehiclesList.get(pos));
-                chosenDrivers.addAll(vehiclesList.get(pos).getLoaders());
-                configuredChosenAdapter.notifyDataSetChanged();
-            }
+
+       vehiclesList= (ArrayList<Vehicle>) model.MastervehiclesList.getValue();
+
+        AddButtonClicked addButtonClicked = pos -> {
+            chosenVehicles.add(vehiclesList.get(pos));
+            chosenDrivers.addAll(vehiclesList.get(pos).getLoaders());
+            configuredChosenAdapter.notifyDataSetChanged();
         };
 
-        VehicleDeleteButtonClicked vehicleDeleteButtonClicked = new VehicleDeleteButtonClicked() {
-            @Override
-            public void deleteButtonClicked(int pos) {
-                chosenVehicles.remove(pos);
-                int newPos = pos;
-                configuredChosenAdapter.notifyDataSetChanged();
-                configuredChosenAdapter.notifyItemRemoved(newPos);
-                configuredChosenAdapter.notifyItemRangeChanged(newPos, chosenVehicles.size());
-            }
+        VehicleDeleteButtonClicked vehicleDeleteButtonClicked = pos -> {
+            chosenVehicles.remove(pos);
+            configuredChosenAdapter.notifyDataSetChanged();
+            configuredChosenAdapter.notifyItemRemoved(pos);
+            configuredChosenAdapter.notifyItemRangeChanged(pos, chosenVehicles.size());
         };
 
         //done button
@@ -251,12 +247,7 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
             dismiss();
         });
 
-        closeBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        closeBut.setOnClickListener(v -> dismiss());
 
     }
 }

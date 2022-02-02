@@ -1,29 +1,25 @@
 
 package com.example.listing.Plan;
 
-        import android.annotation.SuppressLint;
-        import android.content.Context;
-        import android.util.Log;
-        import android.view.LayoutInflater;
-        import android.view.ViewGroup;
-        import android.widget.TextView;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
-        import androidx.core.content.ContextCompat;
-        import androidx.databinding.DataBindingUtil;
-        import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
-        import com.example.listing.PlanClickListener;
-        import com.example.listing.R;
-            import com.example.listing.databinding.PlanCardBinding;
-        import com.example.listing.models.Material;
-        import com.example.listing.models.Plan;
-        import com.example.listing.notes.SharefPref;
+import com.example.listing.PlanClickListener;
+import com.example.listing.R;
+import com.example.listing.databinding.PlanCardBinding;
+import com.example.listing.models.Material;
+import com.example.listing.models.Plan;
 
-        import java.text.DateFormat;
-        import java.text.SimpleDateFormat;
-        import java.util.ArrayList;
-        import java.util.Date;
-        import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> implements PlanClickListener {
 
@@ -102,41 +98,47 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
 
 
             if(plan.getPlanToItems()!=null){
-
                 if(load){
+
+                    Boolean flag=false;
                     for(int i = 0; i< plan.getPlanToItems().size() ; i++){
 
-                        Log.i("Status",plan.getPlanToItems().get(i).isComplete()+"");
-                        if(!plan.getPlanToItems().get(i).isComplete()){
+                        if(!plan.getPlanToItems().get(i).isComplete())
+                        {   flag=false;
+                            break;
+                        }
+                        else flag=true;
+
+                    }
+                    if(!flag){
+                        plan.setZuphrStatus("InComplete");
+                        statusText.setText(plan.getZuphrStatus());
+                        statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
+
+                    }
+                    else{
+                        plan.setZuphrStatus("Complete");
+                        statusText.setText(plan.getZuphrStatus());
+                        statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
+                    }
+                }
+                else{
+                    for(int i = 0; i< plan.getPlanToItems().size(); i++){
+                        Material material = plan.getPlanToItems().get(i);
+                        if(material.getVehicles().isEmpty()){
                             plan.setZuphrStatus("Incomplete");
                             statusText.setText(plan.getZuphrStatus());
                             statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
                             break;
-                        }
-                        else{
+
+                        }else{
                             plan.setZuphrStatus("Complete");
                             statusText.setText(plan.getZuphrStatus());
                             statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
                         }
                     }
+
                 }
-//                else{
-//                    for(int i = 0; i< plan.getPlanToItems().size(); i++){
-//                        Material material = plan.getPlanToItems().get(i);
-//                        if(material.getVehicle()..isEmpty()){
-//                            plan.setZuphrStatus("Incomplete");
-//                            statusText.setText(plan.getZuphrStatus());
-//                            statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
-//                            break;
-//
-//                        }else{
-//                            plan.setZuphrStatus("Complete");
-//                            statusText.setText(plan.getZuphrStatus());
-//                            statusText.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
-//                        }
-//                    }
-//
-//                }
 
             }
             String planTime = plan.getZuphrFpTime();

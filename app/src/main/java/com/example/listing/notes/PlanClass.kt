@@ -1,6 +1,6 @@
 package com.example.listing.notes
-import androidx.core.content.res.FontResourcesParserCompat
-import com.fasterxml.jackson.annotation.*
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 
 class dVariableJSON<T> {
     @JsonProperty("d")

@@ -1,11 +1,8 @@
 package com.example.listing.models;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -13,13 +10,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -46,25 +40,19 @@ public class MatrialDispatching implements Serializable {
     String Zuphr;
 
 
-   // @JsonProperty(value = "NavLpToVehAssign", access = JsonProperty.Access.WRITE_ONLY)
-    @Ignore
-     @JsonIgnore
+    @JsonProperty(value = "NavLpToVehAssign",access = JsonProperty.Access.READ_ONLY)
     List<VehAssign> Vehassignment;
 
-
-
-    @JsonProperty(value = "NavLpToVehAssign", access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(value = "NavLpToVehAssign",access = JsonProperty.Access.WRITE_ONLY)
     public void unpackVehAssign(Map<String ,List<VehAssign>> d) {
-
         Vehassignment=d.get("results");
     }
-
-
-
 
     @JsonProperty(value = "NavLpToReturn", access = JsonProperty.Access.READ_ONLY)
     @ColumnInfo(name = "NavLpToReturn")
     List<String> NavLpToReturn=new ArrayList<>();
+
+
 
     @JsonPropertyOrder({"ZuphrLpid","Zuphr","NavLpToVehAssign","NavLpToReturn"})
 
@@ -110,5 +98,7 @@ public class MatrialDispatching implements Serializable {
         Vehassignment = vehassign;
     }
 }
+
+
 
 

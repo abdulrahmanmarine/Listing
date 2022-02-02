@@ -2,19 +2,10 @@ package com.example.listing.Material.Loader;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,21 +18,28 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listing.CameraButtonClicked;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.FoundButtonClicked;
 import com.example.listing.LoadButtonClicked;
-
 import com.example.listing.Material.MaterialAdapter;
 import com.example.listing.NoteButtonClicked;
 import com.example.listing.PrcButtonClicked;
 import com.example.listing.R;
 import com.example.listing.UnloadButtonClicked;
-import com.example.listing.Utils.Loginsession;
 import com.example.listing.models.Material;
+import com.example.listing.models.MatrialDispatching;
 import com.example.listing.models.Plan;
-import com.example.listing.models.VehAssign;
+import com.example.listing.models.VechAssignLoader;
 import com.example.listing.notes.RedesignedNotesFragment;
 import com.fasterxml.jackson.core.Base64Variants;
 
@@ -57,7 +55,6 @@ import java.util.regex.Pattern;
  * create an instance of this fragment.
  */
 public class LoaderFragment extends Fragment  {
-    private int pPos = 0;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -68,39 +65,26 @@ public class LoaderFragment extends Fragment  {
 
 
     // TODO: Rename and change types of parameters
-    List<Plan> plans;
     private String mParam2, mParam3, mParam4;
-    //private ArrayList<Material> mParam1 = new ArrayList<>();
     private ArrayList<Material> mParam1 = new ArrayList<>();
     private MaterialAdapter materialAdapter;
-    private static Context contexts;
-    private static LoaderFragment fragment = null;
     private static RedesignedNotesFragment notesFragment= null;
-    private Boolean isLoad = true;
     ImageButton btnCapture;
     PlansDataModel model;
+    List<VechAssignLoader> Vehassignment = new ArrayList<>();
+    VechAssignLoader Vehassign;
+    private MatrialDispatching MatrialDispatch;
 
 
 
     public LoaderFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     * <p>
-     * <p>
-     * //     * @param param2 Parameter 2.
-     *
-     * @return A new instance of fragment TextFragment.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static LoaderFragment newInstance(ArrayList<Material> param1, String param2, String param3, String param4) {
         LoaderFragment fragment = new LoaderFragment();
         Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-
         args.putSerializable(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         args.putString(ARG_PARAM3, param3);
@@ -114,9 +98,6 @@ public class LoaderFragment extends Fragment  {
         materialAdapter.notifyDataSetChanged();
     }
 
-//    public void changeLoading(boolean loadOrNot){
-//        isLoad = loadOrNot;
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -166,7 +147,7 @@ public class LoaderFragment extends Fragment  {
 
         View v = inflater.inflate(R.layout.fragment_text, container, false);
 
-        EditText editText1 = (EditText) v.findViewById(R.id.search_material);
+        EditText editText1 =v.findViewById(R.id.search_material);
 
         editText1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -188,7 +169,7 @@ public class LoaderFragment extends Fragment  {
 
 
 
-        btnCapture = (ImageButton) v.findViewById(R.id.camerabutton);
+        btnCapture =v.findViewById(R.id.camerabutton);
 
         //set recyclerview adapter
         RecyclerView rv = v.findViewById(R.id.textrecview);
@@ -212,163 +193,18 @@ public class LoaderFragment extends Fragment  {
             }
         };
         LoadButtonClicked loadListener = pos -> {
-            Material Material= model.MatrialsList.getValue().get(pos);
-            VehAssign vehAssign=new VehAssign(Material.getZuphrLpid(),Material.getZuphrMjahr(),
-                    Material.getZuphrMblpo(),Material.getZuphrStgid(),Material.getZuphrMatnr(),
-                    Material.getZuphrReqid(),Material.getZuphrReqitm(),Material.getZuphrShortxt(),
-                    Material.getZuphrDescrip(),Material.getZuphrOffshore(),Loginsession.getInstance().getUser().UserId,
-                    "","X","","","");
-            Material.getVehAssignList().clear();
-            for(int i=0;i<Material.getVehAssignList().size();i++){
 
-                if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
-                 vehAssign=Material.getVehAssignList().get(i);
-                    break;
-                }
-
-            }
-
-
-            model.AssignValueLoader(vehAssign);
-            Material.getVehAssignList().add(vehAssign);
-            boolean FLAG=true;
-            for(int i=0;i<Material.getVehAssignList().size();i++){
-                if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
-                    FLAG = false;
-                }
-            }
-            Material.setComplete(FLAG);
-            List<Material> list = model.MatrialsList.getValue();
-            list.set(pos,Material);
-            Plan plan= model.plan.getValue();
-            plan.setPlanToItems(list);
-            model.plan.setValue(plan);
-            List<Plan> plans=model.Plans.getValue();
-            for(int i=0;i<model.Plans.getValue().size();i++){
-                if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-                    plans.set(i,model.plan.getValue());
-                  model.Plans.setValue(plans);
-                }
-            }
-
+            typemethod(pos,"X","","","");
 
         };
         UnloadButtonClicked unloadListener = pos -> {
-            Material Material= model.MatrialsList.getValue().get(pos);
-            VehAssign vehAssign=new VehAssign(Material.getZuphrLpid(),Material.getZuphrMjahr(),
-                    Material.getZuphrMblpo(),Material.getZuphrStgid(),Material.getZuphrMatnr(),
-                    Material.getZuphrReqid(),Material.getZuphrReqitm(),Material.getZuphrShortxt(),
-                    Material.getZuphrDescrip(),Material.getZuphrOffshore(),Loginsession.getInstance().getUser().UserId,
-                    "","","x","","");
-            Material.getVehAssignList().clear();
-            for(int i=0;i<Material.getVehAssignList().size();i++){
-
-                if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
-                    vehAssign=Material.getVehAssignList().get(i);
-                    break;
-                }
-
-            }
-            model.AssignValueLoader(vehAssign);
-            Material.getVehAssignList().add(vehAssign);
-            boolean FLAG=true;
-            for(int i=0;i<Material.getVehAssignList().size();i++){
-                if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
-                    FLAG = false;
-                }
-            }
-            Material.setComplete(FLAG);
-            List<Material> list = model.MatrialsList.getValue();
-            list.set(pos,Material);
-            Plan plan= model.plan.getValue();
-            plan.setPlanToItems(list);
-            model.plan.setValue(plan);
-            List<Plan> plans=model.Plans.getValue();
-            for(int i=0;i<model.Plans.getValue().size();i++){
-                if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-                    plans.set(i,model.plan.getValue());
-                    model.Plans.setValue(plans);
-                }
-            }
-
+            typemethod(pos,"","X","","");
         };
         FoundButtonClicked foundListener = pos -> {
-            Material Material= model.MatrialsList.getValue().get(pos);
-            VehAssign vehAssign=new VehAssign(Material.getZuphrLpid(),Material.getZuphrMjahr(),
-                    Material.getZuphrMblpo(),Material.getZuphrStgid(),Material.getZuphrMatnr(),
-                    Material.getZuphrReqid(),Material.getZuphrReqitm(),Material.getZuphrShortxt(),
-                    Material.getZuphrDescrip(),Material.getZuphrOffshore(),Loginsession.getInstance().getUser().UserId,
-                    "","","","X","");
-            Material.getVehAssignList().clear();
-            for(int i=0;i<Material.getVehAssignList().size();i++){
-
-                if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
-                    vehAssign=Material.getVehAssignList().get(i);
-                    break;
-                }
-
-            }
-            model.AssignValueLoader(vehAssign);
-            Material.getVehAssignList().add(vehAssign);
-            boolean FLAG=true;
-            for(int i=0;i<Material.getVehAssignList().size();i++){
-                if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
-                    FLAG = false;
-                }
-            }
-            Material.setComplete(FLAG);
-            List<Material> list = model.MatrialsList.getValue();
-            list.set(pos,Material);
-            Plan plan= model.plan.getValue();
-            plan.setPlanToItems(list);
-            model.plan.setValue(plan);
-            List<Plan> plans=model.Plans.getValue();
-            for(int i=0;i<model.Plans.getValue().size();i++){
-                if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-                    plans.set(i,model.plan.getValue());
-                    model.Plans.setValue(plans);
-                }
-            }
-
+            typemethod(pos,"","","X","");
         };
         PrcButtonClicked prcListener = pos -> {
-            Material Material= model.MatrialsList.getValue().get(pos);
-            VehAssign vehAssign=new VehAssign(Material.getZuphrLpid(),Material.getZuphrMjahr(),
-                    Material.getZuphrMblpo(),Material.getZuphrStgid(),Material.getZuphrMatnr(),
-                    Material.getZuphrReqid(),Material.getZuphrReqitm(),Material.getZuphrShortxt(),
-                    Material.getZuphrDescrip(),Material.getZuphrOffshore(),Loginsession.getInstance().getUser().UserId,
-                    "","","","","x");
-            Material.getVehAssignList().clear();
-            for(int i=0;i<Material.getVehAssignList().size();i++){
-
-                if(Material.getVehAssignList().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)){
-                    vehAssign=Material.getVehAssignList().get(i);
-                    break;
-                }
-
-            }
-            model.AssignValueLoader(vehAssign);
-            Material.getVehAssignList().add(vehAssign);
-            boolean FLAG=true;
-            for(int i=0;i<Material.getVehAssignList().size();i++){
-                if(!Material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
-                    FLAG = false;
-                }
-            }
-            Material.setComplete(FLAG);
-            List<Material> list = model.MatrialsList.getValue();
-            list.set(pos,Material);
-            Plan plan= model.plan.getValue();
-            plan.setPlanToItems(list);
-            model.plan.setValue(plan);
-            List<Plan> plans=model.Plans.getValue();
-            for(int i=0;i<model.Plans.getValue().size();i++){
-                if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-                    plans.set(i,model.plan.getValue());
-                    model.Plans.setValue(plans);
-                }
-            }
-
+            typemethod(pos,"","","","X");
 
         };
 
@@ -405,6 +241,7 @@ public class LoaderFragment extends Fragment  {
 
 
 
+
         materialAdapter = new MaterialAdapter(mParam1, loadListener, unloadListener, prcListener, foundListener, noteListener, cameraListener);
         rv.setAdapter(materialAdapter);
 
@@ -418,32 +255,87 @@ public class LoaderFragment extends Fragment  {
 
             grm.offsetChildrenHorizontal(1);
             rv.setLayoutManager(grm);
-            ViewGroup vg = v.findViewById(R.id.cont);
 
-//
-//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-//                Fade fade = new Fade();
-//                TransitionManager.beginDelayedTransition(vg, fade);
-//
-//        }
-
-        //animation
-//        final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.layout_animation);
-//        rv.setLayoutAnimation(controller);
-//        materialAdapter.notifyDataSetChanged();
-//        rv.scheduleLayoutAnimation();
-//
-//        GridLayoutManager grm = new GridLayoutManager(getActivity(), 2);
-//        grm.offsetChildrenHorizontal(1);
-//        rv.setLayoutManager(grm);
-//
-//        ViewGroup vg = v.findViewById(R.id.cont);
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-//            Fade fade = new Fade();
-//            TransitionManager.beginDelayedTransition(vg, fade);
-//        }
         return v;
     }
+
+    public void typemethod(int Mpostion ,String load,String UNload,String Nfound,String Proc){
+
+
+        Material materialParam= model.MatrialsList.getValue().get(Mpostion);
+        if(materialParam.getVehAssignList()!=null) {
+            if (materialParam.getVehAssignList().size() > 0) {
+
+                //get the matarial & plan object and lists
+
+                Vehassignment = new ArrayList<>();
+
+                //go through the matrial vech assign
+                for (int i = 0; i < materialParam.getVehAssignList().size(); i++) {
+
+                    Vehassign = new VechAssignLoader(
+                                materialParam.getZuphrLpid(), materialParam.getZuphrMjahr(),
+                                materialParam.getZuphrMblpo(), materialParam.getVehAssignList().get(i).getZuphrDriverid(),
+                                materialParam.getVehAssignList().get(i).getZuphrVehid(),
+                                load, UNload, Nfound, Proc);
+
+                        materialParam.getVehAssignList().set(i, Vehassign);
+                        Vehassignment.add(Vehassign);
+                        Log.i("vechassign-typeMTR-id", Vehassign.getZuphrDriverid());
+
+                }
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+                //Go through plan items list to populate all VechAssign list for over all update
+
+
+                //Create object and posting
+
+                Boolean flaglooded=true;
+                for (int i = 0; i < Vehassignment.size(); i++) {
+                    model.AssignValueLoader(Vehassignment.get(i));
+
+                    if(!Vehassignment.get(i).getZuphrLoad().toLowerCase().contains("x")&&flaglooded){
+                        flaglooded=false;
+                    }
+                }
+
+                Plan plan= model.plan.getValue();
+
+                materialParam.setComplete(flaglooded);
+
+
+                plan.getPlanToItems().set(Mpostion,materialParam);
+
+                List<Plan> planslist=model.Plans.getValue();
+
+                model.plan.setValue(plan);
+                for (int i = 0; i < planslist.size(); i++) {
+                   if(planslist.get(i).getZuphrLpid().equalsIgnoreCase(plan.getZuphrLpid())){
+                       planslist.set(i,model.plan.getValue());
+                   }
+                }
+
+               model.Plans.setValue(planslist);
+
+
+
+
+            }
+            else
+                Toast.makeText(getContext(), "Not assigend for you", Toast.LENGTH_SHORT).show();
+
+        }else
+            Toast.makeText(getContext(), "Not assigend for you", Toast.LENGTH_SHORT).show();
+
+
+    }
+
+
+
+
 
 }
 

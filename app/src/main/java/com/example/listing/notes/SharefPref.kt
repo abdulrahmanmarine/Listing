@@ -1,16 +1,12 @@
 package com.example.listing.notes
 
-import android.content.ContentValues
 import android.content.Context
 import android.content.SharedPreferences
-import android.database.Cursor
 import android.util.Log
-import android.widget.Toast
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 object SharefPref {
     val mapper = jacksonObjectMapper()

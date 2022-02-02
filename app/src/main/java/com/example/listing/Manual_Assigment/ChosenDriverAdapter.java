@@ -11,7 +11,6 @@ import com.example.listing.R;
 import com.example.listing.databinding.ManualChoosenDriverListBinding;
 import com.example.listing.models.Driver;
 
-
 import java.util.List;
 
 public class ChosenDriverAdapter extends RecyclerView.Adapter<ChosenDriverAdapter.ViewHolder>{

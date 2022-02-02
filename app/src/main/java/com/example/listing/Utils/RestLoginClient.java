@@ -1,5 +1,6 @@
 package com.example.listing.Utils;
 
+
 import android.app.Application;
 import android.util.Log;
 
@@ -10,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.CookieManager;
-import java.net.CookiePolicy;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Headers;
@@ -28,68 +29,58 @@ public class RestLoginClient {
 
     private static RestLoginClient instance;
     private static Retrofit retrofit;
-    private static Retrofit retrofitdvc;
-    private static CookieManager cookieManager;
-    private  static  OkHttpClient client;
-
-    private final RetrofitInterfaceLogin retrofitInterfacelogin;
+    private final RetrofitInterfaceLogin RetrofitInterfaceLogin;
+    private static OkHttpClient client=null;
 
 
 
-    public RetrofitInterfaceLogin getRetrofitInterfacelogin() {
-        return retrofitInterfacelogin;
+    private RestLoginClient( Application application) {
+        RetrofitInterfaceLogin = Login(application);
     }
-
-    public CookieManager getCookieManager() {
-        return cookieManager;
-    }
-
-
-    private RestLoginClient(Application application) {
-        retrofitInterfacelogin = Login(application);
-    }
-
-
-
-
 
     public static void initializer(Application application) {
         if (instance == null) {
             synchronized (RestLoginClient.class) {
                 instance = new RestLoginClient(application);
+
             }
         }
     }
 
-
-
-    public static RestLoginClient getInstance() {
+    public static RestLoginClient getInstance(Application application) {
         if (instance == null) {
-            return null;
-        } else {
-            Log.i("response", "here");
-            return instance;
+            instance = new RestLoginClient( application);
         }
+        return instance;
 
     }
 
+    static OkHttpClient headersInterceptors(Application application) {
 
-    public static RetrofitInterfaceLogin Login(Application application) {
-        Log.i("Login-Repo", "2");
-        return CreateClient(application).create(RetrofitInterfaceLogin.class);
+        return new OkHttpClient.Builder()
+                .addInterceptor(new BasicAuth(application))
+                .cookieJar(new JavaNetCookieJar(new CookieManager()))
+                .connectTimeout(900, TimeUnit.SECONDS)
+                .addInterceptor(new ReceivedCookiesInterceptor(application))
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .build();
     }
 
 
-    public static Retrofit CreateClient(Application application) {
+    public static RetrofitInterfaceLogin Login( Application application) {
+        return CreateClient( application).create(RetrofitInterfaceLogin.class);
+    }
+
+    public static Retrofit CreateClient( Application application) {
         if (retrofit == null) {
-            Log.i("Login-create", "3");
-
+            client=headersInterceptors(application);
             retrofit = new Retrofit.Builder()
                     .baseUrl(application.getString(R.string.portalURL))
-                    .client(headersInterceptors(application))
-                    .addConverterFactory(JacksonConverterFactory.create(jacksonObjectMapper().setPropertyNamingStrategy(new PropertyNamingStrategies.UpperCamelCaseStrategy())))
+                    .client(client)
+                    .addConverterFactory(JacksonConverterFactory.create(jacksonObjectMapper().
+                            setPropertyNamingStrategy(new PropertyNamingStrategies.UpperCamelCaseStrategy())))
                     .build();
-
         }
         return retrofit;
     }
@@ -97,40 +88,30 @@ public class RestLoginClient {
 
 
 
-    static OkHttpClient headersInterceptors(Application application) {
-
-        cookieManager = new CookieManager();
-        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
-        JavaNetCookieJar javaNetCookieJar = new JavaNetCookieJar(cookieManager);
-
-         client = new OkHttpClient.Builder()
-                .cookieJar(javaNetCookieJar)
-                .addInterceptor(new BasicAuth(application))
-                .addInterceptor(new ReceivedCookiesInterceptor(application))
-                .connectTimeout(900, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .build();
-        client.followRedirects();
-        return client;
+    public RetrofitInterfaceLogin getRetrofitInterfaceLogin() {
+        return RetrofitInterfaceLogin;
     }
+
 
     private static class BasicAuth implements Interceptor {
         Application application;
+
         public BasicAuth(Application application) {
             this.application = application;
+
         }
+
+
         @NotNull
         @Override
         public Response intercept(Chain chain) throws IOException {
 
             Headers headers = chain.request().headers().newBuilder()
+                    .add("Content-Type", application.getResources().getString(R.string.Content_Type))
+                    .add("Accept", application.getResources().getString(R.string.accept))
+                    .add("sap-client", application.getResources().getString(R.string.sapclient_25))
+                    // .add("User-Agent", application.getResources().getString(R.string.user_agent))
 
-                    .add("Content-Type", "application/json; charset=utf-8")
-                    .add("Accept", "application/json")
-                    .add("X-CSRF-Token", "Fetch")
-                    .add("sap-client", "025")
-                    .add("User-Agent", application.getResources().getString(R.string.user_agent))
                     .build();
 
             Request request = chain.request().newBuilder().headers(headers).build();
@@ -140,18 +121,28 @@ public class RestLoginClient {
     }
 
 
-    private static class  ReceivedCookiesInterceptor implements Interceptor {
+
+    private static class ReceivedCookiesInterceptor implements Interceptor {
         Application application;
+
         public ReceivedCookiesInterceptor(Application application) {
             this.application = application;
         }
 
+        @NotNull
         @Override
         public Response intercept(Chain chain) throws IOException {
-            Response originalResponse = chain.proceed(chain.request());
 
-      // TODO UNCOMMENT FOR AIRWATCH
-              RestApiClient.initializer(client,application, "");
+            Response originalResponse = chain.proceed(chain.request());
+            Log.i("Login url:", originalResponse.request().url().toString());
+            Log.i("Login header-request:", originalResponse.request().headers().toString());
+            Log.i("Login header-response:", originalResponse.headers().toString());
+
+
+            List<String> Cookielist = originalResponse.headers().values("Set-Cookie");
+
+
+            RestApiClient.initializer(application,Cookielist,null);
 
 
             return originalResponse;
@@ -159,13 +150,4 @@ public class RestLoginClient {
     }
 
 
-
-
-
-
 }
-
-
-
-
-

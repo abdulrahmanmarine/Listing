@@ -8,7 +8,6 @@ import androidx.room.Update;
 
 import com.example.listing.models.Driver;
 
-
 import java.util.List;
 
 @Dao

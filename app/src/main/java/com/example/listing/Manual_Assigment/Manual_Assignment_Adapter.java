@@ -1,23 +1,21 @@
 package com.example.listing.Manual_Assigment;
 
-        import android.content.Context;
-        import android.util.Log;
-        import android.view.LayoutInflater;
-        import android.view.ViewGroup;
-        import android.widget.Button;
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
-        import androidx.annotation.NonNull;
-        import androidx.databinding.DataBindingUtil;
-        import androidx.recyclerview.widget.GridLayoutManager;
-        import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-        import com.example.listing.DriverDeleteButtonClicked;
-        import com.example.listing.R;
-        import com.example.listing.databinding.ManualAssigmentCardBinding;
-        import com.example.listing.models.Vehicle;
+import com.example.listing.DriverDeleteButtonClicked;
+import com.example.listing.R;
+import com.example.listing.databinding.ManualAssigmentCardBinding;
+import com.example.listing.models.Vehicle;
 
-
-        import java.util.List;
+import java.util.List;
 
 public class Manual_Assignment_Adapter extends RecyclerView.Adapter<Manual_Assignment_Adapter.ViewHolder>{
     List <Vehicle> vehicle;
