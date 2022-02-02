@@ -117,8 +117,6 @@ public class PlanFragment extends Fragment {
         rv = v.findViewById(R.id.recview);
         rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
 
-        flagwidget=v.findViewById(R.id.flagwidget);
-        button=v.findViewById(R.id.flagbutton);
 
 
         model.Plans.observe(getViewLifecycleOwner(), list -> {
@@ -126,11 +124,11 @@ public class PlanFragment extends Fragment {
             {
                 if(list.size()>0){
 
-                    if(model.UserRule.getValue()){
-                        flagwidget.setVisibility(View.GONE);
-                    }else{
-                        flagwidget.setVisibility(View.VISIBLE);
-                    }
+//                    if(model.UserRule.getValue()){
+//                        flagwidget.setVisibility(View.GONE);
+//                    }else{
+//                        flagwidget.setVisibility(View.VISIBLE);
+//                    }
 
                     myadapter = new PlanAdapter(listener, (ArrayList<Plan>) list, getContext(),model.UserRule.getValue());
                     rv.setAdapter(myadapter);

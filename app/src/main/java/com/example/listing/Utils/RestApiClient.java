@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.net.CookieManager;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +19,7 @@ import okhttp3.CookieJar;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
+import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -61,22 +63,23 @@ public class RestApiClient {
 
     static OkHttpClient headersInterceptors(Application application) {
 
-           String[] newDesc1=credns.get(0).split("=");
-          String[] test=newDesc1[1].split(";path");
+     //   String[] newDesc1=credns.get(0).split("=");
+    //    String[] test=newDesc1[1].split(";path");
 
         return new OkHttpClient.Builder()
                 .addInterceptor(new BasicAuth(application))
-            //    .cookieJar(new JavaNetCookieJar(new CookieManager()))
-                .cookieJar(new CookieJar() {
-                    @Override
-                    public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-                    }
-
-                    @Override
-                    public List<Cookie> loadForRequest(HttpUrl url) {
-                       return Arrays.asList(createNonPersistentCookie(test[0]));
-                    }
-                }).connectTimeout(900, TimeUnit.SECONDS)
+                   .cookieJar(new JavaNetCookieJar(new CookieManager()))
+//                .cookieJar(new CookieJar() {
+//                    @Override
+//                    public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+//                    }
+//
+//                    @Override
+//                    public List<Cookie> loadForRequest(HttpUrl url) {
+//                        return Arrays.asList(createNonPersistentCookie(test[0]));
+//                    }
+//                })
+                .connectTimeout(900, TimeUnit.SECONDS)
                 .addInterceptor(new ReceivedCookiesInterceptor(application))
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
@@ -137,6 +140,7 @@ public class RestApiClient {
             Headers headers = chain.request().headers().newBuilder()
                     .add("Content-Type", application.getResources().getString(R.string.Content_Type))
                     .add("Accept", application.getResources().getString(R.string.accept))
+                    .add("Authorization",kkey)
                     .add("sap-client", application.getResources().getString(R.string.sapclient_25))
                     .add("User-Agent", application.getResources().getString(R.string.user_agent)).build();
 

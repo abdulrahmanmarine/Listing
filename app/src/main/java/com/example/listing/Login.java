@@ -21,6 +21,7 @@ import com.example.listing.Utils.Loginsession;
 import com.example.listing.ViewModelsFactory.LoginView_ModelFactory;
 import com.example.listing.databinding.ActivityLoginBinding;
 import com.example.listing.models.User;
+import com.example.listing.notes.pictureMode;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Login extends AppCompatActivity {
@@ -54,8 +55,13 @@ public class Login extends AppCompatActivity {
         myProgress.setCancelable(true);
         myProgress.setIndeterminate(true);
 
-        binding.logInBtn.setOnClickListener(v -> login());
 
+        binding.logInBtn.setOnClickListener(view1 -> {
+
+            model = new ViewModelProvider(this, new LoginView_ModelFactory(Login.this.getApplication())).get(LoginView_Model.class);
+            login();
+
+        });
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -129,10 +135,8 @@ public class Login extends AppCompatActivity {
         User user = new User(binding.username.getText().toString(), binding.password.getText().toString());
         if (binding.username.getText().toString().isEmpty() || binding.password.getText().toString().isEmpty()) {
 
-
             Error_Msg.setText(getResources().getString(R.string.Login_Empty_Error_msg));
             Error_Msg.setVisibility(View.VISIBLE);
-
         } else {
             myProgress.show();
             Error_Msg.setVisibility(View.GONE);
@@ -149,6 +153,7 @@ public class Login extends AppCompatActivity {
                         Error_Msg.setVisibility(View.VISIBLE);
                     }
                 }
+
 
             });
         }
