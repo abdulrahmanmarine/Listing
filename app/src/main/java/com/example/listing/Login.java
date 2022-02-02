@@ -125,9 +125,6 @@ public class Login extends AppCompatActivity {
     public void login() {
         Error_Msg.setVisibility(View.INVISIBLE);
         saveMode("online");
-        binding.username.setText("T_CBAD_PPLN");
-        binding.password.setText("Welcome.3");
-        binding.password.setText("aramco.1");
 
         User user = new User(binding.username.getText().toString(), binding.password.getText().toString());
         if (binding.username.getText().toString().isEmpty() || binding.password.getText().toString().isEmpty()) {
