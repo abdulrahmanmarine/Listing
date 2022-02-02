@@ -1,23 +1,23 @@
 package com.example.listing.Manual_Assigment;
 
-        import android.content.Context;
-        import android.util.Log;
-        import android.view.LayoutInflater;
-        import android.view.ViewGroup;
-        import android.widget.TextView;
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
-        import androidx.annotation.NonNull;
-        import androidx.databinding.DataBindingUtil;
-        import androidx.recyclerview.widget.LinearLayoutManager;
-        import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-        import com.example.listing.AssignDialog_Configured.ConfiguredLoaderListAdapter;
-        import com.example.listing.R;
-        import com.example.listing.databinding.ChosenVehicleCardItemBinding;
-        import com.example.listing.databinding.ChosenVehicleCardItemVertBinding;
-        import com.example.listing.models.Vehicle;
+import com.example.listing.AssignDialog_Configured.ConfiguredLoaderListAdapter;
+import com.example.listing.R;
+import com.example.listing.databinding.ChosenVehicleCardItemBinding;
+import com.example.listing.databinding.ChosenVehicleCardItemVertBinding;
+import com.example.listing.models.Vehicle;
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class ChosenVehicleCardAdapter extends RecyclerView.Adapter<ChosenVehicleCardAdapter.ViewHolder>  {
     ArrayList<Vehicle> Vehicle;

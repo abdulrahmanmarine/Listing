@@ -3,7 +3,6 @@ package com.example.listing.Kotlin
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
@@ -15,8 +14,6 @@ import com.example.listing.Material.Dispatcher.DispatcherFragment
 import com.example.listing.Plan.PlanFragment
 import com.example.listing.PlanClickListener
 import com.example.listing.R
-import com.example.listing.Utils.DataClass
-import com.example.listing.Utils.Loginsession
 import com.example.listing.ViewModelsFactory.PlansDataModelFactory
 import com.example.listing.models.Material
 import com.example.listing.models.Plan
@@ -120,7 +117,6 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         (dialog as Configured_AssignMultiDialogFragment?)!!.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
         (dialogManual as Manual_AssignMultiDialogFragment?)!!.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog)
 
-        flag=DataClass.getInstance().flag_dispatch
         if(flag){
            (dialog as Configured_AssignMultiDialogFragment?)!!.show(fra, "assign")
         }else{

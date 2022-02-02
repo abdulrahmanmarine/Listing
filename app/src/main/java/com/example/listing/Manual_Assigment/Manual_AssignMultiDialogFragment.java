@@ -19,39 +19,33 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-//import com.example.listing.Kotlin.pictureMode;
-import com.example.listing.AddButtonClicked;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.DriverDeleteButtonClicked;
-import com.example.listing.Kotlin.Dispatcher;
-import com.example.listing.Kotlin.Loader;
 import com.example.listing.Plan.PlanFragment;
 import com.example.listing.R;
 import com.example.listing.models.Driver;
-
 import com.example.listing.models.Material;
 import com.example.listing.models.MatrialDispatching;
 import com.example.listing.models.Plan;
 import com.example.listing.models.VehAssign;
 import com.example.listing.models.Vehicle;
-import com.google.android.gms.common.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+
+//import com.example.listing.Kotlin.pictureMode;
 
 public class Manual_AssignMultiDialogFragment extends DialogFragment
         implements DriverDeleteButtonClicked, DriverSelected, AdapterView.OnItemSelectedListener, VehicleSelected {
 
-    private static int Mpostion, counter;
+    private static int Mpostion;
 
     private static final String MATERIAL_2 = "materialParam";
 
@@ -132,6 +126,10 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         RecyclerView Choosenpair = view.findViewById(R.id.vehicle_chosen_list);
         //done button
         Button doneBut = view.findViewById(R.id.done_btn);
+
+        //Close Button
+        ImageView closeBut = view.findViewById(R.id.but_close);
+
         //search edit text for loader
         EditText searchLoader = view.findViewById(R.id.search_loader);
         //search edir text for vehicle
@@ -191,11 +189,6 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
                     chosenVehicles.add(chosenVehicle);
                 }
                 for (int j = 0; j < chosenVehicles.size(); j++) {
-                    counter = 0;
-                    found = false;
-
-
-                    //working fine
 
                     if (chosenVehicle.getVehType().equals(chosenVehicles.get(j).getVehType())) {
                         for (int c = 0; c < chosenVehicle.getLoaders().size(); c++) {
@@ -273,6 +266,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
             dismiss();
         });
 
+        closeBut.setOnClickListener(v -> dismiss());
 
     }
 
@@ -344,5 +338,8 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
         return newList;
     }
+
+
+
 
 }

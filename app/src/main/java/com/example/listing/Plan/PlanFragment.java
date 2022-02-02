@@ -2,13 +2,6 @@ package com.example.listing.Plan;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -16,19 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
-import com.example.listing.DataViewModel.Flag;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.PlanClickListener;
 import com.example.listing.R;
-import com.example.listing.Utils.DataClass;
-import com.example.listing.models.Material;
 import com.example.listing.models.Plan;
 
 import java.util.ArrayList;
@@ -146,22 +139,22 @@ public class PlanFragment extends Fragment {
                     type.add("Manual");
                     type.add("Configured");
 
-                    ArrayAdapter<String> adapter=new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,type);
-                    button.setAdapter(adapter);
-                    button.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if(parent.getItemAtPosition(position).toString().equalsIgnoreCase("Manual"))
-                                DataClass.getInstance().setFlag_dispatch(false);
-                            else
-                                DataClass.getInstance().setFlag_dispatch(true);
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });
+//                    ArrayAdapter<String> adapter=new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,type);
+//                    button.setAdapter(adapter);
+//                    button.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                        @Override
+//                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                            if(parent.getItemAtPosition(position).toString().equalsIgnoreCase("Manual"))
+//                                DataClass.getInstance().setFlag_dispatch(false);
+//                            else
+//                                DataClass.getInstance().setFlag_dispatch(true);
+//                        }
+//
+//                        @Override
+//                        public void onNothingSelected(AdapterView<?> parent) {
+//
+//                        }
+//                    });
 
                 }else {
 

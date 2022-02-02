@@ -3,7 +3,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.widget.*
+import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import com.example.listing.R
 

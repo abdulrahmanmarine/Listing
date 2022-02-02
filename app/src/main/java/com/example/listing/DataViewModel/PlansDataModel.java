@@ -5,16 +5,12 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.listing.Plan.PlanFragment;
 import com.example.listing.R;
 import com.example.listing.Utils.AppExecutors;
-
 import com.example.listing.Utils.Loginsession;
 import com.example.listing.Utils.OfflineDatabaseClient;
 import com.example.listing.Utils.RestApiClient;
@@ -29,7 +25,6 @@ import com.example.listing.models.Material;
 import com.example.listing.models.MatrialDispatching;
 import com.example.listing.models.Plan;
 import com.example.listing.models.PlanUnpack;
-import com.example.listing.models.User;
 import com.example.listing.models.VechAssignLoader;
 import com.example.listing.models.VehAssign;
 import com.example.listing.models.Vehicle;
@@ -59,7 +54,6 @@ public class PlansDataModel extends ViewModel {
     public  MutableLiveData<List<Driver>> MasterdriversList = new MutableLiveData<>();
     public MutableLiveData<List<Vehicle>> MastervehiclesList = new MutableLiveData<>();
     public MutableLiveData<List<imagenode>> MatrialImageList = new MutableLiveData<>();
-
     public MutableLiveData<Boolean> flag = new MutableLiveData<>(true);
     public MutableLiveData<Boolean> getplan = new MutableLiveData<>(true);
     Application application;
@@ -77,7 +71,6 @@ public class PlansDataModel extends ViewModel {
         preferences = application.getSharedPreferences(application.getResources().getString(R.string.SharedPrefName), Activity.MODE_PRIVATE);
         Mode = preferences.getString(application.getResources().getString(R.string.UserMode), "");
         db = OfflineDatabaseClient.getInstance(application.getApplicationContext());
-       // postDriver();
 
     }
 
@@ -90,12 +83,10 @@ public class PlansDataModel extends ViewModel {
 
 
             db.planitem().GetItemAll(Loginsession.getInstance().getUser().getUserId().toUpperCase()).observe(owner,itemlist->{
-                Log.i("test plans:",itemlist.size()+"");
 
                 for(int i=0 ;i<itemlist.size();i++){
                     Plan plan=itemlist.get(i);
                     db.Matrial().GetItemAll(String.valueOf(plan.getPlanId())).observe(owner, matriallist->{
-                        Log.i("test matrial:",matriallist.size()+"");
 
                         for(int j=0 ;j<matriallist.size();j++) {
                             Material material=matriallist.get(j);
@@ -208,9 +199,6 @@ public class PlansDataModel extends ViewModel {
         }
 
         else {
-
-     //     Plans.setValue(DataClass.getInstance().getPlans());
-
 
             retrofitInterface.getPlansDispatcher("Fetch").enqueue(new Callback<PlanUnpack>() {
                 @Override
@@ -557,7 +545,7 @@ public class PlansDataModel extends ViewModel {
                             List<Material> Matxx;
 
                             if(vehAssignObj.getZuphrMblpo().equals(loopMaterial.getZuphrMblpo())
-                                    && vehAssignObj.getZuphrDriverid().equalsIgnoreCase("ABDK01")) //matching vehassign material id with material material id
+                                    && vehAssignObj.getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)) //matching vehassign material id with material material id
                             {
 
                                 if(!vehAssignObj.getZuphrLoad().toLowerCase().contains("x")&&flaglooded){

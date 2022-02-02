@@ -2,19 +2,10 @@ package com.example.listing.Material.Loader;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,23 +20,26 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.listing.CameraButtonClicked;
 import com.example.listing.DataViewModel.PlansDataModel;
 import com.example.listing.FoundButtonClicked;
 import com.example.listing.LoadButtonClicked;
-
 import com.example.listing.Material.MaterialAdapter;
 import com.example.listing.NoteButtonClicked;
-import com.example.listing.Plan.PlanFragment;
 import com.example.listing.PrcButtonClicked;
 import com.example.listing.R;
 import com.example.listing.UnloadButtonClicked;
-import com.example.listing.Utils.Loginsession;
 import com.example.listing.models.Material;
 import com.example.listing.models.MatrialDispatching;
 import com.example.listing.models.Plan;
 import com.example.listing.models.VechAssignLoader;
-import com.example.listing.models.VehAssign;
 import com.example.listing.notes.RedesignedNotesFragment;
 import com.fasterxml.jackson.core.Base64Variants;
 
@@ -299,10 +293,36 @@ public class LoaderFragment extends Fragment  {
 
                 //Create object and posting
 
+                Boolean flaglooded=true;
                 for (int i = 0; i < Vehassignment.size(); i++) {
                     model.AssignValueLoader(Vehassignment.get(i));
+
+                    if(!Vehassignment.get(i).getZuphrLoad().toLowerCase().contains("x")&&flaglooded){
+                        flaglooded=false;
+                    }
                 }
-                model.plan.getValue().getPlanToItems().set(Mpostion,materialParam);
+
+                Plan plan= model.plan.getValue();
+
+                materialParam.setComplete(flaglooded);
+
+
+                plan.getPlanToItems().set(Mpostion,materialParam);
+
+                List<Plan> planslist=model.Plans.getValue();
+
+                model.plan.setValue(plan);
+                for (int i = 0; i < planslist.size(); i++) {
+                   if(planslist.get(i).getZuphrLpid().equalsIgnoreCase(plan.getZuphrLpid())){
+                       planslist.set(i,model.plan.getValue());
+                   }
+                }
+
+               model.Plans.setValue(planslist);
+
+
+
+
             }
             else
                 Toast.makeText(getContext(), "Not assigend for you", Toast.LENGTH_SHORT).show();
@@ -314,13 +334,6 @@ public class LoaderFragment extends Fragment  {
     }
 
 
-
-
-    public void notifDataAddChanged() {
-        FragmentManager fm = getFragmentManager();
-        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.constraintLayout4);
-        fragm.dataChanged();
-    }
 
 
 
