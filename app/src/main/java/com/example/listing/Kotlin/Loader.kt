@@ -79,7 +79,8 @@ class Loader : AppCompatActivity(), PlanClickListener {
 
     override fun onItemClick(plan: Plan?, pos: Int) {
 
-        model.getLoaderMtr(plan?.ZuphrLpid)
+        model.PostOfflineContent(plan?.ZuphrLpid,this)
+        model.getLoaderMtr(plan?.ZuphrLpid,  this)
 
         model.plan.value = plan
         LoaderFragmentInteraction(plan!!, pos)

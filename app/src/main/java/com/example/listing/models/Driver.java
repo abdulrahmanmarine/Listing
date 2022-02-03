@@ -28,28 +28,35 @@ public class Driver implements Serializable, Comparable<Driver>{
 
 
     @JsonProperty("ZuphrDriverid")
+    @ColumnInfo(name = "ZuphrDriverid")
     String ZuphrDriverid;
 
     @JsonProperty("ZuphrDrvrName")
+    @ColumnInfo(name = "ZuphrDrvrName")
     String ZuphrdrvrName;
 
 
     @JsonProperty("ZuphrSpecial")
+    @ColumnInfo(name = "ZuphrSpecial")
     String ZuphrSpecial;
 
 
     @JsonProperty("ZuphrLicNo")
+    @ColumnInfo(name = "ZuphrLicNo")
     String ZuphrLicNo;
 
     @JsonProperty("ZuphrNation")
+    @ColumnInfo(name = "ZuphrNation")
     String ZuphrNation;
 
 
     @JsonProperty("Phonenumber")
+    @ColumnInfo(name = "Phonenumber")
     String Phonenumber;
 
 
     @JsonProperty("ZuphrEmail")
+    @ColumnInfo(name = "ZuphrEmail")
     String ZuphrEmail;
 
     @Expose(serialize = false,deserialize = false)

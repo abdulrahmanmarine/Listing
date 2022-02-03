@@ -3,6 +3,7 @@ package com.example.listing.models;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -105,6 +106,10 @@ public class VehAssign implements Serializable {
     @JsonProperty("ZuphrProc")
     @ColumnInfo(name = "ZuphrProc")
     String ZuphrProc;
+
+    @JsonIgnore
+    @ColumnInfo(name = "AddToDB")
+    public boolean addtoDB=false;
 
     public VehAssign( String zuphrLpid, String zuphrMjahr, String zuphrMblpo, String zuphrStgid,
                      String zuphrMatnr, String zuphrReqid, String zuphrReqitm, String zuphrShortxt,
@@ -276,6 +281,17 @@ public class VehAssign implements Serializable {
 
     public void setZuphrProc(String zuphrDone) {
         ZuphrProc = zuphrDone;
+    }
+
+    @JsonIgnore
+    @Ignore
+    public boolean isAddedtoDB() {
+        return addtoDB;
+    }
+    @JsonIgnore
+    @Ignore
+    public void AddtoDB(boolean addtoDB) {
+        addtoDB = addtoDB;
     }
 }
 

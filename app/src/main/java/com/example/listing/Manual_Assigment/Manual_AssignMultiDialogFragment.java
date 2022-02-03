@@ -139,7 +139,6 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         imageView = view.findViewById(R.id.material_image);
 
 
-        model.getVechiles();
 
         materialParam = model.MatrialsList.getValue().get(Mpostion);
 
@@ -261,8 +260,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
             }
 
             MatrialDispatch = new MatrialDispatching(plan.getZuphrLpid(), "", Vehassignment);
-            model.AssignValue(MatrialDispatch);
-
+            model.AssignValue(MatrialDispatch,this);
             dismiss();
         });
 

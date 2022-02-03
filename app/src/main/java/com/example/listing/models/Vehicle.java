@@ -33,42 +33,46 @@ public class Vehicle implements Serializable, Comparable<Vehicle>{
     @JsonIgnore
     public int VehicleId;
 
-    @Expose(serialize = false,deserialize = false)
-    @ColumnInfo(name = "MaterialOfflineID")
-    @JsonIgnore
-    public  String MaterialOfflineID;
-
 
     @JsonProperty("VehId")
+    @ColumnInfo(name = "VehId")
     String Vehid;
 
     @JsonProperty("Category")
+    @ColumnInfo(name = "Category")
     String Category;
 
 
     @JsonProperty("VehType")
+    @ColumnInfo(name = "VehType")
     String VehType;
 
 
     @JsonProperty("Identifier")
+    @ColumnInfo(name = "Identifier")
     String Identifier;
 
     @JsonProperty("MaxWeight")
+    @ColumnInfo(name = "MaxWeight")
     String MaxWeight;
 
 
     @JsonProperty("Color")
+    @ColumnInfo(name = "Color")
     String Color;
 
 
     @JsonProperty("Model")
+    @ColumnInfo(name = "Model")
     String Model;
 
     @JsonProperty("MfgYear")
+    @ColumnInfo(name = "MfgYear")
     String MfgYear;
 
 
     @JsonProperty("PlateNo")
+    @ColumnInfo(name = "PlateNo")
     String PlateNo;
 
     @Ignore

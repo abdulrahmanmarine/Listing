@@ -23,8 +23,9 @@ public interface Offline_Plan {
     @Update
     void updateplan(com.example.listing.models.Plan plan);
 
-    @Delete
-    void deleteplan(com.example.listing.models.Plan plan);
+
+    @Query("DELETE FROM PlanTable WHERE  ZuphrFpName=:userid ")
+    void deleteplan(String userid);
 
     @Query("DELETE FROM PlanTable")
     void nukeTable();

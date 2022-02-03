@@ -60,5 +60,8 @@
     <string name="destination">Destination: </string>
     <string name="vessel">Vessel: </string>
     <string name="LoadingData">Loading Plans</string>
+    <string name="offine_window_title">Offline Assigment items</string>
+    <string name="Offline_items_DispatchAll">Dispatch All Assigment</string>
+    <string name="Lpid">Plan ID</string>
 
 </resources>

@@ -242,10 +242,6 @@ public class Plan implements Serializable {
     public String ZuphrStatus;
 
 
-
-
-
-
     @JsonProperty("ZuphrVesselName")
     @ColumnInfo(name="ZuphrVesselName")
     public String ZuphrVesselName;

@@ -3,6 +3,7 @@ package com.example.listing.models;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -37,19 +38,21 @@ public class MatrialDispatching implements Serializable {
 
     @JsonProperty("Zuphr")
     @ColumnInfo(name = "Zuphr")
-    String Zuphr;
+    String Zuphr="";
 
 
     @JsonProperty(value = "NavLpToVehAssign",access = JsonProperty.Access.READ_ONLY)
+    @Ignore
     List<VehAssign> Vehassignment;
 
     @JsonProperty(value = "NavLpToVehAssign",access = JsonProperty.Access.WRITE_ONLY)
+    @Ignore
     public void unpackVehAssign(Map<String ,List<VehAssign>> d) {
         Vehassignment=d.get("results");
     }
 
     @JsonProperty(value = "NavLpToReturn", access = JsonProperty.Access.READ_ONLY)
-    @ColumnInfo(name = "NavLpToReturn")
+    @Ignore
     List<String> NavLpToReturn=new ArrayList<>();
 
 

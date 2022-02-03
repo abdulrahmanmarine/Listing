@@ -26,8 +26,9 @@ public interface Offline_Matrial {
     @Update
     void UpdateImageMatrial(Material material);
 
-    @Delete
-    void DeleteMatrial(Material material);
+
+    @Query("DELETE FROM MaterialTable WHERE  ZuphrFpName=:FNAME ")
+    void Delete(String FNAME);
 
     @Query("DELETE FROM MaterialTable")
     void nukeTable();

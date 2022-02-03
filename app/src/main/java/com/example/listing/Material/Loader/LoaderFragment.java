@@ -295,7 +295,7 @@ public class LoaderFragment extends Fragment  {
 
                 Boolean flaglooded=true;
                 for (int i = 0; i < Vehassignment.size(); i++) {
-                    model.AssignValueLoader(Vehassignment.get(i));
+                    model.AssignValueLoader(Vehassignment.get(i),this);
 
                     if(!Vehassignment.get(i).getZuphrLoad().toLowerCase().contains("x")&&flaglooded){
                         flaglooded=false;

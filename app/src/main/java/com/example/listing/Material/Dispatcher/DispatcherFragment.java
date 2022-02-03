@@ -1,19 +1,27 @@
 package com.example.listing.Material.Dispatcher;
 
+import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.Fade;
 import android.transition.TransitionManager;
+import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -30,9 +38,11 @@ import com.example.listing.Kotlin.Dispatcher;
 import com.example.listing.Plan.PlanFragment;
 import com.example.listing.R;
 import com.example.listing.models.Material;
+import com.example.listing.models.VehAssign;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
@@ -174,8 +184,8 @@ public class DispatcherFragment extends Fragment {
        // model.postVehicle();
        // model.postDevice();
 
-        model.getdrivers();
-        model.getVechiles();
+        model.getdrivers(this);
+        model.getVechiles(this);
        // model.getDevice();
 
 
@@ -266,6 +276,7 @@ public class DispatcherFragment extends Fragment {
         PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.constraintLayout4);
         fragm.dataChanged();
     }
+
 
 
 

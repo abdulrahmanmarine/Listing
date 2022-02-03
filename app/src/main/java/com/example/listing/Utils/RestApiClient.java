@@ -23,6 +23,7 @@ import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okio.Buffer;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -163,9 +164,15 @@ public class RestApiClient {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Response originalResponse = chain.proceed(chain.request());
-            Log.i("Login url-API:", originalResponse.request().url().toString());
-            Log.i("Login header-request-API:", originalResponse.request().headers().toString());
-            Log.i("Login header-response-API:", originalResponse.headers().toString());
+            Log.i("url call",originalResponse.request().url()+"");
+
+            final Request copy = chain.request().newBuilder().build();
+            final Buffer buffer = new Buffer();
+
+            if(copy.body()!=null) {
+                copy.body().writeTo(buffer);
+                Log.i("url body", buffer.readUtf8() + "");
+            }
 
 
             return originalResponse;
