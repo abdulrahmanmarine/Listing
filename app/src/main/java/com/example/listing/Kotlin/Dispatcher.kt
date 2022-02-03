@@ -20,7 +20,7 @@ import com.example.listing.DataViewModel.PlansDataModel
 import com.example.listing.Login
 import com.example.listing.Manual_Assigment.Manual_AssignMultiDialogFragment
 import com.example.listing.Material.Dispatcher.DispatcherFragment
-import com.example.listing.Offline_items_Adapter.Offline_items_adapter
+import com.example.listing.Offline_Items_adapter
 import com.example.listing.Plan.PlanFragment
 import com.example.listing.PlanClickListener
 import com.example.listing.R
@@ -157,14 +157,11 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         val view = inflater.inflate(R.layout.offline_items_vehassign_view, main_layout, false)
         val Stageall = view.findViewById<Button>(R.id.DispatchAll)
        val recyclerView: RecyclerView = view.findViewById(R.id.items_list)
-        val items_adapter = Offline_items_adapter(offlineitems, this)
-        recyclerView.adapter = items_adapter
+     //   val items_adapter = Offline_Items_adapter(offlineitems, this)
+      //  recyclerView.adapter = items_adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
-        Stageall.setOnClickListener { v: View? -> Stagingmodel.StageAll(
-            Objects.requireNonNull(m.offlineitems.getValue()),
-            this
-        )
-        }
+
+
         val popupWindow: PopupWindow
         val display = windowManager.defaultDisplay
         val size = Point()
