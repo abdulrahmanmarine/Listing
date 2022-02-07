@@ -9,6 +9,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.listing.Kotlin.Loader;
 import com.example.listing.R;
 import com.example.listing.Utils.AppExecutors;
 import com.example.listing.Utils.Loginsession;
@@ -31,7 +32,8 @@ import com.example.listing.models.Vehicle;
 import com.example.listing.models.VehicleUnpack;
 import com.example.listing.models.imagenode;
 
-import org.json.JSONException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,6 +56,12 @@ public class PlansDataModel extends ViewModel {
     public  MutableLiveData<List<Driver>> MasterdriversList = new MutableLiveData<>();
     public MutableLiveData<List<Vehicle>> MastervehiclesList = new MutableLiveData<>();
     public MutableLiveData<List<imagenode>> MatrialImageList = new MutableLiveData<>();
+
+
+    public MutableLiveData<List<VehAssign>> VechAssignDispatchList = new MutableLiveData<>();
+    public MutableLiveData<List<VechAssignLoader>> VechAssignLoaderList = new MutableLiveData<>();
+
+
     public MutableLiveData<Boolean> flag = new MutableLiveData<>(true);
     Application application;
 
@@ -382,11 +390,11 @@ public class PlansDataModel extends ViewModel {
     }
 
     public void getDispatchMtr(String Lpid ,LifecycleOwner owner){
+        Log.i("valueassign-lp", String.valueOf(Lpid));
 
         if (Mode.equals("offline")) {
 
             db.Assignment().GetItemAll(Lpid).observe(owner,itemlist->{
-
                 MatchingVechAssgin(itemlist,false);
                 Log.i("valueassign-off", String.valueOf(itemlist.size()));
 
@@ -446,11 +454,12 @@ public class PlansDataModel extends ViewModel {
         if(flagonline){
                 AppExecutors.getInstance().diskIO().execute(() -> {
                     if(vehAssigns.size()>0)
-                        db.Assignment().Delete(vehAssigns.get(0).getZuphrLpid());
+                        db.Assignment().DeleteByPlanID(vehAssigns.get(0).getZuphrLpid());
                     Log.i("value size",vehAssigns.size()+"");
                     for(int i=0 ;i<vehAssigns.size();i++){
                         VehAssign vechAssign=vehAssigns.get(i);
-                        String id = String.valueOf(db.Assignment().insertAssginment(vehAssigns.get(i)));
+                        vechAssign.AddtoDB(true);
+                        String id = String.valueOf(db.Assignment().insertAssginment(vechAssign));
 
                     }
                 });
@@ -531,7 +540,7 @@ public class PlansDataModel extends ViewModel {
                     //plans.set(pos,planx);
                     Plans.postValue(plans);
 
-                    plan.setValue(planx);
+                    plan.postValue(planx);
 
                 }
 
@@ -546,14 +555,12 @@ public class PlansDataModel extends ViewModel {
     public void getLoaderMtr(String Lpid,LifecycleOwner owner){
 
         if (Mode.equals("offline")) {
-            db.Assignment().GetItemAll(Lpid).observe(owner,itemlist->{
-                MatchingVechAssginLoader(itemlist,true);
+            db.Load().GetItemAll(Lpid).observe(owner,itemlist->{
+                MatchingVechAssginLoader(itemlist,false);
                 Log.i("valueassignLoader-off", String.valueOf(itemlist.size()));
             });
-
         }
         else {
-
             retrofitInterface.getDispatch("LpHdrSet('"+Lpid+"')?$expand=NavLpToVehAssign").enqueue(new Callback<AssignmentUnpack>() {
                 @Override
                 public void onResponse(Call<AssignmentUnpack> call, Response<AssignmentUnpack> response) {
@@ -567,8 +574,26 @@ public class PlansDataModel extends ViewModel {
 
                     }
                     if(response.isSuccessful()){
+                        List<VechAssignLoader> loaders=new ArrayList<>();
+                        Log.i("get loader assigment response",response.body().getAssignment().getVehassign().size()+"");
 
-                MatchingVechAssginLoader(response.body().getAssignment().getVehassign(),true);
+                        for(int i=0 ;i<response.body().getAssignment().getVehassign().size();i++){
+
+                            VechAssignLoader vechAssignLoader=new VechAssignLoader(
+                                    response.body().getAssignment().getVehassign().get(i).getZuphrLpid(),
+                                    response.body().getAssignment().getVehassign().get(i).getZuphrMjahr(),
+                                    response.body().getAssignment().getVehassign().get(i).getZuphrMblpo(),
+                                    response.body().getAssignment().getVehassign().get(i).getZuphrDriverid(),
+                                    response.body().getAssignment().getVehassign().get(i).getZuphrVehid(),
+                                    response.body().getAssignment().getVehassign().get(i).getZuphrLoad(),
+                                    response.body().getAssignment().getVehassign().get(i).getZuphrUload(),
+                                    response.body().getAssignment().getVehassign().get(i).getZuphrNfound(),
+                                    response.body().getAssignment().getVehassign().get(i).getZuphrProc());
+                            vechAssignLoader.AddtoDB(true);
+                           loaders.add(vechAssignLoader);
+
+                        }
+                MatchingVechAssginLoader(loaders,true);
                     }
 
 
@@ -590,26 +615,24 @@ public class PlansDataModel extends ViewModel {
 
     }
 
-    private void MatchingVechAssginLoader(List<VehAssign> vehAssigns, Boolean flag) {
-
-        if(flag){
-            AppExecutors.getInstance().diskIO().execute(() -> {
-                db.Assignment().nukeTable();
-                for(int i=0 ;i<vehAssigns.size();i++){
-                    String id = String.valueOf(db.Assignment().insertAssginment(vehAssigns.get(i)));
-                    Log.i("valueassignLoader",id);
-                }
-            });
-        }
-
+    private void MatchingVechAssginLoader(List<VechAssignLoader> vehAssigns, Boolean flag) {
 
         List<Material> materials=plan.getValue().getPlanToItems();
 
         Boolean flaglooded=true;
 
+        if(flag){
+            AppExecutors.getInstance().diskIO().execute(() -> {
+              db.Load().DeleteByPlanID(vehAssigns.get(vehAssigns.size()-1).getZuphrLpid());
+            });
+
+
+        }
         for(int i=0 ; i<vehAssigns.size();i++){ // for vehassigns
 
-            VehAssign vehAssignObj = vehAssigns.get(i);
+            VechAssignLoader vehAssignObj = vehAssigns.get(i);
+
+
             Log.i("get plan vehAssigns :",vehAssignObj.getZuphrMblpo()+"");
             for(int j=0; j<materials.size();j++){ // for materials
                 Material loopMaterial = materials.get(j);
@@ -617,23 +640,29 @@ public class PlansDataModel extends ViewModel {
                 List<Material> Matxx;
 
                 if(vehAssignObj.getZuphrMblpo().equals(loopMaterial.getZuphrMblpo())
-                        && vehAssignObj.getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)) //matching vehassign material id with material material id
+
+                     //   && vehAssignObj.getZuphrDriverid().toUpperCase().equals("ABDK01")
+
+                             //   Loginsession.getInstance().getUser().UserId)
+
+                ) //matching vehassign material id with material material id
                 {
+                    if(flag){
+                        AppExecutors.getInstance().diskIO().execute(() -> {
+                            vehAssignObj.AddtoDB(true);
+                            String id = String.valueOf(db.Load().insertAssginment(vehAssignObj));
+                            Log.i("valueassignLoader",id);
+
+                        });
+                    }
+
 
                     if(!vehAssignObj.getZuphrLoad().toLowerCase().contains("x")&&flaglooded){
                         flaglooded=false;
                     }
                     loopMaterial.setComplete(flaglooded);
 
-                    VechAssignLoader Vehassign = new VechAssignLoader(
-                            vehAssignObj.getZuphrLpid(), vehAssignObj.getZuphrMjahr(),
-                            vehAssignObj.getZuphrMblpo(), vehAssignObj.getZuphrDriverid(),
-                            vehAssignObj.getZuphrVehid(),
-                            vehAssignObj.getZuphrLoad(), vehAssignObj.getZuphrUload(), vehAssignObj.getZuphrNfound(), vehAssignObj.getZuphrProc());
-
-
-
-                    loopMaterial.getVehAssignList().add(Vehassign);
+                    loopMaterial.getVehAssignList().add(vehAssignObj);
 
 
                     plan.getValue().getPlanToItems().set(j, loopMaterial);
@@ -799,23 +828,18 @@ public class PlansDataModel extends ViewModel {
 
         if (Mode.equals("offline")) {
 
-          Log.i("valueassign- newDriver", matrialDispatching.getVehassign().get(matrialDispatching.getVehassign().size()-1).getZuphrDriverName() + "");
 
             AppExecutors.getInstance().diskIO().execute(() -> {
 
+                db.Assignment().DeleteByPlanID(matrialDispatching.getZuphrLpid());
+
                     for(int i=0;i<matrialDispatching.getVehassign().size();i++) {
                         VehAssign assign=    matrialDispatching.getVehassign().get(i) ;
-                        if (matrialDispatching.getVehassign().get(i).isAddedtoDB()) {
-                            db.Assignment().UpdateV(matrialDispatching.getVehassign().get(i));
-                            Log.i("valueassign- updated", matrialDispatching.getVehassign().get(i).getZuphrDriverName() + "");
+                        assign.AddtoDB(false);
+                        Log.i("valueassign- newDriver", matrialDispatching.getVehassign().get(matrialDispatching.getVehassign().size()-1).getZuphrDriverName() + matrialDispatching.getVehassign().size());
 
-                        }
-                        else {
-                            assign.AddtoDB(true);
                         String id = String.valueOf(db.Assignment().insertAssginment(assign));
-                        Log.i("valueassign- added", matrialDispatching.getVehassign().get(i).getZuphrDriverName() + "");
-                    }
-
+                        Log.i("valueassign- added", matrialDispatching.getVehassign().get(i).getZuphrDriverName() +",,"+matrialDispatching.getVehassign().get(i).isAddedtoDB() );
                     }
 
                 });
@@ -823,7 +847,6 @@ public class PlansDataModel extends ViewModel {
 
         }
         else {
-
             retrofitInterface.Dispatch(matrialDispatching, Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
@@ -834,15 +857,20 @@ public class PlansDataModel extends ViewModel {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
                     }
                     if (response.isSuccessful()) {
-
                         try {
                             Log.i("post dispatch response", response.body().string());
 
                             AppExecutors.getInstance().diskIO().execute(() -> {
-                                db.Assignment().Delete(matrialDispatching.getZuphrLpid());
+                                db.Assignment().DeleteByPlanID(matrialDispatching.getZuphrLpid());
+
+                                for(int i=0;i<matrialDispatching.getVehassign().size();i++) {
+                                    VehAssign assign=    matrialDispatching.getVehassign().get(i) ;
+                                    assign.AddtoDB(true);
+                                    matrialDispatching.getVehassign().set(i,assign);
+                                }
+                                MatchingVechAssgin(matrialDispatching.getVehassign(),true);
 
                             });
 
@@ -872,24 +900,20 @@ public class PlansDataModel extends ViewModel {
 
               AppExecutors.getInstance().diskIO().execute(() -> {
                        if(vechAssignLoader.isAddedtoDB()) {
+                           vechAssignLoader.AddtoDB(false);
                            db.Load().UpdateV(vechAssignLoader);
 
                        } else{
                            String id = String.valueOf(db.Load().insertAssginment(vechAssignLoader));
                            Log.i("get driver added", id + "");
-
                        }
 
                    });
-
-
-
-
-
         }
         else {
 
-            retrofitInterface.LoaderStatus("ZuphrLpid='"+vechAssignLoader.getZuphrLpid()+"',ZuphrMjahr='"+vechAssignLoader.getZuphrMjahr()+"',ZuphrMblpo='"+vechAssignLoader.getZuphrMblpo()+"'"
+            retrofitInterface.LoaderStatus(
+                    "ZuphrLpid='"+vechAssignLoader.getZuphrLpid()+"',ZuphrMjahr='"+vechAssignLoader.getZuphrMjahr()+"',ZuphrMblpo='"+vechAssignLoader.getZuphrMblpo()+"'"
                     ,vechAssignLoader,Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
@@ -907,7 +931,7 @@ public class PlansDataModel extends ViewModel {
                         Log.i("post loader  response","done");
 
                         AppExecutors.getInstance().diskIO().execute(() -> {
-                            db.Load().Delete(vechAssignLoader.getZuphrLpid());
+                            db.Load().DeleteByPlanID(vechAssignLoader.getZuphrLpid());
                         });
                     }
 
@@ -985,40 +1009,123 @@ public class PlansDataModel extends ViewModel {
         }
     }
 
-    public void PostOfflineContent(String id,LifecycleOwner owner){
+    public void offlineDispatchItems(LifecycleOwner owner, String lpid) {
+       if(!Mode.equals("offline")) {
+           db.Assignment().GetItemtoPost(lpid, false).observe(owner, items -> {
+               Log.i("valueassign- offline-9", items.size() + "");
 
-        if (!Mode.equals("offline")) {
-            if(UserRule.getValue()){
 
-                Log.i("PostOffline -Plan ", id);
-                db.Assignment().GetItemAll(id).observe(owner,itemlist->{
-                    Log.i("PostOffline - ", String.valueOf(itemlist.size()));
-                    MatrialDispatching matrialDispatching=new MatrialDispatching();
-                    matrialDispatching.setZuphrLpid(id);
-                    matrialDispatching.setVehassign(itemlist);
-                   // if(itemlist.size()>0)
-                    //AssignValue(matrialDispatching,owner);
+               if (items != null) {
+                   if (items.size() > 0 && Loginsession.getInstance().isOfflineflag()) {
+                       Loginsession.getInstance().setOfflineflag(false);
+                       VechAssignDispatchList.postValue(items);
+                       Log.i("valueassign- offline-1", items.get(0).isAddedtoDB() + "");
+                   }
+                   else if (Loginsession.getInstance().isOfflineflag()){
+                       Loginsession.getInstance().setOfflineflag(false);
+                       Log.i("valueassign- offline-2",  "here");
+                       getDispatchMtr(lpid, owner);
+                   }
+               }
+           });
 
-                });
 
-            }
-            else {
-                db.Load().GetItemAll(id).observe(owner,itemlist->{
+       }
+       else {
+           Loginsession.getInstance().setOfflineflag(false);
+           Log.i("valueassign- offline-3",  "here");
+           getDispatchMtr(lpid, owner);
+       }
 
-                    Log.i("PostOffline-before", String.valueOf(itemlist.size()));
-                    for(int x=0;x<itemlist.size();x++){
-                        AssignValueLoader(itemlist.get(x),owner);
+    }
+
+    public void offlineLoaderItems(LifecycleOwner owner, String lpid) {
+
+        if(!Mode.equals("offline")) {
+            db.Load().GetItemtoPost(lpid, false).observe(owner, items -> {
+                Log.i("valueassign- offline-9", items.size() + "");
+
+
+                if (items != null) {
+                    if (items.size() > 0 && Loginsession.getInstance().isOfflineflag()) {
+                        Loginsession.getInstance().setOfflineflag(false);
+                        VechAssignLoaderList.postValue(items);
+                        Log.i("valueassign- offline-1", items.get(0).isAddedtoDB() + "");
                     }
+                    else if (Loginsession.getInstance().isOfflineflag()){
+                        Loginsession.getInstance().setOfflineflag(false);
+                        Log.i("valueassign- offline-2",  "here");
+                        getLoaderMtr(lpid, owner);
+                    }
+                }
+            });
 
-
-                });
-            }
+        }
+        else {
+            Loginsession.getInstance().setOfflineflag(false);
+            Log.i("valueassign- offline-3",  "here");
+            getLoaderMtr(lpid, owner);
         }
 
+    }
+
+
+    public void PostOfflineDispatchContent( List<VehAssign> vehAssigns,LifecycleOwner owner){
+
+        String id =plan.getValue().ZuphrLpid;
+
+                    Log.i("PostOffline - ", String.valueOf(vehAssigns.size()));
+                    MatrialDispatching matrialDispatching=new MatrialDispatching();
+                    matrialDispatching.setZuphrLpid(id);
+                    matrialDispatching.setVehassign(vehAssigns);
+
+        AppExecutors.getInstance().diskIO().execute(() -> {
+            db.Assignment().DeleteByPlanID(id);
+        });
+          Loginsession.getInstance().setOfflineflag(false);
+                    if(vehAssigns.size()>0)
+                    AssignValue(matrialDispatching,owner);
 
 
 
     }
+
+    public void PostOfflineLoaderContent( List<VechAssignLoader> vechAssignLoader,LifecycleOwner owner){
+
+        String id =plan.getValue().ZuphrLpid;
+
+        AppExecutors.getInstance().diskIO().execute(() -> {
+            db.Load().DeleteByPlanID(id);
+        });
+        Loginsession.getInstance().setOfflineflag(false);
+        if(vechAssignLoader.size()>0)
+
+           for(int i=0;i<vechAssignLoader.size();i++){
+
+               AssignValueLoader(vechAssignLoader.get(i),owner);
+
+           }
+
+
+
     }
+
+
+    public void deleteDispatchObject(VehAssign vehAssign){
+
+            AppExecutors.getInstance().diskIO().execute(() -> {
+                 db.Assignment().DeleteByObj(vehAssign);
+            });
+
+    }
+
+    public void deleteLoaderObject(@Nullable VechAssignLoader vechAssignLoader) {
+        AppExecutors.getInstance().diskIO().execute(() -> {
+            db.Load().DeleteByObj(vechAssignLoader);
+        });
+    }
+
+
+}
 
 

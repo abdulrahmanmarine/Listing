@@ -23,10 +23,11 @@ android:orientation="vertical">
         android:textSize="28sp" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/closeBtn"
         android:layout_width="40dp"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/wifi_off" />
+        android:background="@android:drawable/ic_menu_close_clear_cancel"
+        />
 </LinearLayout>
 
 <androidx.recyclerview.widget.RecyclerView
@@ -34,15 +35,36 @@ android:orientation="vertical">
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_margin="10dp"
+    android:padding="10dp"
     android:layout_weight="1"
     android:background="@drawable/border" />
 
-<Button
-    android:id="@+id/DispatchAll"
+<LinearLayout
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
+    android:orientation="horizontal"
+    android:weightSum="2"
+    >
+<Button
+    android:id="@+id/DispatchAll"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:layout_margin="10dp"
+    android:backgroundTint="@color/SA_Light_Green"
     android:text="@string/Offline_items_DispatchAll" />
 
+
+    <Button
+        android:id="@+id/ClearAll"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/lightRed"
+        android:text="@string/Offline_items_ClearAll" />
+</LinearLayout>
 
 </LinearLayout>

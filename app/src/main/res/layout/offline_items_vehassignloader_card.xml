@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
 
         <variable
-            name="VechAssignObject"
-            type="com.example.listing.models.VehAssign" />
+            name="matrialNumber"
+            type="String" />
+
+        <variable
+            name="status"
+            type="String" />
 
     </data>
 
@@ -54,7 +59,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="25dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="2"
                     android:orientation="vertical"
@@ -84,7 +89,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@{VechAssignObject.zuphrMblpo}"
+                            android:text="@{matrialNumber}"
                             android:textColor="@color/SA_Dark_Green"
                             android:textSize="@dimen/text_size_M" />
                     </LinearLayout>
@@ -100,44 +105,18 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.65
 "
-                            android:text="@string/VehAssginVeachileName"
+                            android:text="@string/VehAssginLoaderStatus"
                             android:textColor="@color/SA_Dark_Blue"
                             android:textSize="@dimen/text_size_M"
                             android:textStyle="bold" />
 
 
                         <TextView
-                            android:id="@+id/VechicleName_view"
+                            android:id="@+id/LoaderStatus_view"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@{VechAssignObject.zuphrVehType}"
-                            android:textColor="@color/SA_Dark_Green"
-                            android:textSize="@dimen/text_size_M" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/Driver_name"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.65"
-                            android:text="@string/VehAssginDriverName"
-                            android:textColor="@color/SA_Dark_Blue"
-                            android:textSize="@dimen/text_size_M"
-                            android:textStyle="bold" />
-
-
-                        <TextView
-                            android:id="@+id/Qty_view"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@{VechAssignObject.zuphrDriverName}"
+                            android:text="@{status}"
                             android:textColor="@color/SA_Dark_Green"
                             android:textSize="@dimen/text_size_M" />
                     </LinearLayout>

@@ -273,7 +273,7 @@ public class DispatcherFragment extends Fragment {
 
     public void notifDataAddChanged(){
         FragmentManager fm = getFragmentManager();
-        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.constraintLayout4);
+        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.mainlayout);
         fragm.dataChanged();
     }
 

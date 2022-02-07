@@ -8,22 +8,21 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
-import android.widget.LinearLayout
+import android.widget.ImageView
 import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.listing.*
 import com.example.listing.AssignDialog_Configured.Configured_AssignMultiDialogFragment
 import com.example.listing.DataViewModel.PlansDataModel
-import com.example.listing.Login
 import com.example.listing.Manual_Assigment.Manual_AssignMultiDialogFragment
 import com.example.listing.Material.Dispatcher.DispatcherFragment
-import com.example.listing.Offline_Items_adapter
 import com.example.listing.Plan.PlanFragment
-import com.example.listing.PlanClickListener
-import com.example.listing.R
+import com.example.listing.Utils.Loginsession
 import com.example.listing.ViewModelsFactory.PlansDataModelFactory
 import com.example.listing.models.Material
 import com.example.listing.models.Plan
@@ -31,7 +30,8 @@ import com.example.listing.models.VehAssign
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
-class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragmentClickListener{
+class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragmentClickListener
+, Offlineitem_updatelist {
 
     var dialog: DialogFragment? = null
     var dialogManual: DialogFragment? = null
@@ -40,7 +40,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
     var po = 0
     lateinit var model :PlansDataModel
     lateinit var logout :FloatingActionButton
-    var main_layout: LinearLayout? = null
+    var main_layout: ConstraintLayout? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,8 +52,13 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
             PlansDataModel::class.java
         )
         model.getplansDispatcher(application, this)
+        model.getdrivers( this)
+        model.getVechiles( this)
         model.UserRule.value=false
         logout=findViewById(R.id.logout_button)
+
+
+        main_layout=findViewById(R.id.mainlayout)
 
         model.Plans.observe(this, { Plans: List<Plan?>? ->
             for (i in 0..1) {
@@ -70,10 +75,21 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
 
         logout.setOnClickListener {
-           // Loginsession.getInstance().user=null
+            Loginsession.getInstance().user=null
             val intent = Intent(applicationContext, Login::class.java)
             startActivity(intent)
         }
+
+
+        model.VechAssignDispatchList.observe(this, { AssignList: List<VehAssign?>? ->
+            if (AssignList != null) {
+                if (AssignList.isNotEmpty()) {
+                    Offline_items_PopUpView(AssignList)
+                }
+            }
+
+
+        })
 
 
     }
@@ -84,17 +100,16 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         val planFragment = PlanFragment.newInstance(lst, true)
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
-        ft.replace(R.id.constraintLayout4, planFragment)
+        ft.replace(R.id.mainlayout, planFragment)
         ft.commit()
     }
 
 
     override fun onItemClick(plan: Plan?, pos: Int) {
+     //  model.getDispatchMtr(plan?.ZuphrLpid, this)
 
-
-        model.PostOfflineContent(plan?.ZuphrLpid, this)
-        model.getDispatchMtr(plan?.ZuphrLpid, this)
-
+        Loginsession.getInstance().setOfflineflag(true)
+        model.offlineDispatchItems(this, plan?.ZuphrLpid)
         model.plan.value = plan
         LoaderFragmentInteraction(pos)
         po = pos
@@ -155,11 +170,21 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
         val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.offline_items_vehassign_view, main_layout, false)
-        val Stageall = view.findViewById<Button>(R.id.DispatchAll)
+        val DispatchAll = view.findViewById<Button>(R.id.DispatchAll)
+        val Close = view.findViewById<ImageView>(R.id.closeBtn)
        val recyclerView: RecyclerView = view.findViewById(R.id.items_list)
-     //   val items_adapter = Offline_Items_adapter(offlineitems, this)
-      //  recyclerView.adapter = items_adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+
+
+        Log.i("list size:", vehAssigns?.size.toString() + "")
+
+        val items_adapter = Offline_Items_Dispatch_adapter(
+            vehAssigns,
+            model.plan.value?.planToItems,
+            this
+        )
+        val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.setLayoutManager(linearLayoutManager)
+        recyclerView.setAdapter(items_adapter)
 
 
         val popupWindow: PopupWindow
@@ -169,11 +194,30 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         val width = size.x
         val height = size.y
         popupWindow = PopupWindow(view)
-        popupWindow.width = width - 50
-        popupWindow.height = height - 200
+        popupWindow.width = width - 100
+        popupWindow.height = height - 300
         popupWindow.isFocusable = true
         popupWindow.isOutsideTouchable = true
         popupWindow.showAtLocation(main_layout, Gravity.CENTER, 0, 0)
+
+
+
+        DispatchAll.setOnClickListener { v: View? ->
+            popupWindow.dismiss()
+            model.VechAssignDispatchList.setValue(ArrayList<VehAssign>())
+            model.PostOfflineDispatchContent(vehAssigns, this)
+        }
+
+
+
+        Close.setOnClickListener { v: View? ->
+            popupWindow.dismiss()
+        }
+    }
+
+    override fun updatelist(items: MutableList<VehAssign>?, vehAssign: VehAssign?) {
+        model.deleteDispatchObject(vehAssign)
+
     }
 
 

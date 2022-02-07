@@ -321,7 +321,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
     public void notifDataAddChanged() {
         FragmentManager fm = getFragmentManager();
-        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.constraintLayout4);
+        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.mainlayout);
         fragm.dataChanged();
     }
 

@@ -73,6 +73,9 @@ public interface RetrofitInterface {
     @PUT("VehAssignSet({vehPara})")
     Call<ResponseBody> LoaderStatus(@Path("vehPara") String vehPara, @Body VechAssignLoader matrialDispatch, @Header("x-csrf-token") String token);
 
+    @GET("VehAssignSet({vehPara})")
+    Call<ResponseBody> GetLoaderStatus(@Path("vehPara") String vehPara,@Header("x-csrf-token") String token);
+
     @GET("UserInfoSet/")
     Call<Userunpack> DVClogin(@Header("x-csrf-token") String fetch);
 

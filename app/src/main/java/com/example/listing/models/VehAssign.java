@@ -109,7 +109,7 @@ public class VehAssign implements Serializable {
 
     @JsonIgnore
     @ColumnInfo(name = "AddToDB")
-    public boolean addtoDB=false;
+    public boolean addtoDB=true;
 
     public VehAssign( String zuphrLpid, String zuphrMjahr, String zuphrMblpo, String zuphrStgid,
                      String zuphrMatnr, String zuphrReqid, String zuphrReqitm, String zuphrShortxt,
@@ -291,7 +291,7 @@ public class VehAssign implements Serializable {
     @JsonIgnore
     @Ignore
     public void AddtoDB(boolean addtoDB) {
-        addtoDB = addtoDB;
+        this.addtoDB = addtoDB;
     }
 }
 

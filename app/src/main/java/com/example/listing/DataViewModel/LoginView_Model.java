@@ -46,9 +46,9 @@ public class LoginView_Model extends ViewModel {
         db.Users().GetUser(username.toUpperCase())
                 .observe(owner, user -> {
                     if (user != null) {
-                        user=new User();
-                        user.setUserId(user.getUserId());
-                        Loginsession.initializer(null,  user);
+                        user=new User(user.getUserId(),null,null,null);
+                        Loginsession.initializer(null, user);
+                        Loginsession.getInstance().setUser(user);
                         Log.d("userid1", user.getUserId() + "");
                         Offline.postValue(true);
                     } else {
@@ -70,11 +70,8 @@ public class LoginView_Model extends ViewModel {
 
     public void Login(Application application, User user,LifecycleOwner owner) {
 
-
         String credentials = Credentials.basic(user.UserId, user.getPassword());
-
-          RestLoginClient.initializer(application);
-
+        RestLoginClient.initializer(application);
         final OfflineDatabaseClient db = OfflineDatabaseClient.getInstance(application.getApplicationContext());
 
 
@@ -227,7 +224,6 @@ public class LoginView_Model extends ViewModel {
                 }
 
                 if (response.isSuccessful()) {
-
                     Log.i("logout","worked");
                     Loginsession.getInstance().setUser(null);
                 }

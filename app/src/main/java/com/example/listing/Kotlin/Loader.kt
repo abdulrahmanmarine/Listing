@@ -1,29 +1,43 @@
 package com.example.listing.Kotlin
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Point
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.listing.*
 import com.example.listing.DataViewModel.PlansDataModel
-import com.example.listing.Login
 import com.example.listing.Material.Loader.LoaderFragment
 import com.example.listing.Plan.PlanFragment
-import com.example.listing.PlanClickListener
-import com.example.listing.R
 import com.example.listing.Utils.Loginsession
 import com.example.listing.ViewModelsFactory.PlansDataModelFactory
 import com.example.listing.models.Material
 import com.example.listing.models.Plan
+import com.example.listing.models.VechAssignLoader
+import com.example.listing.models.VehAssign
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class Loader : AppCompatActivity(), PlanClickListener {
+class Loader : AppCompatActivity(), PlanClickListener ,  Offlineitem_updatelist_loader {
     var reqs = ArrayList<Plan?>()
     lateinit var model: PlansDataModel
     var po = 0
     lateinit var  progressBar: LinearLayout
+    var main_layout: ConstraintLayout? = null
+
+    @SuppressLint("HardwareIds")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loader)
@@ -31,6 +45,7 @@ class Loader : AppCompatActivity(), PlanClickListener {
         lateinit var logout : FloatingActionButton
 
         progressBar = findViewById(R.id.progressBarlayout)
+        main_layout=findViewById(R.id.mainlayout)
 
         val android_id = Settings.Secure.getString(
             this.getContentResolver(),
@@ -57,6 +72,17 @@ class Loader : AppCompatActivity(), PlanClickListener {
                 )
             })
 
+        model.VechAssignLoaderList.observe(this, { StatusList: List<VechAssignLoader?>? ->
+            if (StatusList != null) {
+                if (StatusList.isNotEmpty()) {
+                    Offline_items_PopUpView(StatusList)
+                }
+            }
+
+
+        })
+
+
         logout.setOnClickListener {
             Loginsession.getInstance().user=null
             var intent = Intent(applicationContext, Login::class.java)
@@ -70,7 +96,7 @@ class Loader : AppCompatActivity(), PlanClickListener {
         var planFragment = PlanFragment.newInstance(lst, true)
         var fm = supportFragmentManager
         var ft = fm.beginTransaction()
-        ft.replace(R.id.constraintLayout4, planFragment)
+        ft.replace(R.id.mainlayout, planFragment)
         ft.commit()
     }
 
@@ -78,10 +104,10 @@ class Loader : AppCompatActivity(), PlanClickListener {
 
 
     override fun onItemClick(plan: Plan?, pos: Int) {
+        //model.getLoaderMtr(plan?.ZuphrLpid,  this)
 
-        model.PostOfflineContent(plan?.ZuphrLpid,this)
-        model.getLoaderMtr(plan?.ZuphrLpid,  this)
-
+        Loginsession.getInstance().setOfflineflag(true)
+        model.offlineLoaderItems(this, plan?.ZuphrLpid)
         model.plan.value = plan
         LoaderFragmentInteraction(plan!!, pos)
         po = pos
@@ -113,6 +139,60 @@ class Loader : AppCompatActivity(), PlanClickListener {
             ft.commit()
         })
     }
+
+
+
+
+    fun Offline_items_PopUpView(vehassignloader: List<VechAssignLoader?>?) {
+
+        val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.offline_items_vehassignloader_view, main_layout, false)
+        val ChangeStatusAll = view.findViewById<Button>(R.id.ChangeStatusAll)
+        val Close = view.findViewById<ImageView>(R.id.closeBtn)
+        val recyclerView: RecyclerView = view.findViewById(R.id.items_list)
+
+
+        Log.i("list size:", vehassignloader?.size.toString() + "")
+
+        val items_adapter = Offline_Items_Loader_adapter(vehassignloader, model.plan.value?.planToItems, this)
+        val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.setLayoutManager(linearLayoutManager)
+        recyclerView.setAdapter(items_adapter)
+
+
+        val popupWindow: PopupWindow
+        val display = windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        val width = size.x
+        val height = size.y
+        popupWindow = PopupWindow(view)
+        popupWindow.width = width - 100
+        popupWindow.height = height - 300
+        popupWindow.isFocusable = true
+        popupWindow.isOutsideTouchable = true
+        popupWindow.showAtLocation(main_layout, Gravity.CENTER, 0, 0)
+
+
+
+        ChangeStatusAll.setOnClickListener { v: View? ->
+            popupWindow.dismiss()
+            model.VechAssignLoaderList.setValue(java.util.ArrayList())
+            model.PostOfflineLoaderContent(vehassignloader, this)
+        }
+
+
+        Close.setOnClickListener { v: View? ->
+            popupWindow.dismiss()
+        }
+    }
+
+
+    override fun updatelist(items: MutableList<VechAssignLoader>?, vechAssignLoader: VechAssignLoader?) {
+        model.deleteLoaderObject(vechAssignLoader)
+
+    }
+
 }
 
 

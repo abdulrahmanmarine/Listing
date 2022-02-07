@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.listing.Login
 import com.example.listing.R
+import com.example.listing.Utils.Loginsession
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
@@ -34,7 +35,7 @@ class Home : AppCompatActivity() {
         }
 
         logout.setOnClickListener {
-           // Loginsession.getInstance().user=null
+            Loginsession.getInstance().user=null
             var intent = Intent(applicationContext, Login::class.java)
             startActivity(intent)
         }

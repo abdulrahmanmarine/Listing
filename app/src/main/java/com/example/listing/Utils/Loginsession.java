@@ -8,6 +8,7 @@ public class Loginsession {
     private static Loginsession instance;
     private User user;
     private String token;
+    private boolean Offlineflag=true;
 
 
     private Loginsession( String token, User user) {
@@ -51,7 +52,13 @@ public class Loginsession {
         this.user = user;
     }
 
+    public boolean isOfflineflag() {
+        return Offlineflag;
+    }
 
+    public void setOfflineflag(boolean offlineflag) {
+        Offlineflag = offlineflag;
+    }
 }
 
 
