@@ -29,14 +29,13 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
     private List<Material> materials;
     private AddButtonClicked addListener;
     private ImageView materialImage;
-    private  Context context;
-
+    private Context context;
 
 
     public DriverAdapter(List<Material> materials, AddButtonClicked addListener, Context context) {
         this.materials = materials;
         this.addListener = addListener;
-        this.context= context;
+        this.context = context;
     }
 
 
@@ -79,10 +78,11 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
         public RecyclerView chosenVehicleList;
         public TextView assignStatus;
         boolean incomplete = true;
+
         public ViewHolder(AssignCardBinding itemRowBinding) {
             super(itemRowBinding.getRoot());
             this.itemRowBinding = itemRowBinding;
-            chosenVehicleList=itemRowBinding.chosenVehiclesCard;
+            chosenVehicleList = itemRowBinding.chosenVehiclesCard;
             materialImage = itemRowBinding.materialImgCard;
             assignStatus = itemRowBinding.assignstat;
         }
@@ -93,8 +93,8 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
             itemRowBinding.setPos(getAdapterPosition());
             itemRowBinding.executePendingBindings();
 
-            if(material.getZuphrContents().length()> 100) {
-                String img =material.getZuphrContents().replace("data:image/jpeg;base64,","");
+            if (material.getZuphrContents().length() > 100) {
+                String img = material.getZuphrContents().replace("data:image/jpeg;base64,", "");
                 byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                 itemRowBinding.materialImgCard.setImageBitmap(decodedByte);
@@ -105,12 +105,10 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
 //            }
 
 
-
-
-            if(material.getVehicles().isEmpty()){
+            if (material.getVehicles().isEmpty()) {
                 itemRowBinding.assignstat.setText("Not Assigned");
                 itemRowBinding.assignstat.setBackground(ContextCompat.getDrawable(context, R.drawable.red_border));
-            }else{
+            } else {
                 itemRowBinding.assignstat.setText("Assigned");
                 itemRowBinding.assignstat.setBackground(ContextCompat.getDrawable(context, R.drawable.green_border));
                 itemRowBinding.assignstat.setPadding(50, 0, 50, 0);

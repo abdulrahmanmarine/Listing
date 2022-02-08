@@ -15,7 +15,7 @@ public interface Offline_Image {
 
 
     @Query("SELECT * FROM ImageTable WHERE MaterialOfflineID =:id")
-   List<imagenode> GetItemAll(String id);
+    List<imagenode> GetItemAll(String id);
 
     @Insert
     void insertImage(imagenode image);
@@ -25,7 +25,8 @@ public interface Offline_Image {
 
     @Delete
     void Delete(imagenode image);
+
     @Query("DELETE FROM ImageTable")
-     void nukeTable();
+    void nukeTable();
 
 }

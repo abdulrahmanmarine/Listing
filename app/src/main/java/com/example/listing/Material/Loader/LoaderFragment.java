@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,27 +53,24 @@ import java.util.regex.Pattern;
  * Use the {@link LoaderFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoaderFragment extends Fragment  {
+public class LoaderFragment extends Fragment {
+    static final int REQUEST_IMAGE_CAPTURE = -1;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_PARAM3 = "param3";
     private static final String ARG_PARAM4 = "param4";
-    static final int REQUEST_IMAGE_CAPTURE = -1;
-
-
-    // TODO: Rename and change types of parameters
-    private String mParam2, mParam3, mParam4;
-    private ArrayList<Material> mParam1 = new ArrayList<>();
-    private MaterialAdapter materialAdapter;
-    private static RedesignedNotesFragment notesFragment= null;
+    private static RedesignedNotesFragment notesFragment = null;
     ImageButton btnCapture;
     PlansDataModel model;
     List<VechAssignLoader> Vehassignment = new ArrayList<>();
     VechAssignLoader Vehassign;
+    // TODO: Rename and change types of parameters
+    private String mParam2, mParam3, mParam4;
+    private ArrayList<Material> mParam1 = new ArrayList<>();
+    private MaterialAdapter materialAdapter;
     private MatrialDispatching MatrialDispatch;
-
 
 
     public LoaderFragment() {
@@ -114,11 +110,11 @@ public class LoaderFragment extends Fragment  {
     private void filter2(String text) {
         ArrayList<Material> filteredList = new ArrayList<>();
 
-        for(Material mat : mParam1){
+        for (Material mat : mParam1) {
             String planName = mat.getZuphrShortxt().toLowerCase();
 
             Boolean contains = Pattern.compile(Pattern.quote(text), Pattern.CASE_INSENSITIVE).matcher(planName).find();
-            if(contains){
+            if (contains) {
                 filteredList.add(mat);
             }
         }
@@ -128,7 +124,7 @@ public class LoaderFragment extends Fragment  {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_IMAGE_CAPTURE&& requestCode == Activity.RESULT_OK){
+        if (requestCode == REQUEST_IMAGE_CAPTURE && requestCode == Activity.RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -143,11 +139,11 @@ public class LoaderFragment extends Fragment  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        model=new ViewModelProvider(getActivity()).get(PlansDataModel.class);
+        model = new ViewModelProvider(getActivity()).get(PlansDataModel.class);
 
         View v = inflater.inflate(R.layout.fragment_text, container, false);
 
-        EditText editText1 =v.findViewById(R.id.search_material);
+        EditText editText1 = v.findViewById(R.id.search_material);
 
         editText1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -167,9 +163,7 @@ public class LoaderFragment extends Fragment  {
         });
 
 
-
-
-        btnCapture =v.findViewById(R.id.camerabutton);
+        btnCapture = v.findViewById(R.id.camerabutton);
 
         //set recyclerview adapter
         RecyclerView rv = v.findViewById(R.id.textrecview);
@@ -186,46 +180,43 @@ public class LoaderFragment extends Fragment  {
 
         CameraButtonClicked cameraListener = pos -> {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            try{
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE );
-            }catch (ActivityNotFoundException e){
+            try {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            } catch (ActivityNotFoundException e) {
 
             }
         };
         LoadButtonClicked loadListener = pos -> {
 
-            typemethod(pos,"X","","","");
+            typemethod(pos, "X", "", "", "");
 
         };
         UnloadButtonClicked unloadListener = pos -> {
-            typemethod(pos,"","X","","");
+            typemethod(pos, "", "X", "", "");
         };
         FoundButtonClicked foundListener = pos -> {
-            typemethod(pos,"","","X","");
+            typemethod(pos, "", "", "X", "");
         };
         PrcButtonClicked prcListener = pos -> {
-            typemethod(pos,"","","","X");
+            typemethod(pos, "", "", "", "X");
 
         };
 
-  NoteButtonClicked noteListener = pos -> {
+        NoteButtonClicked noteListener = pos -> {
 
 
-      FragmentManager fragm = getActivity().getSupportFragmentManager();
-      materialAdapter.notifyDataSetChanged();
-      SharedPreferences preferences = requireActivity().getSharedPreferences(getResources().getString(R.string.SharedPrefName), Activity.MODE_PRIVATE);
-      String Mode = preferences.getString(getResources().getString(R.string.UserMode), "");
+            FragmentManager fragm = getActivity().getSupportFragmentManager();
+            materialAdapter.notifyDataSetChanged();
+            SharedPreferences preferences = requireActivity().getSharedPreferences(getResources().getString(R.string.SharedPrefName), Activity.MODE_PRIVATE);
+            String Mode = preferences.getString(getResources().getString(R.string.UserMode), "");
+            notesFragment = new RedesignedNotesFragment(model.MatrialsList.getValue().get(pos),
+                    model.Plans.getValue().get(pos).getZuphrLpid(), "0", Calendar.getInstance().get(Calendar.YEAR) + "",
+                    requireActivity().getApplication(), Mode);
 
-      Log.i("notes",model.MatrialsList.getValue().get(pos).getNotes().size()+"");
-      notesFragment = new RedesignedNotesFragment( model.MatrialsList.getValue().get(pos),
-              model.Plans.getValue().get(pos).getZuphrLpid(), "0", Calendar.getInstance().get(Calendar.YEAR) + "",
-              requireActivity().getApplication(),Mode);
-
-      notesFragment.show(fragm, "Note");
+            notesFragment.show(fragm, "Note");
 
 
-
-  };
+        };
 
 //        CameraButtonClicked cameraListener = new MaterialAdapter.cameraClick() {
 //            @Override
@@ -239,31 +230,28 @@ public class LoaderFragment extends Fragment  {
 //        };
 
 
-
-
-
         materialAdapter = new MaterialAdapter(mParam1, loadListener, unloadListener, prcListener, foundListener, noteListener, cameraListener);
         rv.setAdapter(materialAdapter);
 
 
-            final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.layout_animation);
-           // rv.setLayoutAnimation(controller);
-            materialAdapter.notifyDataSetChanged();
-           // rv.scheduleLayoutAnimation();
+        final LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), R.anim.layout_animation);
+        // rv.setLayoutAnimation(controller);
+        materialAdapter.notifyDataSetChanged();
+        // rv.scheduleLayoutAnimation();
 
-            GridLayoutManager grm = new GridLayoutManager(getActivity(), 2);
+        GridLayoutManager grm = new GridLayoutManager(getActivity(), 2);
 
-            grm.offsetChildrenHorizontal(1);
-            rv.setLayoutManager(grm);
+        grm.offsetChildrenHorizontal(1);
+        rv.setLayoutManager(grm);
 
         return v;
     }
 
-    public void typemethod(int Mpostion ,String load,String UNload,String Nfound,String Proc){
+    public void typemethod(int Mpostion, String load, String UNload, String Nfound, String Proc) {
 
 
-        Material materialParam= model.MatrialsList.getValue().get(Mpostion);
-        if(materialParam.getVehAssignList()!=null) {
+        Material materialParam = model.MatrialsList.getValue().get(Mpostion);
+        if (materialParam.getVehAssignList() != null) {
             if (materialParam.getVehAssignList().size() > 0) {
 
                 //get the matarial & plan object and lists
@@ -274,15 +262,14 @@ public class LoaderFragment extends Fragment  {
                 for (int i = 0; i < materialParam.getVehAssignList().size(); i++) {
 
                     Vehassign = new VechAssignLoader(
-                                materialParam.getZuphrLpid(), materialParam.getZuphrMjahr(),
-                                materialParam.getZuphrMblpo(), materialParam.getVehAssignList().get(i).getZuphrDriverid(),
-                                materialParam.getVehAssignList().get(i).getZuphrVehid(),
-                                load, UNload, Nfound, Proc,false);
+                            materialParam.getZuphrLpid(), materialParam.getZuphrMjahr(),
+                            materialParam.getZuphrMblpo(), materialParam.getVehAssignList().get(i).getZuphrDriverid(),
+                            materialParam.getVehAssignList().get(i).getZuphrVehid(),
+                            load, UNload, Nfound, Proc, false);
 
                     Vehassign.AddtoDB(false);
-                        materialParam.getVehAssignList().set(i, Vehassign);
-                        Vehassignment.add(Vehassign);
-                        Log.i("vechassign-typeMTR-id", Vehassign.getZuphrDriverid());
+                    materialParam.getVehAssignList().set(i, Vehassign);
+                    Vehassignment.add(Vehassign);
 
                 }
 
@@ -294,50 +281,44 @@ public class LoaderFragment extends Fragment  {
 
                 //Create object and posting
 
-                Boolean flaglooded=true;
+                Boolean flaglooded = true;
                 for (int i = 0; i < Vehassignment.size(); i++) {
 
 
-                    model.AssignValueLoader(Vehassignment.get(i),this);
+                    model.AssignValueLoader(Vehassignment.get(i), this);
 
-                    if(!Vehassignment.get(i).getZuphrLoad().toLowerCase().contains("x")&&flaglooded){
-                        flaglooded=false;
+                    if (!Vehassignment.get(i).getZuphrLoad().toLowerCase().contains("x") && flaglooded) {
+                        flaglooded = false;
                     }
                 }
 
-                Plan plan= model.plan.getValue();
+                Plan plan = model.plan.getValue();
 
                 materialParam.setComplete(flaglooded);
 
 
-                plan.getPlanToItems().set(Mpostion,materialParam);
+                plan.getPlanToItems().set(Mpostion, materialParam);
 
-                List<Plan> planslist=model.Plans.getValue();
+                List<Plan> planslist = model.Plans.getValue();
 
                 model.plan.setValue(plan);
                 for (int i = 0; i < planslist.size(); i++) {
-                   if(planslist.get(i).getZuphrLpid().equalsIgnoreCase(plan.getZuphrLpid())){
-                       planslist.set(i,model.plan.getValue());
-                   }
+                    if (planslist.get(i).getZuphrLpid().equalsIgnoreCase(plan.getZuphrLpid())) {
+                        planslist.set(i, model.plan.getValue());
+                    }
                 }
 
-               model.Plans.setValue(planslist);
+                model.Plans.setValue(planslist);
 
 
-
-
-            }
-            else
+            } else
                 Toast.makeText(getContext(), "Not assigend for you", Toast.LENGTH_SHORT).show();
 
-        }else
+        } else
             Toast.makeText(getContext(), "Not assigend for you", Toast.LENGTH_SHORT).show();
 
 
     }
-
-
-
 
 
 }

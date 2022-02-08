@@ -12,16 +12,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class Home : AppCompatActivity() {
 
-    lateinit var logout : FloatingActionButton
+    lateinit var logout: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         this.getSupportActionBar()!!.hide()
 
-        var loader : ConstraintLayout = findViewById(R.id.loader)
-        var dispatcher : ConstraintLayout = findViewById(R.id.dispatcher)
-        logout=findViewById(R.id.homelogout_button);
+        var loader: ConstraintLayout = findViewById(R.id.loader)
+        var dispatcher: ConstraintLayout = findViewById(R.id.dispatcher)
+        logout = findViewById(R.id.homelogout_button);
 
 
         loader.setOnClickListener {
@@ -35,7 +35,7 @@ class Home : AppCompatActivity() {
         }
 
         logout.setOnClickListener {
-            Loginsession.getInstance().user=null
+            Loginsession.getInstance().user = null
             var intent = Intent(applicationContext, Login::class.java)
             startActivity(intent)
         }

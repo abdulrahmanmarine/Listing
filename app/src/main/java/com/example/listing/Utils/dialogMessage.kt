@@ -7,12 +7,14 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 
 
-fun dialogMessage(context: Context,
-                  title:String,
-                  message:String,
-                  confirmMessage:Boolean,
-                  view: View?=null,
-                  confirmBtn:MessageDialogInterface?=null){
+fun dialogMessage(
+    context: Context,
+    title: String,
+    message: String,
+    confirmMessage: Boolean,
+    view: View? = null,
+    confirmBtn: MessageDialogInterface? = null
+) {
 
     val dialog = AlertDialog.Builder(context).create()
     var dismissButtonStr = "OK"
@@ -24,7 +26,8 @@ fun dialogMessage(context: Context,
     }
 
     dialog.setButton(
-        AlertDialog.BUTTON_NEGATIVE,dismissButtonStr) { dialog, which ->
+        AlertDialog.BUTTON_NEGATIVE, dismissButtonStr
+    ) { dialog, which ->
         dialog.dismiss()
     }
     dialog.setMessage(message)
@@ -34,6 +37,6 @@ fun dialogMessage(context: Context,
 
 }
 
-interface MessageDialogInterface{
+interface MessageDialogInterface {
     fun onConfirmClick(dialog: DialogInterface)
 }

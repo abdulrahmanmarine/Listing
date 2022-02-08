@@ -2,7 +2,6 @@ package com.example.listing.Utils;
 
 
 import android.app.Application;
-import android.util.Log;
 
 import com.example.listing.R;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -29,12 +28,11 @@ public class RestLoginClient {
 
     private static RestLoginClient instance;
     private static Retrofit retrofit;
+    private static OkHttpClient client = null;
     private final RetrofitInterfaceLogin RetrofitInterfaceLogin;
-    private static OkHttpClient client=null;
 
 
-
-    private RestLoginClient( Application application) {
+    private RestLoginClient(Application application) {
         RetrofitInterfaceLogin = Login(application);
     }
 
@@ -49,7 +47,7 @@ public class RestLoginClient {
 
     public static RestLoginClient getInstance(Application application) {
         if (instance == null) {
-            instance = new RestLoginClient( application);
+            instance = new RestLoginClient(application);
         }
         return instance;
 
@@ -68,13 +66,13 @@ public class RestLoginClient {
     }
 
 
-    public static RetrofitInterfaceLogin Login( Application application) {
-        return CreateClient( application).create(RetrofitInterfaceLogin.class);
+    public static RetrofitInterfaceLogin Login(Application application) {
+        return CreateClient(application).create(RetrofitInterfaceLogin.class);
     }
 
-    public static Retrofit CreateClient( Application application) {
+    public static Retrofit CreateClient(Application application) {
         if (retrofit == null) {
-            client=headersInterceptors(application);
+            client = headersInterceptors(application);
             retrofit = new Retrofit.Builder()
                     .baseUrl(application.getString(R.string.portalURL))
                     .client(client)
@@ -84,8 +82,6 @@ public class RestLoginClient {
         }
         return retrofit;
     }
-
-
 
 
     public RetrofitInterfaceLogin getRetrofitInterfaceLogin() {
@@ -121,7 +117,6 @@ public class RestLoginClient {
     }
 
 
-
     private static class ReceivedCookiesInterceptor implements Interceptor {
         Application application;
 
@@ -134,15 +129,11 @@ public class RestLoginClient {
         public Response intercept(Chain chain) throws IOException {
 
             Response originalResponse = chain.proceed(chain.request());
-            Log.i("Login url:", originalResponse.request().url().toString());
-            Log.i("Login header-request:", originalResponse.request().headers().toString());
-            Log.i("Login header-response:", originalResponse.headers().toString());
-
 
             List<String> Cookielist = originalResponse.headers().values("Set-Cookie");
 
 
-            RestApiClient.initializer(application,Cookielist,null);
+            RestApiClient.initializer(application, Cookielist, null);
 
 
             return originalResponse;

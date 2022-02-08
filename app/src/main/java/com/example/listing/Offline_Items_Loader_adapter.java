@@ -1,27 +1,24 @@
 package com.example.listing;
 
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.util.Base64;
-        import android.view.LayoutInflater;
-        import android.view.ViewGroup;
-        import android.widget.ImageView;
-        import android.widget.LinearLayout;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
-        import androidx.annotation.NonNull;
-        import androidx.core.content.ContextCompat;
-        import androidx.databinding.DataBindingUtil;
-        import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
-        import com.example.listing.databinding.OfflineItemsVehassignloaderCardBinding;
-        import com.example.listing.models.Material;
-        import com.example.listing.models.VechAssignLoader;
-        import com.example.listing.models.VehAssign;
+import com.example.listing.databinding.OfflineItemsVehassignloaderCardBinding;
+import com.example.listing.models.Material;
+import com.example.listing.models.VechAssignLoader;
 
+import org.jetbrains.annotations.NotNull;
 
-        import org.jetbrains.annotations.NotNull;
-
-        import java.util.List;
+import java.util.List;
 
 
 public class Offline_Items_Loader_adapter extends RecyclerView.Adapter<Offline_Items_Loader_adapter.ViewHolder>
@@ -32,11 +29,10 @@ public class Offline_Items_Loader_adapter extends RecyclerView.Adapter<Offline_I
     private final List<Material> materials;
 
 
-
-    public Offline_Items_Loader_adapter(List<VechAssignLoader> VechAssignLoaderList, List<Material> materials , Offlineitem_updatelist_loader onCallBack) {
+    public Offline_Items_Loader_adapter(List<VechAssignLoader> VechAssignLoaderList, List<Material> materials, Offlineitem_updatelist_loader onCallBack) {
         this.VechAssignLoaderList = VechAssignLoaderList;
         this.onCallBack = onCallBack;
-        this.materials=materials;
+        this.materials = materials;
 
 
     }
@@ -69,7 +65,7 @@ public class Offline_Items_Loader_adapter extends RecyclerView.Adapter<Offline_I
     @Override
     public void onBindViewHolder(@NonNull Offline_Items_Loader_adapter.ViewHolder holder, int position) {
         VechAssignLoader VechAssignLoader = VechAssignLoaderList.get(position);
-        holder.bind(VechAssignLoader,materials);
+        holder.bind(VechAssignLoader, materials);
         holder.Delete.setOnClickListener(v -> {
             VechAssignLoaderList.remove(position);
             notifyDataSetChanged();
@@ -83,7 +79,6 @@ public class Offline_Items_Loader_adapter extends RecyclerView.Adapter<Offline_I
     public int getItemCount() {
         return VechAssignLoaderList.size();
     }
-
 
 
     @Override
@@ -104,13 +99,13 @@ public class Offline_Items_Loader_adapter extends RecyclerView.Adapter<Offline_I
 
         public void bind(VechAssignLoader obj, List<Material> MtrList) {
 
-            String Content="";
+            String Content = "";
 
-            for(int i=0 ;i<MtrList.size();i++){
+            for (int i = 0; i < MtrList.size(); i++) {
 
-                if(MtrList.get(i).getZuphrMblpo().equalsIgnoreCase(obj.getZuphrMblpo())){
+                if (MtrList.get(i).getZuphrMblpo().equalsIgnoreCase(obj.getZuphrMblpo())) {
 
-                    Content=MtrList.get(i).getZuphrContents();
+                    Content = MtrList.get(i).getZuphrContents();
 
                 }
 
@@ -131,14 +126,13 @@ public class Offline_Items_Loader_adapter extends RecyclerView.Adapter<Offline_I
             itemRowBinding.setMatrialNumber(obj.getZuphrMblpo());
             itemRowBinding.setMatrialNumber(obj.getZuphrDriverid());
 
-            if(obj.getZuphrLoad().equalsIgnoreCase("x")){
+            if (obj.getZuphrLoad().equalsIgnoreCase("x")) {
                 itemRowBinding.setStatus("Loaded");
-            }else if (obj.getZuphrUload().equalsIgnoreCase("x")){
+            } else if (obj.getZuphrUload().equalsIgnoreCase("x")) {
                 itemRowBinding.setStatus("UnLoaded");
-            }else if (obj.getZuphrNfound().equalsIgnoreCase("x")){
+            } else if (obj.getZuphrNfound().equalsIgnoreCase("x")) {
                 itemRowBinding.setStatus("NotFound");
-           }
-            else if (obj.getZuphrProc().equalsIgnoreCase("x")){
+            } else if (obj.getZuphrProc().equalsIgnoreCase("x")) {
                 itemRowBinding.setStatus("Proccessd");
             }
 

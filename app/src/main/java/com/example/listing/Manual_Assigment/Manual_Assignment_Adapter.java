@@ -1,7 +1,6 @@
 package com.example.listing.Manual_Assigment;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -17,38 +16,16 @@ import com.example.listing.models.Vehicle;
 
 import java.util.List;
 
-public class Manual_Assignment_Adapter extends RecyclerView.Adapter<Manual_Assignment_Adapter.ViewHolder>{
-    List <Vehicle> vehicle;
+public class Manual_Assignment_Adapter extends RecyclerView.Adapter<Manual_Assignment_Adapter.ViewHolder> {
+    List<Vehicle> vehicle;
     DriverDeleteButtonClicked deleteListener;
     Context context;
 
-    public Manual_Assignment_Adapter(  List <Vehicle> vehicle, DriverDeleteButtonClicked deleteListener,
+    public Manual_Assignment_Adapter(List<Vehicle> vehicle, DriverDeleteButtonClicked deleteListener,
                                      Context ctx) {
-        Log.i("Manual","listcreated");
-        this.vehicle=vehicle;
+        this.vehicle = vehicle;
         this.deleteListener = deleteListener;
-        this.context=ctx;
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public ManualAssigmentCardBinding itemRowBinding;
-        public RecyclerView DriversRecycleView;
-
-        public ViewHolder(@NonNull ManualAssigmentCardBinding itemRowBinding) {
-            super(itemRowBinding.getRoot());
-            this.itemRowBinding = itemRowBinding;
-            this.DriversRecycleView=itemRowBinding.Driverlist;
-        }
-
-        public void bind(Vehicle vehicle) {
-
-            itemRowBinding.setDeleteListener(deleteListener);
-            itemRowBinding.setItem(vehicle);
-            itemRowBinding.setDeleteListener(deleteListener);
-            itemRowBinding.executePendingBindings();
-        }
-
-
+        this.context = ctx;
     }
 
     @NonNull
@@ -63,26 +40,44 @@ public class Manual_Assignment_Adapter extends RecyclerView.Adapter<Manual_Assig
 
     @Override
     public void onBindViewHolder(@NonNull Manual_Assignment_Adapter.ViewHolder holder, int position) {
-        Vehicle vehicleitem=vehicle.get(position);
-       holder.bind(vehicleitem);
-        Log.i("REFlisit",vehicleitem.getVehType()+"");
-        if(vehicleitem.getLoaders().size()>0){
+        Vehicle vehicleitem = vehicle.get(position);
+        holder.bind(vehicleitem);
+        if (vehicleitem.getLoaders().size() > 0) {
 
-          ChosenDriverAdapter recyclerviewAdapter = new ChosenDriverAdapter(vehicleitem.getLoaders());
+            ChosenDriverAdapter recyclerviewAdapter = new ChosenDriverAdapter(vehicleitem.getLoaders());
             holder.DriversRecycleView.setLayoutManager(new GridLayoutManager(context, 5));
             holder.DriversRecycleView.setAdapter(recyclerviewAdapter);
         }
-
-
 
 
     }
 
     @Override
     public int getItemCount() {
-        if(vehicle!=null)
-        return vehicle.size();
+        if (vehicle != null)
+            return vehicle.size();
         else
             return 0;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public ManualAssigmentCardBinding itemRowBinding;
+        public RecyclerView DriversRecycleView;
+
+        public ViewHolder(@NonNull ManualAssigmentCardBinding itemRowBinding) {
+            super(itemRowBinding.getRoot());
+            this.itemRowBinding = itemRowBinding;
+            this.DriversRecycleView = itemRowBinding.Driverlist;
+        }
+
+        public void bind(Vehicle vehicle) {
+
+            itemRowBinding.setDeleteListener(deleteListener);
+            itemRowBinding.setItem(vehicle);
+            itemRowBinding.setDeleteListener(deleteListener);
+            itemRowBinding.executePendingBindings();
+        }
+
+
     }
 }

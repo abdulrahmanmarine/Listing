@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -29,11 +28,11 @@ import com.example.listing.models.Plan
 import com.example.listing.models.VechAssignLoader
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class Loader : AppCompatActivity(), PlanClickListener ,  Offlineitem_updatelist_loader {
+class Loader : AppCompatActivity(), PlanClickListener, Offlineitem_updatelist_loader {
     var reqs = ArrayList<Plan?>()
     lateinit var model: PlansDataModel
     var po = 0
-    lateinit var  progressBar: LinearLayout
+    lateinit var progressBar: LinearLayout
     var main_layout: ConstraintLayout? = null
 
     @SuppressLint("HardwareIds")
@@ -41,10 +40,10 @@ class Loader : AppCompatActivity(), PlanClickListener ,  Offlineitem_updatelist_
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loader)
         this.getSupportActionBar()!!.hide()
-        lateinit var logout : FloatingActionButton
+        lateinit var logout: FloatingActionButton
 
         progressBar = findViewById(R.id.progressBarlayout)
-        main_layout=findViewById(R.id.mainlayout)
+        main_layout = findViewById(R.id.mainlayout)
 
         val android_id = Settings.Secure.getString(
             this.getContentResolver(),
@@ -55,11 +54,11 @@ class Loader : AppCompatActivity(), PlanClickListener ,  Offlineitem_updatelist_
             PlansDataModel::class.java
         )
 
-      //  model.postDriver()
+        //  model.postDriver()
         model.getplansLoader(this)
-        model.UserRule.value=true
+        model.UserRule.value = true
         progressBar.visibility = View.VISIBLE
-       logout=findViewById(R.id.logout_button);
+        logout = findViewById(R.id.logout_button);
 
 
 
@@ -83,7 +82,7 @@ class Loader : AppCompatActivity(), PlanClickListener ,  Offlineitem_updatelist_
 
 
         logout.setOnClickListener {
-            Loginsession.getInstance().user=null
+            Loginsession.getInstance().user = null
             var intent = Intent(applicationContext, Login::class.java)
             startActivity(intent)
         }
@@ -98,8 +97,6 @@ class Loader : AppCompatActivity(), PlanClickListener ,  Offlineitem_updatelist_
         ft.replace(R.id.mainlayout, planFragment)
         ft.commit()
     }
-
-
 
 
     override fun onItemClick(plan: Plan?, pos: Int) {
@@ -138,8 +135,6 @@ class Loader : AppCompatActivity(), PlanClickListener ,  Offlineitem_updatelist_
     }
 
 
-
-
     fun Offline_items_PopUpView(vehassignloader: List<VechAssignLoader?>?) {
 
         val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -148,9 +143,6 @@ class Loader : AppCompatActivity(), PlanClickListener ,  Offlineitem_updatelist_
         val DeleteAll = view.findViewById<Button>(R.id.ClearAllLoader)
         val Close = view.findViewById<ImageView>(R.id.closeBtn)
         val recyclerView: RecyclerView = view.findViewById(R.id.items_list)
-
-
-        Log.i("list size:", vehassignloader?.size.toString() + "")
 
         val items_adapter = Offline_Items_Loader_adapter(
             vehassignloader,
@@ -188,8 +180,7 @@ class Loader : AppCompatActivity(), PlanClickListener ,  Offlineitem_updatelist_
 
             popupWindow.dismiss()
 
-              model.deleteLoaderObject(null,vehassignloader)
-
+            model.deleteLoaderObject(null, vehassignloader)
 
 
         }
@@ -205,7 +196,7 @@ class Loader : AppCompatActivity(), PlanClickListener ,  Offlineitem_updatelist_
         items: MutableList<VechAssignLoader>?,
         vechAssignLoader: VechAssignLoader?
     ) {
-        model.deleteLoaderObject(vechAssignLoader,null)
+        model.deleteLoaderObject(vechAssignLoader, null)
 
     }
 

@@ -1,7 +1,6 @@
 package com.example.listing.Manual_Assigment;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -19,43 +18,12 @@ import com.example.listing.models.Vehicle;
 
 import java.util.ArrayList;
 
-public class ChosenVehicleCardAdapter extends RecyclerView.Adapter<ChosenVehicleCardAdapter.ViewHolder>  {
+public class ChosenVehicleCardAdapter extends RecyclerView.Adapter<ChosenVehicleCardAdapter.ViewHolder> {
     ArrayList<Vehicle> Vehicle;
     Context context;
 
     public ChosenVehicleCardAdapter(ArrayList<Vehicle> Vehicle) {
-        Log.d("Vehicle-newlist",Vehicle.size()+"");
         this.Vehicle = Vehicle;
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public ChosenVehicleCardItemBinding itemRowBinding;
-        public ChosenVehicleCardItemVertBinding itemVertBinding;
-        public TextView chosenDriverName;
-        public RecyclerView loadersList;
-
-        public ViewHolder(@NonNull ChosenVehicleCardItemBinding itemRowBinding){
-            super(itemRowBinding.getRoot());
-            this.itemRowBinding = itemRowBinding;
-            chosenDriverName = itemRowBinding.getRoot().findViewById(R.id.chosen_vehicles_card_tv);
-            loadersList = itemRowBinding.loadersListCard;
-        }
-
-        public ViewHolder(ChosenVehicleCardItemVertBinding itemVertBinding) {
-            super(itemVertBinding.getRoot());
-            this.itemVertBinding = itemVertBinding;
-            chosenDriverName = itemVertBinding.textView6;
-            loadersList = itemVertBinding.loadersListCardVert;
-        }
-
-        public void bind(Vehicle vehicle) {
-            Log.i("Chosencardadapter", "chosen");
-            itemRowBinding.setChosenDriver(vehicle);
-            itemRowBinding.executePendingBindings();
-//
-//            itemVertBinding.setChosenDriver(vehicle);
-//            itemVertBinding.executePendingBindings();
-        }
     }
 
     @NonNull
@@ -90,11 +58,39 @@ public class ChosenVehicleCardAdapter extends RecyclerView.Adapter<ChosenVehicle
 //        holder.itemVertBinding.loadersListCardVert.setAdapter(configuredLoaderListAdapter);
 
 
-
     }
 
     @Override
     public int getItemCount() {
         return Vehicle.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public ChosenVehicleCardItemBinding itemRowBinding;
+        public ChosenVehicleCardItemVertBinding itemVertBinding;
+        public TextView chosenDriverName;
+        public RecyclerView loadersList;
+
+        public ViewHolder(@NonNull ChosenVehicleCardItemBinding itemRowBinding) {
+            super(itemRowBinding.getRoot());
+            this.itemRowBinding = itemRowBinding;
+            chosenDriverName = itemRowBinding.getRoot().findViewById(R.id.chosen_vehicles_card_tv);
+            loadersList = itemRowBinding.loadersListCard;
+        }
+
+        public ViewHolder(ChosenVehicleCardItemVertBinding itemVertBinding) {
+            super(itemVertBinding.getRoot());
+            this.itemVertBinding = itemVertBinding;
+            chosenDriverName = itemVertBinding.textView6;
+            loadersList = itemVertBinding.loadersListCardVert;
+        }
+
+        public void bind(Vehicle vehicle) {
+            itemRowBinding.setChosenDriver(vehicle);
+            itemRowBinding.executePendingBindings();
+//
+//            itemVertBinding.setChosenDriver(vehicle);
+//            itemVertBinding.executePendingBindings();
+        }
     }
 }

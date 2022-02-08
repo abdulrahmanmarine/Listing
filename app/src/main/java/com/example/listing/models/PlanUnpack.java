@@ -8,19 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY,getterVisibility = JsonAutoDetect.Visibility.NONE,
-        setterVisibility = JsonAutoDetect.Visibility.NONE,creatorVisibility = JsonAutoDetect.Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PlanUnpack {
     List<Plan> items = new ArrayList<>();
-
-    public List<Plan> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Plan> items) {
-        this.items = items;
-    }
 
     public PlanUnpack() {
 
@@ -30,10 +22,16 @@ public class PlanUnpack {
         this.items = items;
     }
 
+    public List<Plan> getItems() {
+        return items;
+    }
 
+    public void setItems(List<Plan> items) {
+        this.items = items;
+    }
 
     @JsonProperty("d")
-    public void unpackd(Map<String,List<Plan>> d) {
+    public void unpackd(Map<String, List<Plan>> d) {
         if (d.get("results") != null) {
             items = d.get("results");
         }

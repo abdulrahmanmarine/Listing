@@ -17,116 +17,83 @@ import java.io.Serializable;
 
 
 @Entity(tableName = "SAPNote")
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY,getterVisibility = JsonAutoDetect.Visibility.NONE,
-        setterVisibility = JsonAutoDetect.Visibility.NONE,creatorVisibility = JsonAutoDetect.Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public
 class SAPNote implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    @Expose(serialize = false,deserialize = false)
+    @Expose(serialize = false, deserialize = false)
     @NonNull
     @JsonIgnore
     public int NotesID;
 
-    @Expose(serialize = false,deserialize = false)
+    @Expose(serialize = false, deserialize = false)
     @ColumnInfo(name = "MaterialOfflineID")
     @JsonIgnore
-    public  String MaterialOfflineID;
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    @Expose(serialize = false,deserialize = false)
+    public String MaterialOfflineID;
+    @Expose(serialize = false, deserialize = false)
     @ColumnInfo(name = "status")
     @JsonIgnore
-    public  Boolean status=true;
-
-    @ColumnInfo(name ="ZuphrMjahr")
+    public Boolean status = true;
+    @ColumnInfo(name = "ZuphrMjahr")
     @JsonProperty("ZuphrMjahr")
     @SerializedName("ZuphrMjahr")
-    public String ZuphrMjahr="";
-
-    @ColumnInfo(name ="ZuphrType")
+    public String ZuphrMjahr = "";
+    @ColumnInfo(name = "ZuphrType")
     @JsonProperty("ZuphrType")
     @SerializedName("ZuphrType")
-    public String ZuphrType= "";
-
-    @ColumnInfo(name ="ZuphrNoteId")
+    public String ZuphrType = "";
+    @ColumnInfo(name = "ZuphrNoteId")
     @JsonProperty("ZuphrNoteId")
     @SerializedName("ZuphrNoteId")
-    public String ZuphrNoteId ="";
-
-    @ColumnInfo(name ="ZuphrContent")
+    public String ZuphrNoteId = "";
+    @ColumnInfo(name = "ZuphrContent")
     @JsonProperty("ZuphrContent")
     @SerializedName("ZuphrContent")
-    public String ZuphrContent =null;
-
+    public String ZuphrContent = null;
     @SerializedName("ZuphrId1")
-    @ColumnInfo(name ="ZuphrId1")
+    @ColumnInfo(name = "ZuphrId1")
     @JsonProperty("ZuphrId1")
-    public String ZuphrId1 =null;
-
-
-
+    public String ZuphrId1 = null;
     @SerializedName("ZuphrId2")
-    @ColumnInfo(name ="ZuphrId2")
+    @ColumnInfo(name = "ZuphrId2")
     @JsonProperty("ZuphrId2")
-    public String ZuphrId2 =null;
-
-
-
+    public String ZuphrId2 = null;
     @SerializedName("ZuphrId3")
-    @ColumnInfo(name ="ZuphrId3")
+    @ColumnInfo(name = "ZuphrId3")
     @JsonProperty("ZuphrId3")
-    public String ZuphrId3 =null;
-
+    public String ZuphrId3 = null;
     @SerializedName("ZuphrContentType")
-    @ColumnInfo(name ="ZuphrContentType")
+    @ColumnInfo(name = "ZuphrContentType")
     @JsonProperty("ZuphrContentType")
-    public String ZuphrContentType =null;
-
-
+    public String ZuphrContentType = null;
     @SerializedName("Lat")
-    @ColumnInfo(name ="Lat")
+    @ColumnInfo(name = "Lat")
     @JsonProperty("Lat")
-    public String Lat =null;
-
-
+    public String Lat = null;
     @SerializedName("Lon")
-    @ColumnInfo(name ="Lon")
+    @ColumnInfo(name = "Lon")
     @JsonProperty("Lon")
-    public String Lon =null;
-
+    public String Lon = null;
     @SerializedName("ZuphrFpName")
-    @ColumnInfo(name ="ZuphrFpName")
+    @ColumnInfo(name = "ZuphrFpName")
     @JsonProperty("ZuphrFpName")
-    public String ZuphrFpName =null;
-
-
+    public String ZuphrFpName = null;
     @SerializedName("ZuphrFpTime")
-    @ColumnInfo(name ="ZuphrFpTime")
+    @ColumnInfo(name = "ZuphrFpTime")
     @JsonProperty("ZuphrFpTime")
-    public String ZuphrFpTime =null;
-
-
+    public String ZuphrFpTime = null;
     @SerializedName("ZuphrFpDate")
-    @ColumnInfo(name ="ZuphrFpDate")
+    @ColumnInfo(name = "ZuphrFpDate")
     @JsonProperty("ZuphrFpDate")
-    public String ZuphrFpDate =null;
+    public String ZuphrFpDate = null;
 
 
     public SAPNote() {
     }
 
-    public int getNotesID() {
-        return NotesID;
-    }
 
     public SAPNote(String zuphrMjahr, String zuphrType, String zuphrNoteId, String zuphrContent,
                    String zuphrId1, String zuphrId2, String zuphrId3, String zuphrContentType,
@@ -146,9 +113,17 @@ class SAPNote implements Serializable {
         ZuphrFpDate = zuphrFpDate;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
 
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 
-
+    public int getNotesID() {
+        return NotesID;
+    }
 
     public void setNotesID(int notesID) {
         NotesID = notesID;

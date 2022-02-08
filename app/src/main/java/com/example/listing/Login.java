@@ -21,7 +21,6 @@ import com.example.listing.Utils.Loginsession;
 import com.example.listing.ViewModelsFactory.LoginView_ModelFactory;
 import com.example.listing.databinding.ActivityLoginBinding;
 import com.example.listing.models.User;
-import com.example.listing.notes.pictureMode;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Login extends AppCompatActivity {
@@ -115,7 +114,6 @@ public class Login extends AppCompatActivity {
         builder.setView(input);
 
 
-        input.setText("T_CBAD_PPLN");
 // Set up the buttons
         builder.setPositiveButton("OK", (dialog, which) -> {
             m_Text = input.getText().toString().toUpperCase();
@@ -134,8 +132,6 @@ public class Login extends AppCompatActivity {
     public void login() {
         Error_Msg.setVisibility(View.INVISIBLE);
         saveMode("online");
-        binding.username.setText("T_CBAD_PPLN");
-        binding.password.setText("Welcome.3");
 
         User user = new User(binding.username.getText().toString(), binding.password.getText().toString());
         if (binding.username.getText().toString().isEmpty() || binding.password.getText().toString().isEmpty()) {
@@ -171,7 +167,6 @@ public class Login extends AppCompatActivity {
         editor.apply();
         editor.commit();
     }
-
 
 
 }

@@ -9,27 +9,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 @Entity(tableName = "DeviceTable")
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY,getterVisibility = JsonAutoDetect.Visibility.NONE,
-        setterVisibility = JsonAutoDetect.Visibility.NONE,creatorVisibility = JsonAutoDetect.Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Device implements Serializable {
+
+    @JsonProperty("DevId")
+    String Devid;
+    @JsonProperty("Name")
+    String Name;
+    @JsonProperty("Macid")
+    String Macid;
+    @JsonProperty("Sno")
+    String Sno;
+
 
     public Device() {
 
     }
-    @JsonProperty("DevId")
-    String Devid;
-
-    @JsonProperty("Name")
-    String Name;
-
-
-    @JsonProperty("Macid")
-    String Macid;
-
-
-    @JsonProperty("Sno")
-    String Sno;
 
     public Device(String devid, String name, String macid, String sno) {
         Devid = devid;

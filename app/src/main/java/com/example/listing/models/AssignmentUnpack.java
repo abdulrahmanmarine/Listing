@@ -9,6 +9,7 @@ public class AssignmentUnpack {
     public AssignmentUnpack() {
 
     }
+
     public MatrialDispatching getAssignment() {
         return Assignment;
     }
@@ -16,7 +17,7 @@ public class AssignmentUnpack {
     @JsonProperty("d")
     public void unpackd(MatrialDispatching d) {
 
-        Assignment =d;
+        Assignment = d;
     }
 
 }

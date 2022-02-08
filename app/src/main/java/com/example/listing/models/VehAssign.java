@@ -26,94 +26,67 @@ public class VehAssign implements Serializable {
     @NonNull
     @JsonIgnore
     public int Dispatch;
-
+    @JsonIgnore
+    @ColumnInfo(name = "AddToDB")
+    public boolean addtoDB = true;
     @JsonProperty("ZuphrLpid")
     @ColumnInfo(name = "ZuphrLpid")
     String ZuphrLpid;
-
     @JsonProperty("ZuphrMjahr")
     @ColumnInfo(name = "ZuphrMjahr")
     String ZuphrMjahr;
-
     @JsonProperty("ZuphrMblpo")
     @ColumnInfo(name = "ZuphrMblpo")
     String ZuphrMblpo;
-
-
     @JsonProperty("ZuphrStgid")
     @ColumnInfo(name = "ZuphrStgid")
     String ZuphrStgid;
-
     @JsonProperty("ZuphrMatnr")
     @ColumnInfo(name = "ZuphrMatnr")
     String ZuphrMatnr;
-
     @JsonProperty("ZuphrReqid")
     @ColumnInfo(name = "ZuphrReqid")
     String ZuphrReqid;
-
     @JsonProperty("ZuphrReqitm")
     @ColumnInfo(name = "ZuphrReqitm")
     String ZuphrReqitm;
-
-
     @JsonProperty("ZuphrShortxt")
     @ColumnInfo(name = "ZuphrShortxt")
     String ZuphrShortxt;
-
-
     @JsonProperty("ZuphrDescrip")
     @ColumnInfo(name = "ZuphrDescrip")
     String ZuphrDescrip;
-
-
     @JsonProperty("ZuphrOffshore")
     @ColumnInfo(name = "ZuphrOffshore")
     String ZuphrOffshore;
-
-
     @JsonProperty("ZuphrDriverid")
     @ColumnInfo(name = "ZuphrDriverid")
     String ZuphrDriverid;
-
     @JsonProperty("ZUphrDrvrName")
     @ColumnInfo(name = "ZUphrDrvrName")
     String ZuphrDriverName;
-
-
     @JsonProperty("ZuphrVehid")
     @ColumnInfo(name = "ZuphrVehid")
     String ZuphrVehid;
-
     @JsonProperty("ZphrVehType")
     @ColumnInfo(name = "ZphrVehType")
     String ZuphrVehType;
-
-
     @JsonProperty("ZuphrLoad")
     @ColumnInfo(name = "ZuphrLoad")
     String ZuphrLoad;
-
     @JsonProperty("ZuphrUload")
     @ColumnInfo(name = "ZuphrUload")
     String ZuphrUload;
-
     @JsonProperty("ZuphrNfound")
     @ColumnInfo(name = "ZuphrNfound")
     String ZuphrNfound;
-
-
     @JsonProperty("ZuphrProc")
     @ColumnInfo(name = "ZuphrProc")
     String ZuphrProc;
 
-    @JsonIgnore
-    @ColumnInfo(name = "AddToDB")
-    public boolean addtoDB=true;
-
-    public VehAssign( String zuphrLpid, String zuphrMjahr, String zuphrMblpo, String zuphrStgid,
+    public VehAssign(String zuphrLpid, String zuphrMjahr, String zuphrMblpo, String zuphrStgid,
                      String zuphrMatnr, String zuphrReqid, String zuphrReqitm, String zuphrShortxt,
-                     String zuphrDescrip, String zuphrOffshore, String zuphrDriverid,String DriverName, String zuphrVehid,String VechType,
+                     String zuphrDescrip, String zuphrOffshore, String zuphrDriverid, String DriverName, String zuphrVehid, String VechType,
                      String zuphrLoad, String zuphrUload, String zuphrNfound, String zuphrProc) {
         ZuphrLpid = zuphrLpid;
         ZuphrMjahr = zuphrMjahr;
@@ -126,9 +99,9 @@ public class VehAssign implements Serializable {
         ZuphrDescrip = zuphrDescrip;
         ZuphrOffshore = zuphrOffshore;
         ZuphrDriverid = zuphrDriverid;
-        ZuphrDriverName=DriverName;
+        ZuphrDriverName = DriverName;
         ZuphrVehid = zuphrVehid;
-        ZuphrVehType=VechType;
+        ZuphrVehType = VechType;
         ZuphrLoad = zuphrLoad;
         ZuphrUload = zuphrUload;
         ZuphrNfound = zuphrNfound;
@@ -231,24 +204,32 @@ public class VehAssign implements Serializable {
         return ZuphrDriverid;
     }
 
-    public String getZuphrDriverName() { return ZuphrDriverName; }
-
-    public void setZuphrDriverName(String zuphrDriverName) { ZuphrDriverName = zuphrDriverName; }
-
     public void setZuphrDriverid(String zuphrDriverid) {
         ZuphrDriverid = zuphrDriverid;
+    }
+
+    public String getZuphrDriverName() {
+        return ZuphrDriverName;
+    }
+
+    public void setZuphrDriverName(String zuphrDriverName) {
+        ZuphrDriverName = zuphrDriverName;
     }
 
     public String getZuphrVehid() {
         return ZuphrVehid;
     }
 
-    public String getZuphrVehType() { return ZuphrVehType; }
-
-    public void setZuphrVehType(String zuphrVehType) { ZuphrVehType = zuphrVehType; }
-
     public void setZuphrVehid(String zuphrVehid) {
         ZuphrVehid = zuphrVehid;
+    }
+
+    public String getZuphrVehType() {
+        return ZuphrVehType;
+    }
+
+    public void setZuphrVehType(String zuphrVehType) {
+        ZuphrVehType = zuphrVehType;
     }
 
     public String getZuphrLoad() {
@@ -288,6 +269,7 @@ public class VehAssign implements Serializable {
     public boolean isAddedtoDB() {
         return addtoDB;
     }
+
     @JsonIgnore
     @Ignore
     public void AddtoDB(boolean addtoDB) {

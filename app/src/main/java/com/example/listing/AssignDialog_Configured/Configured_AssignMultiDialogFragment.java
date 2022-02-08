@@ -39,20 +39,17 @@ import java.util.List;
 
 //import com.example.listing.Kotlin.pictureMode;
 
-public class Configured_AssignMultiDialogFragment extends DialogFragment{
-
-    private static int Mpostion;
+public class Configured_AssignMultiDialogFragment extends DialogFragment {
 
     //material object
     private static final String MATERIAL_2 = "materialParam";
+    private static int Mpostion;
+    PlansDataModel model;
+    Context context = getContext();
     private ArrayList<Driver> driversList = new ArrayList<>();
     private ArrayList<Driver> driverList2 = new ArrayList<>();
     private ArrayList<Vehicle> vehiclesList = new ArrayList<>();
     private Material materialParam;
-    PlansDataModel model;
-
-    Context context = getContext();
-
     private ArrayList<Vehicle> chosenVehicles = new ArrayList<>();
 
 
@@ -63,9 +60,17 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
 
     private ConfiguredChosenAdapter configuredChosenAdapter;
 
+    public static Configured_AssignMultiDialogFragment newInstance(int position, Material materialParam) {
+        Configured_AssignMultiDialogFragment fragment = new Configured_AssignMultiDialogFragment();
+        Bundle args = new Bundle();
 
-    public void onStart()
-    {
+        args.putSerializable(MATERIAL_2, materialParam);
+        Mpostion = position;
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public void onStart() {
         super.onStart();
 
         // safety check
@@ -76,7 +81,7 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
 
-        getDialog().getWindow().setLayout((5 * width)/7, (5 * height)/5);
+        getDialog().getWindow().setLayout((5 * width) / 7, (5 * height) / 5);
         getDialog().getWindow().setBackgroundDrawable(ContextCompat.getDrawable(getActivity().getBaseContext(), R.drawable.dialogborder));
 
         // ... other stuff you want to do in your onStart() method
@@ -85,17 +90,6 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-    }
-
-
-    public static Configured_AssignMultiDialogFragment newInstance(int position, Material materialParam){
-        Configured_AssignMultiDialogFragment fragment = new Configured_AssignMultiDialogFragment();
-        Bundle args = new Bundle();
-
-        args.putSerializable(MATERIAL_2, materialParam);
-        Mpostion=position;
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Nullable
@@ -108,10 +102,10 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        model=new ViewModelProvider(getActivity()).get(PlansDataModel.class);
+        model = new ViewModelProvider(getActivity()).get(PlansDataModel.class);
 
 
-       vehiclesList= (ArrayList<Vehicle>) model.MastervehiclesList.getValue();
+        vehiclesList = (ArrayList<Vehicle>) model.MastervehiclesList.getValue();
 
         AddButtonClicked addButtonClicked = pos -> {
             chosenVehicles.add(vehiclesList.get(pos));
@@ -138,7 +132,6 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
         RecyclerView configuredChosenList = view.findViewById(R.id.chosen_list);
 
 
-
         Driver driver1 = new Driver("3", " Abdulrahman alsalim", "Heavy Vehicle Driving",
                 "456324", "Saudi", "91 66778899", "driver.test@gmail.com");
         Driver driver2 = new Driver("2", "Ahmed Alghamdi", "Small Vehicle Driving",
@@ -162,18 +155,17 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
         driverList2.add(driver1);
 
 
-
-        Vehicle vehicle1 = new Vehicle("3","Medium", "Truck", "456234", "1000",
+        Vehicle vehicle1 = new Vehicle("3", "Medium", "Truck", "456234", "1000",
                 "Red", "2012", "DDMMYYYY", "123456", driversList);
-        Vehicle vehicle2 = new Vehicle("2","Medium", "Crane", "456234", "1000",
+        Vehicle vehicle2 = new Vehicle("2", "Medium", "Crane", "456234", "1000",
                 "Red", "2012", "DDMMYYYY", "123456", driverList2);
-        Vehicle vehicle3 = new Vehicle("2","Medium", "Two Wheel", "456234", "1000",
+        Vehicle vehicle3 = new Vehicle("2", "Medium", "Two Wheel", "456234", "1000",
                 "Red", "2012", "DDMMYYYY", "123456", driversList);
-        Vehicle vehicle4 = new Vehicle("2","Medium", "Four Wheel", "456234", "1000",
+        Vehicle vehicle4 = new Vehicle("2", "Medium", "Four Wheel", "456234", "1000",
                 "Red", "2012", "DDMMYYYY", "123456", driversList);
-        Vehicle vehicle5 = new Vehicle("2","Medium", "two wheel fork lift", "456234", "1000",
+        Vehicle vehicle5 = new Vehicle("2", "Medium", "two wheel fork lift", "456234", "1000",
                 "Red", "2012", "DDMMYYYY", "123456", driversList);
-        Vehicle vehicle6 = new Vehicle("2","Medium", "Huge Truck", "456234", "1000",
+        Vehicle vehicle6 = new Vehicle("2", "Medium", "Huge Truck", "456234", "1000",
                 "Red", "2012", "DDMMYYYY", "123456", driversList);
         vehiclesList.add(vehicle1);
         vehiclesList.add(vehicle2);
@@ -194,8 +186,6 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
         materialName.setText(materialParam.getZuphrShortxt());
 
 
-
-
         chosenVehicles = (ArrayList<Vehicle>) materialParam.getVehicles();
 
         configuredChosenAdapter = new ConfiguredChosenAdapter(chosenVehicles, vehicleDeleteButtonClicked);
@@ -205,8 +195,8 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
 //FOR IMAGE
         ImageView pic = view.findViewById(R.id.material_image);
         Bitmap decodedByte = null;
-        if(materialParam.getZuphrContents().length()> 100) {
-            String img =materialParam.getZuphrContents().replace("data:image/jpeg;base64,","");
+        if (materialParam.getZuphrContents().length() > 100) {
+            String img = materialParam.getZuphrContents().replace("data:image/jpeg;base64,", "");
             byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
             decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             pic.setImageBitmap(decodedByte);
@@ -217,28 +207,27 @@ public class Configured_AssignMultiDialogFragment extends DialogFragment{
         pic.setOnClickListener(view1 -> {
                     AppCompatActivity activity = (AppCompatActivity) requireContext();
                     pictureMode myFragment = new pictureMode(finalImage);
-                    activity.getSupportFragmentManager().beginTransaction().add(myFragment,"Picture").commit();
+                    activity.getSupportFragmentManager().beginTransaction().add(myFragment, "Picture").commit();
                 }
         );
-
 
 
         doneBut.setOnClickListener(v -> {
             materialParam.setVehicles(chosenVehicles);
 
-           Material Material= model.MatrialsList.getValue().get(Mpostion);
-            List<Material> list =model.MatrialsList.getValue();
+            Material Material = model.MatrialsList.getValue().get(Mpostion);
+            List<Material> list = model.MatrialsList.getValue();
             Material.setVehicles(chosenVehicles);
-            list.set(Mpostion,Material);
-            Plan plan= model.plan.getValue();
+            list.set(Mpostion, Material);
+            Plan plan = model.plan.getValue();
             plan.setPlanToItems(list);
             model.plan.setValue(plan);
 
 
-            List<Plan> plans=model.Plans.getValue();
-            for(int i=0;i<model.Plans.getValue().size();i++){
-                if(model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())){
-                    plans.set(i,model.plan.getValue());
+            List<Plan> plans = model.Plans.getValue();
+            for (int i = 0; i < model.Plans.getValue().size(); i++) {
+                if (model.plan.getValue().getZuphrLpid().equals(model.Plans.getValue().get(i).getZuphrLpid())) {
+                    plans.set(i, model.plan.getValue());
                     model.Plans.setValue(plans);
                 }
             }

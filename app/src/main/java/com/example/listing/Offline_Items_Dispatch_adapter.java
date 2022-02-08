@@ -1,24 +1,24 @@
 package com.example.listing;
 
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.util.Base64;
-        import android.view.LayoutInflater;
-        import android.view.ViewGroup;
-        import android.widget.ImageView;
-        import android.widget.LinearLayout;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
-        import androidx.annotation.NonNull;
-        import androidx.databinding.DataBindingUtil;
-        import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
-        import com.example.listing.databinding.OfflineItemsVehassignCardBinding;
-        import com.example.listing.models.Material;
-        import com.example.listing.models.VehAssign;
+import com.example.listing.databinding.OfflineItemsVehassignCardBinding;
+import com.example.listing.models.Material;
+import com.example.listing.models.VehAssign;
 
-        import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.NotNull;
 
-        import java.util.List;
+import java.util.List;
 
 
 public class Offline_Items_Dispatch_adapter extends RecyclerView.Adapter<Offline_Items_Dispatch_adapter.ViewHolder>
@@ -29,11 +29,10 @@ public class Offline_Items_Dispatch_adapter extends RecyclerView.Adapter<Offline
     private final List<Material> materials;
 
 
-
-    public Offline_Items_Dispatch_adapter(List<VehAssign> VehAssignList, List<Material> materials , Offlineitem_updatelist onCallBack) {
+    public Offline_Items_Dispatch_adapter(List<VehAssign> VehAssignList, List<Material> materials, Offlineitem_updatelist onCallBack) {
         this.VehAssignList = VehAssignList;
         this.onCallBack = onCallBack;
-        this.materials=materials;
+        this.materials = materials;
 
 
     }
@@ -66,7 +65,7 @@ public class Offline_Items_Dispatch_adapter extends RecyclerView.Adapter<Offline
     @Override
     public void onBindViewHolder(@NonNull Offline_Items_Dispatch_adapter.ViewHolder holder, int position) {
         VehAssign VehAssign = VehAssignList.get(position);
-        holder.bind(VehAssign,materials);
+        holder.bind(VehAssign, materials);
         holder.Delete.setOnClickListener(v -> {
             VehAssignList.remove(position);
             notifyDataSetChanged();
@@ -99,14 +98,14 @@ public class Offline_Items_Dispatch_adapter extends RecyclerView.Adapter<Offline
 
         public void bind(VehAssign obj, List<Material> MtrList) {
 
-                String Content="";
+            String Content = "";
 
-                for(int i=0 ;i<MtrList.size();i++){
+            for (int i = 0; i < MtrList.size(); i++) {
 
-                        if(MtrList.get(i).getZuphrMblpo().equalsIgnoreCase(obj.getZuphrMblpo())){
-                                Content=MtrList.get(i).getZuphrContents();
-                        }
+                if (MtrList.get(i).getZuphrMblpo().equalsIgnoreCase(obj.getZuphrMblpo())) {
+                    Content = MtrList.get(i).getZuphrContents();
                 }
+            }
             if (!Content.isEmpty()) {
                 int height = itemRowBinding.MatrialImage.getLayoutParams().height;
                 int width = itemRowBinding.MatrialImage.getLayoutParams().width;

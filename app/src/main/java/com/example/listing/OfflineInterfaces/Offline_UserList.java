@@ -10,17 +10,15 @@ import androidx.room.Query;
 public interface Offline_UserList {
 
 
-
     @Query("SELECT UserId FROM UserTable WHERE UserId =:id")
     LiveData<com.example.listing.models.User> GetUser(String id);
-
 
 
     @Insert
     void insertUser(com.example.listing.models.User user);
 
     @Query("DELETE FROM UserTable")
-     void nukeTable();
+    void nukeTable();
 
 
 }

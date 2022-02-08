@@ -9,7 +9,7 @@ import com.example.listing.DataViewModel.LoginView_Model;
 
 import org.jetbrains.annotations.NotNull;
 
-public class LoginView_ModelFactory  implements ViewModelProvider.Factory  {
+public class LoginView_ModelFactory implements ViewModelProvider.Factory {
 
     private final Application mApplication;
 
@@ -23,7 +23,7 @@ public class LoginView_ModelFactory  implements ViewModelProvider.Factory  {
     @Override
     public <T extends ViewModel> T create(@NotNull Class<T> modelClass) {
 
-            return (T) new LoginView_Model(mApplication);
+        return (T) new LoginView_Model(mApplication);
 
     }
 }

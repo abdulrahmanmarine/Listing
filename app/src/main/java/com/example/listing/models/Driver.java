@@ -15,55 +15,57 @@ import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 
 @Entity(tableName = "DriverTable")
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY,getterVisibility = JsonAutoDetect.Visibility.NONE,
-        setterVisibility = JsonAutoDetect.Visibility.NONE,creatorVisibility = JsonAutoDetect.Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Driver implements Serializable, Comparable<Driver>{
+public class Driver implements Serializable, Comparable<Driver> {
 
-    @Expose(serialize = false,deserialize = false)
+    @Expose(serialize = false, deserialize = false)
     @PrimaryKey(autoGenerate = true)
     @NonNull
     @JsonIgnore
     public int DriverId;
-
-
+    @Expose(serialize = false, deserialize = false)
+    @ColumnInfo(name = "MaterialOfflineID")
+    @JsonIgnore
+    public String VechileId;
     @JsonProperty("ZuphrDriverid")
     @ColumnInfo(name = "ZuphrDriverid")
     String ZuphrDriverid;
-
     @JsonProperty("ZuphrDrvrName")
     @ColumnInfo(name = "ZuphrDrvrName")
     String ZuphrdrvrName;
-
-
     @JsonProperty("ZuphrSpecial")
     @ColumnInfo(name = "ZuphrSpecial")
     String ZuphrSpecial;
-
-
     @JsonProperty("ZuphrLicNo")
     @ColumnInfo(name = "ZuphrLicNo")
     String ZuphrLicNo;
-
     @JsonProperty("ZuphrNation")
     @ColumnInfo(name = "ZuphrNation")
     String ZuphrNation;
-
-
     @JsonProperty("Phonenumber")
     @ColumnInfo(name = "Phonenumber")
     String Phonenumber;
-
-
     @JsonProperty("ZuphrEmail")
     @ColumnInfo(name = "ZuphrEmail")
     String ZuphrEmail;
 
-    @Expose(serialize = false,deserialize = false)
-    @ColumnInfo(name = "MaterialOfflineID")
-    @JsonIgnore
-    public  String VechileId;
 
+    public Driver(String zuphrDriverid, String zuphrdrvrName, String zuphrSpecial,
+                  String zuphrLicNo, String zuphrNation, String phonenumber, String zuphrEmail) {
+        ZuphrDriverid = zuphrDriverid;
+        ZuphrdrvrName = zuphrdrvrName;
+        ZuphrSpecial = zuphrSpecial;
+        ZuphrLicNo = zuphrLicNo;
+        ZuphrNation = zuphrNation;
+        Phonenumber = phonenumber;
+        ZuphrEmail = zuphrEmail;
+    }
+
+    public Driver() {
+
+    }
 
     public String getZuphrDriverid() {
         return ZuphrDriverid;
@@ -121,21 +123,6 @@ public class Driver implements Serializable, Comparable<Driver>{
         ZuphrEmail = zuphrEmail;
     }
 
-    public Driver(String zuphrDriverid, String zuphrdrvrName, String zuphrSpecial,
-                  String zuphrLicNo, String zuphrNation, String phonenumber, String zuphrEmail) {
-        ZuphrDriverid = zuphrDriverid;
-        ZuphrdrvrName = zuphrdrvrName;
-        ZuphrSpecial = zuphrSpecial;
-        ZuphrLicNo = zuphrLicNo;
-        ZuphrNation = zuphrNation;
-        Phonenumber = phonenumber;
-        ZuphrEmail = zuphrEmail;
-    }
-
-    public Driver() {
-
-    }
-
     public String getVechileId() {
         return VechileId;
     }
@@ -146,11 +133,11 @@ public class Driver implements Serializable, Comparable<Driver>{
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        if(obj == null){
+        if (obj == null) {
             return false;
         }
         final Driver other = (Driver) obj;
-        if(this.getZuphrDriverid().equals(other.ZuphrDriverid)){
+        if (this.getZuphrDriverid().equals(other.ZuphrDriverid)) {
             return true;
         }
         return false;

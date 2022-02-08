@@ -18,7 +18,6 @@ import com.example.listing.models.Vehicle;
 import java.util.List;
 
 
-
 public class ConfiguredLoaderAdapter extends RecyclerView.Adapter<ConfiguredLoaderAdapter.ViewHolder> {
     private List<Vehicle> vehicles;
     private AddButtonClicked addListener;
@@ -30,7 +29,6 @@ public class ConfiguredLoaderAdapter extends RecyclerView.Adapter<ConfiguredLoad
         this.addListener = addListener;
         this.context = context;
     }
-
 
 
     @NonNull
@@ -59,7 +57,7 @@ public class ConfiguredLoaderAdapter extends RecyclerView.Adapter<ConfiguredLoad
         return vehicles.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public AssignConfiguredListItemBinding itemRowBinding;
         public RecyclerView configuredList;
         public RecyclerView loaderList;

@@ -3,7 +3,6 @@ package com.example.listing.Kotlin
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -30,16 +29,16 @@ import com.example.listing.models.VehAssign
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
-class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragmentClickListener
-, Offlineitem_updatelist {
+class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragmentClickListener,
+    Offlineitem_updatelist {
 
     var dialog: DialogFragment? = null
     var dialogManual: DialogFragment? = null
     private var flag: Boolean = true
     var materialpos = 0
     var po = 0
-    lateinit var model :PlansDataModel
-    lateinit var logout :FloatingActionButton
+    lateinit var model: PlansDataModel
+    lateinit var logout: FloatingActionButton
     var main_layout: ConstraintLayout? = null
 
 
@@ -52,20 +51,16 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
             PlansDataModel::class.java
         )
         model.getplansDispatcher(application, this)
-        model.getdrivers( this)
-        model.getVechiles( this)
-        model.UserRule.value=false
-        logout=findViewById(R.id.logout_button)
+        model.getdrivers(this)
+        model.getVechiles(this)
+        model.UserRule.value = false
+        logout = findViewById(R.id.logout_button)
 
 
-        main_layout=findViewById(R.id.mainlayout)
+        main_layout = findViewById(R.id.mainlayout)
 
         model.Plans.observe(this, { Plans: List<Plan?>? ->
-            for (i in 0..1) {
-                if (Plans != null) {
-                    Log.i("for test", Plans[i]!!.zuphrVessel + "")
-                }
-            }
+
             buildRecycler(
                 (Plans as ArrayList<Plan?>?)!!
 
@@ -75,7 +70,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
 
         logout.setOnClickListener {
-            Loginsession.getInstance().user=null
+            Loginsession.getInstance().user = null
             val intent = Intent(applicationContext, Login::class.java)
             startActivity(intent)
         }
@@ -106,7 +101,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
 
     override fun onItemClick(plan: Plan?, pos: Int) {
-     //  model.getDispatchMtr(plan?.ZuphrLpid, this)
+        //  model.getDispatchMtr(plan?.ZuphrLpid, this)
 
         Loginsession.getInstance().setOfflineflag(true)
         model.offlineDispatchItems(this, plan?.ZuphrLpid)
@@ -145,7 +140,7 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         val fra = supportFragmentManager
 
         dialog = Configured_AssignMultiDialogFragment.newInstance(matpos, material)
-        dialogManual=Manual_AssignMultiDialogFragment.newInstance(matpos, material)
+        dialogManual = Manual_AssignMultiDialogFragment.newInstance(matpos, material)
 
         (dialog as Configured_AssignMultiDialogFragment?)!!.setStyle(
             DialogFragment.STYLE_NORMAL,
@@ -156,9 +151,9 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
             R.style.CustomDialog
         )
 
-        if(!flag){
-           (dialog as Configured_AssignMultiDialogFragment?)!!.show(fra, "assign")
-        }else{
+        if (!flag) {
+            (dialog as Configured_AssignMultiDialogFragment?)!!.show(fra, "assign")
+        } else {
             (dialogManual as Manual_AssignMultiDialogFragment?)!!.show(fra, "assign")
         }
 
@@ -172,10 +167,8 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         val view = inflater.inflate(R.layout.offline_items_vehassign_view, main_layout, false)
         val DispatchAll = view.findViewById<Button>(R.id.DispatchAll)
         val Close = view.findViewById<ImageView>(R.id.closeBtn)
-       val recyclerView: RecyclerView = view.findViewById(R.id.items_list)
+        val recyclerView: RecyclerView = view.findViewById(R.id.items_list)
 
-
-        Log.i("list size:", vehAssigns?.size.toString() + "")
 
         val items_adapter = Offline_Items_Dispatch_adapter(
             vehAssigns,

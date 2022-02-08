@@ -47,7 +47,7 @@ public interface RetrofitInterface {
     Call<AssignmentUnpack> getDispatch(@Url String url);
 
     @POST("ImageHandlingSet/")
-    Call<ResponseBody> SaveImages(@Header("x-csrf-token") String token,@Body imagenode image);
+    Call<ResponseBody> SaveImages(@Header("x-csrf-token") String token, @Body imagenode image);
 
     @GET()
     Call<ImageList> getImageList(@Url String filter);
@@ -68,15 +68,15 @@ public interface RetrofitInterface {
     Call<ResponseBody> SaveVechile(@Body Vehicle vehicle, @Header("x-csrf-token") String Token);
 
     @POST("LpHdrSet")
-    Call<ResponseBody> Dispatch(@Body  MatrialDispatching matrialDispatch, @Header("x-csrf-token") String token);
+    Call<ResponseBody> Dispatch(@Body MatrialDispatching matrialDispatch, @Header("x-csrf-token") String token);
 
     @PUT("VehAssignSet({vehPara})")
     Call<ResponseBody> LoaderStatus(@Path("vehPara") String vehPara, @Body VechAssignLoader matrialDispatch, @Header("x-csrf-token") String token);
 
     @GET("VehAssignSet({vehPara})")
-    Call<ResponseBody> GetLoaderStatus(@Path("vehPara") String vehPara,@Header("x-csrf-token") String token);
+    Call<ResponseBody> GetLoaderStatus(@Path("vehPara") String vehPara, @Header("x-csrf-token") String token);
 
     @GET("UserInfoSet/")
     Call<Userunpack> DVClogin(@Header("x-csrf-token") String fetch);
 
-   }
+}

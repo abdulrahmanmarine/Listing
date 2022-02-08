@@ -15,41 +15,41 @@ import java.io.Serializable;
 
 
 @Entity(tableName = "ImageTable")
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY,getterVisibility = JsonAutoDetect.Visibility.NONE,
-        setterVisibility = JsonAutoDetect.Visibility.NONE,creatorVisibility = JsonAutoDetect.Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class imagenode implements Serializable {
 
 
-    @Expose(serialize = false,deserialize = false)
+    @Expose(serialize = false, deserialize = false)
     @PrimaryKey(autoGenerate = true)
     @NonNull
     @JsonIgnore
     public int Imageid;
 
-    @Expose(serialize = false,deserialize = false)
+    @Expose(serialize = false, deserialize = false)
     @ColumnInfo(name = "MaterialOfflineID")
     @JsonIgnore
-    public  String MaterialOfflineID;
+    public String MaterialOfflineID;
 
 
     @ColumnInfo(name = "ZuphrId")
     @JsonProperty("ZuphrId")
-    String ZuphrId ="";
+    String ZuphrId = "";
 
     @ColumnInfo(name = "AppPrefix")
     @JsonProperty("AppPrefix")
 
-    String AppPrefix ="STG";
+    String AppPrefix = "STG";
 
     @ColumnInfo(name = "Item")
     @JsonProperty("Item")
 
-    String Item ="";
+    String Item = "";
 
     @ColumnInfo(name = "Order")
     @JsonProperty("Order")
-    String Order ="";
+    String Order = "";
 
 
     @ColumnInfo(name = "Type")
@@ -65,20 +65,18 @@ public class imagenode implements Serializable {
     String Contents;
 
 
-
     public imagenode() {
 
     }
 
-    public imagenode(String zuphrStgid, String type, String name,String order ,String item,String contents) {
+    public imagenode(String zuphrStgid, String type, String name, String order, String item, String contents) {
         ZuphrId = zuphrStgid;
         Type = type;
         Name = name;
-        Item=item;
-        Order=order;
+        Item = item;
+        Order = order;
         Contents = contents;
     }
-
 
 
     public String getZuphrId() {

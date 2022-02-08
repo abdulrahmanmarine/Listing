@@ -33,16 +33,16 @@
 
         <activity android:name=".Kotlin.Loader"
             android:screenOrientation="sensorLandscape"
-            android:exported="true"/>
+             android:exported="false"/>
 
 
         <activity android:name=".Kotlin.Dispatcher"
             android:screenOrientation="sensorLandscape"
-            android:exported="true"/>
+             android:exported="false"/>
 
         <activity android:name=".Kotlin.Home"
             android:screenOrientation="sensorLandscape"
-            android:exported="true"/>
+             android:exported="false"/>
 
         <activity android:name=".Login"
             android:screenOrientation="sensorLandscape"

@@ -1,7 +1,6 @@
 package com.example.listing.Utils;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.example.listing.R;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -10,14 +9,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.CookieManager;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cookie;
-import okhttp3.CookieJar;
 import okhttp3.Headers;
-import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
@@ -33,21 +29,21 @@ public class RestApiClient {
 
     private static RestApiClient instance;
     private static Retrofit retrofit;
+    private static List<String> credns;
+    private static String kkey;
     private final RetrofitInterface retrofitInterface;
-    private  static List<String> credns;
-    private  static  String kkey;
 
 
     private RestApiClient(Application application) {
         retrofitInterface = Login(application);
     }
 
-    public static void initializer(Application application, List<String> creds,String key) {
+    public static void initializer(Application application, List<String> creds, String key) {
         if (instance == null) {
             synchronized (RestApiClient.class) {
-                credns=creds;
+                credns = creds;
                 instance = new RestApiClient(application);
-                kkey=key;
+                kkey = key;
 
 
             }
@@ -64,12 +60,12 @@ public class RestApiClient {
 
     static OkHttpClient headersInterceptors(Application application) {
 
-     //   String[] newDesc1=credns.get(0).split("=");
-    //    String[] test=newDesc1[1].split(";path");
+        //   String[] newDesc1=credns.get(0).split("=");
+        //    String[] test=newDesc1[1].split(";path");
 
         return new OkHttpClient.Builder()
                 .addInterceptor(new BasicAuth(application))
-                   .cookieJar(new JavaNetCookieJar(new CookieManager()))
+                .cookieJar(new JavaNetCookieJar(new CookieManager()))
 //                .cookieJar(new CookieJar() {
 //                    @Override
 //                    public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
@@ -117,8 +113,6 @@ public class RestApiClient {
     }
 
 
-
-
     public RetrofitInterface getRetrofitInterface() {
         return retrofitInterface;
     }
@@ -141,7 +135,7 @@ public class RestApiClient {
             Headers headers = chain.request().headers().newBuilder()
                     .add("Content-Type", application.getResources().getString(R.string.Content_Type))
                     .add("Accept", application.getResources().getString(R.string.accept))
-                    .add("Authorization",kkey)
+                    .add("Authorization", kkey)
                     .add("sap-client", application.getResources().getString(R.string.sapclient_25))
                     .add("User-Agent", application.getResources().getString(R.string.user_agent)).build();
 
@@ -150,7 +144,6 @@ public class RestApiClient {
             return chain.proceed(request);
         }
     }
-
 
 
     private static class ReceivedCookiesInterceptor implements Interceptor {
@@ -164,14 +157,12 @@ public class RestApiClient {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Response originalResponse = chain.proceed(chain.request());
-            Log.i("url call",originalResponse.request().url()+"");
 
             final Request copy = chain.request().newBuilder().build();
             final Buffer buffer = new Buffer();
 
-            if(copy.body()!=null) {
+            if (copy.body() != null) {
                 copy.body().writeTo(buffer);
-                Log.i("url body", buffer.readUtf8() + "");
             }
 
 
