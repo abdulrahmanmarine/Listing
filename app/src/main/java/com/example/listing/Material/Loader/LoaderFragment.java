@@ -277,8 +277,9 @@ public class LoaderFragment extends Fragment  {
                                 materialParam.getZuphrLpid(), materialParam.getZuphrMjahr(),
                                 materialParam.getZuphrMblpo(), materialParam.getVehAssignList().get(i).getZuphrDriverid(),
                                 materialParam.getVehAssignList().get(i).getZuphrVehid(),
-                                load, UNload, Nfound, Proc);
+                                load, UNload, Nfound, Proc,false);
 
+                    Vehassign.AddtoDB(false);
                         materialParam.getVehAssignList().set(i, Vehassign);
                         Vehassignment.add(Vehassign);
                         Log.i("vechassign-typeMTR-id", Vehassign.getZuphrDriverid());
@@ -295,6 +296,7 @@ public class LoaderFragment extends Fragment  {
 
                 Boolean flaglooded=true;
                 for (int i = 0; i < Vehassignment.size(); i++) {
+
 
                     model.AssignValueLoader(Vehassignment.get(i),this);
 

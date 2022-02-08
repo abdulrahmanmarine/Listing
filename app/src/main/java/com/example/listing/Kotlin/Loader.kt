@@ -27,7 +27,6 @@ import com.example.listing.ViewModelsFactory.PlansDataModelFactory
 import com.example.listing.models.Material
 import com.example.listing.models.Plan
 import com.example.listing.models.VechAssignLoader
-import com.example.listing.models.VehAssign
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class Loader : AppCompatActivity(), PlanClickListener ,  Offlineitem_updatelist_loader {
@@ -104,8 +103,6 @@ class Loader : AppCompatActivity(), PlanClickListener ,  Offlineitem_updatelist_
 
 
     override fun onItemClick(plan: Plan?, pos: Int) {
-        //model.getLoaderMtr(plan?.ZuphrLpid,  this)
-
         Loginsession.getInstance().setOfflineflag(true)
         model.offlineLoaderItems(this, plan?.ZuphrLpid)
         model.plan.value = plan
@@ -148,13 +145,18 @@ class Loader : AppCompatActivity(), PlanClickListener ,  Offlineitem_updatelist_
         val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.offline_items_vehassignloader_view, main_layout, false)
         val ChangeStatusAll = view.findViewById<Button>(R.id.ChangeStatusAll)
+        val DeleteAll = view.findViewById<Button>(R.id.ClearAllLoader)
         val Close = view.findViewById<ImageView>(R.id.closeBtn)
         val recyclerView: RecyclerView = view.findViewById(R.id.items_list)
 
 
         Log.i("list size:", vehassignloader?.size.toString() + "")
 
-        val items_adapter = Offline_Items_Loader_adapter(vehassignloader, model.plan.value?.planToItems, this)
+        val items_adapter = Offline_Items_Loader_adapter(
+            vehassignloader,
+            model.plan.value?.planToItems,
+            this
+        )
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.setLayoutManager(linearLayoutManager)
         recyclerView.setAdapter(items_adapter)
@@ -182,14 +184,28 @@ class Loader : AppCompatActivity(), PlanClickListener ,  Offlineitem_updatelist_
         }
 
 
+        DeleteAll.setOnClickListener { v: View? ->
+
+            popupWindow.dismiss()
+
+              model.deleteLoaderObject(null,vehassignloader)
+
+
+
+        }
+
+
         Close.setOnClickListener { v: View? ->
             popupWindow.dismiss()
         }
     }
 
 
-    override fun updatelist(items: MutableList<VechAssignLoader>?, vechAssignLoader: VechAssignLoader?) {
-        model.deleteLoaderObject(vechAssignLoader)
+    override fun updatelist(
+        items: MutableList<VechAssignLoader>?,
+        vechAssignLoader: VechAssignLoader?
+    ) {
+        model.deleteLoaderObject(vechAssignLoader,null)
 
     }
 

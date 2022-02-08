@@ -72,10 +72,10 @@ public class VechAssignLoader implements Serializable {
 
     @JsonIgnore
     @ColumnInfo(name = "AddToDB")
-    public boolean addtoDB=true;
+    public boolean addtoDB;
 
     public VechAssignLoader( String zuphrLpid, String zuphrMjahr, String zuphrMblpo,  String zuphrDriverid
-            , String zuphrVehid, String zuphrLoad, String zuphrUload, String zuphrNfound, String zuphrProc) {
+            , String zuphrVehid, String zuphrLoad, String zuphrUload, String zuphrNfound, String zuphrProc,boolean added) {
         ZuphrLpid = zuphrLpid;
         ZuphrMjahr = zuphrMjahr;
         ZuphrMblpo = zuphrMblpo;
@@ -85,6 +85,7 @@ public class VechAssignLoader implements Serializable {
         ZuphrUload = zuphrUload;
         ZuphrNfound = zuphrNfound;
         ZuphrProc = zuphrProc;
+        addtoDB=added;
     }
 
     public VechAssignLoader() {

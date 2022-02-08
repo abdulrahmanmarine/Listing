@@ -109,8 +109,12 @@ public class Offline_Items_Loader_adapter extends RecyclerView.Adapter<Offline_I
             for(int i=0 ;i<MtrList.size();i++){
 
                 if(MtrList.get(i).getZuphrMblpo().equalsIgnoreCase(obj.getZuphrMblpo())){
+
                     Content=MtrList.get(i).getZuphrContents();
+
                 }
+
+
             }
             if (!Content.isEmpty()) {
                 int height = itemRowBinding.MatrialImage.getLayoutParams().height;
@@ -125,17 +129,17 @@ public class Offline_Items_Loader_adapter extends RecyclerView.Adapter<Offline_I
 
             }
             itemRowBinding.setMatrialNumber(obj.getZuphrMblpo());
-
+            itemRowBinding.setMatrialNumber(obj.getZuphrDriverid());
 
             if(obj.getZuphrLoad().equalsIgnoreCase("x")){
-                itemRowBinding.setMatrialNumber("Loaded");
+                itemRowBinding.setStatus("Loaded");
             }else if (obj.getZuphrUload().equalsIgnoreCase("x")){
-                itemRowBinding.setMatrialNumber("UnLoaded");
+                itemRowBinding.setStatus("UnLoaded");
             }else if (obj.getZuphrNfound().equalsIgnoreCase("x")){
-                itemRowBinding.setMatrialNumber("NotFound");
+                itemRowBinding.setStatus("NotFound");
            }
             else if (obj.getZuphrProc().equalsIgnoreCase("x")){
-                itemRowBinding.setMatrialNumber("Proccessd");
+                itemRowBinding.setStatus("Proccessd");
             }
 
             itemRowBinding.executePendingBindings();
