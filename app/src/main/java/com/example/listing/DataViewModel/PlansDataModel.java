@@ -501,7 +501,7 @@ public class PlansDataModel extends ViewModel {
 
         if (Mode.equals("offline")) {
 
-            db.Load().GetItemtoPost(Lpid, "ABDK01", true).observe(owner, itemlist -> {
+            db.Load().GetItemtoPost(Lpid, Loginsession.getInstance().getUser().UserId, true).observe(owner, itemlist -> {
 
                 MatchingVechAssginLoader(itemlist, false);
 
@@ -520,9 +520,8 @@ public class PlansDataModel extends ViewModel {
                         List<VechAssignLoader> loaders = new ArrayList<>();
 
                         for (int i = 0; i < response.body().getAssignment().getVehassign().size(); i++) {
-                            if (response.body().getAssignment().getVehassign().get(i).getZuphrDriverid().equals("ABDK01"))
-                                ;
-                            {
+
+                            if(response.body().getAssignment().getVehassign().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)) {
                                 VechAssignLoader vechAssignLoader = new VechAssignLoader(
                                         response.body().getAssignment().getVehassign().get(i).getZuphrLpid(),
                                         response.body().getAssignment().getVehassign().get(i).getZuphrMjahr(),
@@ -535,8 +534,8 @@ public class PlansDataModel extends ViewModel {
                                         response.body().getAssignment().getVehassign().get(i).getZuphrProc(), true);
 
                                 loaders.add(vechAssignLoader);
-
                             }
+
 
 
                         }
@@ -592,13 +591,7 @@ public class PlansDataModel extends ViewModel {
                 Plan planx = null;
                 List<Material> Matxx;
 
-                if (vehAssignObj.getZuphrMblpo().equals(loopMaterial.getZuphrMblpo())
-
-                    //   && vehAssignObj.getZuphrDriverid().toUpperCase().equals("ABDK01")
-
-                    //   Loginsession.getInstance().getUser().UserId)
-
-                ) //matching vehassign material id with material material id
+                if (vehAssignObj.getZuphrMblpo().equals(loopMaterial.getZuphrMblpo())) //matching vehassign material id with material material id
                 {
 
 
@@ -912,7 +905,7 @@ public class PlansDataModel extends ViewModel {
     public void offlineLoaderItems(LifecycleOwner owner, String lpid) {
 
         if (!Mode.equals("offline")) {
-            db.Load().GetItemtoPost(lpid, "ABDK01", false).observe(owner, items -> {
+            db.Load().GetItemtoPost(lpid, Loginsession.getInstance().getUser().UserId, false).observe(owner, items -> {
 
                 if (items != null) {
                     if (items.size() > 0 && Loginsession.getInstance().isOfflineflag()) {
