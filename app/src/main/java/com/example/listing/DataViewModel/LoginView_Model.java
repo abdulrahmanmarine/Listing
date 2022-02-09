@@ -1,7 +1,6 @@
 package com.example.listing.DataViewModel;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
@@ -19,7 +18,6 @@ import com.example.listing.models.Userunpack;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 
 import okhttp3.Credentials;
@@ -89,6 +87,7 @@ public class LoginView_Model extends ViewModel {
 //                            flag=true;
 //                    }
 //
+//                    if(flag){
 //                        RestApiClient.getInstance(application).getRetrofitInterface().DVClogin("Fetch").enqueue(new Callback<Userunpack>() {
 //                            @Override
 //                            public void onResponse(@NotNull Call<Userunpack> call, @NotNull retrofit2.Response<Userunpack> response2) {
@@ -113,6 +112,7 @@ public class LoginView_Model extends ViewModel {
 //                                    Logged_in.postValue(false);
 //                                    try {
 //                                        String error=response2.errorBody().string();
+//                                        Log.i("Dvc1 ERROR", response2.code()+response2.message()+error);
 //                                        ErrorMsg.setValue("Login Failed check credentials ");
 //                                    } catch (IOException e) {
 //                                        e.printStackTrace();
@@ -124,12 +124,15 @@ public class LoginView_Model extends ViewModel {
 //                            @Override
 //                            public void onFailure(@NotNull Call<Userunpack> call, @NotNull Throwable t) {
 //                                Logged_in.postValue(false);
+//                                Log.i("Dvc -2 ERROR",t.getLocalizedMessage());
 //                                ErrorMsg.setValue(t.getLocalizedMessage());
-//
 //                            }
 //                        });
 //
-//
+//                    }else {
+//                        Logged_in.postValue(false);
+//                       ErrorMsg.setValue("Login Failed check credentials");
+//                    }
 //
 //
 //
@@ -186,6 +189,7 @@ public class LoginView_Model extends ViewModel {
                 ErrorMsg.setValue(t.getLocalizedMessage());
             }
         });
+
 
     }
 
