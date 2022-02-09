@@ -2,6 +2,7 @@ package com.example.listing.Utils;
 
 
 import android.app.Application;
+import android.util.Log;
 
 import com.example.listing.R;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -106,7 +107,7 @@ public class RestLoginClient {
                     .add("Content-Type", application.getResources().getString(R.string.Content_Type))
                     .add("Accept", application.getResources().getString(R.string.accept))
                     .add("sap-client", application.getResources().getString(R.string.sapclient_25))
-                    // .add("User-Agent", application.getResources().getString(R.string.user_agent))
+                    .add("User-Agent", application.getResources().getString(R.string.user_agent))
 
                     .build();
 
@@ -131,6 +132,11 @@ public class RestLoginClient {
             Response originalResponse = chain.proceed(chain.request());
 
             List<String> Cookielist = originalResponse.headers().values("Set-Cookie");
+
+
+            Log.i("Login url-API:", originalResponse.request().url().toString());
+            Log.i("Login header-request-API:", originalResponse.request().headers().toString());
+            Log.i("Login header-response-API:", originalResponse.headers().toString());
 
 
             RestApiClient.initializer(application, Cookielist, null);
