@@ -12,34 +12,49 @@ import com.example.listing.OfflineInterfaces.Offline_Matrial;
 import com.example.listing.OfflineInterfaces.Offline_Notes;
 import com.example.listing.OfflineInterfaces.Offline_Plan;
 import com.example.listing.OfflineInterfaces.Offline_UserList;
+import com.example.listing.OfflineInterfaces.Offline_VechAssign;
+import com.example.listing.OfflineInterfaces.Offline_VechLoad;
 import com.example.listing.OfflineInterfaces.Offline_Vehicle;
 import com.example.listing.models.Driver;
 import com.example.listing.models.Material;
 import com.example.listing.models.Plan;
 import com.example.listing.models.SAPNote;
+import com.example.listing.models.VechAssignLoader;
+import com.example.listing.models.VehAssign;
 import com.example.listing.models.Vehicle;
 import com.example.listing.models.imagenode;
 
-@Database(entities = {Plan.class, Material.class,  imagenode.class, Driver.class,
-        Vehicle.class, com.example.listing.models.User.class, SAPNote.class} , version = 19)
+@Database(entities = {Plan.class, Material.class, imagenode.class, Driver.class,
+        Vehicle.class, com.example.listing.models.User.class, SAPNote.class,
+        VehAssign.class, VechAssignLoader.class}, version = 39)
 public abstract class OfflineDatabaseClient extends RoomDatabase {
-    private static final String DB_Name ="App_db";
+    private static final String DB_Name = "App_db";
     private static OfflineDatabaseClient instance;
 
     public static synchronized OfflineDatabaseClient getInstance(Context context) {
         if (instance == null) {
-            instance = Room.databaseBuilder(context.getApplicationContext(),OfflineDatabaseClient.class, DB_Name).
-                       fallbackToDestructiveMigration().build();
+            instance = Room.databaseBuilder(context.getApplicationContext(), OfflineDatabaseClient.class, DB_Name).
+                    fallbackToDestructiveMigration().build();
         }
         return instance;
     }
 
     public abstract Offline_Plan planitem();
+
+    public abstract Offline_VechAssign Assignment();
+
+    public abstract Offline_VechLoad Load();
+
     public abstract Offline_Matrial Matrial();
+
     public abstract Offline_Driver MatrialDrivers();
+
     public abstract Offline_Vehicle MatrialVehicles();
+
     public abstract Offline_UserList Users();
+
     public abstract Offline_Notes Notes();
+
     public abstract Offline_Image MatrialImage();
 
 

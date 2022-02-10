@@ -30,8 +30,8 @@ import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
-
-
+ * <p>
+ * <p>
  * create an instance of this fragment.
  */
 public class PlanFragment extends Fragment {
@@ -40,41 +40,19 @@ public class PlanFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private PlanClickListener listener;
     List<Plan> plans = new ArrayList<>();
-
     int currentpos;
-
-
-    // TODO: Rename and change types of parameters
-    private ArrayList<Plan> mParam1 = new ArrayList<>();
-    private boolean mParam2;
     PlanAdapter myadapter;
-    RecyclerView  rv;
+    RecyclerView rv;
     PlansDataModel model;
     Spinner button;
     boolean first = true;
     LinearLayout flagwidget;
+    private PlanClickListener listener;
+    // TODO: Rename and change types of parameters
+    private ArrayList<Plan> mParam1 = new ArrayList<>();
+    private boolean mParam2;
 
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        if(context instanceof PlanClickListener){
-            listener = (PlanClickListener) context;
-        }else{
-            throw new ClassCastException("activity does not implement fragment listener interface");
-        }
-
-
-
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        listener = null;
-    }
 
     public PlanFragment() {
         // Required empty public constructor
@@ -90,21 +68,38 @@ public class PlanFragment extends Fragment {
         return fragment;
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof PlanClickListener) {
+            listener = (PlanClickListener) context;
+        } else {
+            throw new ClassCastException("activity does not implement fragment listener interface");
+        }
+
+
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
 
         super.onCreate(savedInstanceState);
-         Bundle bundle  = getArguments();
-         if(bundle!=null){
+        Bundle bundle = getArguments();
+        if (bundle != null) {
 
-             mParam1 = (ArrayList<Plan>) getArguments().getSerializable(ARG_PARAM1);
-             mParam2 = getArguments().getBoolean(ARG_PARAM2);
+            mParam1 = (ArrayList<Plan>) getArguments().getSerializable(ARG_PARAM1);
+            mParam2 = getArguments().getBoolean(ARG_PARAM2);
 
-         }
+        }
 
-        model =new ViewModelProvider(getActivity()).get(PlansDataModel.class);
+        model = new ViewModelProvider(getActivity()).get(PlansDataModel.class);
 
     }
 
@@ -117,25 +112,21 @@ public class PlanFragment extends Fragment {
         rv = v.findViewById(R.id.recview);
         rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
 
-        flagwidget=v.findViewById(R.id.flagwidget);
-        button=v.findViewById(R.id.flagbutton);
-
 
         model.Plans.observe(getViewLifecycleOwner(), list -> {
-            if(list!=null)
-            {
-                if(list.size()>0){
+            if (list != null) {
+                if (list.size() > 0) {
 
-                    if(model.UserRule.getValue()){
-                        flagwidget.setVisibility(View.GONE);
-                    }else{
-                        flagwidget.setVisibility(View.VISIBLE);
-                    }
+//                    if(model.UserRule.getValue()){
+//                        flagwidget.setVisibility(View.GONE);
+//                    }else{
+//                        flagwidget.setVisibility(View.VISIBLE);
+//                    }
 
-                    myadapter = new PlanAdapter(listener, (ArrayList<Plan>) list, getContext(),model.UserRule.getValue());
+                    myadapter = new PlanAdapter(listener, (ArrayList<Plan>) list, getContext(), model.UserRule.getValue());
                     rv.setAdapter(myadapter);
 
-                    List<String> type =new ArrayList<>();
+                    List<String> type = new ArrayList<>();
                     type.add("Manual");
                     type.add("Configured");
 
@@ -156,22 +147,15 @@ public class PlanFragment extends Fragment {
 //                        }
 //                    });
 
-                }else {
-
+                } else {
 
 
                 }
 
 
-
             }
 
         });
-
-
-
-
-
 
 
         EditText editText = (EditText) v.findViewById(R.id.searching);
@@ -198,15 +182,15 @@ public class PlanFragment extends Fragment {
         return v;
     }
 
-    private void filter(String text){
+    private void filter(String text) {
         ArrayList<Plan> filteredList = new ArrayList<>();
 
-        for(Plan plan : mParam1){
+        for (Plan plan : mParam1) {
             String planName = plan.getZuphrLpname();
             //Comparing strings
             Boolean contains = Pattern.compile(Pattern.quote(text), Pattern.CASE_INSENSITIVE).matcher(planName).find();
 
-            if(contains){
+            if (contains) {
                 filteredList.add(plan);
             }
         }
@@ -222,15 +206,16 @@ public class PlanFragment extends Fragment {
         rv.scheduleLayoutAnimation();
     }
 
-    public void dataChanged(){ myadapter.notifyDataSetChanged(); }
+    public void dataChanged() {
+        myadapter.notifyDataSetChanged();
+    }
 
     public interface LoaderFragmentClickListener {
         void LoaderFragmentInteraction(int pos);
     }
 
 
-
-    public interface setDriverListener{
+    public interface setDriverListener {
         void onDriverSetting(String text);
     }
 }

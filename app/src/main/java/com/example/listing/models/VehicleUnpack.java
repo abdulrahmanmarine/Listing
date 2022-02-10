@@ -14,7 +14,7 @@ public class VehicleUnpack {
 
     }
 
-    public List<Vehicle>  getvehiclelist() {
+    public List<Vehicle> getvehiclelist() {
         return vehicle;
     }
 
@@ -22,8 +22,6 @@ public class VehicleUnpack {
     public void unpackd(Map<String, List<Vehicle>> d) {
         vehicle = d.get("results");
     }
-
-
 
 
 }

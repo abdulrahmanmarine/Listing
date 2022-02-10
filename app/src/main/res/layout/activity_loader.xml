@@ -9,7 +9,7 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout4"
+            android:id="@+id/mainlayout"
             android:layout_width="220dp"
             android:layout_height="match_parent"
             android:background="@color/fifteenGray"
@@ -90,7 +90,7 @@
             android:background="@drawable/aramcoback"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/constraintLayout4"
+            app:layout_constraintStart_toEndOf="@+id/mainlayout"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0">
 

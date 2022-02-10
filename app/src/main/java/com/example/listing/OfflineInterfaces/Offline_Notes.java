@@ -27,6 +27,6 @@ public interface Offline_Notes {
     void deleteItem(com.example.listing.models.SAPNote items);
 
     @Query("DELETE FROM SAPNote")
-     void nukeTable();
+    void nukeTable();
 
 }

@@ -51,6 +51,12 @@ public class User implements Serializable {
     public User() {
     }
 
+    public User(@NonNull String userId, String name, String profileid, String email) {
+        UserId = userId;
+        Name = name;
+        Profileid = profileid;
+        Email = email;
+    }
 
     //  Data Constructor for login
     public User(String UserId, String Password) {

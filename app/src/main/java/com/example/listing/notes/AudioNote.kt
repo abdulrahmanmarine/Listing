@@ -3,7 +3,6 @@ package com.example.listing.notes
 import android.content.Context
 import android.media.MediaPlayer
 import android.media.MediaRecorder
-import android.util.Log
 import java.io.IOException
 
 class AudioNote(context: Context) {
@@ -43,7 +42,6 @@ class AudioNote(context: Context) {
             try {
                 prepare()
             } catch (e: IOException) {
-                Log.e("AudioRecordTest", "prepare() failed")
             }
 
             start()
@@ -70,7 +68,6 @@ class AudioNote(context: Context) {
                 prepare()
                 start()
             } catch (e: IOException) {
-                Log.e("AudioPlayingText", "prepare() failed")
             }
         }
     }

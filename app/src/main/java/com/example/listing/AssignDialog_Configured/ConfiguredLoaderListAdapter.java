@@ -44,6 +44,7 @@ public class ConfiguredLoaderListAdapter extends RecyclerView.Adapter<Configured
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView loaderName;
         AssignConfiguredLoaderNameBinding itemRowBinding;
+
         public ViewHolder(AssignConfiguredLoaderNameBinding itemRowBinding) {
             super(itemRowBinding.getRoot());
             this.itemRowBinding = itemRowBinding;

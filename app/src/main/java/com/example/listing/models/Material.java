@@ -18,284 +18,278 @@ import java.util.List;
 
 
 @Entity(tableName = "MaterialTable")
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY,getterVisibility = JsonAutoDetect.Visibility.NONE,
-        setterVisibility = JsonAutoDetect.Visibility.NONE,creatorVisibility = JsonAutoDetect.Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Material implements Serializable {
 
-    @Expose(serialize = false,deserialize = false)
+    @Expose(serialize = false, deserialize = false)
     @PrimaryKey(autoGenerate = true)
     @NonNull
     @JsonIgnore
     public int MatrialId;
 
-    @Expose(serialize = false,deserialize = false)
+    @Expose(serialize = false, deserialize = false)
     @ColumnInfo(name = "PlanOfflineID")
     @JsonIgnore
-    public  String PlanOfflineID;
+    public String PlanOfflineID;
 
     @Ignore
     @JsonIgnore
-    public ArrayList<com.example.listing.notes.Notes> notes=new ArrayList<>();
+    public ArrayList<com.example.listing.notes.Notes> notes = new ArrayList<>();
 
     @JsonProperty("ZuphrActquan")
-    @ColumnInfo(name="ZuphrActquan")
+    @ColumnInfo(name = "ZuphrActquan")
     String ZuphrActquan;
 
     @JsonProperty("Log")
-     @ColumnInfo(name="Log")
+    @ColumnInfo(name = "Log")
     String Log;
 
 
-
-
-     @ColumnInfo(name="ZuphrMovem")
+    @ColumnInfo(name = "ZuphrMovem")
     @JsonProperty("ZuphrMovem")
     String ZuphrMovem;
 
-     @ColumnInfo(name="ZuphrActtype")
+    @ColumnInfo(name = "ZuphrActtype")
     @JsonProperty("ZuphrActtype")
     String ZuphrActtype;
 
 
-     @ColumnInfo(name="ZuphrContents")
+    @ColumnInfo(name = "ZuphrContents")
     @JsonProperty("ZuphrContents")
     String ZuphrContents;
 
 
-     @ColumnInfo(name="ZuphrHeight")
+    @ColumnInfo(name = "ZuphrHeight")
     @JsonProperty("ZuphrHeight")
     String ZuphrHeight;
 
 
-     @ColumnInfo(name="ZuphrLength")
+    @ColumnInfo(name = "ZuphrLength")
     @JsonProperty("ZuphrLength")
     String ZuphrLength;
 
-     @ColumnInfo(name="ZuphrLpid")
+    @ColumnInfo(name = "ZuphrLpid")
     @JsonProperty("ZuphrLpid")
     String ZuphrLpid;
 
-     @ColumnInfo(name="ZuphrObjecte")
+    @ColumnInfo(name = "ZuphrObjecte")
     @JsonProperty("ZuphrObjecte")
     Boolean ZuphrObjecte;
 
-     @ColumnInfo(name="ZuphrSchar")
+    @ColumnInfo(name = "ZuphrSchar")
     @JsonProperty("ZuphrSchar")
     String ZuphrSchar;
 
-     @ColumnInfo(name="ZuphrFrom")
+    @ColumnInfo(name = "ZuphrFrom")
     @JsonProperty("ZuphrFrom")
     String ZuphrFrom;
 
-     @ColumnInfo(name="ZuphrSchtask")
+    @ColumnInfo(name = "ZuphrSchtask")
     @JsonProperty("ZuphrSchtask")
     String ZuphrSchtask;
 
-     @ColumnInfo(name="ZuphrSeq")
+    @ColumnInfo(name = "ZuphrSeq")
     @JsonProperty("ZuphrSeq")
     String ZuphrSeq;
 
-     @ColumnInfo(name="ZuphrWidth")
+    @ColumnInfo(name = "ZuphrWidth")
     @JsonProperty("ZuphrWidth")
     String ZuphrWidth;
 
-     @ColumnInfo(name="ZuphrShipper")
+    @ColumnInfo(name = "ZuphrShipper")
     @JsonProperty("ZuphrShipper")
     String ZuphrShipper;
 
-     @ColumnInfo(name="ZuphrTo")
+    @ColumnInfo(name = "ZuphrTo")
     @JsonProperty("ZuphrTo")
     String ZuphrTo;
 
-     @ColumnInfo(name="ZuphrVolmeins")
+    @ColumnInfo(name = "ZuphrVolmeins")
     @JsonProperty("ZuphrVolmeins")
     String ZuphrVolmeins;
 
-     @ColumnInfo(name="ZuphrMjahr")
+    @ColumnInfo(name = "ZuphrMjahr")
     @JsonProperty("ZuphrMjahr")
     String ZuphrMjahr;
 
-     @ColumnInfo(name="ZuphrMblpo")
+    @ColumnInfo(name = "ZuphrMblpo")
     @JsonProperty("ZuphrMblpo")
     String ZuphrMblpo;
 
-     @ColumnInfo(name="ZuphrStgid")
+    @ColumnInfo(name = "ZuphrStgid")
     @JsonProperty("ZuphrStgid")
     String ZuphrStgid;
 
-     @ColumnInfo(name="ZuphrMatnr")
+    @ColumnInfo(name = "ZuphrMatnr")
     @JsonProperty("ZuphrMatnr")
     String ZuphrMatnr;
 
-     @ColumnInfo(name="ZuphrReqid")
+    @ColumnInfo(name = "ZuphrReqid")
     @JsonProperty("ZuphrReqid")
     String ZuphrReqid;
 
-     @ColumnInfo(name="ZuphrReqitm")
+    @ColumnInfo(name = "ZuphrReqitm")
     @JsonProperty("ZuphrReqitm")
     String ZuphrReqitm;
 
-     @ColumnInfo(name="ZuphrShortxt")
+    @ColumnInfo(name = "ZuphrShortxt")
     @JsonProperty("ZuphrShortxt")
     String ZuphrShortxt;
 
-     @ColumnInfo(name="ZuphrDescrip")
+    @ColumnInfo(name = "ZuphrDescrip")
     @JsonProperty("ZuphrDescrip")
     String ZuphrDescrip;
 
 
-     @ColumnInfo(name="ZuphrQuan")
+    @ColumnInfo(name = "ZuphrQuan")
     @JsonProperty("ZuphrQuan")
     String ZuphrQuan;
 
 
-     @ColumnInfo(name="Meins")
+    @ColumnInfo(name = "Meins")
     @JsonProperty("Meins")
     String Meins;
 
-     @ColumnInfo(name="ZuphrOffshore")
+    @ColumnInfo(name = "ZuphrOffshore")
     @JsonProperty("ZuphrOffshore")
     String ZuphrOffshore;
 
 
-     @ColumnInfo(name="ZuphrAreacode")
+    @ColumnInfo(name = "ZuphrAreacode")
     @JsonProperty("ZuphrAreacode")
     String ZuphrAreacode;
 
-     @ColumnInfo(name="ZuphrStatus")
+    @ColumnInfo(name = "ZuphrStatus")
     @JsonProperty("ZuphrStatus")
     String ZuphrStatus;
 
-     @ColumnInfo(name="ZuphrClass")
+    @ColumnInfo(name = "ZuphrClass")
     @JsonProperty("ZuphrClass")
     String ZuphrClass;
 
-     @ColumnInfo(name="ZuphrDeleted")
+    @ColumnInfo(name = "ZuphrDeleted")
     @JsonProperty("ZuphrDeleted")
     Boolean ZuphrDeleted;
 
 
-     @ColumnInfo(name="ZuphrStatdt")
+    @ColumnInfo(name = "ZuphrStatdt")
     @JsonProperty("ZuphrStatdt")
     String ZuphrStatdt;
 
 
-     @ColumnInfo(name="ZuphrCompflg")
+    @ColumnInfo(name = "ZuphrCompflg")
     @JsonProperty("ZuphrCompflg")
     String ZuphrCompflg;
 
-     @ColumnInfo(name="ZuphrCompdat")
+    @ColumnInfo(name = "ZuphrCompdat")
     @JsonProperty("ZuphrCompdat")
     String ZuphrCompdat;
 
-     @ColumnInfo(name="ZuphrAction")
+    @ColumnInfo(name = "ZuphrAction")
     @JsonProperty("ZuphrAction")
     String ZuphrAction;
 
-     @ColumnInfo(name="ZuphrResponse")
+    @ColumnInfo(name = "ZuphrResponse")
     @JsonProperty("ZuphrResponse")
     String ZuphrResponse;
 
-     @ColumnInfo(name="ZuphrAutoact")
+    @ColumnInfo(name = "ZuphrAutoact")
     @JsonProperty("ZuphrAutoact")
     String ZuphrAutoact;
 
-     @ColumnInfo(name="ZuphrActposgrp")
+    @ColumnInfo(name = "ZuphrActposgrp")
     @JsonProperty("ZuphrActposgrp")
     String ZuphrActposgrp;
 
 
-     @ColumnInfo(name="ZuphrSent")
+    @ColumnInfo(name = "ZuphrSent")
     @JsonProperty("ZuphrSent")
     String ZuphrSent;
 
-     @ColumnInfo(name="ZuphrActuname")
+    @ColumnInfo(name = "ZuphrActuname")
     @JsonProperty("ZuphrActuname")
     String ZuphrActuname;
 
-     @ColumnInfo(name="ZuphrActdate")
+    @ColumnInfo(name = "ZuphrActdate")
     @JsonProperty("ZuphrActdate")
     String ZuphrActdate;
 
-     @ColumnInfo(name="ZuphrActtime")
+    @ColumnInfo(name = "ZuphrActtime")
     @JsonProperty("ZuphrActtime")
     String ZuphrActtime;
 
-     @ColumnInfo(name="ZuphrWellnm")
+    @ColumnInfo(name = "ZuphrWellnm")
     @JsonProperty("ZuphrWellnm")
     String ZuphrWellnm;
 
-     @ColumnInfo(name="ZuphrEquipnumber")
+    @ColumnInfo(name = "ZuphrEquipnumber")
     @JsonProperty("ZuphrEquipnumber")
     String ZuphrEquipnumber;
 
-     @ColumnInfo(name="ZuphrCnumber")
+    @ColumnInfo(name = "ZuphrCnumber")
     @JsonProperty("ZuphrCnumber")
     String ZuphrCnumber;
 
-     @ColumnInfo(name="ZuphrTicketno")
+    @ColumnInfo(name = "ZuphrTicketno")
     @JsonProperty("ZuphrTicketno")
     String ZuphrTicketno;
 
-     @ColumnInfo(name="ZuphrMfrpn")
+    @ColumnInfo(name = "ZuphrMfrpn")
     @JsonProperty("ZuphrMfrpn")
     String ZuphrMfrpn;
 
-     @ColumnInfo(name="ZuphrBitType")
+    @ColumnInfo(name = "ZuphrBitType")
     @JsonProperty("ZuphrBitType")
     String ZuphrBitType;
 
-     @ColumnInfo(name="ZuphrBitstatus")
+    @ColumnInfo(name = "ZuphrBitstatus")
     @JsonProperty("ZuphrBitstatus")
     String ZuphrBitstatus;
 
-     @ColumnInfo(name="ZuphrSrlno")
+    @ColumnInfo(name = "ZuphrSrlno")
     @JsonProperty("ZuphrSrlno")
     String ZuphrSrlno;
 
 
-     @ColumnInfo(name="ZuphrGl")
+    @ColumnInfo(name = "ZuphrGl")
     @JsonProperty("ZuphrGl")
     String ZuphrGl;
 
-     @ColumnInfo(name="ZuphrCostcen")
+    @ColumnInfo(name = "ZuphrCostcen")
     @JsonProperty("ZuphrCostcen")
     String ZuphrCostcen;
 
-     @ColumnInfo(name="ZuphrMattype")
+    @ColumnInfo(name = "ZuphrMattype")
     @JsonProperty("ZuphrMattype")
     String ZuphrMattype;
 
-     @ColumnInfo(name="ZuphrFpDate")
+    @ColumnInfo(name = "ZuphrFpDate")
     @JsonProperty("ZuphrFpDate")
     String ZuphrFpDate;
 
-     @ColumnInfo(name="ZuphrFpTime")
+    @ColumnInfo(name = "ZuphrFpTime")
     @JsonProperty("ZuphrFpTime")
     String ZuphrFpTime;
 
-     @ColumnInfo(name="ZuphrFpName")
+    @ColumnInfo(name = "ZuphrFpName")
     @JsonProperty("ZuphrFpName")
     String ZuphrFpName;
 
 
+    @JsonIgnore
+    @Ignore
+    boolean Complete = false;
 
     @JsonIgnore
     @Ignore
-    boolean Complete =false;
-
-     @JsonIgnore
-     @Ignore
-    List<Vehicle> Vehicles =new ArrayList<>();
-
+    List<Vehicle> Vehicles = new ArrayList<>();
 
 
     @JsonIgnore
     @Ignore
-    List<VechAssignLoader> vehAssignList =new ArrayList<>();
-
-
+    List<VechAssignLoader> vehAssignList = new ArrayList<>();
 
 
 //    @JsonProperty("LoadingPlanLoadActionSet")
@@ -312,20 +306,20 @@ public class Material implements Serializable {
 
 
     public Material(String zuphrActquan, String log, String zuphrMovem, String zuphrActtype,
-                     String zuphrContents, String zuphrHeight, String zuphrLength, String zuphrLpid,
-                     Boolean zuphrObjecte, String zuphrSchar, String zuphrFrom, String zuphrSchtask,
-                     String zuphrSeq, String zuphrWidth, String zuphrShipper, String zuphrTo,
-                     String zuphrVolmeins, String zuphrMjahr, String zuphrMblpo, String zuphrStgid,
-                     String zuphrMatnr, String zuphrReqid, String zuphrReqitm, String zuphrShortxt,
-                     String zuphrDescrip, String zuphrQuan, String meins, String zuphrOffshore,
-                     String zuphrAreacode, String zuphrStatus, String zuphrClass, Boolean zuphrDeleted,
-                     String zuphrStatdt, String zuphrCompflg, String zuphrCompdat, String zuphrAction,
-                     String zuphrResponse, String zuphrAutoact, String zuphrActposgrp, String zuphrSent,
-                     String zuphrActuname, String zuphrActdate, String zuphrActtime, String zuphrWellnm,
-                     String zuphrEquipnumber, String zuphrCnumber, String zuphrTicketno, String zuphrMfrpn,
-                     String zuphrBitType, String zuphrBitstatus, String zuphrSrlno, String zuphrGl,
-                     String zuphrCostcen, String zuphrMattype, String zuphrFpDate, String zuphrFpTime,
-                     String zuphrFpName , List<Vehicle> vehicles) {
+                    String zuphrContents, String zuphrHeight, String zuphrLength, String zuphrLpid,
+                    Boolean zuphrObjecte, String zuphrSchar, String zuphrFrom, String zuphrSchtask,
+                    String zuphrSeq, String zuphrWidth, String zuphrShipper, String zuphrTo,
+                    String zuphrVolmeins, String zuphrMjahr, String zuphrMblpo, String zuphrStgid,
+                    String zuphrMatnr, String zuphrReqid, String zuphrReqitm, String zuphrShortxt,
+                    String zuphrDescrip, String zuphrQuan, String meins, String zuphrOffshore,
+                    String zuphrAreacode, String zuphrStatus, String zuphrClass, Boolean zuphrDeleted,
+                    String zuphrStatdt, String zuphrCompflg, String zuphrCompdat, String zuphrAction,
+                    String zuphrResponse, String zuphrAutoact, String zuphrActposgrp, String zuphrSent,
+                    String zuphrActuname, String zuphrActdate, String zuphrActtime, String zuphrWellnm,
+                    String zuphrEquipnumber, String zuphrCnumber, String zuphrTicketno, String zuphrMfrpn,
+                    String zuphrBitType, String zuphrBitstatus, String zuphrSrlno, String zuphrGl,
+                    String zuphrCostcen, String zuphrMattype, String zuphrFpDate, String zuphrFpTime,
+                    String zuphrFpName, List<Vehicle> vehicles) {
         ZuphrActquan = zuphrActquan;
         Log = log;
         ZuphrMovem = zuphrMovem;
@@ -407,7 +401,6 @@ public class Material implements Serializable {
     }
 
 
-
     public String getZuphrMovem() {
         return ZuphrMovem;
     }
@@ -415,7 +408,6 @@ public class Material implements Serializable {
     public void setZuphrMovem(String zuphrMovem) {
         ZuphrMovem = zuphrMovem;
     }
-
 
 
     public List<Vehicle> getVehicles() {

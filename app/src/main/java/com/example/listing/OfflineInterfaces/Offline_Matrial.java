@@ -2,7 +2,6 @@ package com.example.listing.OfflineInterfaces;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -26,8 +25,9 @@ public interface Offline_Matrial {
     @Update
     void UpdateImageMatrial(Material material);
 
-    @Delete
-    void DeleteMatrial(Material material);
+
+    @Query("DELETE FROM MaterialTable WHERE  ZuphrFpName=:FNAME ")
+    void Delete(String FNAME);
 
     @Query("DELETE FROM MaterialTable")
     void nukeTable();

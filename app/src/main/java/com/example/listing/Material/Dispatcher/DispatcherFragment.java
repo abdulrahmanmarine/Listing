@@ -48,24 +48,17 @@ public class DispatcherFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_PARAM3 = "param3";
     private static final String ARG_PARAM4 = "param4";
-    RecyclerView rv;
     private static Bundle mBundleRecView;
+    private static DispatcherFragment fragment = null;
+    RecyclerView rv;
     Parcelable state;
     PlansDataModel model;
-
-
-
-
-
+    ImageButton btnCapture;
     // TODO: Rename and change types of parameters
     private String mParam2, mParam3, mParam4;
     private List<Material> mParam1 = new ArrayList<>();
     private DriverAdapter driverAdapter;
-    private static DispatcherFragment fragment = null;
     private Boolean isLoad = true;
-    ImageButton btnCapture;
-
-
 
 
     public DispatcherFragment() {
@@ -75,9 +68,10 @@ public class DispatcherFragment extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
+     * <p>
+     * <p>
+     * //     * @param param2 Parameter 2.
      *
-
-     //     * @param param2 Parameter 2.
      * @return A new instance of fragment AddFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -95,7 +89,9 @@ public class DispatcherFragment extends Fragment {
         return fragment;
     }
 
-    public void dataChangedDer(){ driverAdapter.notifyDataSetChanged(); }
+    public void dataChangedDer() {
+        driverAdapter.notifyDataSetChanged();
+    }
 
 //    public void changeLoading(boolean loadOrNot){
 //        isLoad = loadOrNot;
@@ -111,17 +107,17 @@ public class DispatcherFragment extends Fragment {
             mParam4 = getArguments().getString(ARG_PARAM4);
         }
 
-        model =   new ViewModelProvider(getActivity()).get(PlansDataModel.class);
+        model = new ViewModelProvider(getActivity()).get(PlansDataModel.class);
     }
 
-    private void filter2(String text){
+    private void filter2(String text) {
         ArrayList<Material> filteredList = new ArrayList<>();
 
-        for(Material mat : mParam1){
+        for (Material mat : mParam1) {
             String planName = mat.getZuphrShortxt().toLowerCase();
 
             Boolean contains = Pattern.compile(Pattern.quote(text), Pattern.CASE_INSENSITIVE).matcher(planName).find();
-            if(contains){
+            if (contains) {
                 filteredList.add(mat);
             }
         }
@@ -171,16 +167,16 @@ public class DispatcherFragment extends Fragment {
         dest_tv.setText(mParam4);
 
 
-       // model.postVehicle();
-       // model.postDevice();
+        // model.postVehicle();
+        // model.postDevice();
 
-        model.getdrivers();
-        model.getVechiles();
-       // model.getDevice();
+        model.getdrivers(this);
+        model.getVechiles(this);
+        // model.getDevice();
 
 
-        model.MatrialsList.observe(getViewLifecycleOwner(),materialList->{
-         String x = null;
+        model.MatrialsList.observe(getViewLifecycleOwner(), materialList -> {
+            String x = null;
             AddButtonClicked addListener = pos -> {
 
                 ((Dispatcher) getActivity()).showAssignDialog(pos, materialList.get(pos));
@@ -189,7 +185,7 @@ public class DispatcherFragment extends Fragment {
 
             };
 
-            driverAdapter = new DriverAdapter(materialList, addListener,getContext());
+            driverAdapter = new DriverAdapter(materialList, addListener, getContext());
 
 
             //animation
@@ -202,8 +198,6 @@ public class DispatcherFragment extends Fragment {
 
 //            driverAdapter.updateChosen();
         });
-
-
 
 
 //        //FOR ASSIGN
@@ -219,11 +213,10 @@ public class DispatcherFragment extends Fragment {
 //            });
 
 
-
         // For loading
-        if(this.getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE){
-        rv.setLayoutManager(new GridLayoutManager(getActivity(), 2));}
-        else if(this.getResources().getConfiguration().orientation==Configuration.ORIENTATION_PORTRAIT){
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            rv.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        } else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         }
 
@@ -248,8 +241,6 @@ public class DispatcherFragment extends Fragment {
 //        tv.setText(mParam2);
 
 
-
-
 //        Button loadBut = v.findViewById(R.id.load_button);
 //        loadBut.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -261,12 +252,11 @@ public class DispatcherFragment extends Fragment {
         return v;
     }
 
-    public void notifDataAddChanged(){
+    public void notifDataAddChanged() {
         FragmentManager fm = getFragmentManager();
-        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.constraintLayout4);
+        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.mainlayout);
         fragm.dataChanged();
     }
-
 
 
 }

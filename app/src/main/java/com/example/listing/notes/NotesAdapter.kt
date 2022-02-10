@@ -21,7 +21,7 @@ import java.io.IOException
 import java.util.*
 
 
-class NotesAdapter2(val supFM: FragmentManager, val context: Context, notes: ArrayList<Notes>,) :
+class NotesAdapter2(val supFM: FragmentManager, val context: Context, notes: ArrayList<Notes>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
 
     companion object {
@@ -31,9 +31,9 @@ class NotesAdapter2(val supFM: FragmentManager, val context: Context, notes: Arr
     }
 
 
-  //  var historyList = mutableListOf<Notes>()
+    //  var historyList = mutableListOf<Notes>()
 
-    var historyList=notes
+    var historyList = notes
 
     override fun getItemViewType(position: Int): Int {
         return if (historyList[position].type == "AUD") {
@@ -68,7 +68,7 @@ class NotesAdapter2(val supFM: FragmentManager, val context: Context, notes: Arr
         private val creator: TextView = itemView.creatorName
         private val message: TextView = itemView.noteMessage
         private val image: ImageView = itemView.noteImage
-        private val time : TextView = itemView.timestamp
+        private val time: TextView = itemView.timestamp
 
         private val audioPlayer = itemView.audionote2
 
@@ -130,7 +130,7 @@ class NotesAdapter2(val supFM: FragmentManager, val context: Context, notes: Arr
                 message.visibility = View.VISIBLE
                 message.text = historyList[position].noteText
 
-            } else if (type == TYPE_Audio){
+            } else if (type == TYPE_Audio) {
                 audioPlayer.visibility = View.VISIBLE
                 message.visibility = View.GONE
                 var base64Aud = historyList[position].noteText
@@ -144,7 +144,7 @@ class NotesAdapter2(val supFM: FragmentManager, val context: Context, notes: Arr
             }
 
             creator.text = historyList[position].creator
-            time.text = historyList[position].time + "  " +historyList[position].date
+            time.text = historyList[position].time + "  " + historyList[position].date
 
 
 

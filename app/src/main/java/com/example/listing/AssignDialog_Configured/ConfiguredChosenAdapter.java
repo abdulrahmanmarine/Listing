@@ -18,15 +18,14 @@ import com.example.listing.models.Vehicle;
 import java.util.List;
 
 public class ConfiguredChosenAdapter extends RecyclerView.Adapter<ConfiguredChosenAdapter.ViewHolder> {
-    private List<Vehicle> vehicles;
     VehicleDeleteButtonClicked deleteListener;
+    private List<Vehicle> vehicles;
+    private Context context;
 
     public ConfiguredChosenAdapter(List<Vehicle> vehicles, VehicleDeleteButtonClicked deleteListener) {
         this.vehicles = vehicles;
         this.deleteListener = deleteListener;
     }
-
-    private Context context;
 
     @NonNull
     @Override
@@ -54,11 +53,10 @@ public class ConfiguredChosenAdapter extends RecyclerView.Adapter<ConfiguredChos
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public AssignConfiguredChosenItemBinding itemRowBinding;
         public RecyclerView configuredList;
         public TextView vehicleName;
-
 
 
         public ViewHolder(@NonNull AssignConfiguredChosenItemBinding

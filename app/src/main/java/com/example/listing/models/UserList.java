@@ -22,7 +22,7 @@ public class UserList implements Serializable {
     @Ignore
     // Online Login store userid  constructor
     public UserList(String UserId) {
-        this.UserId=UserId;
+        this.UserId = UserId;
     }
 
 

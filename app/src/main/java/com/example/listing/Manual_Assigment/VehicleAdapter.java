@@ -20,39 +20,18 @@ import java.util.ArrayList;
 
 public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.ViewHolder> {
 
-    private int selectedPosition = -1;
     ArrayList<Vehicle> vehicles;
     Context context;
     VehicleSelected vehicleSelected;
-
-    public void setSelectedPosition(int selectedPosition) {
-        this.selectedPosition = selectedPosition;
-    }
+    private int selectedPosition = -1;
 
     public VehicleAdapter(ArrayList<Vehicle> vehicles, VehicleSelected vehicleSelected) {
         this.vehicles = vehicles;
-        this.vehicleSelected=vehicleSelected;
+        this.vehicleSelected = vehicleSelected;
     }
 
-
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public AssignSpinnerVehicleBinding itemRowBinding;
-        public RadioButton radioButton;
-        public TextView vehicleName;
-
-        public ViewHolder(@NonNull AssignSpinnerVehicleBinding itemRowBinding) {
-            super(itemRowBinding.getRoot());
-            this.itemRowBinding = itemRowBinding;
-            vehicleName = itemRowBinding.getRoot().findViewById(R.id.vehicle_list_name);
-        }
-
-        public void bind(Vehicle vehicle) {
-            itemRowBinding.setItem(vehicle);
-            itemRowBinding.setPos(getAdapterPosition());
-            itemRowBinding.executePendingBindings();
-            boolean laststat, load;
-        }
+    public void setSelectedPosition(int selectedPosition) {
+        this.selectedPosition = selectedPosition;
     }
 
     @NonNull
@@ -73,21 +52,20 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.ViewHold
         holder.bind(vehicle);
 
 
-        if(selectedPosition==position){
+        if (selectedPosition == position) {
             holder.itemRowBinding.assignDriverCard.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDarkBlue));
             holder.vehicleName.setTextColor(Color.WHITE);
-        }
-        else {
+        } else {
             holder.itemRowBinding.assignDriverCard.setBackgroundColor(Color.WHITE);
             holder.vehicleName.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDarkBlue));
         }
 
         holder.itemView.setOnClickListener(v -> {
 
-                vehicleSelected.VehicleSelected(vehicle);
-                selectedPosition = holder.getAdapterPosition();
-                notifyDataSetChanged();
-                return;
+            vehicleSelected.VehicleSelected(vehicle);
+            selectedPosition = holder.getAdapterPosition();
+            notifyDataSetChanged();
+            return;
 
         });
 
@@ -98,11 +76,29 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.ViewHold
         return vehicles.size();
     }
 
-    public void filterList(ArrayList<Vehicle> vehicles){
+    public void filterList(ArrayList<Vehicle> vehicles) {
         this.vehicles = vehicles;
         notifyDataSetChanged();
     }
 
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public AssignSpinnerVehicleBinding itemRowBinding;
+        public RadioButton radioButton;
+        public TextView vehicleName;
+
+        public ViewHolder(@NonNull AssignSpinnerVehicleBinding itemRowBinding) {
+            super(itemRowBinding.getRoot());
+            this.itemRowBinding = itemRowBinding;
+            vehicleName = itemRowBinding.getRoot().findViewById(R.id.vehicle_list_name);
+        }
+
+        public void bind(Vehicle vehicle) {
+            itemRowBinding.setItem(vehicle);
+            itemRowBinding.setPos(getAdapterPosition());
+            itemRowBinding.executePendingBindings();
+            boolean laststat, load;
+        }
+    }
 
 
 }

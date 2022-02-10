@@ -3,6 +3,7 @@ package com.example.listing.models;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -14,7 +15,7 @@ import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 
 
-@Entity(tableName = "MatrialDispatchingTable")
+@Entity(tableName = "MatrialLoaderTable")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
         setterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -24,50 +25,40 @@ public class VechAssignLoader implements Serializable {
     @PrimaryKey(autoGenerate = true)
     @NonNull
     @JsonIgnore
-    public int Dispatch;
-
+    public int Loaderid = 0;
+    @JsonIgnore
+    @ColumnInfo(name = "AddToDB")
+    public boolean addtoDB;
     @JsonProperty("ZuphrLpid")
     @ColumnInfo(name = "ZuphrLpid")
     String ZuphrLpid;
-
     @JsonProperty("ZuphrMjahr")
     @ColumnInfo(name = "ZuphrMjahr")
     String ZuphrMjahr;
-
     @JsonProperty("ZuphrMblpo")
     @ColumnInfo(name = "ZuphrMblpo")
     String ZuphrMblpo;
-
-
     @JsonProperty("ZuphrDriverid")
     @ColumnInfo(name = "ZuphrDriverid")
     String ZuphrDriverid;
-
-
     @JsonProperty("ZuphrVehid")
     @ColumnInfo(name = "ZuphrVehid")
     String ZuphrVehid;
-
-
     @JsonProperty("ZuphrLoad")
     @ColumnInfo(name = "ZuphrLoad")
     String ZuphrLoad;
-
     @JsonProperty("ZuphrUload")
     @ColumnInfo(name = "ZuphrUload")
     String ZuphrUload;
-
     @JsonProperty("ZuphrNfound")
     @ColumnInfo(name = "ZuphrNfound")
     String ZuphrNfound;
-
-
     @JsonProperty("ZuphrProc")
     @ColumnInfo(name = "ZuphrProc")
     String ZuphrProc;
 
-    public VechAssignLoader( String zuphrLpid, String zuphrMjahr, String zuphrMblpo,  String zuphrDriverid
-            , String zuphrVehid, String zuphrLoad, String zuphrUload, String zuphrNfound, String zuphrProc) {
+    public VechAssignLoader(String zuphrLpid, String zuphrMjahr, String zuphrMblpo, String zuphrDriverid
+            , String zuphrVehid, String zuphrLoad, String zuphrUload, String zuphrNfound, String zuphrProc, boolean added) {
         ZuphrLpid = zuphrLpid;
         ZuphrMjahr = zuphrMjahr;
         ZuphrMblpo = zuphrMblpo;
@@ -77,6 +68,7 @@ public class VechAssignLoader implements Serializable {
         ZuphrUload = zuphrUload;
         ZuphrNfound = zuphrNfound;
         ZuphrProc = zuphrProc;
+        addtoDB = added;
     }
 
     public VechAssignLoader() {
@@ -84,11 +76,11 @@ public class VechAssignLoader implements Serializable {
     }
 
     public int getDispatch() {
-        return Dispatch;
+        return Loaderid;
     }
 
     public void setDispatch(int dispatch) {
-        Dispatch = dispatch;
+        Loaderid = dispatch;
     }
 
     public String getZuphrLpid() {
@@ -163,6 +155,18 @@ public class VechAssignLoader implements Serializable {
 
     public void setZuphrProc(String zuphrDone) {
         ZuphrProc = zuphrDone;
+    }
+
+    @JsonIgnore
+    @Ignore
+    public boolean isAddedtoDB() {
+        return addtoDB;
+    }
+
+    @JsonIgnore
+    @Ignore
+    public void AddtoDB(boolean addtoDB) {
+        addtoDB = addtoDB;
     }
 }
 

@@ -13,25 +13,11 @@ import com.example.listing.models.Driver;
 
 import java.util.List;
 
-public class ChosenDriverAdapter extends RecyclerView.Adapter<ChosenDriverAdapter.ViewHolder>{
+public class ChosenDriverAdapter extends RecyclerView.Adapter<ChosenDriverAdapter.ViewHolder> {
     List<Driver> drivers;
 
     public ChosenDriverAdapter(List<Driver> drivers) {
         this.drivers = drivers;
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public ManualChoosenDriverListBinding itemRowBinding;
-
-        public ViewHolder(@NonNull ManualChoosenDriverListBinding itemRowBinding) {
-            super(itemRowBinding.getRoot());
-            this.itemRowBinding = itemRowBinding;
-        }
-
-        public void bind(Driver driver) {
-            itemRowBinding.setItem(driver);
-            itemRowBinding.executePendingBindings();
-        }
     }
 
     @NonNull
@@ -54,5 +40,19 @@ public class ChosenDriverAdapter extends RecyclerView.Adapter<ChosenDriverAdapte
     @Override
     public int getItemCount() {
         return drivers.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public ManualChoosenDriverListBinding itemRowBinding;
+
+        public ViewHolder(@NonNull ManualChoosenDriverListBinding itemRowBinding) {
+            super(itemRowBinding.getRoot());
+            this.itemRowBinding = itemRowBinding;
+        }
+
+        public void bind(Driver driver) {
+            itemRowBinding.setItem(driver);
+            itemRowBinding.executePendingBindings();
+        }
     }
 }

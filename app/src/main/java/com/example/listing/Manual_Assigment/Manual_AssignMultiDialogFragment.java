@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,29 +44,49 @@ import java.util.List;
 public class Manual_AssignMultiDialogFragment extends DialogFragment
         implements DriverDeleteButtonClicked, DriverSelected, AdapterView.OnItemSelectedListener, VehicleSelected {
 
-    private static int Mpostion;
-
     private static final String MATERIAL_2 = "materialParam";
-
-    private Material materialParam;
+    private static int Mpostion;
     PlansDataModel model;
     RecyclerView loaderList;
     List<Vehicle> chosenVehicles;
     ImageView imageView;
     Vehicle chosenVehicle;
-
-    private LoaderAdapter loaderAdapter;
-    private VehicleAdapter vehicleAdapter;
-
-    private MatrialDispatching MatrialDispatch;
-
     List<VehAssign> Vehassignment = new ArrayList<>();
     VehAssign Vehassign;
-
+    private Material materialParam;
+    private LoaderAdapter loaderAdapter;
+    private VehicleAdapter vehicleAdapter;
+    private MatrialDispatching MatrialDispatch;
     private Manual_Assignment_Adapter chosenVehicleAdapter;
     private ArrayList<Driver> chosenDrivers = new ArrayList<>();
     private ArrayList<Driver> notFoundDrivers = new ArrayList<>();
 
+
+    public Manual_AssignMultiDialogFragment() {
+
+    }
+
+    public static Manual_AssignMultiDialogFragment newInstance(int position, Material materialParam) {
+        Manual_AssignMultiDialogFragment fragment = new Manual_AssignMultiDialogFragment();
+        Bundle args = new Bundle();
+
+        args.putSerializable(MATERIAL_2, materialParam);
+        Mpostion = position;
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static <Driver> List<Driver> removeDuplicates(List<Driver> oldList) {
+        List<Driver> newList = new ArrayList<>();
+
+        for (Driver element : oldList) {
+            if (!newList.contains(element)) {
+                newList.add(element);
+            }
+        }
+
+        return newList;
+    }
 
     public void onStart() {
         super.onStart();
@@ -85,21 +104,6 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
-    }
-
-
-    public static Manual_AssignMultiDialogFragment newInstance(int position, Material materialParam) {
-        Manual_AssignMultiDialogFragment fragment = new Manual_AssignMultiDialogFragment();
-        Bundle args = new Bundle();
-
-        args.putSerializable(MATERIAL_2, materialParam);
-        Mpostion = position;
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public Manual_AssignMultiDialogFragment() {
 
     }
 
@@ -139,8 +143,6 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         imageView = view.findViewById(R.id.material_image);
 
 
-        model.getVechiles();
-
         materialParam = model.MatrialsList.getValue().get(Mpostion);
 
 
@@ -178,14 +180,13 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
                 ArrayList<Vehicle> vehiclesList = (ArrayList<Vehicle>) model.MastervehiclesList.getValue();
                 Boolean found = null;
 
-                if(chosenVehicles.contains(chosenVehicle)){
+                if (chosenVehicles.contains(chosenVehicle)) {
                     int chosenVehIndex = chosenVehicles.indexOf(chosenVehicle);
-                    Log.i("Contained","Comt" + chosenVehIndex);
                     removeDuplicates(chosenVehicle.getLoaders());
                     chosenVehicles.get(chosenVehIndex).getLoaders().removeAll((Collection<?>) chosenVehicle.getLoaders());
                     chosenVehicles.get(chosenVehIndex).getLoaders().addAll(chosenVehicle.getLoaders());
 
-                }else{
+                } else {
                     chosenVehicles.add(chosenVehicle);
                 }
                 for (int j = 0; j < chosenVehicles.size(); j++) {
@@ -200,19 +201,19 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
                     }
 
                 }
-                    for (int i = 0; i < vehiclesList.size(); i++) {
-                        if (chosenVehicle.equals(vehiclesList.get(i))) {
-                            vehiclesList.remove(i);
-                            model.MastervehiclesList.setValue(vehiclesList);
-                            loaderAdapter = new LoaderAdapter((ArrayList<Driver>) model.MasterdriversList.getValue(), this::Driverselected);
-                            loaderList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-                            loaderList.setAdapter(loaderAdapter);
-                            model.MastervehiclesList.setValue(vehiclesList);
-                            chosenVehicleAdapter.notifyDataSetChanged();
+                for (int i = 0; i < vehiclesList.size(); i++) {
+                    if (chosenVehicle.equals(vehiclesList.get(i))) {
+                        vehiclesList.remove(i);
+                        model.MastervehiclesList.setValue(vehiclesList);
+                        loaderAdapter = new LoaderAdapter((ArrayList<Driver>) model.MasterdriversList.getValue(), this::Driverselected);
+                        loaderList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+                        loaderList.setAdapter(loaderAdapter);
+                        model.MastervehiclesList.setValue(vehiclesList);
+                        chosenVehicleAdapter.notifyDataSetChanged();
 
-                            break;
-                        }
+                        break;
                     }
+                }
 
                 chosenVehicleAdapter.notifyDataSetChanged();
 
@@ -225,8 +226,6 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
 
         doneBut.setOnClickListener(v -> {
-
-            Log.i("matposition", Mpostion + "");
             List<Material> list = model.MatrialsList.getValue();
 
             list.set(Mpostion, materialParam);
@@ -249,7 +248,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
                             plan.getPlanToItems().get(Mpostion).getVehicles().get(i).getLoaders().get(j).getZuphrdrvrName(),
                             plan.getPlanToItems().get(Mpostion).getVehicles().get(i).getVehid(),
                             plan.getPlanToItems().get(Mpostion).getVehicles().get(i).getVehType(),
-                            "X","", "", "");
+                            "X", "", "", "");
 
 
                     Vehassignment.add(Vehassign);
@@ -261,15 +260,13 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
             }
 
             MatrialDispatch = new MatrialDispatching(plan.getZuphrLpid(), "", Vehassignment);
-            model.AssignValue(MatrialDispatch);
-
+            model.AssignValue(MatrialDispatch, this);
             dismiss();
         });
 
         closeBut.setOnClickListener(v -> dismiss());
 
     }
-
 
     @Override
     public void deleteButtonClicked(int pos) {
@@ -323,23 +320,9 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
     public void notifDataAddChanged() {
         FragmentManager fm = getFragmentManager();
-        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.constraintLayout4);
+        PlanFragment fragm = (PlanFragment) fm.findFragmentById(R.id.mainlayout);
         fragm.dataChanged();
     }
-
-    public static <Driver> List<Driver> removeDuplicates(List<Driver> oldList){
-        List<Driver> newList = new ArrayList<>();
-
-        for(Driver element : oldList){
-            if(!newList.contains(element)){
-                newList.add(element);
-            }
-        }
-
-        return newList;
-    }
-
-
 
 
 }

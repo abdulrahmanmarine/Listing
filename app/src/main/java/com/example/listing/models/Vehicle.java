@@ -18,62 +18,65 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "VehicleTable")
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY,getterVisibility = JsonAutoDetect.Visibility.NONE,
-        setterVisibility = JsonAutoDetect.Visibility.NONE,creatorVisibility = JsonAutoDetect.Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
+        setterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Vehicle implements Serializable, Comparable<Vehicle>{
+public class Vehicle implements Serializable, Comparable<Vehicle> {
+
+    @Expose(serialize = false, deserialize = false)
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @JsonIgnore
+    public int VehicleId;
+    @JsonProperty("VehId")
+    @ColumnInfo(name = "VehId")
+    String Vehid;
+    @JsonProperty("Category")
+    @ColumnInfo(name = "Category")
+    String Category;
+    @JsonProperty("VehType")
+    @ColumnInfo(name = "VehType")
+    String VehType;
+    @JsonProperty("Identifier")
+    @ColumnInfo(name = "Identifier")
+    String Identifier;
+    @JsonProperty("MaxWeight")
+    @ColumnInfo(name = "MaxWeight")
+    String MaxWeight;
+    @JsonProperty("Color")
+    @ColumnInfo(name = "Color")
+    String Color;
+    @JsonProperty("Model")
+    @ColumnInfo(name = "Model")
+    String Model;
+    @JsonProperty("MfgYear")
+    @ColumnInfo(name = "MfgYear")
+    String MfgYear;
+    @JsonProperty("PlateNo")
+    @ColumnInfo(name = "PlateNo")
+    String PlateNo;
+    @Ignore
+    @JsonIgnore
+    List<Driver> loaders = new ArrayList<>();
 
     public Vehicle() {
 
     }
 
-    @Expose(serialize = false,deserialize = false)
-    @PrimaryKey(autoGenerate = true)
-    @NonNull
-    @JsonIgnore
-    public int VehicleId;
+    public Vehicle(String vehid, String category, String vehType, String identifier, String maxWeight, String color, String model,
+                   String mfgYear, String plateNo, List<Driver> laoders) {
+        Vehid = vehid;
+        Category = category;
+        VehType = vehType;
+        Identifier = identifier;
+        MaxWeight = maxWeight;
+        Color = color;
+        Model = model;
+        MfgYear = mfgYear;
+        PlateNo = plateNo;
+        loaders = laoders;
 
-    @Expose(serialize = false,deserialize = false)
-    @ColumnInfo(name = "MaterialOfflineID")
-    @JsonIgnore
-    public  String MaterialOfflineID;
-
-
-    @JsonProperty("VehId")
-    String Vehid;
-
-    @JsonProperty("Category")
-    String Category;
-
-
-    @JsonProperty("VehType")
-    String VehType;
-
-
-    @JsonProperty("Identifier")
-    String Identifier;
-
-    @JsonProperty("MaxWeight")
-    String MaxWeight;
-
-
-    @JsonProperty("Color")
-    String Color;
-
-
-    @JsonProperty("Model")
-    String Model;
-
-    @JsonProperty("MfgYear")
-    String MfgYear;
-
-
-    @JsonProperty("PlateNo")
-    String PlateNo;
-
-    @Ignore
-    @JsonIgnore
-    List<Driver> loaders =new ArrayList<>();
+    }
 
     public String getVehid() {
         return Vehid;
@@ -157,11 +160,11 @@ public class Vehicle implements Serializable, Comparable<Vehicle>{
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        if(obj == null){
+        if (obj == null) {
             return false;
         }
         final Vehicle other = (Vehicle) obj;
-        if(this.getVehid().equals(other.Vehid)){
+        if (this.getVehid().equals(other.Vehid)) {
             return true;
         }
         return false;
@@ -171,22 +174,6 @@ public class Vehicle implements Serializable, Comparable<Vehicle>{
     public int compareTo(Vehicle o) {
         return this.getVehid().compareTo(o.Vehid);
     }
-
-    public Vehicle(String vehid, String category, String vehType, String identifier, String maxWeight, String color, String model,
-                   String mfgYear, String plateNo, List<Driver> laoders) {
-        Vehid = vehid;
-        Category = category;
-        VehType = vehType;
-        Identifier = identifier;
-        MaxWeight = maxWeight;
-        Color = color;
-        Model = model;
-        MfgYear = mfgYear;
-        PlateNo = plateNo;
-        loaders = laoders;
-
-    }
-
 
 
 }

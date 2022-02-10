@@ -54,8 +54,13 @@ public class Login extends AppCompatActivity {
         myProgress.setCancelable(true);
         myProgress.setIndeterminate(true);
 
-        binding.logInBtn.setOnClickListener(v -> login());
 
+        binding.logInBtn.setOnClickListener(view1 -> {
+
+            model = new ViewModelProvider(this, new LoginView_ModelFactory(Login.this.getApplication())).get(LoginView_Model.class);
+            login();
+
+        });
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -104,8 +109,11 @@ public class Login extends AppCompatActivity {
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
 
+        input.setText("T_CBAD_PPLN");
+
 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         builder.setView(input);
+
 
 // Set up the buttons
         builder.setPositiveButton("OK", (dialog, which) -> {
@@ -126,13 +134,16 @@ public class Login extends AppCompatActivity {
         Error_Msg.setVisibility(View.INVISIBLE);
         saveMode("online");
 
+
+
+        binding.username.setText("T_CBAD_PPLN");
+        binding.password.setText("Welcome.3");
+
         User user = new User(binding.username.getText().toString(), binding.password.getText().toString());
         if (binding.username.getText().toString().isEmpty() || binding.password.getText().toString().isEmpty()) {
 
-
             Error_Msg.setText(getResources().getString(R.string.Login_Empty_Error_msg));
             Error_Msg.setVisibility(View.VISIBLE);
-
         } else {
             myProgress.show();
             Error_Msg.setVisibility(View.GONE);
@@ -150,6 +161,7 @@ public class Login extends AppCompatActivity {
                     }
                 }
 
+
             });
         }
     }
@@ -161,7 +173,6 @@ public class Login extends AppCompatActivity {
         editor.apply();
         editor.commit();
     }
-
 
 
 }

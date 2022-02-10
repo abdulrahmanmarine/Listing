@@ -27,22 +27,22 @@ import com.example.listing.models.Material;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.MaterialViewHolder>{
-   LoadButtonClicked loadListener;
-   UnloadButtonClicked unloadListener;
-   PrcButtonClicked prcListener;
-   FoundButtonClicked foundListener;
-   NoteButtonClicked noteListener;
-   CameraButtonClicked cameraListener;
-   AppCompatActivity act;
-   public static List<Material> materialList;
+public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.MaterialViewHolder> {
+    public static List<Material> materialList;
+    LoadButtonClicked loadListener;
+    UnloadButtonClicked unloadListener;
+    PrcButtonClicked prcListener;
+    FoundButtonClicked foundListener;
+    NoteButtonClicked noteListener;
+    CameraButtonClicked cameraListener;
+    AppCompatActivity act;
     Context contexts;
 
     public MaterialAdapter(ArrayList<Material> materialList, LoadButtonClicked loadListener, UnloadButtonClicked unloadListener, PrcButtonClicked prcListener
             , FoundButtonClicked foundListener, NoteButtonClicked noteListener, CameraButtonClicked cameraListener) {
         this.materialList = materialList;
         this.loadListener = loadListener;
-        this.unloadListener  = unloadListener;
+        this.unloadListener = unloadListener;
         this.prcListener = prcListener;
         this.foundListener = foundListener;
         this.noteListener = noteListener;
@@ -77,14 +77,13 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.Materi
         return materialList.size();
     }
 
-    public void filterList(ArrayList<Material> materialList){
+    public void filterList(ArrayList<Material> materialList) {
         this.materialList = materialList;
         notifyDataSetChanged();
     }
 
 
-
-    public static class MaterialViewHolder extends RecyclerView.ViewHolder{
+    public static class MaterialViewHolder extends RecyclerView.ViewHolder {
         public LoadItemCardBinding itemRowBinding;
         public ImageView materialImage;
         private Context contexts = itemView.getContext();
@@ -95,41 +94,40 @@ public class MaterialAdapter extends RecyclerView.Adapter<MaterialAdapter.Materi
             materialImage = itemRowBinding.materialImgCard;
         }
 
-        public void bind(Material material){
+        public void bind(Material material) {
             //itemRowBinding.setVariable(3, getAdapterPosition());
             itemRowBinding.setPos(getAdapterPosition());
             itemRowBinding.setMat(material);
             itemRowBinding.executePendingBindings();
 
-            if(material.getVehAssignList()!=null &&material.getVehAssignList().size()>0){
-                for(int i=0; i<material.getVehAssignList().size();i++){
+            if (material.getVehAssignList() != null && material.getVehAssignList().size() > 0) {
+                for (int i = 0; i < material.getVehAssignList().size(); i++) {
 
-                    if(material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")){
+                    if (material.getVehAssignList().get(i).getZuphrLoad().equalsIgnoreCase("x")) {
                         itemRowBinding.statusTv.setText("Loaded");
                         itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.green_border));
-                    }else if (material.getVehAssignList().get(i).getZuphrUload().equalsIgnoreCase("x")){
+                    } else if (material.getVehAssignList().get(i).getZuphrUload().equalsIgnoreCase("x")) {
                         itemRowBinding.statusTv.setText("UnLoaded");
                         itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
-                    }else if (material.getVehAssignList().get(i).getZuphrNfound().equalsIgnoreCase("x")){
+                    } else if (material.getVehAssignList().get(i).getZuphrNfound().equalsIgnoreCase("x")) {
                         itemRowBinding.statusTv.setText("NotFound");
                         itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
-                    }
-                    else if (material.getVehAssignList().get(i).getZuphrProc().equalsIgnoreCase("x")){
+                    } else if (material.getVehAssignList().get(i).getZuphrProc().equalsIgnoreCase("x")) {
                         itemRowBinding.statusTv.setText("Proccessd");
                         itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.yellow_border));
                     }
 
                 }
 
-            }else {
+            } else {
 
                 itemRowBinding.statusTv.setText("No Action");
                 itemRowBinding.statusTv.setBackground(ContextCompat.getDrawable(contexts, R.drawable.red_border));
             }
 
 
-            if(material.getZuphrContents().length()> 100) {
-                String img =material.getZuphrContents().replace("data:image/jpeg;base64,","");
+            if (material.getZuphrContents().length() > 100) {
+                String img = material.getZuphrContents().replace("data:image/jpeg;base64,", "");
                 byte[] decodedString = Base64.decode(img, Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                 itemRowBinding.materialImgCard.setImageBitmap(decodedByte);

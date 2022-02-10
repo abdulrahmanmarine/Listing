@@ -60,5 +60,16 @@
     <string name="destination">Destination: </string>
     <string name="vessel">Vessel: </string>
     <string name="LoadingData">Loading Plans</string>
+    <string name="offine_window_title">Offline Assigment items</string>
+    <string name="Offline_items_DispatchAll">Dispatch All</string>
+    <string name="Offline_items_ClearAll">Clear All</string>
+    <string name="Lpid">Plan ID</string>
+    <string name="VehAssginVeachileName">Vechicle Name</string>
+    <string name="VehAssginDriverName">Driver Name</string>
+    <string name="PlanNumber">Plan Number</string>
+    <string name="MatrialNumber">Matrial Number</string>
+    <string name="offine_window_titleLoader" >Offline Loader items</string>
+    <string name="VehAssginLoaderStatus">Loader Status</string>
+    <string name="Offline_items_ChangeStatusAll">Change Status All</string>
 
 </resources>

@@ -19,7 +19,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -57,29 +56,29 @@ import javax.security.auth.callback.Callback
 
 
 class RedesignedNotesFragment(
-         material: Material, 
-         id2: String?,
-        id3: String?,
-        noteMjahr: String?,
-        application: Application,
-        mode :String
+    material: Material,
+    id2: String?,
+    id3: String?,
+    noteMjahr: String?,
+    application: Application,
+    mode: String
 ) : DialogFragment() {
     private var db: OfflineDatabaseClient? = null
-    private var Mode =mode
+    private var Mode = mode
     private lateinit var mViewModel: PlansDataModel
     private lateinit var Token: String
     var notes = ArrayList<Notes>()
-    var application=application
+    var application = application
     var recording: Boolean = false
     var recorder: MediaRecorder? = null
     var player: MediaPlayer? = null
     private var vmJob = Job()
     private var uiScopre = CoroutineScope(Dispatchers.IO + vmJob)
-    var noteType =""
+    var noteType = ""
     var id1 = material.zuphrLpid
     var id2 = id2
     var id3 = id3
-    var material=material;
+    var material = material;
     var noteMjahr = noteMjahr
     lateinit var saveTextNote: ImageButton
     lateinit var saveAudioNote: ImageButton
@@ -90,13 +89,14 @@ class RedesignedNotesFragment(
     var recordCount = 0
     var outputDir: String = ""
     lateinit var infview: View
-    lateinit var binding : View
+    lateinit var binding: View
     var long: Double? = 0.0
-    var lat :  Double? = 0.0
-    var subSAPNote : SAPNote = SAPNote()
-    lateinit var lManager : LocationManager
+    var lat: Double? = 0.0
+    var subSAPNote: SAPNote = SAPNote()
+    lateinit var lManager: LocationManager
     var dummyDate = "/Date(1622592000000)/"
     var dummyTime = "PT00H00M00S"
+
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -105,10 +105,11 @@ class RedesignedNotesFragment(
             var mets = DisplayMetrics()
             requireContext().display?.getRealMetrics(mets)
             noteRV.layoutParams.width = (mets.widthPixels * 0.71).toInt()
-            noteRV.layoutParams.height =  (mets.heightPixels * 0.65).toInt()
+            noteRV.layoutParams.height = (mets.heightPixels * 0.65).toInt()
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
+
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,10 +121,11 @@ class RedesignedNotesFragment(
         cameraBtn = infview.findViewById(R.id.camera_button)
         noteTextView = infview.findViewById(R.id.note_text)
         noteRV = infview.findViewById(R.id.notes_list)
-        noteAdapter = NotesAdapter2(requireActivity().supportFragmentManager, requireContext(), notes)
+        noteAdapter =
+            NotesAdapter2(requireActivity().supportFragmentManager, requireContext(), notes)
         noteRV.adapter = noteAdapter
         Manifest.permission()
-        mViewModel=ViewModelProviders.of(requireActivity()).get(PlansDataModel::class.java)
+        mViewModel = ViewModelProviders.of(requireActivity()).get(PlansDataModel::class.java)
         lManager = requireContext().getSystemService(LOCATION_SERVICE) as LocationManager
         outputDir = "${requireActivity().filesDir?.path}/ggg.3gp"
         db = OfflineDatabaseClient.getInstance(requireContext())
@@ -160,21 +162,21 @@ class RedesignedNotesFragment(
         noteRV.scrollToPosition(noteAdapter.itemCount - 1)
 
 
-
-
     }
 
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         super.onCreate(savedInstanceState)
-      binding = infview.rootView
+        binding = infview.rootView
         return binding
     }
+
     var screenFlag = 0
+
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onResume() {
         super.onResume()
@@ -182,9 +184,12 @@ class RedesignedNotesFragment(
         var mets = DisplayMetrics()
         requireContext().display?.getRealMetrics(mets)
         if (dialog != null) {
-        val window = dialog!!.window
+            val window = dialog!!.window
             window!!.setGravity(Gravity.CENTER)
-        window!!.setLayout((mets.widthPixels * 0.75).toInt(), WindowManager.LayoutParams.WRAP_CONTENT)
+            window!!.setLayout(
+                (mets.widthPixels * 0.75).toInt(),
+                WindowManager.LayoutParams.WRAP_CONTENT
+            )
         }
 
 
@@ -195,9 +200,8 @@ class RedesignedNotesFragment(
                     val outRect = Rect()
                     v.getGlobalVisibleRect(outRect)
                     if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
-                        Log.d("focus", "touchevent")
                         v.clearFocus()
-                       // window!!.setLayout((mets.widthPixels * 0.75).toInt(), (mets.heightPixels * 0.75).toInt())
+                        // window!!.setLayout((mets.widthPixels * 0.75).toInt(), (mets.heightPixels * 0.75).toInt())
                         val imm: InputMethodManager =
                             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                         imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
@@ -208,10 +212,6 @@ class RedesignedNotesFragment(
         }
 
 
-
-
-
-
     }
 
 
@@ -219,41 +219,41 @@ class RedesignedNotesFragment(
     fun permission(): Boolean {
 
         return if (ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.RECORD_AUDIO
-                ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
+                requireContext(),
+                Manifest.permission.RECORD_AUDIO
+            ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
             && ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
             && ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
             && ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
+                requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
             && ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.INTERNET
-                ) != PackageManager.PERMISSION_GRANTED
+                requireContext(),
+                Manifest.permission.INTERNET
+            ) != PackageManager.PERMISSION_GRANTED
             && ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
+                requireContext(),
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
         ) {
             val permissions = arrayOf(
-                    android.Manifest.permission.RECORD_AUDIO,
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                    android.Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                    android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION,
-                    android.Manifest.permission.INTERNET
+                android.Manifest.permission.RECORD_AUDIO,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                android.Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.INTERNET
             )
             requireActivity().requestPermissions(permissions, 0)
 
@@ -284,7 +284,6 @@ class RedesignedNotesFragment(
             try {
                 prepare()
             } catch (e: IOException) {
-                Log.e("AudioRecordTest", "prepare() failed")
             }
 
             start()
@@ -303,16 +302,15 @@ class RedesignedNotesFragment(
     }
 
 
-
     private val REQUEST_IMAGE_CAPTURE = 1
 
     private fun dispatchTakePictureIntent() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
             requireActivity().startActivityFromFragment(
-                    this,
-                    takePictureIntent,
-                    REQUEST_IMAGE_CAPTURE
+                this,
+                takePictureIntent,
+                REQUEST_IMAGE_CAPTURE
             )
         } catch (e: ActivityNotFoundException) {
             // display error state to the user
@@ -328,8 +326,8 @@ class RedesignedNotesFragment(
             var picString = Base64Variants.getDefaultVariant().encode(byteArray)
             subSAPNote.ZuphrContent = picString
             subSAPNote.ZuphrContentType = "IMG"
-         
-                sendNote()
+
+            sendNote()
 
         }
     }
@@ -337,40 +335,39 @@ class RedesignedNotesFragment(
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun saveAudioClickListener(v: View) {
-            if (!this.permission())
-                Toast.makeText(
-                        requireContext(),
-                        "You Have Not Granted Permission To Record",
-                        Toast.LENGTH_LONG
-                ).show()
-            else if (!recording) {
-                recording = true
-                onRecord(recording)
-                saveAudioNote.setImageResource(R.drawable.ic_stop_button)
-                saveAudioNote.background = null
-            } else {
-                recording = false
+        if (!this.permission())
+            Toast.makeText(
+                requireContext(),
+                "You Have Not Granted Permission To Record",
+                Toast.LENGTH_LONG
+            ).show()
+        else if (!recording) {
+            recording = true
+            onRecord(recording)
+            saveAudioNote.setImageResource(R.drawable.ic_stop_button)
+            saveAudioNote.background = null
+        } else {
+            recording = false
 
-                onRecord(recording)
-                saveAudioNote.setImageResource(R.drawable.ic_speaker)
-                saveAudioNote.background = null
+            onRecord(recording)
+            saveAudioNote.setImageResource(R.drawable.ic_speaker)
+            saveAudioNote.background = null
 
-                val file = File(outputDir)
-                val FileBytes: ByteArray = file.readBytes()
-                var encoded = Base64Variants.getDefaultVariant().encode(FileBytes)
+            val file = File(outputDir)
+            val FileBytes: ByteArray = file.readBytes()
+            var encoded = Base64Variants.getDefaultVariant().encode(FileBytes)
 
-                subSAPNote.ZuphrContent = encoded.toString()
-                subSAPNote.ZuphrContentType = "AUD"
-                recordCount++
-            
-                    sendNote()
-            }
+            subSAPNote.ZuphrContent = encoded.toString()
+            subSAPNote.ZuphrContentType = "AUD"
+            recordCount++
+
+            sendNote()
+        }
 
     }
 
 
-    fun sendNote(){
-        Log.i("test comment", "off")
+    fun sendNote() {
 
         if (Mode == "offline") {
             AppExecutors.getInstance().diskIO().execute {
@@ -378,81 +375,87 @@ class RedesignedNotesFragment(
                 subSAPNote.setNotesID(0)
                 var text = db!!.Notes().insertItem(subSAPNote)
 
-                Log.i("test comment", text.toString()+subSAPNote.zuphrContent)
 
             }
-        }
-        else {
-            Log.i("test comment", "on")
+        } else {
 
-            Token =  Loginsession.getInstance().getToken()
+            Token = Loginsession.getInstance().getToken()
             if (RestApiClient.getInstance(application) != null)
-                RestApiClient.getInstance(application).retrofitInterface.submitNote(subSAPNote, Token)
-                        .enqueue(object : Callback,
-                                retrofit2.Callback<ResponseBody> {
-                            override fun onResponse(
-                                    call: Call<ResponseBody>,
-                                    response: Response<ResponseBody>
-                            ) {
-                                if (response.isSuccessful) {
-                                    var note = SharefPref.mapper.readValue<dVariableJSON<SAPNote>>(response.body()?.string()!!).d
-                                    notes.add(Notes(note!!.ZuphrFpName!!,
-                                            note.ZuphrContent!!,
-                                            note!!.ZuphrContentType,
-                                            SharefPref.parseTime(note.ZuphrFpTime!!)!!,
-                                            SharefPref.parseDate(note.ZuphrFpDate!!)!!))
-                                    noteAdapter.notifyDataSetChanged()
-                                    noteRV.scrollToPosition(noteAdapter.itemCount - 1)
-
-                                }
+                RestApiClient.getInstance(application).retrofitInterface.submitNote(
+                    subSAPNote,
+                    Token
+                )
+                    .enqueue(object : Callback,
+                        retrofit2.Callback<ResponseBody> {
+                        override fun onResponse(
+                            call: Call<ResponseBody>,
+                            response: Response<ResponseBody>
+                        ) {
+                            if (response.isSuccessful) {
+                                var note = SharefPref.mapper.readValue<dVariableJSON<SAPNote>>(
+                                    response.body()?.string()!!
+                                ).d
+                                notes.add(
+                                    Notes(
+                                        note!!.ZuphrFpName!!,
+                                        note.ZuphrContent!!,
+                                        note!!.ZuphrContentType,
+                                        SharefPref.parseTime(note.ZuphrFpTime!!)!!,
+                                        SharefPref.parseDate(note.ZuphrFpDate!!)!!
+                                    )
+                                )
+                                noteAdapter.notifyDataSetChanged()
+                                noteRV.scrollToPosition(noteAdapter.itemCount - 1)
 
                             }
 
-                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                                Log.i("ApiConnection", "Failed: ${t.localizedMessage}")
-                            }
+                        }
+
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        }
 
 
-                        })
+                    })
 
 
         }
     }
-    @RequiresApi(Build.VERSION_CODES.M)
-    fun saveTextClickListner(v: View){
-        var textBoxValue = noteTextView.text.toString()
-        if (textBoxValue.isNotEmpty() && textBoxValue.trim()!= "") {
-                subSAPNote.ZuphrContent = noteTextView.text.toString()
-                subSAPNote.ZuphrContentType = "TXT"
-                notes.add(
-                        Notes(
-                                subSAPNote!!.ZuphrFpName!!,
-                                subSAPNote.ZuphrContent!!,
-                                subSAPNote!!.ZuphrContentType,
-                                SharefPref.parseTime(subSAPNote.ZuphrFpTime!!)!!,
-                                SharefPref.parseDate(subSAPNote.ZuphrFpDate!!)!!
-                        )
-                )
-                noteAdapter.notifyDataSetChanged()
-                noteRV.scrollToPosition(noteAdapter.itemCount - 1)
-                noteTextView.text.clear()
-                sendNote()
 
-            }
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun saveTextClickListner(v: View) {
+        var textBoxValue = noteTextView.text.toString()
+        if (textBoxValue.isNotEmpty() && textBoxValue.trim() != "") {
+            subSAPNote.ZuphrContent = noteTextView.text.toString()
+            subSAPNote.ZuphrContentType = "TXT"
+            notes.add(
+                Notes(
+                    subSAPNote!!.ZuphrFpName!!,
+                    subSAPNote.ZuphrContent!!,
+                    subSAPNote!!.ZuphrContentType,
+                    SharefPref.parseTime(subSAPNote.ZuphrFpTime!!)!!,
+                    SharefPref.parseDate(subSAPNote.ZuphrFpDate!!)!!
+                )
+            )
+            noteAdapter.notifyDataSetChanged()
+            noteRV.scrollToPosition(noteAdapter.itemCount - 1)
+            noteTextView.text.clear()
+            sendNote()
+
+        }
     }
 
-    fun saveTextClickListnerOffline(v: View){
+    fun saveTextClickListnerOffline(v: View) {
         subSAPNote.ZuphrContent = noteTextView.text.toString()
         subSAPNote.ZuphrContentType = "TXT"
         sendNote()
         notes.add(
-                Notes(
-                        subSAPNote!!.ZuphrFpName!!,
-                        subSAPNote.ZuphrContent!!,
-                        subSAPNote!!.ZuphrContentType,
-                        SharefPref.parseTime(subSAPNote.ZuphrFpTime!!)!!,
-                        SharefPref.parseDate(subSAPNote.ZuphrFpDate!!)!!
-                )
+            Notes(
+                subSAPNote!!.ZuphrFpName!!,
+                subSAPNote.ZuphrContent!!,
+                subSAPNote!!.ZuphrContentType,
+                SharefPref.parseTime(subSAPNote.ZuphrFpTime!!)!!,
+                SharefPref.parseDate(subSAPNote.ZuphrFpDate!!)!!
+            )
         )
         noteAdapter.notifyDataSetChanged()
         noteRV.scrollToPosition(noteAdapter.itemCount - 1)
@@ -460,61 +463,73 @@ class RedesignedNotesFragment(
         noteAdapter.historyList = notes
 
 
-
-
-
     }
 
-    fun getNotes(){
-        var filterstr = "NoteSet?\$filter=ZuphrType eq '$noteType' and ZuphrId1 eq '$id1' and ZuphrId2 eq '$id2' and ZuphrId3 eq '$id3' "
-        Log.i("test comment get",material.matrialId.toString()+Mode)
+    fun getNotes() {
+        var filterstr =
+            "NoteSet?\$filter=ZuphrType eq '$noteType' and ZuphrId1 eq '$id1' and ZuphrId2 eq '$id2' and ZuphrId3 eq '$id3' "
 
         if (Mode == "offline") {
 
-            db!!.Notes().GetItemAll(material.matrialId.toString()).observe(this, { sAPnotesList: List<SAPNote> ->
-                for (j in sAPnotesList.indices) {
-                    sAPnotesList[j].setStatus(false)
-               }
-                notes.clear()
-                sAPnotesList?.forEach {
-                    notes.add(Notes(it!!.ZuphrFpName!!, it!!.ZuphrContent!!, it.ZuphrContentType,
-                            SharefPref.parseTime(it.ZuphrFpTime!!)!!, SharefPref.parseDate(it.ZuphrFpDate!!)!!
-                    )
-                    )
-                }
-                notes.sortWith(compareBy({ x -> x.date }, { x -> x.time }))
-                noteAdapter.historyList = notes
-                noteRV.scrollToPosition(notes.size - 1)
-            })
-        }
-        else{
-            if(RestApiClient.getInstance(application)!=null)
+            db!!.Notes().GetItemAll(material.matrialId.toString())
+                .observe(this, { sAPnotesList: List<SAPNote> ->
+                    for (j in sAPnotesList.indices) {
+                        sAPnotesList[j].setStatus(false)
+                    }
+                    notes.clear()
+                    sAPnotesList?.forEach {
+                        notes.add(
+                            Notes(
+                                it!!.ZuphrFpName!!,
+                                it!!.ZuphrContent!!,
+                                it.ZuphrContentType,
+                                SharefPref.parseTime(it.ZuphrFpTime!!)!!,
+                                SharefPref.parseDate(it.ZuphrFpDate!!)!!
+                            )
+                        )
+                    }
+                    notes.sortWith(compareBy({ x -> x.date }, { x -> x.time }))
+                    noteAdapter.historyList = notes
+                    noteRV.scrollToPosition(notes.size - 1)
+                })
+        } else {
+            if (RestApiClient.getInstance(application) != null)
                 RestApiClient.getInstance(application).retrofitInterface.retrieveNotes(filterstr)
-                        .enqueue(object : Callback,
-                                retrofit2.Callback<ResponseBody> {
-                            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                                if (response.isSuccessful) {
-                                    var sAPnotesList: ArrayList<SAPNote>? = SharefPref.mapper.readValue<dVariableJSON<resultVariableJSON<ArrayList<SAPNote>>>>(response.body()?.string()!!).d!!.results
-                                    notes.clear()
-                                    sAPnotesList?.forEach {
-                                        notes.add(Notes(it!!.ZuphrFpName!!, it!!.ZuphrContent!!, it.ZuphrContentType,
-                                                SharefPref.parseTime(it.ZuphrFpTime!!)!!, SharefPref.parseDate(it.ZuphrFpDate!!)!!
+                    .enqueue(object : Callback,
+                        retrofit2.Callback<ResponseBody> {
+                        override fun onResponse(
+                            call: Call<ResponseBody>,
+                            response: Response<ResponseBody>
+                        ) {
+                            if (response.isSuccessful) {
+                                var sAPnotesList: ArrayList<SAPNote>? =
+                                    SharefPref.mapper.readValue<dVariableJSON<resultVariableJSON<ArrayList<SAPNote>>>>(
+                                        response.body()?.string()!!
+                                    ).d!!.results
+                                notes.clear()
+                                sAPnotesList?.forEach {
+                                    notes.add(
+                                        Notes(
+                                            it!!.ZuphrFpName!!,
+                                            it!!.ZuphrContent!!,
+                                            it.ZuphrContentType,
+                                            SharefPref.parseTime(it.ZuphrFpTime!!)!!,
+                                            SharefPref.parseDate(it.ZuphrFpDate!!)!!
                                         )
-                                        )
-                                    }
-                                    notes.sortWith(compareBy({ x -> x.date }, { x -> x.time }))
-                                    noteAdapter.historyList = notes
-                                    noteRV.scrollToPosition(notes.size - 1)
+                                    )
                                 }
-
+                                notes.sortWith(compareBy({ x -> x.date }, { x -> x.time }))
+                                noteAdapter.historyList = notes
+                                noteRV.scrollToPosition(notes.size - 1)
                             }
 
-                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                                Log.i("ApiConnection", "Failed: ${t.localizedMessage}")
-                            }
+                        }
+
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        }
 
 
-                        })
+                    })
         }
 
     }

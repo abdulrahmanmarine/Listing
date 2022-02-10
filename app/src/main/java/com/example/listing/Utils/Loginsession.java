@@ -8,14 +8,15 @@ public class Loginsession {
     private static Loginsession instance;
     private User user;
     private String token;
+    private boolean Offlineflag = true;
 
 
-    private Loginsession( String token, User user) {
+    private Loginsession(String token, User user) {
         this.token = token;
         this.user = user;
     }
 
-    public static void initializer( String token, User user) {
+    public static void initializer(String token, User user) {
         if (instance == null) {
             synchronized (Loginsession.class) {
                 instance = new Loginsession(token, user);
@@ -31,7 +32,6 @@ public class Loginsession {
         }
 
     }
-
 
 
     public String getToken() {
@@ -51,7 +51,13 @@ public class Loginsession {
         this.user = user;
     }
 
+    public boolean isOfflineflag() {
+        return Offlineflag;
+    }
 
+    public void setOfflineflag(boolean offlineflag) {
+        Offlineflag = offlineflag;
+    }
 }
 
 

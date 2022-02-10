@@ -1,4 +1,5 @@
 package com.example.listing.models;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class ImageList {
     }
 
     @JsonProperty("d")
-    public void unpackd(Map<String,List<imagenode>> d) {
+    public void unpackd(Map<String, List<imagenode>> d) {
         if (d.get("results") != null) {
             items = d.get("results");
         }
