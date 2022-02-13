@@ -501,7 +501,7 @@ public class PlansDataModel extends ViewModel {
 
         if (Mode.equals("offline")) {
 
-            db.Load().GetItemtoPost(Lpid, Loginsession.getInstance().getUser().UserId, true).observe(owner, itemlist -> {
+            db.Load().GetItemtoPost(Lpid, true).observe(owner, itemlist -> {
 
                 MatchingVechAssginLoader(itemlist, false);
 
@@ -521,7 +521,6 @@ public class PlansDataModel extends ViewModel {
 
                         for (int i = 0; i < response.body().getAssignment().getVehassign().size(); i++) {
 
-                            if(response.body().getAssignment().getVehassign().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)) {
                                 VechAssignLoader vechAssignLoader = new VechAssignLoader(
                                         response.body().getAssignment().getVehassign().get(i).getZuphrLpid(),
                                         response.body().getAssignment().getVehassign().get(i).getZuphrMjahr(),
@@ -534,7 +533,7 @@ public class PlansDataModel extends ViewModel {
                                         response.body().getAssignment().getVehassign().get(i).getZuphrProc(), true);
 
                                 loaders.add(vechAssignLoader);
-                            }
+
 
 
 
@@ -905,7 +904,7 @@ public class PlansDataModel extends ViewModel {
     public void offlineLoaderItems(LifecycleOwner owner, String lpid) {
 
         if (!Mode.equals("offline")) {
-            db.Load().GetItemtoPost(lpid, Loginsession.getInstance().getUser().UserId, false).observe(owner, items -> {
+            db.Load().GetItemtoPost(lpid, false).observe(owner, items -> {
 
                 if (items != null) {
                     if (items.size() > 0 && Loginsession.getInstance().isOfflineflag()) {

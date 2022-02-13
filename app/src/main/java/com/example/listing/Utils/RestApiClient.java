@@ -64,6 +64,7 @@ public class RestApiClient {
 
     static OkHttpClient headersInterceptors(Application application) {
 
+
        //    String[] newDesc1=credns.get(0).split("=");
       //      String[] test=newDesc1[1].split(";path");
 

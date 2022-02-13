@@ -17,8 +17,8 @@ public interface Offline_VechLoad {
     @Query("SELECT * FROM MatrialLoaderTable WHERE ZuphrLpid=:LPID And ZuphrDriverid=:Did ")
     LiveData<List<VechAssignLoader>> GetItemAll(String LPID, String Did);
 
-    @Query("SELECT * FROM MatrialLoaderTable WHERE ZuphrLpid=:LPID And ZuphrDriverid=:Did And AddToDB=:addedtodb")
-    LiveData<List<VechAssignLoader>> GetItemtoPost(String LPID, String Did, Boolean addedtodb);
+    @Query("SELECT * FROM MatrialLoaderTable WHERE ZuphrLpid=:LPID And AddToDB=:addedtodb")
+    LiveData<List<VechAssignLoader>> GetItemtoPost(String LPID,  Boolean addedtodb);
 
     @Insert
     long insertAssginment(VechAssignLoader assgin);
