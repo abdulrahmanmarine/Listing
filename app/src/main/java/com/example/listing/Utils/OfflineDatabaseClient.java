@@ -26,7 +26,7 @@ import com.example.listing.models.imagenode;
 
 @Database(entities = {Plan.class, Material.class, imagenode.class, Driver.class,
         Vehicle.class, com.example.listing.models.User.class, SAPNote.class,
-        VehAssign.class, VechAssignLoader.class}, version = 39)
+        VehAssign.class, VechAssignLoader.class}, version = 40)
 public abstract class OfflineDatabaseClient extends RoomDatabase {
     private static final String DB_Name = "App_db";
     private static OfflineDatabaseClient instance;

@@ -2,6 +2,7 @@ package com.example.listing.Plan;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.example.listing.R;
 import com.example.listing.databinding.PlanCardBinding;
 import com.example.listing.models.Material;
 import com.example.listing.models.Plan;
+import com.example.listing.notes.SharefPref;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,13 +139,18 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
 
             }
             String planTime = plan.getZuphrFpTime();
+            String planDate = plan.getZuphrFpDate();
 
             int hours = Integer.parseInt(planTime.substring(planTime.indexOf("H") - 2, planTime.indexOf("H")));
             int mins = Integer.parseInt(planTime.substring(planTime.indexOf("M") - 2, planTime.indexOf("M")));
             int secs = Integer.parseInt(planTime.substring(planTime.indexOf("S") - 2, planTime.indexOf("S")));
 
             String timetext = hours + ":" + mins + ":" + secs;
+
+
             timeTextView.setText(timetext);
+            dateText.setText(SharefPref.INSTANCE.parseDate(planDate));
+            Log.i("planDestniation",plan.getZuphrOffshore()+"");
 
             statusText.setText(plan.getZuphrStatus());
         }

@@ -3,15 +3,14 @@ package com.example.listing.Kotlin
 import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.PopupWindow
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.DialogFragment
+
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,11 +31,14 @@ import java.util.*
 class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFragmentClickListener,
     Offlineitem_updatelist {
 
-    var dialog: DialogFragment? = null
-    var dialogManual: DialogFragment? = null
+    var dialog: androidx.fragment.app.DialogFragment? = null
+    var dialogManual: androidx.fragment.app.DialogFragment? = null
     private var flag: Boolean = true
     var materialpos = 0
     var po = 0
+    lateinit var progressBarContainer: LinearLayout
+    lateinit var progressBarText: TextView
+    lateinit var progressBar: ProgressBar
     lateinit var model: PlansDataModel
     lateinit var logout: FloatingActionButton
     var main_layout: ConstraintLayout? = null
@@ -47,25 +49,34 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         setContentView(R.layout.activity_loader)
         this.supportActionBar!!.hide()
 
+        progressBarContainer = findViewById(R.id.progressBarlayout)
+        progressBar = findViewById(R.id.progressBar)
+        progressBarText = findViewById(R.id.progressbartext)
         model = ViewModelProvider(this, PlansDataModelFactory(this.application, "")).get(
-            PlansDataModel::class.java
+                PlansDataModel::class.java
         )
         model.getplansDispatcher(application, this)
-        model.getdrivers(this)
-        model.getVechiles(this)
+
         model.UserRule.value = false
         logout = findViewById(R.id.logout_button)
+
 
 
         main_layout = findViewById(R.id.mainlayout)
 
         model.Plans.observe(this, { Plans: List<Plan?>? ->
 
-            buildRecycler(
-                (Plans as ArrayList<Plan?>?)!!
-
-
-            )
+            progressBar.visibility = View.GONE
+            if (Plans != null) {
+                if (Plans!!.size > 0) {
+                    progressBarContainer.visibility = View.GONE
+                    buildRecycler((Plans as ArrayList<Plan?>?)!!)
+                } else {
+                    progressBarText.setText("No Plans found")
+                }
+            }else {
+                progressBarText.setText("No Plans found")
+            }
         })
 
 
@@ -121,11 +132,15 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
             val planList = model.Plans.value!!
             val plan = planList[pos]
             val textfragment = DispatcherFragment.newInstance(
-                MaterialList as ArrayList<Material>?,
-                plan.zuphrLpname,
-                plan.zuphrVesselName,
-                plan.zuphrCaptain
+                    MaterialList as ArrayList<Material>?,
+                    plan.zuphrLpname,
+                    plan.zuphrVesselName,
+                    plan.zuphrOffshore
             )
+
+            // model.getDevice();
+            Log.i("destnation",  plan.zuphrOffshore + "")
+
             val fm = supportFragmentManager
             val ft = fm.beginTransaction()
             ft.replace(R.id.item_recycler, textfragment)
@@ -143,12 +158,12 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
         dialogManual = Manual_AssignMultiDialogFragment.newInstance(matpos, material)
 
         (dialog as Configured_AssignMultiDialogFragment?)!!.setStyle(
-            DialogFragment.STYLE_NORMAL,
-            R.style.CustomDialog
+                androidx.fragment.app.DialogFragment.STYLE_NORMAL,
+                R.style.CustomDialog
         )
         (dialogManual as Manual_AssignMultiDialogFragment?)!!.setStyle(
-            DialogFragment.STYLE_NORMAL,
-            R.style.CustomDialog
+                androidx.fragment.app.DialogFragment.STYLE_NORMAL,
+                R.style.CustomDialog
         )
 
         if (!flag) {
@@ -171,9 +186,9 @@ class Dispatcher : AppCompatActivity(), PlanClickListener, PlanFragment.LoaderFr
 
 
         val items_adapter = Offline_Items_Dispatch_adapter(
-            vehAssigns,
-            model.plan.value?.planToItems,
-            this
+                vehAssigns,
+                model.plan.value?.planToItems,
+                this
         )
         val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.setLayoutManager(linearLayoutManager)

@@ -577,6 +577,14 @@ public class Plan implements Serializable {
         return Flag;
     }
 
+    public String getZuphrOffshore() {
+        return ZuphrOffshore;
+    }
+
+    public void setZuphrOffshore(String zuphrOffshore) {
+        ZuphrOffshore = zuphrOffshore;
+    }
+
     public void setFlag(Boolean flag) {
         Flag = flag;
     }

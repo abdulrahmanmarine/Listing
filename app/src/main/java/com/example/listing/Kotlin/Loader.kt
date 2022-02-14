@@ -8,10 +8,7 @@ import android.provider.Settings
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.PopupWindow
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
@@ -32,7 +29,9 @@ class Loader : AppCompatActivity(), PlanClickListener, Offlineitem_updatelist_lo
     var reqs = ArrayList<Plan?>()
     lateinit var model: PlansDataModel
     var po = 0
-    lateinit var progressBar: LinearLayout
+    lateinit var progressBarContainer: LinearLayout
+    lateinit var progressBarText: TextView
+    lateinit var progressBar: ProgressBar
     var main_layout: ConstraintLayout? = null
 
     @SuppressLint("HardwareIds")
@@ -42,7 +41,9 @@ class Loader : AppCompatActivity(), PlanClickListener, Offlineitem_updatelist_lo
         this.getSupportActionBar()!!.hide()
         lateinit var logout: FloatingActionButton
 
-        progressBar = findViewById(R.id.progressBarlayout)
+        progressBarContainer = findViewById(R.id.progressBarlayout)
+        progressBar = findViewById(R.id.progressBar)
+        progressBarText = findViewById(R.id.progressbartext)
         main_layout = findViewById(R.id.mainlayout)
 
         val android_id = Settings.Secure.getString(
@@ -54,10 +55,9 @@ class Loader : AppCompatActivity(), PlanClickListener, Offlineitem_updatelist_lo
             PlansDataModel::class.java
         )
 
-        //  model.postDriver()
+
         model.getplansLoader(this)
         model.UserRule.value = true
-        progressBar.visibility = View.VISIBLE
         logout = findViewById(R.id.logout_button);
 
 
@@ -65,9 +65,17 @@ class Loader : AppCompatActivity(), PlanClickListener, Offlineitem_updatelist_lo
         model.Plans.observe(this,
             { Plans: List<Plan?>? ->
                 progressBar.visibility = View.GONE
-                buildRecycler(
-                    (Plans as ArrayList<Plan?>?)!!
-                )
+                if (Plans != null) {
+                        if (Plans!!.size > 0) {
+                            progressBarContainer.visibility = View.GONE
+                            buildRecycler((Plans as ArrayList<Plan?>?)!!)
+                        } else {
+                            progressBarText.setText("No Plans found")
+                        }
+                }else {
+                    progressBarText.setText("No Plans found")
+                }
+
             })
 
         model.VechAssignLoaderList.observe(this, { StatusList: List<VechAssignLoader?>? ->
