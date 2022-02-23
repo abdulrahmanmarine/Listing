@@ -3,32 +3,130 @@
     "results": [
       {
         "__metadata": {
-          "id": "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/DriverSet('ABDK01')",
-          "uri": "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/DriverSet('ABDK01')",
-          "type": "ZU_UPHR_MAIN_SRV.Driver"
+          "id": "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/LoadingPlanSet('9000000001')",
+          "uri": "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/LoadingPlanSet('9000000001')",
+          "type": "ZU_UPHR_MAIN_SRV.LoadingPlan"
         },
-        "ZuphrDriverid": "ABDK01",
-        "ZuphrDrvrName": "Abdullah Khalid",
-        "ZuphrSpecial": "Truck",
-        "ZuphrLicNo": "75756",
-        "ZuphrNation": "Saudi",
-        "Phonenumber": "598574933",
-        "ZuphrEmail": "Abdullah.Khalid@aramco.com"
-      },
-      {
-        "__metadata": {
-          "id": "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/DriverSet('OS20MA')",
-          "uri": "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/DriverSet('OS20MA')",
-          "type": "ZU_UPHR_MAIN_SRV.Driver"
-        },
-        "ZuphrDriverid": "OS20MA",
-        "ZuphrDrvrName": "Osamah Mohammed",
-        "ZuphrSpecial": "Heavy Truck",
-        "ZuphrLicNo": "74352",
-        "ZuphrNation": "Saudi",
-        "Phonenumber": "05895798",
-        "ZuphrEmail": "Osamah.Mohammed@aramco.com"
+        "ReadyFor": false,
+        "ZuphrInprocs": false,
+        "Modified": false,
+        "ZuphrLoadtype": "",
+        "ZuphrActtype": "",
+        "ZuphrStatus": "RELE",
+        "ZuphrVesselName": "",
+        "ZuphrCaptain": "",
+        "ZuphrStation": "",
+        "ZuphrLpid": "9000000001",
+        "Mjahr": "2022",
+        "ZuphrLpname": "",
+        "ZuphrProfid": "DRW",
+        "ZuphrRqtype": "NAV",
+        "ZuphrLpdate": "\/Date(1644796800000)\/",
+        "ZuphrLptime": "PT15H53M04S",
+        "ZuphrLpuser": "T_CBAD_SUPP",
+        "ZuphrLifnr": "",
+        "ZuphrVessel": "",
+        "ZuphrReleased": true,
+        "ZuphrDeleted": false,
+        "ZuphrFpDate": "\/Date(1644796800000)\/",
+        "ZuphrFpTime": "PT15H53M38S",
+        "ZuphrFpName": "T_CBAD_SUPP",
+        "PlanToItems": {
+          "results": [
+            {
+              "__metadata": {
+                "id": "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/LoadingPlanItemSet(ZuphrLpid='9000000001',ZuphrMblpo='0002')",
+                "uri": "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/LoadingPlanItemSet(ZuphrLpid='9000000001',ZuphrMblpo='0002')",
+                "type": "ZU_UPHR_MAIN_SRV.LoadingPlanItem"
+              },
+              "ZuphrActquan": "0.000",
+              "Log": "",
+              "ZuphrLoada": "[{\"mandt\":\"025\",\"zuphrLpid\":\"9000000001\",\"zuphrMjahr\":2021,\"zuphrMblpo\":2,\"zuphrLoadid\":13,\"zuphrActtype\":\"DISP\",\"zuphrAsinQuan\":9.000,\"zuphrFpDate\":\"2021-11-14\",\"zuphrFpTime\":\"14:52:08\",\"zuphrFpName\":\"AWAMAS0F\"}]",
+              "ZuphrDrssno": "",
+              "ZpuhrMovtype": "",
+              "ZuphrFreestock": false,
+              "ZuphrShipperNt": "",
+              "ZuphrCateid": "",
+              "ZuphrActtype": "",
+              "ZuphrMovem": "",
+              "ZuphrContents": "",
+              "ZuphrHeight": "0.000",
+              "ZuphrLength": "0.000",
+              "ZuphrLpid": "9000000001",
+              "ZuphrObjecte": false,
+              "ZuphrSchar": "",
+              "ZuphrFrom": "",
+              "ZuphrSchtask": "",
+              "ZuphrSeq": "0000",
+              "ZuphrWidth": "0.000",
+              "ZuphrShipper": "",
+              "ZuphrTo": "",
+              "ZuphrVolmeins": "",
+              "ZuphrMjahr": "2022",
+              "ZuphrMblpo": "0002",
+              "ZuphrStgid": "",
+              "ZuphrMatnr": "",
+              "ZuphrReqid": "1000000756",
+              "ZuphrReqitm": "0002",
+              "ZuphrShortxt": "",
+              "ZuphrDescrip": "JMM - 2",
+              "ZuphrQuan": "10.000",
+              "Meins": "",
+              "ZuphrOffshore": "ADC-12",
+              "ZuphrAreacode": "",
+              "ZuphrStatus": "RELE",
+              "ZuphrClass": "",
+              "ZuphrDeleted": false,
+              "ZuphrStatdt": null,
+              "ZuphrCompflg": "",
+              "ZuphrCompdat": null,
+              "ZuphrAction": "00",
+              "ZuphrResponse": "",
+              "ZuphrAutoact": "00",
+              "ZuphrActposgrp": "",
+              "ZuphrActrole": "",
+              "ZuphrSent": "",
+              "ZuphrActuname": "",
+              "ZuphrActdate": null,
+              "ZuphrActtime": "PT00H00M00S",
+              "ZuphrWellnm": "",
+              "ZuphrEquipnumber": "",
+              "ZuphrCnumber": "",
+              "ZuphrTicketno": "",
+              "ZuphrMfrpn": "",
+              "ZuphrBitType": "",
+              "ZuphrBitstatus": "",
+              "ZuphrSrlno": "",
+              "ZuphrGl": "",
+              "ZuphrCostcen": "",
+              "ZuphrMattype": "",
+              "ZuphrFpDate": "\/Date(1644796800000)\/",
+              "ZuphrFpTime": "PT15H53M38S",
+              "ZuphrFpName": "T_CBAD_SUPP",
+              "LoadingPlanCheckTSet": {
+                "__deferred": {
+                  "uri": "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/LoadingPlanItemSet(ZuphrLpid='9000000001',ZuphrMblpo='0002')/LoadingPlanCheckTSet"
+                }
+              },
+              "LoadingPlanCharSet": {
+                "__deferred": {
+                  "uri": "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/LoadingPlanItemSet(ZuphrLpid='9000000001',ZuphrMblpo='0002')/LoadingPlanCharSet"
+                }
+              },
+              "LoadingPlanMovemSet": {
+                "__deferred": {
+                  "uri": "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/LoadingPlanItemSet(ZuphrLpid='9000000001',ZuphrMblpo='0002')/LoadingPlanMovemSet"
+                }
+              },
+              "LoadingPlanLoadActionSet": {
+                "__deferred": {
+                  "uri": "https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/LoadingPlanItemSet(ZuphrLpid='9000000001',ZuphrMblpo='0002')/LoadingPlanLoadActionSet"
+                }
+              }
+            }
+          ]
+        }
       }
-    ]
-  }
-}
+      ]
+
+  }}

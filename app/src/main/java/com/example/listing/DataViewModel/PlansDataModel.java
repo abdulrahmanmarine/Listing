@@ -165,12 +165,15 @@ public class PlansDataModel extends ViewModel {
 
                     if (response.isSuccessful()) {
                         List<Plan> temp = response.body().getItems();
+
+
                         Plans.postValue(temp);
                         AppExecutors.getInstance().diskIO().execute(() -> {
                             db.planitem().deleteplan(
                                     Loginsession.getInstance().getUser().getUserId().toUpperCase());
                             db.Matrial().Delete(Loginsession.getInstance().getUser().getUserId().toUpperCase());
                             for (int i = 0; i < temp.size(); i++) {
+
 
                                 Plan plan = temp.get(i);
                                 plan.setZuphrFpName(Loginsession.getInstance().getUser().getUserId().toUpperCase());
@@ -194,6 +197,9 @@ public class PlansDataModel extends ViewModel {
 
                 }
             });
+
+
+
 
 
         }

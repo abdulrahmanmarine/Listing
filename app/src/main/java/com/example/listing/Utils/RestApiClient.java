@@ -1,7 +1,6 @@
 package com.example.listing.Utils;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.example.listing.R;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -10,14 +9,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.CookieManager;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cookie;
-import okhttp3.CookieJar;
 import okhttp3.Headers;
-import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
@@ -64,14 +60,13 @@ public class RestApiClient {
 
     static OkHttpClient headersInterceptors(Application application) {
 
+      //  String[] newDesc1=credns.get(0).split("=");
+     //   String[] test=newDesc1[1].split(";path");
 
-       //    String[] newDesc1=credns.get(0).split("=");
-      //      String[] test=newDesc1[1].split(";path");
 
         return new OkHttpClient.Builder()
                 .addInterceptor(new BasicAuth(application))
                 .cookieJar(new JavaNetCookieJar(new CookieManager()))
-
 
 //                .cookieJar(new CookieJar() {
 //                    @Override public void saveFromResponse(HttpUrl url, List<Cookie> cookies) { }
@@ -140,8 +135,8 @@ public class RestApiClient {
             Headers headers = chain.request().headers().newBuilder()
                     .add("Content-Type", application.getResources().getString(R.string.Content_Type))
                     .add("Accept", application.getResources().getString(R.string.accept))
-                    .add("Authorization", kkey)
                     .add("sap-client", application.getResources().getString(R.string.sapclient_25))
+                    .add("Authorization", kkey)
                     .add("User-Agent", application.getResources().getString(R.string.user_agent)).build();
 
             Request request = chain.request().newBuilder().headers(headers).build();

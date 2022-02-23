@@ -51,8 +51,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> im
         Plan plan = PlanList.get(position);
         holder.bind(plan);
 
-        // holder.dateText.setText(SharefPref.INSTANCE.parseDate(plan.getZuphrFpDate()));
-
         holder.itemRowBinding.setItemClickListener(this);
     }
 

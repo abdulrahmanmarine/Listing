@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.Fade;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -167,13 +168,10 @@ public class DispatcherFragment extends Fragment {
         dest_tv.setText(mParam4);
 
 
-        // model.postVehicle();
-        // model.postDevice();
-
         model.getdrivers(this);
         model.getVechiles(this);
-        // model.getDevice();
 
+        Log.i("destnation",model.plan.getValue().getZuphrOffshore()+"");
 
         model.MatrialsList.observe(getViewLifecycleOwner(), materialList -> {
             String x = null;

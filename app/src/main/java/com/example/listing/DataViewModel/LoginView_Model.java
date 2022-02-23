@@ -18,6 +18,7 @@ import com.example.listing.models.Userunpack;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 import okhttp3.Credentials;
@@ -71,90 +72,28 @@ public class LoginView_Model extends ViewModel {
         final OfflineDatabaseClient db = OfflineDatabaseClient.getInstance(application.getApplicationContext());
 
 
-//        Objects.requireNonNull(RestLoginClient.getInstance(application)).getRetrofitInterfaceLogin().login(credentials).enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull retrofit2.Response<ResponseBody> response) {
-//                if (response.isSuccessful()) {
-//
-//
-//
-//                    List<String> Cookielist = response.headers().values("Set-Cookie");
-//
-//                    Boolean flag=false;
-//
-//                    for(int i=0;i<Cookielist.size();i++){
-//                        if(Cookielist.get(i).equalsIgnoreCase("MYSAPSSO2"))
-//                            flag=true;
-//                    }
-//
-//                    if(flag){
-//                        RestApiClient.getInstance(application).getRetrofitInterface().DVClogin("Fetch").enqueue(new Callback<Userunpack>() {
-//                            @Override
-//                            public void onResponse(@NotNull Call<Userunpack> call, @NotNull retrofit2.Response<Userunpack> response2) {
-//                                if (response2.isSuccessful()) {
-//                                    User user1 = response2.body().getUser();
-//
-//                                    db.Users().GetUser(user1.getUserId().toUpperCase()).observe(owner, user -> {
-//                                        if (user == null) {
-//                                            AppExecutors.getInstance().diskIO().execute(() -> {
-//                                                user1.setUserId(user1.UserId.toUpperCase());
-//                                                db.Users().insertUser(user1);
-//                                            });
-//                                        }
-//                                    });
-//
-//                                    Loginsession.initializer( response2.headers().get("x-csrf-token"), user1);
-//                                    Loginsession.getInstance().setUser(user1);
-//                                    Logged_in.postValue(true);
-//
-//                                }
-//                                if(response2.errorBody()!=null){
-//                                    Logged_in.postValue(false);
-//                                    try {
-//                                        String error=response2.errorBody().string();
-//                                        Log.i("Dvc1 ERROR", response2.code()+response2.message()+error);
-//                                        ErrorMsg.setValue("Login Failed check credentials ");
-//                                    } catch (IOException e) {
-//                                        e.printStackTrace();
-//                                    }
-//
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onFailure(@NotNull Call<Userunpack> call, @NotNull Throwable t) {
-//                                Logged_in.postValue(false);
-//                                Log.i("Dvc -2 ERROR",t.getLocalizedMessage());
-//                                ErrorMsg.setValue(t.getLocalizedMessage());
-//                            }
-//                        });
-//
-//                    }else {
-//                        Logged_in.postValue(false);
-//                       ErrorMsg.setValue("Login Failed check credentials");
-//                    }
-//
-//
-//
-//
-//
-//
-//                }
-//            }
-//            @Override
-//            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-//                Logged_in.postValue(false);
-//                ErrorMsg.setValue(t.getLocalizedMessage());
-//            }
-//        });
-//
+        Objects.requireNonNull(RestLoginClient.getInstance(application)).getRetrofitInterfaceLogin().login(credentials).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull retrofit2.Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+
+                    List<String> Cookielist = response.headers().values("Set-Cookie");
+
+                    Boolean flag=false;
 
 
-        RestApiClient.initializer(application, null, credentials);
+                    for(int i=0;i<Cookielist.size();i++){
+                        if(Cookielist.get(i).toLowerCase().contains("MYSAPSSO2".toLowerCase()))
+                        {flag=true;
+                        break;}
+                    }
+
         RestApiClient.getInstance(application).getRetrofitInterface().DVClogin("Fetch").enqueue(new Callback<Userunpack>() {
             @Override
             public void onResponse(@NotNull Call<Userunpack> call, @NotNull retrofit2.Response<Userunpack> response2) {
                 if (response2.isSuccessful()) {
+
+
                     User user1 = response2.body().getUser();
 
                     db.Users().GetUser(user1.getUserId().toUpperCase()).observe(owner, user -> {
@@ -166,16 +105,16 @@ public class LoginView_Model extends ViewModel {
                         }
                     });
 
-                    Loginsession.initializer(response2.headers().get("x-csrf-token"), user1);
+                    Loginsession.initializer( response2.headers().get("x-csrf-token"), user1);
                     Loginsession.getInstance().setUser(user1);
                     Logged_in.postValue(true);
 
                 }
-                if (response2.errorBody() != null) {
+                if(response2.errorBody()!=null){
                     Logged_in.postValue(false);
                     try {
-                        String error = response2.errorBody().string();
-                        ErrorMsg.setValue("Login Failed check credentials ");
+                        String error=response2.errorBody().string();
+                        ErrorMsg.setValue("Login Failed check your access ");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -187,8 +126,24 @@ public class LoginView_Model extends ViewModel {
             public void onFailure(@NotNull Call<Userunpack> call, @NotNull Throwable t) {
                 Logged_in.postValue(false);
                 ErrorMsg.setValue(t.getLocalizedMessage());
+
             }
         });
+
+
+
+                }
+            }
+            @Override
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                Logged_in.postValue(false);
+                ErrorMsg.setValue(t.getLocalizedMessage());
+            }
+        });
+
+
+//        RestApiClient.initializer(application,null,credentials);
+
 
 
     }
