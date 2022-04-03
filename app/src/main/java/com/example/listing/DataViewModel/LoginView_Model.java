@@ -125,8 +125,11 @@ public class LoginView_Model extends ViewModel {
             @Override
             public void onFailure(@NotNull Call<Userunpack> call, @NotNull Throwable t) {
                 Logged_in.postValue(false);
-                ErrorMsg.setValue(t.getLocalizedMessage());
-
+               if(t.getLocalizedMessage().contains("port")){
+                   ErrorMsg.setValue("Problem with connection port");
+               }else {
+                   ErrorMsg.setValue(t.getLocalizedMessage());
+               }
             }
         });
 

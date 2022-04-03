@@ -107,7 +107,7 @@ public class RestLoginClient {
                     .add("Content-Type", application.getResources().getString(R.string.Content_Type))
                     .add("Accept", application.getResources().getString(R.string.accept))
                     .add("sap-client", application.getResources().getString(R.string.sapclient_25))
-                 //    .add("User-Agent", application.getResources().getString(R.string.user_agent))
+                    .add("User-Agent", application.getResources().getString(R.string.user_agent))
 
                     .build();
 

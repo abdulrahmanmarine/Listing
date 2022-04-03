@@ -135,7 +135,6 @@ public class Login extends AppCompatActivity {
         saveMode("online");
 
 
-
         User user = new User(binding.username.getText().toString(), binding.password.getText().toString());
         if (binding.username.getText().toString().isEmpty() || binding.password.getText().toString().isEmpty()) {
 
