@@ -146,6 +146,7 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
         materialParam = model.MatrialsList.getValue().get(Mpostion);
 
 
+
         Bitmap decodedByte;
         materialName.setText(materialParam.getZuphrShortxt());
         if (materialParam.getZuphrContents().length() > 100) {
@@ -162,9 +163,16 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
 
         //setting adapter for vehicle recycler
         model.MastervehiclesList.observe(getViewLifecycleOwner(), vehiclesList -> {
+
+
+            for(int i=0;i<chosenVehicles.size();i++){
+                vehiclesList.remove(chosenVehicles.get(i));
+            }
+
             vehicleAdapter = new VehicleAdapter((ArrayList<Vehicle>) vehiclesList, this::VehicleSelected);
             vehicleList.setLayoutManager(new GridLayoutManager(getActivity(), 1));
             vehicleList.setAdapter(vehicleAdapter);
+
 
         });
 
@@ -271,8 +279,8 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
     @Override
     public void deleteButtonClicked(int pos) {
         chosenVehicles.remove(pos);
-
         chosenVehicleAdapter.notifyDataSetChanged();
+        model.getVechiles(this);
 
     }
 
@@ -294,12 +302,26 @@ public class Manual_AssignMultiDialogFragment extends DialogFragment
             if (chosenVehicle.getLoaders() != null)
                 loaders = chosenVehicle.getLoaders();
 
-            loaders.add(driver);
-            chosenVehicle.setLoaders(loaders);
+            boolean flag=true;
+            for(int i=0;i<loaders.size();i++){
+                if(driver.getZuphrDriverid().equalsIgnoreCase(loaders.get(i).getZuphrDriverid()))
+                { flag=false;
+                    break;
+                }
+            }
+            if(flag)
+            {
+                loaders.add(driver);
+                chosenVehicle.setLoaders(loaders);
+            }
+            else {
+                Toast.makeText(getContext(), "Driver is already added to this Vehicle", Toast.LENGTH_SHORT).show();
+            }
 
         } else {
             Toast.makeText(getContext(), "Please select a vehicle first", Toast.LENGTH_SHORT).show();
         }
+
 
     }
 

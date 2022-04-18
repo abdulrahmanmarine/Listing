@@ -25,13 +25,18 @@ public class Driver implements Serializable, Comparable<Driver> {
     @NonNull
     @JsonIgnore
     public int DriverId;
+
+
     @Expose(serialize = false, deserialize = false)
     @ColumnInfo(name = "MaterialOfflineID")
     @JsonIgnore
     public String VechileId;
+
     @JsonProperty("ZuphrDriverid")
     @ColumnInfo(name = "ZuphrDriverid")
     String ZuphrDriverid;
+
+
     @JsonProperty("ZuphrDrvrName")
     @ColumnInfo(name = "ZuphrDrvrName")
     String ZuphrdrvrName;

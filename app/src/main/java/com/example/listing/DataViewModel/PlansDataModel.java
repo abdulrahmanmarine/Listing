@@ -3,6 +3,7 @@ package com.example.listing.DataViewModel;
 import android.app.Activity;
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
@@ -53,6 +54,8 @@ public class PlansDataModel extends ViewModel {
     public MutableLiveData<Boolean> UserRule = new MutableLiveData<>();
     public MutableLiveData<List<Driver>> MasterdriversList = new MutableLiveData<>();
     public MutableLiveData<List<Vehicle>> MastervehiclesList = new MutableLiveData<>();
+    public MutableLiveData<List<Vehicle>> vehiclesList = new MutableLiveData<>();
+
     public MutableLiveData<List<imagenode>> MatrialImageList = new MutableLiveData<>();
     public MutableLiveData<List<VehAssign>> VechAssignDispatchList = new MutableLiveData<>();
     public MutableLiveData<List<VechAssignLoader>> VechAssignLoaderList = new MutableLiveData<>();
@@ -73,6 +76,9 @@ public class PlansDataModel extends ViewModel {
     }
 
     public void getplansLoader(LifecycleOwner owner) throws IOException {
+
+
+
         //OFFLINE DATA RETRIEVAL
 
         if (Mode.equals("offline")) {
@@ -88,6 +94,7 @@ public class PlansDataModel extends ViewModel {
 
                     itemlist.set(i, plan);
                 }
+
                 Plans.postValue(itemlist);
             });
 
@@ -101,6 +108,7 @@ public class PlansDataModel extends ViewModel {
                 public void onResponse(Call<PlanUnpack> call, retrofit2.Response<PlanUnpack> response) {
                     if (response.isSuccessful()) {
                         List<Plan> temp = response.body().getItems();
+
                         Plans.postValue(temp);
                         AppExecutors.getInstance().diskIO().execute(() -> {
                             db.planitem().deleteplan(Loginsession.getInstance().getUser().getUserId().toUpperCase());
@@ -117,6 +125,7 @@ public class PlansDataModel extends ViewModel {
                                 }
                             }
                         });
+
 
                     }
 
@@ -156,13 +165,19 @@ public class PlansDataModel extends ViewModel {
 
                     if (response.isSuccessful()) {
                         List<Plan> temp = response.body().getItems();
+
+
                         Plans.postValue(temp);
                         AppExecutors.getInstance().diskIO().execute(() -> {
-                            db.planitem().deleteplan(Loginsession.getInstance().getUser().getUserId().toUpperCase());
+                            db.planitem().deleteplan(
+                                    Loginsession.getInstance().getUser().getUserId().toUpperCase());
                             db.Matrial().Delete(Loginsession.getInstance().getUser().getUserId().toUpperCase());
                             for (int i = 0; i < temp.size(); i++) {
+
+
                                 Plan plan = temp.get(i);
                                 plan.setZuphrFpName(Loginsession.getInstance().getUser().getUserId().toUpperCase());
+
                                 String id = String.valueOf(db.planitem().insertplan(plan));
                                 for (int j = 0; j < temp.get(i).getPlanToItems().size(); j++) {
                                     Material material = temp.get(i).getPlanToItems().get(j);
@@ -182,6 +197,9 @@ public class PlansDataModel extends ViewModel {
 
                 }
             });
+
+
+
 
 
         }
@@ -501,7 +519,7 @@ public class PlansDataModel extends ViewModel {
 
         if (Mode.equals("offline")) {
 
-            db.Load().GetItemtoPost(Lpid, Loginsession.getInstance().getUser().UserId, true).observe(owner, itemlist -> {
+            db.Load().GetItemtoPost(Lpid, true).observe(owner, itemlist -> {
 
                 MatchingVechAssginLoader(itemlist, false);
 
@@ -521,7 +539,6 @@ public class PlansDataModel extends ViewModel {
 
                         for (int i = 0; i < response.body().getAssignment().getVehassign().size(); i++) {
 
-                            if(response.body().getAssignment().getVehassign().get(i).getZuphrDriverid().equalsIgnoreCase(Loginsession.getInstance().getUser().UserId)) {
                                 VechAssignLoader vechAssignLoader = new VechAssignLoader(
                                         response.body().getAssignment().getVehassign().get(i).getZuphrLpid(),
                                         response.body().getAssignment().getVehassign().get(i).getZuphrMjahr(),
@@ -534,7 +551,7 @@ public class PlansDataModel extends ViewModel {
                                         response.body().getAssignment().getVehassign().get(i).getZuphrProc(), true);
 
                                 loaders.add(vechAssignLoader);
-                            }
+
 
 
 
@@ -639,9 +656,11 @@ public class PlansDataModel extends ViewModel {
                 "Saudi", "05895798", "PPLN.Mohammed@aramco.com");
 
 
-        driver = new Driver("", "T_CBAD_PPLN",
-                "Heavy Truck", "546456",
-                "Saudi", "054380958", "T_CBAD_PPLN@aramco.com");
+         driver=new Driver(null,"T_CBAD_PPLN",
+                "All","74752",
+                "Saudi","05895898","T_CBAD_PPLN@aramco.com");
+
+
 
         retrofitInterface.SaveDriver(driver, Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -649,10 +668,19 @@ public class PlansDataModel extends ViewModel {
 
                 if (response.errorBody() != null) {
 
-
+                    try {
+                        Log.i("Driverpost-error",response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 if (response.isSuccessful()) {
 
+                    try {
+                        Log.i("Driverpost",response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
 
@@ -660,6 +688,8 @@ public class PlansDataModel extends ViewModel {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                Log.i("Driverfalied",t.getMessage());
 
             }
         });
@@ -668,30 +698,63 @@ public class PlansDataModel extends ViewModel {
 
     public void postVehicle() {
 
-        Vehicle vehicle = new Vehicle("54353", "Meduim",
+        Vehicle vehicle = new Vehicle("54353", "Large",
                 "Truck", "654654", "10000", "Red", "2012",
-                "2022-01-12T00:00:00", "54354",
-                new ArrayList<>());
+                "2022-01-12T00:00:00", "54354",new ArrayList<>());
 
-        retrofitInterface.SaveVechile(vehicle, Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+        List<Vehicle> vehicles=new ArrayList<>();
+        Vehicle vehicle2 = new Vehicle("54351", "small", "Crane", "456234", "1000",
+                "Red", "2012", "2022-01-12T00:00:00", "123456", new ArrayList<>());
+        Vehicle vehicle3 = new Vehicle("64564", "Medium", "Two Wheel", "456234", "2000",
+                "Red", "2012", "2022-01-12T00:00:00", "768544", new ArrayList<>());
+        Vehicle vehicle4 = new Vehicle("98696", "Medium", "Four Wheel", "08998", "4000",
+                "Red", "2012", "2022-01-12T00:00:00", "987756", new ArrayList<>());
+        Vehicle vehicle5 = new Vehicle("86564", "high", "two wheel fork lift", "05353", "6000",
+                "Red", "2012", "2022-01-12T00:00:00", "907843", new ArrayList<>());
+        Vehicle vehicle6 = new Vehicle("87642", "High", "Huge Truck", "321399", "70000",
+                "Red", "2012", "2022-01-12T00:00:00", "324876", new ArrayList<>());
 
-                if (response.errorBody() != null) {
+        vehicles.add(vehicle2);
+        vehicles.add(vehicle3);
+        vehicles.add(vehicle4);
+        vehicles.add(vehicle5);
+        vehicles.add(vehicle6);
+
+        for(int i=0;i<vehicles.size();i++){
+
+            retrofitInterface.SaveVechile(vehicles.get(i), Loginsession.getInstance().getToken()).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                    if (response.errorBody() != null) {
+
+                        try {
+                            Log.i("Driverpost-error",response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (response.isSuccessful()) {
+
+                        try {
+                            Log.i("Driverpost",response.body().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
 
                 }
-                if (response.isSuccessful()) {
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                        Log.i("Driverfalied",t.getMessage());
 
                 }
+            });
 
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
+        }
 
     }
 
@@ -905,7 +968,7 @@ public class PlansDataModel extends ViewModel {
     public void offlineLoaderItems(LifecycleOwner owner, String lpid) {
 
         if (!Mode.equals("offline")) {
-            db.Load().GetItemtoPost(lpid, Loginsession.getInstance().getUser().UserId, false).observe(owner, items -> {
+            db.Load().GetItemtoPost(lpid, false).observe(owner, items -> {
 
                 if (items != null) {
                     if (items.size() > 0 && Loginsession.getInstance().isOfflineflag()) {
