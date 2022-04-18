@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 //import android.support.v7.widget.GridLayoutManager;
 //import android.support.v7.widget.RecyclerView;
 
-public class CustomGridRecyclerView extends RecyclerView {
+public class    CustomGridRecyclerView extends RecyclerView {
 
     public CustomGridRecyclerView(Context context) {
         super(context);
