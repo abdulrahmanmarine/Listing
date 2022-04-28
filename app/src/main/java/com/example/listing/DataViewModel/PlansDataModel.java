@@ -172,6 +172,7 @@ public class PlansDataModel extends ViewModel {
                             db.planitem().deleteplan(
                                     Loginsession.getInstance().getUser().getUserId().toUpperCase());
                             db.Matrial().Delete(Loginsession.getInstance().getUser().getUserId().toUpperCase());
+
                             for (int i = 0; i < temp.size(); i++) {
 
 
@@ -179,6 +180,8 @@ public class PlansDataModel extends ViewModel {
                                 plan.setZuphrFpName(Loginsession.getInstance().getUser().getUserId().toUpperCase());
 
                                 String id = String.valueOf(db.planitem().insertplan(plan));
+
+
                                 for (int j = 0; j < temp.get(i).getPlanToItems().size(); j++) {
                                     Material material = temp.get(i).getPlanToItems().get(j);
                                     material.setPlanOfflineID(id);
@@ -385,14 +388,19 @@ public class PlansDataModel extends ViewModel {
 
                     }
                     if (response.isSuccessful()) {
-
                         for (int i = 0; i < response.body().getAssignment().getVehassign().size(); i++) {
                             VehAssign vehAssign = response.body().getAssignment().getVehassign().get(i);
                             vehAssign.AddtoDB(true);
                             response.body().getAssignment().getVehassign().set(i, vehAssign);
                         }
+                        try {
+                            if(response.body().getAssignment().getVehassign()!=null)
+                                MatchingVechAssgin(response.body().getAssignment().getVehassign(), true);
 
-                        MatchingVechAssgin(response.body().getAssignment().getVehassign(), true);
+                        }catch (Exception ex){
+
+                            Log.i("Errrorrr",ex.getMessage());
+                        }
 
 
                     }
@@ -417,6 +425,7 @@ public class PlansDataModel extends ViewModel {
         List<Material> materials = plan.getValue().getPlanToItems();
 
         Driver driver = new Driver();
+
 
         if (flagonline) {
             AppExecutors.getInstance().diskIO().execute(() -> {
@@ -848,10 +857,8 @@ public class PlansDataModel extends ViewModel {
         if (Mode.equals("offline")) {
 
             AppExecutors.getInstance().diskIO().execute(() -> {
-
                 db.Load().DeleteByID(vechAssignLoader.getZuphrLpid(),
                         vechAssignLoader.getZuphrDriverid(), vechAssignLoader.getZuphrMblpo(), vechAssignLoader.getZuphrMjahr());
-
                 db.Load().insertAssginment(vechAssignLoader);
 
 
