@@ -87,51 +87,51 @@ public class LoginView_Model extends ViewModel {
                         {flag=true;
                         break;}
                     }
+                    RestApiClient.getInstance(application).getRetrofitInterface().DVClogin("Fetch").enqueue(new Callback<Userunpack>() {
+                        @Override
+                        public void onResponse(@NotNull Call<Userunpack> call, @NotNull retrofit2.Response<Userunpack> response2) {
+                            if (response2.isSuccessful()) {
 
-        RestApiClient.getInstance(application).getRetrofitInterface().DVClogin("Fetch").enqueue(new Callback<Userunpack>() {
-            @Override
-            public void onResponse(@NotNull Call<Userunpack> call, @NotNull retrofit2.Response<Userunpack> response2) {
-                if (response2.isSuccessful()) {
 
+                                User user1 = response2.body().getUser();
 
-                    User user1 = response2.body().getUser();
+                                db.Users().GetUser(user1.getUserId().toUpperCase()).observe(owner, user -> {
+                                    if (user == null) {
+                                        AppExecutors.getInstance().diskIO().execute(() -> {
+                                            user1.setUserId(user1.UserId.toUpperCase());
+                                            db.Users().insertUser(user1);
+                                        });
+                                    }
+                                });
 
-                    db.Users().GetUser(user1.getUserId().toUpperCase()).observe(owner, user -> {
-                        if (user == null) {
-                            AppExecutors.getInstance().diskIO().execute(() -> {
-                                user1.setUserId(user1.UserId.toUpperCase());
-                                db.Users().insertUser(user1);
-                            });
+                                Loginsession.initializer( response2.headers().get("x-csrf-token"), user1);
+                                Loginsession.getInstance().setUser(user1);
+                                Logged_in.postValue(true);
+
+                            }
+                            if(response2.errorBody()!=null){
+                                Logged_in.postValue(false);
+                                try {
+                                    String error=response2.errorBody().string();
+                                    ErrorMsg.setValue("Login Failed check your access ");
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NotNull Call<Userunpack> call, @NotNull Throwable t) {
+                            Logged_in.postValue(false);
+                            if(t.getLocalizedMessage().contains("port")){
+                                ErrorMsg.setValue("Problem with connection port");
+                            }else {
+                                ErrorMsg.setValue(t.getLocalizedMessage());
+                            }
                         }
                     });
 
-                    Loginsession.initializer( response2.headers().get("x-csrf-token"), user1);
-                    Loginsession.getInstance().setUser(user1);
-                    Logged_in.postValue(true);
-
-                }
-                if(response2.errorBody()!=null){
-                    Logged_in.postValue(false);
-                    try {
-                        String error=response2.errorBody().string();
-                        ErrorMsg.setValue("Login Failed check your access ");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<Userunpack> call, @NotNull Throwable t) {
-                Logged_in.postValue(false);
-               if(t.getLocalizedMessage().contains("port")){
-                   ErrorMsg.setValue("Problem with connection port");
-               }else {
-                   ErrorMsg.setValue(t.getLocalizedMessage());
-               }
-            }
-        });
 
 
 
@@ -145,7 +145,8 @@ public class LoginView_Model extends ViewModel {
         });
 
 
-//        RestApiClient.initializer(application,null,credentials);
+       //RestApiClient.initializer(application,null,credentials);
+
 
 
 

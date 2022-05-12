@@ -69,7 +69,7 @@ public class RestApiClient {
 
         return new OkHttpClient.Builder()
                 .addInterceptor(new BasicAuth(application))
-   //             .cookieJar(new JavaNetCookieJar(new CookieManager()))
+               //.cookieJar(new JavaNetCookieJar(new CookieManager()))
 
                 .cookieJar(new CookieJar() {
                     @Override public void saveFromResponse(HttpUrl url, List<Cookie> cookies) { }
@@ -138,8 +138,8 @@ public class RestApiClient {
             Headers headers = chain.request().headers().newBuilder()
                     .add("Content-Type", application.getResources().getString(R.string.Content_Type))
                     .add("Accept", application.getResources().getString(R.string.accept))
-                    .add("sap-client", application.getResources().getString(R.string.sapclient_25))
-                  //  .add("Authorization", kkey)
+                    .add("sap-client", application.getResources().getString(R.string.sapclient_222))
+                   //.add("Authorization", kkey)
                     .add("User-Agent", application.getResources().getString(R.string.user_agent)).build();
 
             Request request = chain.request().newBuilder().headers(headers).build();

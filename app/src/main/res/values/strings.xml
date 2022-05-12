@@ -37,6 +37,7 @@
     <string name="accept">application/json</string>
     <string name="portal">https://qp1.aramco.com.sa/</string>
     <string name="sapclient_25">025</string>
+    <string name="sapclient_222">222</string>
 
     <string name="SharedPrefName">Settings</string>
 
