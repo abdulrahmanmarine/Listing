@@ -64,14 +64,18 @@ public class RestApiClient {
 
     static OkHttpClient headersInterceptors(Application application) {
 
+        //Comment out for Development and uncomment for PRC
         String[] newDesc1=credns.get(0).split("=");
         String[] test=newDesc1[1].split(";path");
-
+       ////////
 
         return new OkHttpClient.Builder()
                 .addInterceptor(new BasicAuth(application))
+
+                //Uncomment for development
    //          .cookieJar(new JavaNetCookieJar(new CookieManager()))
 
+                //Comment out for Development and uncomment for PRC
                 .cookieJar(new CookieJar() {
                     @Override public void saveFromResponse(HttpUrl url, List<Cookie> cookies) { }
 
@@ -139,7 +143,11 @@ public class RestApiClient {
             Headers headers = chain.request().headers().newBuilder()
                     .add("Content-Type", application.getResources().getString(R.string.Content_Type))
                     .add("Accept", application.getResources().getString(R.string.accept))
+            //Change to 25 for development and 222 for PRC
                     .add("sap-client", application.getResources().getString(R.string.sapclient_222))
+
+
+                    //Uncomment for development
              //       .add("Authorization", kkey)
                     .add("User-Agent", application.getResources().getString(R.string.user_agent)).build();
 

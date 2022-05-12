@@ -72,6 +72,8 @@ public class LoginView_Model extends ViewModel {
         final OfflineDatabaseClient db = OfflineDatabaseClient.getInstance(application.getApplicationContext());
 
 
+
+        ///Comment RestLogin client call in development and Uncomment for testing
         Objects.requireNonNull(RestLoginClient.getInstance(application)).getRetrofitInterfaceLogin().login(credentials).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NotNull Call<ResponseBody> call, @NotNull retrofit2.Response<ResponseBody> response) {
@@ -88,7 +90,7 @@ public class LoginView_Model extends ViewModel {
                         break;}
                     }
 
-
+//Remove from this method and move it out to line 154 for development and in for PRC
                     RestApiClient.getInstance(application).getRetrofitInterface().DVClogin("Fetch").enqueue(new Callback<Userunpack>() {
                         @Override
                         public void onResponse(@NotNull Call<Userunpack> call, @NotNull retrofit2.Response<Userunpack> response2) {
@@ -133,7 +135,7 @@ public class LoginView_Model extends ViewModel {
                             }
                         }
                     });
-
+///////
 
 
 
@@ -147,8 +149,9 @@ public class LoginView_Model extends ViewModel {
         });
 
 
+              //Uncomment for Development and comment out for PRC
   //    RestApiClient.initializer(application,null,credentials);
-
+        // add the resapi clinet here for development
 
 
     }
