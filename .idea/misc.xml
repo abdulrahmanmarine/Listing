@@ -12,7 +12,13 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.26268115942028986" />
         <entry key="app/src/main/res/layout/assign_card.xml" value="0.34375" />
         <entry key="app/src/main/res/layout/assign_configured_layout.xml" value="0.203125" />
+        <entry key="app/src/main/res/layout/assign_configured_list_item.xml" value="0.10960144927536232" />
         <entry key="app/src/main/res/layout/assign_manual.xml" value="0.2622834331053229" />
+        <entry key="app/src/main/res/layout/assign_spinner_item.xml" value="0.14895833333333333" />
+        <entry key="app/src/main/res/layout/chosen_driver_card_item.xml" value="0.14895833333333333" />
+        <entry key="app/src/main/res/layout/chosen_vehicle_card_item.xml" value="0.14895833333333333" />
+        <entry key="app/src/main/res/layout/chosen_vehicle_card_item_vert.xml" value="0.14895833333333333" />
+        <entry key="app/src/main/res/layout/chosen_vehicle_item.xml" value="0.14895833333333333" />
         <entry key="app/src/main/res/layout/dialog_spinner.xml" value="0.14583333333333334" />
         <entry key="app/src/main/res/layout/fragment_text.xml" value="0.14583333333333334" />
         <entry key="app/src/main/res/layout/fragmentlist.xml" value="0.33559782608695654" />

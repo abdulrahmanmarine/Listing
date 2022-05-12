@@ -64,19 +64,19 @@ public class RestApiClient {
 
     static OkHttpClient headersInterceptors(Application application) {
 
-//        String[] newDesc1=credns.get(0).split("=");
-//        String[] test=newDesc1[1].split(";path");
+        String[] newDesc1=credns.get(0).split("=");
+        String[] test=newDesc1[1].split(";path");
 
 
         return new OkHttpClient.Builder()
                 .addInterceptor(new BasicAuth(application))
-             .cookieJar(new JavaNetCookieJar(new CookieManager()))
+   //          .cookieJar(new JavaNetCookieJar(new CookieManager()))
 
-//                .cookieJar(new CookieJar() {
-//                    @Override public void saveFromResponse(HttpUrl url, List<Cookie> cookies) { }
-//
-//                    @Override public List<Cookie> loadForRequest(HttpUrl url) { return Arrays.asList(createNonPersistentCookie(test[0])); }
-//                })
+                .cookieJar(new CookieJar() {
+                    @Override public void saveFromResponse(HttpUrl url, List<Cookie> cookies) { }
+
+                    @Override public List<Cookie> loadForRequest(HttpUrl url) { return Arrays.asList(createNonPersistentCookie(test[0])); }
+                })
 
 
 
@@ -139,8 +139,8 @@ public class RestApiClient {
             Headers headers = chain.request().headers().newBuilder()
                     .add("Content-Type", application.getResources().getString(R.string.Content_Type))
                     .add("Accept", application.getResources().getString(R.string.accept))
-                    .add("sap-client", application.getResources().getString(R.string.sapclient_25))
-                    .add("Authorization", kkey)
+                    .add("sap-client", application.getResources().getString(R.string.sapclient_222))
+             //       .add("Authorization", kkey)
                     .add("User-Agent", application.getResources().getString(R.string.user_agent)).build();
 
             Request request = chain.request().newBuilder().headers(headers).build();
@@ -164,11 +164,6 @@ public class RestApiClient {
 
             final Request copy = chain.request().newBuilder().build();
             final Buffer buffer = new Buffer();
-            Log.i("urlhhhhh",chain.request().url()+"");
-            if (copy.body() != null) {
-                copy.body().writeTo(buffer);
-
-            }
 
 
 

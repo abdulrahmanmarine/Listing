@@ -37,6 +37,7 @@
     <string name="accept">application/json</string>
     <string name="portal">https://qp1.aramco.com.sa/</string>
     <string name="sapclient_25">025</string>
+    <string name="sapclient_222">222</string>
 
     <string name="SharedPrefName">Settings</string>
 
@@ -45,12 +46,12 @@
 
     <!-- TestLinks   -->
 
-    <string name="dvcURL">https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/</string>
+<!--    <string name="dvcURL">https://dvc.aramco.com.sa:1443/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/</string>-->
 <!--    <string name="portalURL">https://dp4.aramco.com.sa/</string>-->
 
 
 <!--      ProductionLinks-->
-<!--  <string name="dvcURL">https://prcwd.aramco.com.sa:44505/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/</string>-->
+  <string name="dvcURL">https://prcwd.aramco.com.sa:44505/sap/opu/odata/sap/ZU_UPHR_MAIN_SRV/</string>
     <string name="portalURL">https://myhome.aramco.com.sa/</string>
 
 
